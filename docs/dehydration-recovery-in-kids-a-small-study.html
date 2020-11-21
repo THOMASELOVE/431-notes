@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.2" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#skew"><i class="fa fa-check"></i><b>5.4.2</b> Skew</a></li>
 <li class="chapter" data-level="5.4.3" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#kurtosis"><i class="fa fa-check"></i><b>5.4.3</b> Kurtosis</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#more-detailed-numerical-summaries-for-quantitative-variables"><i class="fa fa-check"></i><b>5.5</b> More Detailed Numerical Summaries for Quantitative Variables</a><ul>
+<li class="chapter" data-level="5.5" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#numerical-summaries-for-quantitative-variables"><i class="fa fa-check"></i><b>5.5</b> Numerical Summaries for Quantitative Variables</a><ul>
 <li class="chapter" data-level="5.5.1" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#favstats-in-the-mosaic-package"><i class="fa fa-check"></i><b>5.5.1</b> <code>favstats</code> in the <code>mosaic</code> package</a></li>
 <li class="chapter" data-level="5.5.2" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#describe-in-the-psych-package"><i class="fa fa-check"></i><b>5.5.2</b> <code>describe</code> in the <code>psych</code> package</a></li>
 <li class="chapter" data-level="5.5.3" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#the-hmisc-packages-version-of-describe"><i class="fa fa-check"></i><b>5.5.3</b> The <code>Hmisc</code> package’s version of <code>describe</code></a></li>
@@ -442,6 +442,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.5" data-path="highlights-of-what-weve-seen-so-far.html"><a href="highlights-of-what-weve-seen-so-far.html#summarizing-bivariate-associations-scatterplots-and-regression-lines"><i class="fa fa-check"></i><b>16.5</b> Summarizing Bivariate Associations: Scatterplots and Regression Lines</a></li>
 <li class="chapter" data-level="16.6" data-path="highlights-of-what-weve-seen-so-far.html"><a href="highlights-of-what-weve-seen-so-far.html#summarizing-bivariate-associations-with-correlations"><i class="fa fa-check"></i><b>16.6</b> Summarizing Bivariate Associations With Correlations</a></li>
 </ul></li>
+<li class="part"><span><b>Part B. Comparing Summaries</b></span></li>
 <li class="chapter" data-level="17" data-path="confidence-intervals-for-a-mean.html"><a href="confidence-intervals-for-a-mean.html"><i class="fa fa-check"></i><b>17</b> Confidence Intervals for a Mean</a><ul>
 <li class="chapter" data-level="17.1" data-path="confidence-intervals-for-a-mean.html"><a href="confidence-intervals-for-a-mean.html#love-boost.r-is-something-well-start-using-now"><i class="fa fa-check"></i><b>17.1</b> <code>Love-boost.R</code> is something we’ll start using now</a></li>
 <li class="chapter" data-level="17.2" data-path="confidence-intervals-for-a-mean.html"><a href="confidence-intervals-for-a-mean.html#introduction"><i class="fa fa-check"></i><b>17.2</b> Introduction</a></li>
@@ -529,8 +530,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="19.3" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#exploratory-data-analysis-for-paired-samples"><i class="fa fa-check"></i><b>19.3</b> Exploratory Data Analysis for Paired Samples</a><ul>
 <li class="chapter" data-level="19.3.1" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#the-paired-differences"><i class="fa fa-check"></i><b>19.3.1</b> The Paired Differences</a></li>
-<li class="chapter" data-level="19.3.2" data-path="confidence-intervals-for-a-mean.html"><a href="confidence-intervals-for-a-mean.html#numerical-summaries"><i class="fa fa-check"></i><b>19.3.2</b> Numerical Summaries</a></li>
-<li class="chapter" data-level="19.3.3" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#impact-of-matching---scatterplot-and-correlation"><i class="fa fa-check"></i><b>19.3.3</b> Impact of Matching - Scatterplot and Correlation</a></li>
+<li class="chapter" data-level="19.3.2" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#impact-of-matching---scatterplot-and-correlation"><i class="fa fa-check"></i><b>19.3.2</b> Impact of Matching - Scatterplot and Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#looking-at-separate-samples-using-pivot_longer"><i class="fa fa-check"></i><b>19.4</b> Looking at Separate Samples: Using <code>pivot_longer</code></a></li>
 <li class="chapter" data-level="19.5" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#estimating-the-difference-in-means-with-paired-samples"><i class="fa fa-check"></i><b>19.5</b> Estimating the Difference in Means with Paired Samples</a><ul>
@@ -705,6 +705,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.9" data-path="comparing-proportions-with-two-independent-samples.html"><a href="comparing-proportions-with-two-independent-samples.html#estimating-a-rate-more-accurately-use-x-2n-4-rather-than-xn"><i class="fa fa-check"></i><b>24.9</b> Estimating a Rate More Accurately: Use (x + 2)/(n + 4) rather than x/n</a></li>
 <li class="chapter" data-level="24.10" data-path="comparing-proportions-with-two-independent-samples.html"><a href="comparing-proportions-with-two-independent-samples.html#a-second-example-ebola-virus-disease-study-again"><i class="fa fa-check"></i><b>24.10</b> A Second Example: Ebola Virus Disease Study, again</a></li>
 </ul></li>
+<li class="chapter" data-level="25" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html"><i class="fa fa-check"></i><b>25</b> Larger Contingency Tables</a><ul>
+<li class="chapter" data-level="25.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#a-2x3-table-comparing-response-to-active-vs.-placebo"><i class="fa fa-check"></i><b>25.1</b> A 2x3 Table: Comparing Response to Active vs. Placebo</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#getting-the-table-into-r"><i class="fa fa-check"></i><b>25.1.1</b> Getting the Table into R</a></li>
+<li class="chapter" data-level="25.1.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#manipulating-the-tables-presentation"><i class="fa fa-check"></i><b>25.1.2</b> Manipulating the Table’s presentation</a></li>
+</ul></li>
+<li class="chapter" data-level="25.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#accuracy-of-death-certificates-a-6x3-table"><i class="fa fa-check"></i><b>25.2</b> Accuracy of Death Certificates (A 6x3 Table)</a></li>
+<li class="chapter" data-level="25.3" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-pearson-chi-square-test-of-independence"><i class="fa fa-check"></i><b>25.3</b> The Pearson Chi-Square Test of Independence</a></li>
+<li class="chapter" data-level="25.4" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#three-way-tables-a-2x2xk-table-and-a-mantel-haenszel-analysis"><i class="fa fa-check"></i><b>25.4</b> Three-Way Tables: A 2x2xK Table and a Mantel-Haenszel Analysis</a><ul>
+<li class="chapter" data-level="25.4.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#smoking-and-mortality-in-the-uk"><i class="fa fa-check"></i><b>25.4.1</b> Smoking and Mortality in the UK</a></li>
+<li class="chapter" data-level="25.4.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-whickham-data-with-age-too"><i class="fa fa-check"></i><b>25.4.2</b> The <code>whickham</code> data with age, too</a></li>
+<li class="chapter" data-level="25.4.3" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#checking-assumptions-the-woolf-test"><i class="fa fa-check"></i><b>25.4.3</b> Checking Assumptions: The Woolf test</a></li>
+<li class="chapter" data-level="25.4.4" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-cochran-mantel-haenszel-test"><i class="fa fa-check"></i><b>25.4.4</b> The Cochran-Mantel-Haenszel Test</a></li>
+<li class="chapter" data-level="25.4.5" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#without-the-continuity-correction"><i class="fa fa-check"></i><b>25.4.5</b> Without the Continuity Correction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="power-and-proportions.html"><a href="power-and-proportions.html"><i class="fa fa-check"></i><b>26</b> Power and Proportions</a><ul>
+<li class="chapter" data-level="26.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#tuberculosis-prevalence-among-iv-drug-users"><i class="fa fa-check"></i><b>26.1</b> Tuberculosis Prevalence Among IV Drug Users</a></li>
+<li class="chapter" data-level="26.2" data-path="power-and-proportions.html"><a href="power-and-proportions.html#designing-a-new-tb-study"><i class="fa fa-check"></i><b>26.2</b> Designing a New TB Study</a></li>
+<li class="chapter" data-level="26.3" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-power.prop.test-for-balanced-designs"><i class="fa fa-check"></i><b>26.3</b> Using <code>power.prop.test</code> for Balanced Designs</a></li>
+<li class="chapter" data-level="26.4" data-path="power-and-proportions.html"><a href="power-and-proportions.html#how-power.prop.test-works"><i class="fa fa-check"></i><b>26.4</b> How <code>power.prop.test</code> works</a></li>
+<li class="chapter" data-level="26.5" data-path="power-and-proportions.html"><a href="power-and-proportions.html#a-revised-scenario"><i class="fa fa-check"></i><b>26.5</b> A Revised Scenario</a></li>
+<li class="chapter" data-level="26.6" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-the-pwr-library-for-unbalanced-designs"><i class="fa fa-check"></i><b>26.6</b> Using the <code>pwr</code> library for Unbalanced Designs</a><ul>
+<li class="chapter" data-level="26.6.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#calculating-the-effect-size-h"><i class="fa fa-check"></i><b>26.6.1</b> Calculating the Effect Size <code>h</code></a></li>
+</ul></li>
+<li class="chapter" data-level="26.7" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-pwr.2p2n.test-in-r"><i class="fa fa-check"></i><b>26.7</b> Using <code>pwr.2p2n.test</code> in R</a><ul>
+<li class="chapter" data-level="26.7.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#comparison-to-balanced-design"><i class="fa fa-check"></i><b>26.7.1</b> Comparison to Balanced Design</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="quiz-2-review.html"><a href="quiz-2-review.html"><i class="fa fa-check"></i><b>27</b> Quiz 2 Review</a><ul>
+<li class="chapter" data-level="27.1" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-1-7"><i class="fa fa-check"></i><b>27.1</b> Review Items 1-7</a></li>
+<li class="chapter" data-level="27.2" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-8-9"><i class="fa fa-check"></i><b>27.2</b> Review Items 8-9</a></li>
+<li class="chapter" data-level="27.3" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-10-13"><i class="fa fa-check"></i><b>27.3</b> Review Items 10-13</a></li>
+<li class="chapter" data-level="27.4" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-14-15"><i class="fa fa-check"></i><b>27.4</b> Review Items 14-15</a></li>
+<li class="chapter" data-level="27.5" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-sketch-for-review-items"><i class="fa fa-check"></i><b>27.5</b> Answer Sketch for Review Items</a><ul>
+<li class="chapter" data-level="27.5.1" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-1"><i class="fa fa-check"></i><b>27.5.1</b> Answer 1</a></li>
+<li class="chapter" data-level="27.5.2" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-2"><i class="fa fa-check"></i><b>27.5.2</b> Answer 2</a></li>
+<li class="chapter" data-level="27.5.3" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-3"><i class="fa fa-check"></i><b>27.5.3</b> Answer 3</a></li>
+<li class="chapter" data-level="27.5.4" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-4"><i class="fa fa-check"></i><b>27.5.4</b> Answer 4</a></li>
+<li class="chapter" data-level="27.5.5" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-5"><i class="fa fa-check"></i><b>27.5.5</b> Answer 5</a></li>
+<li class="chapter" data-level="27.5.6" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-6"><i class="fa fa-check"></i><b>27.5.6</b> Answer 6</a></li>
+<li class="chapter" data-level="27.5.7" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-7"><i class="fa fa-check"></i><b>27.5.7</b> Answer 7</a></li>
+<li class="chapter" data-level="27.5.8" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-8"><i class="fa fa-check"></i><b>27.5.8</b> Answer 8</a></li>
+<li class="chapter" data-level="27.5.9" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-9"><i class="fa fa-check"></i><b>27.5.9</b> Answer 9</a></li>
+<li class="chapter" data-level="27.5.10" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-10"><i class="fa fa-check"></i><b>27.5.10</b> Answer 10</a></li>
+<li class="chapter" data-level="27.5.11" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-11"><i class="fa fa-check"></i><b>27.5.11</b> Answer 11</a></li>
+<li class="chapter" data-level="27.5.12" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-12"><i class="fa fa-check"></i><b>27.5.12</b> Answer 12</a></li>
+<li class="chapter" data-level="27.5.13" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-13"><i class="fa fa-check"></i><b>27.5.13</b> Answer 13</a></li>
+<li class="chapter" data-level="27.5.14" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-14"><i class="fa fa-check"></i><b>27.5.14</b> Answer 14</a></li>
+<li class="chapter" data-level="27.5.15" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-15"><i class="fa fa-check"></i><b>27.5.15</b> Answer 15</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -785,7 +836,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb481-17"><a href="dehydration-recovery-in-kids-a-small-study.html#cb481-17"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Boxplot: hydrate&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb481-18"><a href="dehydration-recovery-in-kids-a-small-study.html#cb481-18"></a></span>
 <span id="cb481-19"><a href="dehydration-recovery-in-kids-a-small-study.html#cb481-19"></a>p1 <span class="op">+</span><span class="st"> </span>(p2 <span class="op">/</span><span class="st"> </span>p3 <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">heights =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">1</span>)))</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
 <div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="dehydration-recovery-in-kids-a-small-study.html#cb482-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(<span class="op">~</span><span class="st"> </span>recov.score, <span class="dt">data =</span> hydrate) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">1</span>)</span></code></pre></div>
 <table>
 <thead>
@@ -917,7 +968,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb486-5"><a href="dehydration-recovery-in-kids-a-small-study.html#cb486-5"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>) <span class="op">+</span></span>
 <span id="cb486-6"><a href="dehydration-recovery-in-kids-a-small-study.html#cb486-6"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
 <span id="cb486-7"><a href="dehydration-recovery-in-kids-a-small-study.html#cb486-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Estimates with 90% confidence intervals from m1 in hydrate&quot;</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-145-1.png" width="672" /></p>
 <p>Another option would be to use <code>geom_errorbarh</code> in this setting, perhaps with a different color scheme…</p>
 <div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="dehydration-recovery-in-kids-a-small-study.html#cb487-1"></a>td &lt;-<span class="st"> </span><span class="kw">tidy</span>(m1, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span>
 <span id="cb487-2"><a href="dehydration-recovery-in-kids-a-small-study.html#cb487-2"></a><span class="kw">ggplot</span>(td, <span class="kw">aes</span>(<span class="dt">x =</span> estimate, <span class="dt">y =</span> term, <span class="dt">col =</span> term)) <span class="op">+</span></span>
@@ -927,7 +978,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb487-6"><a href="dehydration-recovery-in-kids-a-small-study.html#cb487-6"></a><span class="st">  </span><span class="kw">scale_color_viridis_d</span>(<span class="dt">end =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
 <span id="cb487-7"><a href="dehydration-recovery-in-kids-a-small-study.html#cb487-7"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
 <span id="cb487-8"><a href="dehydration-recovery-in-kids-a-small-study.html#cb487-8"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Estimates with 90% confidence intervals from m1 in hydrate&quot;</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
 </div>
 <div id="the-summary-output" class="section level2">
 <h2><span class="header-section-number">15.7</span> The Summary Output</h2>
@@ -1259,10 +1310,10 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <span id="cb501-4"><a href="dehydration-recovery-in-kids-a-small-study.html#cb501-4"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x, <span class="dt">se =</span> F) <span class="op">+</span></span>
 <span id="cb501-5"><a href="dehydration-recovery-in-kids-a-small-study.html#cb501-5"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x, <span class="dt">se =</span> F, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
 <span id="cb501-6"><a href="dehydration-recovery-in-kids-a-small-study.html#cb501-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Residuals vs. Fitted values for Model m1&quot;</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-151-1.png" width="672" /></p>
 <p>We can also obtain a plot of residuals vs. fitted values for <code>m1</code> using the following code from base R.</p>
 <div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="dehydration-recovery-in-kids-a-small-study.html#cb502-1"></a><span class="kw">plot</span>(m1, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-152-1.png" width="672" /></p>
 <p>We hope in this plot to see a generally random scatter of points, perhaps looking like a “fuzzy football”. Since we only have seven possible <code>dose</code> values, we obtain only seven distinct predicted values, which explains the seven vertical lines in the plot. Here, the smooth red line indicates a gentle curve, but no evidence of a strong curve, or any other regular pattern in this residual plot.</p>
 
 </div>

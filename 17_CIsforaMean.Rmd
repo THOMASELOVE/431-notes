@@ -1,3 +1,5 @@
+# (PART\*) Part B. Comparing Summaries {-}
+
 # Confidence Intervals for a Mean
 
 ## `Love-boost.R` is something we'll start using now

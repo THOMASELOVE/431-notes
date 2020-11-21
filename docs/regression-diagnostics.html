@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Regression Diagnostics | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+  <meta name="description" content="This book describes some fundamental approaches to doing biostatistical and data science in research." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Regression Diagnostics | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This book describes some fundamental approaches to doing biostatistical and data science in research." />
+  <meta name="github-repo" content="thomaselove/431-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Regression Diagnostics | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431" />
+  
+  <meta name="twitter:description" content="This book describes some fundamental approaches to doing biostatistical and data science in research." />
+  
+
+<meta name="author" content="Thomas E. Love" />
+
+
+<meta name="date" content="2020-11-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="multiple-regression-with-the-hydrate-data.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Dr. Love's Notes for 431</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Working with These Notes</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#the-431-course-online"><i class="fa fa-check"></i>The 431 Course online</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-youll-find-here"><i class="fa fa-check"></i>What You’ll Find Here</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#setting-up-r"><i class="fa fa-check"></i>Setting Up R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#initial-setup-of-r-packages"><i class="fa fa-check"></i>Initial Setup of R Packages</a></li>
+<li><a href="index.html#the-love-boost.r-script">The <code>Love-boost.R</code> script</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#additional-r-packages-installed-for-this-book"><i class="fa fa-check"></i>Additional R Packages installed for this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html"><i class="fa fa-check"></i><b>1</b> Larger Contingency Tables</a><ul>
+<li class="chapter" data-level="1.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#a-2x3-table-comparing-response-to-active-vs.-placebo"><i class="fa fa-check"></i><b>1.1</b> A 2x3 Table: Comparing Response to Active vs. Placebo</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#getting-the-table-into-r"><i class="fa fa-check"></i><b>1.1.1</b> Getting the Table into R</a></li>
+<li class="chapter" data-level="1.1.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#manipulating-the-tables-presentation"><i class="fa fa-check"></i><b>1.1.2</b> Manipulating the Table’s presentation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#accuracy-of-death-certificates-a-6x3-table"><i class="fa fa-check"></i><b>1.2</b> Accuracy of Death Certificates (A 6x3 Table)</a></li>
+<li class="chapter" data-level="1.3" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-pearson-chi-square-test-of-independence"><i class="fa fa-check"></i><b>1.3</b> The Pearson Chi-Square Test of Independence</a></li>
+<li class="chapter" data-level="1.4" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#three-way-tables-a-2x2xk-table-and-a-mantel-haenszel-analysis"><i class="fa fa-check"></i><b>1.4</b> Three-Way Tables: A 2x2xK Table and a Mantel-Haenszel Analysis</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#smoking-and-mortality-in-the-uk"><i class="fa fa-check"></i><b>1.4.1</b> Smoking and Mortality in the UK</a></li>
+<li class="chapter" data-level="1.4.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-whickham-data-with-age-too"><i class="fa fa-check"></i><b>1.4.2</b> The <code>whickham</code> data with age, too</a></li>
+<li class="chapter" data-level="1.4.3" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#checking-assumptions-the-woolf-test"><i class="fa fa-check"></i><b>1.4.3</b> Checking Assumptions: The Woolf test</a></li>
+<li class="chapter" data-level="1.4.4" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-cochran-mantel-haenszel-test"><i class="fa fa-check"></i><b>1.4.4</b> The Cochran-Mantel-Haenszel Test</a></li>
+<li class="chapter" data-level="1.4.5" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#without-the-continuity-correction"><i class="fa fa-check"></i><b>1.4.5</b> Without the Continuity Correction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="power-and-proportions.html"><a href="power-and-proportions.html"><i class="fa fa-check"></i><b>2</b> Power and Proportions</a><ul>
+<li class="chapter" data-level="2.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#tuberculosis-prevalence-among-iv-drug-users"><i class="fa fa-check"></i><b>2.1</b> Tuberculosis Prevalence Among IV Drug Users</a></li>
+<li class="chapter" data-level="2.2" data-path="power-and-proportions.html"><a href="power-and-proportions.html#designing-a-new-tb-study"><i class="fa fa-check"></i><b>2.2</b> Designing a New TB Study</a></li>
+<li class="chapter" data-level="2.3" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-power.prop.test-for-balanced-designs"><i class="fa fa-check"></i><b>2.3</b> Using <code>power.prop.test</code> for Balanced Designs</a></li>
+<li class="chapter" data-level="2.4" data-path="power-and-proportions.html"><a href="power-and-proportions.html#how-power.prop.test-works"><i class="fa fa-check"></i><b>2.4</b> How <code>power.prop.test</code> works</a></li>
+<li class="chapter" data-level="2.5" data-path="power-and-proportions.html"><a href="power-and-proportions.html#another-scenario"><i class="fa fa-check"></i><b>2.5</b> Another Scenario</a></li>
+<li class="chapter" data-level="2.6" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-the-pwr-library-for-unbalanced-designs"><i class="fa fa-check"></i><b>2.6</b> Using the <code>pwr</code> library for Unbalanced Designs</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#calculating-the-effect-size-h"><i class="fa fa-check"></i><b>2.6.1</b> Calculating the Effect Size <code>h</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-pwr.2p2n.test-in-r"><i class="fa fa-check"></i><b>2.7</b> Using <code>pwr.2p2n.test</code> in R</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#comparison-to-balanced-design"><i class="fa fa-check"></i><b>2.7.1</b> Comparison to Balanced Design</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="quiz-2-review.html"><a href="quiz-2-review.html"><i class="fa fa-check"></i><b>3</b> Quiz 2 Review</a><ul>
+<li class="chapter" data-level="3.1" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-1-7"><i class="fa fa-check"></i><b>3.1</b> Review Items 1-7</a></li>
+<li class="chapter" data-level="3.2" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-8-9"><i class="fa fa-check"></i><b>3.2</b> Review Items 8-9</a></li>
+<li class="chapter" data-level="3.3" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-10-13"><i class="fa fa-check"></i><b>3.3</b> Review Items 10-13</a></li>
+<li class="chapter" data-level="3.4" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-14-15"><i class="fa fa-check"></i><b>3.4</b> Review Items 14-15</a></li>
+<li class="chapter" data-level="3.5" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-sketch-for-review-items"><i class="fa fa-check"></i><b>3.5</b> Answer Sketch for Review Items</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-1"><i class="fa fa-check"></i><b>3.5.1</b> Answer 1</a></li>
+<li class="chapter" data-level="3.5.2" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-2"><i class="fa fa-check"></i><b>3.5.2</b> Answer 2</a></li>
+<li class="chapter" data-level="3.5.3" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-3"><i class="fa fa-check"></i><b>3.5.3</b> Answer 3</a></li>
+<li class="chapter" data-level="3.5.4" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-4"><i class="fa fa-check"></i><b>3.5.4</b> Answer 4</a></li>
+<li class="chapter" data-level="3.5.5" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-5"><i class="fa fa-check"></i><b>3.5.5</b> Answer 5</a></li>
+<li class="chapter" data-level="3.5.6" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-6"><i class="fa fa-check"></i><b>3.5.6</b> Answer 6</a></li>
+<li class="chapter" data-level="3.5.7" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-7"><i class="fa fa-check"></i><b>3.5.7</b> Answer 7</a></li>
+<li class="chapter" data-level="3.5.8" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-8"><i class="fa fa-check"></i><b>3.5.8</b> Answer 8</a></li>
+<li class="chapter" data-level="3.5.9" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-9"><i class="fa fa-check"></i><b>3.5.9</b> Answer 9</a></li>
+<li class="chapter" data-level="3.5.10" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-10"><i class="fa fa-check"></i><b>3.5.10</b> Answer 10</a></li>
+<li class="chapter" data-level="3.5.11" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-11"><i class="fa fa-check"></i><b>3.5.11</b> Answer 11</a></li>
+<li class="chapter" data-level="3.5.12" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-12"><i class="fa fa-check"></i><b>3.5.12</b> Answer 12</a></li>
+<li class="chapter" data-level="3.5.13" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-13"><i class="fa fa-check"></i><b>3.5.13</b> Answer 13</a></li>
+<li class="chapter" data-level="3.5.14" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-14"><i class="fa fa-check"></i><b>3.5.14</b> Answer 14</a></li>
+<li class="chapter" data-level="3.5.15" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-15"><i class="fa fa-check"></i><b>3.5.15</b> Answer 15</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Part C. Building Models</b></span></li>
+<li class="chapter" data-level="4" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html"><i class="fa fa-check"></i><b>4</b> Introduction for Part C</a><ul>
+<li class="chapter" data-level="4.1" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#additional-reading"><i class="fa fa-check"></i><b>4.1</b> Additional Reading</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#scatterplots"><i class="fa fa-check"></i><b>4.2</b> Scatterplots</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#correlation-coefficients"><i class="fa fa-check"></i><b>4.3</b> Correlation Coefficients</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>4.4</b> Fitting a Linear Model</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#building-predictions-from-a-linear-model"><i class="fa fa-check"></i><b>4.5</b> Building Predictions from a Linear Model</a></li>
+<li class="chapter" data-level="4.6" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#data-sets-for-part-c"><i class="fa fa-check"></i><b>4.6</b> Data Sets for Part C</a></li>
+<li class="chapter" data-level="4.7" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#add-some-packages"><i class="fa fa-check"></i><b>4.7</b> Add Some Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html"><i class="fa fa-check"></i><b>5</b> Multiple Regression with the <code>hydrate</code> data</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#a-multiple-regression-for-recov.score"><i class="fa fa-check"></i><b>5.1</b> A Multiple Regression for <code>recov.score</code></a><ul>
+<li class="chapter" data-level="5.1.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-specification"><i class="fa fa-check"></i><b>5.1.1</b> Model Specification</a></li>
+<li class="chapter" data-level="5.1.2" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-residuals"><i class="fa fa-check"></i><b>5.1.2</b> Model Residuals</a></li>
+<li class="chapter" data-level="5.1.3" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-coefficients"><i class="fa fa-check"></i><b>5.1.3</b> Model Coefficients</a></li>
+<li class="chapter" data-level="5.1.4" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#interpreting-the-t-tests-last-predictor-in"><i class="fa fa-check"></i><b>5.1.4</b> Interpreting the t tests (last predictor in)</a></li>
+<li class="chapter" data-level="5.1.5" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#the-effect-of-collinearity"><i class="fa fa-check"></i><b>5.1.5</b> The Effect of Collinearity</a></li>
+<li class="chapter" data-level="5.1.6" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#confidence-intervals-for-the-slopes-in-a-multiple-regression-model"><i class="fa fa-check"></i><b>5.1.6</b> Confidence Intervals for the Slopes in a Multiple Regression Model</a></li>
+<li class="chapter" data-level="5.1.7" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-summaries"><i class="fa fa-check"></i><b>5.1.7</b> Model Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#anova-for-sequential-comparison-of-models"><i class="fa fa-check"></i><b>5.2</b> ANOVA for Sequential Comparison of Models</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#building-the-anova-table-for-the-model"><i class="fa fa-check"></i><b>5.2.1</b> Building The ANOVA Table for The Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#standardizing-the-coefficients-of-a-model"><i class="fa fa-check"></i><b>5.3</b> Standardizing the Coefficients of a Model</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#a-semi-standardized-model-for-the-hydrate-data"><i class="fa fa-check"></i><b>5.3.1</b> A Semi-Standardized Model for the <code>hydrate</code> data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#comparing-fits-of-several-possible-models-for-recovery-score"><i class="fa fa-check"></i><b>5.4</b> Comparing Fits of Several Possible Models for Recovery Score</a></li>
+<li class="chapter" data-level="5.5" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#comparing-model-fit-the-aic-or-akaike-information-criterion"><i class="fa fa-check"></i><b>5.5</b> Comparing Model Fit: The AIC, or Akaike Information Criterion</a></li>
+<li class="chapter" data-level="5.6" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#comparing-model-fit-with-the-bic-or-bayesian-information-criterion"><i class="fa fa-check"></i><b>5.6</b> Comparing Model Fit with the BIC, or Bayesian Information Criterion</a></li>
+<li class="chapter" data-level="5.7" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#making-predictions-for-new-data-prediction-vs.-confidence-intervals"><i class="fa fa-check"></i><b>5.7</b> Making Predictions for New Data: Prediction vs. Confidence Intervals</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#making-a-prediction-using-the-hydrate-data"><i class="fa fa-check"></i><b>5.7.1</b> Making a Prediction using the <code>hydrate</code> data</a></li>
+<li class="chapter" data-level="5.7.2" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#a-new-prediction"><i class="fa fa-check"></i><b>5.7.2</b> A New Prediction?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#interpreting-the-regression-model-two-key-questions"><i class="fa fa-check"></i><b>5.8</b> Interpreting the Regression Model: Two Key Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html"><i class="fa fa-check"></i><b>6</b> Regression Diagnostics</a><ul>
+<li class="chapter" data-level="6.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-four-key-regression-assumptions"><i class="fa fa-check"></i><b>6.1</b> The Four Key Regression Assumptions</a></li>
+<li class="chapter" data-level="6.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-linearity-assumption"><i class="fa fa-check"></i><b>6.2</b> The Linearity Assumption</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#initial-scatterplots-for-the-straight-enough-condition"><i class="fa fa-check"></i><b>6.2.1</b> Initial Scatterplots for the “Straight Enough” Condition</a></li>
+<li class="chapter" data-level="6.2.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#residuals-vs.-predicted-values-to-check-for-non-linearity"><i class="fa fa-check"></i><b>6.2.2</b> Residuals vs. Predicted Values to Check for Non-Linearity</a></li>
+<li class="chapter" data-level="6.2.3" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#residuals-vs.-predictors-to-further-check-for-non-linearity"><i class="fa fa-check"></i><b>6.2.3</b> Residuals vs. Predictors To Further Check for Non-Linearity</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-independence-assumption"><i class="fa fa-check"></i><b>6.3</b> The Independence Assumption</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#residuals-vs.-fitted-values-to-check-for-dependence"><i class="fa fa-check"></i><b>6.3.1</b> Residuals vs. Fitted Values to Check for Dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-constant-variance-assumption"><i class="fa fa-check"></i><b>6.4</b> The Constant Variance Assumption</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-scale-location-plot-to-check-for-non-constant-variance"><i class="fa fa-check"></i><b>6.4.1</b> The Scale-Location Plot to Check for Non-Constant Variance</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-the-equal-variances-assumption"><i class="fa fa-check"></i><b>6.4.2</b> Assessing the Equal Variances Assumption</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-normality-assumption"><i class="fa fa-check"></i><b>6.5</b> The Normality Assumption</a></li>
+<li class="chapter" data-level="6.6" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#outlier-diagnostics-points-with-unusual-residuals"><i class="fa fa-check"></i><b>6.6</b> Outlier Diagnostics: Points with Unusual Residuals</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#standardized-residuals"><i class="fa fa-check"></i><b>6.6.1</b> Standardized Residuals</a></li>
+<li class="chapter" data-level="6.6.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#checking-the-normality-assumption-with-a-plot"><i class="fa fa-check"></i><b>6.6.2</b> Checking the Normality Assumption with a Plot</a></li>
+<li class="chapter" data-level="6.6.3" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-the-size-of-the-standardized-residuals"><i class="fa fa-check"></i><b>6.6.3</b> Assessing the Size of the Standardized Residuals</a></li>
+<li class="chapter" data-level="6.6.4" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-standardized-residuals-with-an-outlier-test"><i class="fa fa-check"></i><b>6.6.4</b> Assessing Standardized Residuals with an Outlier Test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#outlier-diagnostics-identifying-points-with-unusually-high-leverage"><i class="fa fa-check"></i><b>6.7</b> Outlier Diagnostics: Identifying Points with Unusually High Leverage</a></li>
+<li class="chapter" data-level="6.8" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#outlier-diagnostics-identifying-points-with-high-influence-on-the-model"><i class="fa fa-check"></i><b>6.8</b> Outlier Diagnostics: Identifying Points with High Influence on the Model</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-the-value-of-cooks-distance"><i class="fa fa-check"></i><b>6.8.1</b> Assessing the Value of Cook’s Distance</a></li>
+<li class="chapter" data-level="6.8.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#index-plot-of-cooks-distance"><i class="fa fa-check"></i><b>6.8.2</b> Index Plot of Cook’s Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#running-a-regression-model-while-excluding-a-point"><i class="fa fa-check"></i><b>6.9</b> Running a Regression Model While Excluding A Point</a></li>
+<li class="chapter" data-level="6.10" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#summarizing-regression-diagnostics-for-431"><i class="fa fa-check"></i><b>6.10</b> Summarizing Regression Diagnostics for 431</a></li>
+<li class="chapter" data-level="6.11" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#back-to-hydrate-residual-diagnostics-for-dose-weight-model"><i class="fa fa-check"></i><b>6.11</b> Back to <code>hydrate</code>: Residual Diagnostics for Dose + Weight Model</a></li>
+<li class="chapter" data-level="6.12" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#violated-assumptions-problematic-residual-plots"><i class="fa fa-check"></i><b>6.12</b> Violated Assumptions: Problematic Residual Plots?</a></li>
+<li class="chapter" data-level="6.13" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#problems-with-linearity"><i class="fa fa-check"></i><b>6.13</b> Problems with Linearity</a></li>
+<li class="chapter" data-level="6.14" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#problems-with-non-normality-an-influential-point"><i class="fa fa-check"></i><b>6.14</b> Problems with Non-Normality: An Influential Point</a></li>
+<li class="chapter" data-level="6.15" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#problems-with-non-normality-skew"><i class="fa fa-check"></i><b>6.15</b> Problems with Non-Normality: Skew</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regression-diagnostics" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Regression Diagnostics</h1>
+<p>Some of this discussion comes from <span class="citation">Bock, Velleman, and De Veaux (<a href="#ref-BockVD" role="doc-biblioref">2004</a>)</span>.</p>
+<p>Multiple linear regression (also called ordinary least squares, or OLS) has four main assumptions that are derived from its model.</p>
+<p>For a simple regression, the model underlying the regression line is <span class="math inline">\(E(Y) = \beta_0 + \beta_1 x\)</span></p>
+<ul>
+<li>where E(Y) = the expectation (mean) of the outcome Y,</li>
+<li><span class="math inline">\(\beta_0\)</span> is the intercept, and</li>
+<li><span class="math inline">\(\beta_1\)</span> is the slope</li>
+</ul>
+<p>Now, if we have a multiple regression with three predictors <span class="math inline">\(x_1, x_2\)</span> and <span class="math inline">\(x_3\)</span>, as we do in the <code>hydrate</code> case (<code>dose</code>, <code>age</code> and <code>height</code>), then the model becomes <span class="math inline">\(E(Y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3\)</span>.</p>
+<ul>
+<li>As the simple regression model did, the multiple regression model predicts the mean of our outcome, for a subject (or group of subjects) with specific values of the predictors.</li>
+<li>In the <code>hydrate</code> example, our model is E(‘recov.score’) = <span class="math inline">\(\beta_0 + \beta_{dose}\)</span> <code>dose</code> + <span class="math inline">\(\beta_{age}\)</span> <code>age</code> + <span class="math inline">\(\beta_{weight}\)</span> <code>weight</code>
+<ul>
+<li>In a larger version of this study, we can imagine finding many kids with the same <code>age</code> and <code>weight</code> receiving the same <code>dose</code>, but they won’t all have exactly the same <code>recov.score</code>.</li>
+<li>Instead, we’d have many different recovery score values.</li>
+<li>It is the mean of that distribution of recovery scores that the regression model predicts.</li>
+</ul></li>
+</ul>
+<p>Alternatively, we can write the model to relate individual y’s to the x’s by adding an individual error term: <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \epsilon\)</span></p>
+<p>Of course, the multiple regression model is not limited to three predictors. We will often use <em>k</em> to represent the number of coefficients (slopes plus intercept) in the model, and will also use <em>p</em> to represent the number of predictors (usually <em>p</em> = <em>k</em> - 1).</p>
+<div id="the-four-key-regression-assumptions" class="section level2">
+<h2><span class="header-section-number">6.1</span> The Four Key Regression Assumptions</h2>
+<p>The assumptions and conditions for a multiple regression model are nearly the same as those for simple regression. The key assumptions that must be checked in a multiple regression model are:</p>
+<ul>
+<li>Linearity Assumption</li>
+<li>Independence Assumption</li>
+<li>Equal Variance (Constant Variance / Homoscedasticity) Assumption</li>
+<li>Normality Assumption</li>
+</ul>
+<p>Happily, R is well suited to provide us with multiple diagnostic tools to generate plots and other summaries that will let us look more closely at each of these assumptions.</p>
+</div>
+<div id="the-linearity-assumption" class="section level2">
+<h2><span class="header-section-number">6.2</span> The Linearity Assumption</h2>
+<p>We are fitting a linear model.</p>
+<ul>
+<li>By <em>linear</em>, we mean that each predictor value, x, appears simply multiplied by its coefficient and added to the model.</li>
+<li>No x appears in an exponent or some other more complicated function.</li>
+<li>If the regression model is true, then the outcome <em>y</em> is linearly related to each of the <em>x</em>’s.</li>
+</ul>
+<p>Unfortunately, assuming the model is true is not sufficient to prove that the linear model fits, so we check what <span class="citation">Bock, Velleman, and De Veaux (<a href="#ref-BockVD" role="doc-biblioref">2004</a>)</span> call the “Straight Enough Condition”</p>
+<div id="initial-scatterplots-for-the-straight-enough-condition" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Initial Scatterplots for the “Straight Enough” Condition</h3>
+<ul>
+<li>Scatterplots of y against each of the predictors are reasonably straight.</li>
+<li>The scatterplots need not show a strong (or any!) slope; we just check that there isn’t a bend or other nonlinearity.</li>
+<li>Any substantial curve is indicative of a potential problem.</li>
+<li>Modest bends are not usually worthy of serious attention.</li>
+</ul>
+<p>For example, in the <code>hydrate</code> data, here are the relevant scatterplots (in practice, I would simply look at the scatterplot matrix produced earlier.)</p>
+<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="431-notes_files/figure-html/p26-1.png" width="672" /></p>
+<p>Here, I’ve simply placed <code>recov.score</code> on the vertical (Y) axis, plotted against each of the predictors, in turn. I’ve added a straight line (OLS) fit [in tomato red] and a loess smooth [in blue] to each plot to guide your assessment of the “straight enough” condition.</p>
+<ul>
+<li>Each of these is “straight enough” for our purposes, in initially fitting the data.</li>
+<li>If one of these was not, we might consider a transformation of the relevant predictor, or, if all were problematic, we might transform the outcome Y.</li>
+</ul>
+</div>
+<div id="residuals-vs.-predicted-values-to-check-for-non-linearity" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Residuals vs. Predicted Values to Check for Non-Linearity</h3>
+<p>The residuals should appear to have no pattern (no curve, for instance) with respect to the predicted (fitted) values. It is a very good idea to plot the residuals against the fitted values to check for patterns, especially bends or other indications of non-linearity. For a multiple regression, the fitted values are a combination of the x’s given by the regression equation, so they combine the effects of the x’s in a way that makes sense for our particular regression model. That makes them a good choice to plot against. We’ll check for other things in this plot, as well.</p>
+<p>When you ask R to plot the result of a linear model, it will produce up to five separate plots: the first of which is a plot of <strong>residuals vs. fitted values</strong>. To obtain this plot for the model including <code>dose</code>, <code>age</code> and <code>weight</code> that predicts <code>recov.score</code>, we indicate plot 1 using the <code>which</code> command within the <code>plot</code> function:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="regression-diagnostics.html#cb129-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p27-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>The loess smooth is again added to help you identify serious non-linearity. In this case, I would conclude that there were no serious problems with linearity in these data.</p>
+<p>The plot also, by default, identifies the three values with the largest (in absolute value) residuals.</p>
+<ul>
+<li>Here, these are rows 12, 15 and 17, where 12 and 17 have positive residuals (i.e. they represent under-predictions by the model) and 15 has a negative residual (i.e. it represents a situation where the prediction was larger than the observed recovery score.)</li>
+</ul>
+</div>
+<div id="residuals-vs.-predictors-to-further-check-for-non-linearity" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Residuals vs. Predictors To Further Check for Non-Linearity</h3>
+<p>If we do see evidence of non-linearity in the plot of residuals against fitted values, I usually then proceed to look at residual plots against each of the individual predictors, in turn, to try to identify the specific predictor (or predictors) where we may need to use a transformation.</p>
+<p>The appeal of such plots (as compared to the initial scatterplots we looked at of the outcome against each predictor) is that they eliminate the distraction of the linear fit, and let us look more closely at the non-linear part of the relationship between the outcome and the predictor.</p>
+<p>Although I don’t think you need them here, here are these plots for the residuals from this model.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="regression-diagnostics.html#cb130-1"></a>hydrate<span class="op">$</span>recov.res &lt;-<span class="st"> </span><span class="kw">residuals</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate))</span>
+<span id="cb130-2"><a href="regression-diagnostics.html#cb130-2"></a></span>
+<span id="cb130-3"><a href="regression-diagnostics.html#cb130-3"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(hydrate, <span class="kw">aes</span>(<span class="dt">x =</span> dose, <span class="dt">y =</span> recov.res)) <span class="op">+</span></span>
+<span id="cb130-4"><a href="regression-diagnostics.html#cb130-4"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb130-5"><a href="regression-diagnostics.html#cb130-5"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;tomato&quot;</span>)</span>
+<span id="cb130-6"><a href="regression-diagnostics.html#cb130-6"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(hydrate, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> recov.res)) <span class="op">+</span></span>
+<span id="cb130-7"><a href="regression-diagnostics.html#cb130-7"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb130-8"><a href="regression-diagnostics.html#cb130-8"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;tomato&quot;</span>)</span>
+<span id="cb130-9"><a href="regression-diagnostics.html#cb130-9"></a>p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(hydrate, <span class="kw">aes</span>(<span class="dt">x =</span> weight, <span class="dt">y =</span> recov.res)) <span class="op">+</span></span>
+<span id="cb130-10"><a href="regression-diagnostics.html#cb130-10"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb130-11"><a href="regression-diagnostics.html#cb130-11"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;tomato&quot;</span>)</span>
+<span id="cb130-12"><a href="regression-diagnostics.html#cb130-12"></a>gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, <span class="dt">nrow=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="431-notes_files/figure-html/p28a-1.png" width="672" /></p>
+<p>Again, I see no particularly problematic issues in the scatterplot here. The curve in the <code>age</code> plot is a bit worrisome, but it still seems pretty modest, with the few values of 3 and 11 for <code>age</code> driving most of the “curved” pattern we see: there’s no major issue. If we’re willing to assume that the multiple regression model is correct in terms of its specification of a linear model, we can move on to assessing other assumptions and conditions.</p>
+</div>
+</div>
+<div id="the-independence-assumption" class="section level2">
+<h2><span class="header-section-number">6.3</span> The Independence Assumption</h2>
+<p>The errors in the true underlying regression model must be mutually independent, but there is no way to be sure that the independence assumption is true. Fortunately, although there can be many predictor variables, there is only one outcome variable and only one set of errors. The independence assumption concerns the errors, so we check the residuals.</p>
+<p><strong>Randomization condition.</strong> The data should arise from a random sample, or from a randomized experiment.</p>
+<ul>
+<li>The residuals should appear to be randomly scattered and show no patterns, trends or clumps when plotted against the predicted values.</li>
+<li>In the special case when an x-variable is related to time, make sure that the residuals do not have a pattern when plotted against time.</li>
+</ul>
+<div id="residuals-vs.-fitted-values-to-check-for-dependence" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Residuals vs. Fitted Values to Check for Dependence</h3>
+<p>The <code>hydrate</code> children were not related in any way and were randomly assigned to dosages, so we can be pretty sure that their measurements are independent. The residuals vs. fitted values plot shows no clear trend, cycle or pattern which concerns us.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="regression-diagnostics.html#cb132-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p29-1.png" width="432" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="the-constant-variance-assumption" class="section level2">
+<h2><span class="header-section-number">6.4</span> The Constant Variance Assumption</h2>
+<p>The variability of our outcome, y, should be about the same for all values of every predictor x. Of course, we can’t check every combination of x values, so we look at scatterplots and check to see if the plot shows a “fan” shape - in essence, the <strong>Does the plot thicken? Condition.</strong></p>
+<ul>
+<li>Scatterplots of residuals against each x or against the predicted values, offer a visual check.</li>
+<li>Be alert for a “fan” or a “funnel” shape showing growing/shrinking variability in one part of the plot.</li>
+</ul>
+<p>Reviewing the same plots we have previously seen, I can find no evidence of substantial “plot thickening” in either the plot of residuals vs. fitted values or in any of the plots of the residuals against each predictor separately.</p>
+<div id="the-scale-location-plot-to-check-for-non-constant-variance" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> The Scale-Location Plot to Check for Non-Constant Variance</h3>
+<p>R does provide an additional plot to help assess this issue as linear model diagnostic plot 3. This one looks at the square root of the standardized residual plotted against the fitted values. You want the loess smooth in this plot to be flat, rather than sloped.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="regression-diagnostics.html#cb133-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p30-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="assessing-the-equal-variances-assumption" class="section level3">
+<h3><span class="header-section-number">6.4.2</span> Assessing the Equal Variances Assumption</h3>
+<p>It’s helpful to see how this works in practice. Here are three sets of plots for two settings, where the left plots in each pair show simulated data that are homoscedastic (variance is constant across the levels of the predictor) and the right plots show data that are heteroscedastic (variance is not constant across predictor levels.)</p>
+<p><img src="431-notes_files/figure-html/p31_fig-1.png" width="672" /></p>
+<p>Note the funnel shape for the upper two heteroscedastic plots, and the upward sloping loess line in the last one. <em>Source</em>: <a href="http://goo.gl/weMI0U" class="uri">http://goo.gl/weMI0U</a> [from stats.stackexchange.com]</p>
+</div>
+</div>
+<div id="the-normality-assumption" class="section level2">
+<h2><span class="header-section-number">6.5</span> The Normality Assumption</h2>
+<p>If the plot is straight enough, the data are independent, and the plots don’t thicken, you can now move on to the final assumption, that of Normality.</p>
+<p>We assume that the errors around the idealized regression model at any specified values of the x-variables follow a Normal model. We need this assumption so that we can use a Student’s t-model for inference. As with other times when we’ve used Student’s t, we’ll settle for the residuals satisfying the <strong>Nearly Normal condition</strong>. To assess this, we simply look at a histogram or Normal probability plot of the residuals. Note that the Normality Assumption also becomes less important as the sample size grows.</p>
+</div>
+<div id="outlier-diagnostics-points-with-unusual-residuals" class="section level2">
+<h2><span class="header-section-number">6.6</span> Outlier Diagnostics: Points with Unusual Residuals</h2>
+<p>A multiple regression model will always have a point which displays the most unusual residual (that is, the residual furthest from zero in either a positive or negative direction.) As part of our assessment of the normality assumption, we will often try to decide whether the residuals follow a Normal distribution by creating a Q-Q plot of standardized residuals.</p>
+<div id="standardized-residuals" class="section level3">
+<h3><span class="header-section-number">6.6.1</span> Standardized Residuals</h3>
+<p>Standardized residuals are scaled to have mean zero and a constant standard deviation of 1, as a result of dividing the original (raw) residuals by an estimate of the standard deviation that uses all of the data in the data set.</p>
+<p>The <code>rstandard</code> function, when applied to a linear regression model, will generate the standardized residuals, should we want to build a histogram or other plot of the standardized residuals.</p>
+<p>If multiple regression assumptions hold, then the standardized residuals (in addition to following a Normal distribution in general) will also have mean zero and standard deviation 1, with approximately 95% of values between -2 and +2, and approximately 99.74% of values between -3 and +3.</p>
+<p>A natural check, therefore, will be to identify the most extreme/unusual standardized residual in our data set, and see whether its value is within the general bounds implied by the Empirical Rule associated with the Normal distribution. If, for instance, we see a standardized residual below -3 or above +3, this is likely to be a very poorly fit point (we would expect to see a point like this about 2.6 times for every 1,000 observations.)</p>
+<p>A very poorly fitting point, especially if it also has high influence on the model (a concept we’ll discuss shortly), may be sufficiently different from the rest of the points in the data set to merit its removal before modeling. If we did remove such a point, we’d have to have a good reason for this exclusion, and include that explanation in our report.</p>
+<p>R’s general plot set for a linear model includes (as plot 2) a Normal Q-Q plot of the standardized residuals from the model.</p>
+</div>
+<div id="checking-the-normality-assumption-with-a-plot" class="section level3">
+<h3><span class="header-section-number">6.6.2</span> Checking the Normality Assumption with a Plot</h3>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="regression-diagnostics.html#cb134-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p32-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>In the <code>hydrate</code> data, consider our full model with all three predictors. The Q-Q plot of standardized residuals shows the most extreme three cases are in rows 12, 14 and 15. We see from the vertical axis here that none of these points are as large as 3 in absolute value, and only row 12 appears to be above +2 in absolute value.</p>
+</div>
+<div id="assessing-the-size-of-the-standardized-residuals" class="section level3">
+<h3><span class="header-section-number">6.6.3</span> Assessing the Size of the Standardized Residuals</h3>
+<p>I’ll begin by once again placing the details of my linear model into a variable called <code>modela</code>. Next, I’ll extract, round (to two decimal places) and then sort (from lowest to highest) the standardized residuals from <code>modela</code>.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="regression-diagnostics.html#cb135-1"></a>modela &lt;-<span class="st"> </span><span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate)</span>
+<span id="cb135-2"><a href="regression-diagnostics.html#cb135-2"></a><span class="kw">sort</span>(<span class="kw">round</span>(<span class="kw">rstandard</span>(modela),<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>   14    15    30     2    19    20     9    10    21    33    11    25    18 
+-1.73 -1.71 -1.48 -1.25 -1.21 -0.82 -0.77 -0.77 -0.76 -0.66 -0.58 -0.58 -0.47 
+    7    28    23    13     6    32    16    22     3     5     1    26    36 
+-0.46 -0.44 -0.36 -0.31 -0.28 -0.20 -0.13 -0.07  0.18  0.20  0.61  0.63  0.72 
+   31    27    34    35     4    24     8    29    17    12 
+ 0.80  0.87  1.02  1.12  1.20  1.31  1.36  1.40  1.71  2.31 </code></pre>
+<p>We can see that the smallest residual is -1.73 (in row 14) and the largest is 2.31 (in row 12). Another option would be to look at these rows in terms of the absolute value of their standardized residuals…</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="regression-diagnostics.html#cb137-1"></a><span class="kw">sort</span>(<span class="kw">abs</span>(<span class="kw">round</span>(<span class="kw">rstandard</span>(modela),<span class="dv">2</span>)))</span></code></pre></div>
+<pre><code>  22   16    3    5   32    6   13   23   28    7   18   11   25    1   26   33 
+0.07 0.13 0.18 0.20 0.20 0.28 0.31 0.36 0.44 0.46 0.47 0.58 0.58 0.61 0.63 0.66 
+  36   21    9   10   31   20   27   34   35    4   19    2   24    8   29   30 
+0.72 0.76 0.77 0.77 0.80 0.82 0.87 1.02 1.12 1.20 1.21 1.25 1.31 1.36 1.40 1.48 
+  15   17   14   12 
+1.71 1.71 1.73 2.31 </code></pre>
+</div>
+<div id="assessing-standardized-residuals-with-an-outlier-test" class="section level3">
+<h3><span class="header-section-number">6.6.4</span> Assessing Standardized Residuals with an Outlier Test</h3>
+<p>Is a standardized residual of 2.31 particularly unusual in a sample of 36 observations from a Normal distribution, supposedly with mean 0 and standard deviation 1?</p>
+<p>No. The <code>car</code> library has a test called <code>outlierTest</code> which can be applied to a linear model to see if the most unusual studentized residual in absolute value is a surprise given the sample size (the studentized residual is very similar to the standardized residual - it simply uses a different estimate for the standard deviation for every point, in each case excluding the point it is currently studying)</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="regression-diagnostics.html#cb139-1"></a>car<span class="op">::</span><span class="kw">outlierTest</span>(</span>
+<span id="cb139-2"><a href="regression-diagnostics.html#cb139-2"></a>    <span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, </span>
+<span id="cb139-3"><a href="regression-diagnostics.html#cb139-3"></a>       <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>No Studentized residuals with Bonferroni p &lt; 0.05
+Largest |rstudent|:
+   rstudent unadjusted p-value Bonferroni p
+12 2.488182           0.018422      0.66318</code></pre>
+<p>Our conclusion is that there’s no serious problem with normality in this case, and no outliers with studentized (or for that matter, standardized) residuals outside the range we might reasonably expect given a Normal distribution of errors and 36 observations.</p>
+</div>
+</div>
+<div id="outlier-diagnostics-identifying-points-with-unusually-high-leverage" class="section level2">
+<h2><span class="header-section-number">6.7</span> Outlier Diagnostics: Identifying Points with Unusually High Leverage</h2>
+<p>An observation can be an outlier not just in terms of having an unusual residual, but also in terms of having an unusual combination of predictor values. Such an observation is described as having high leverage in a data set.</p>
+<ul>
+<li>R will calculate leverage for the points included in a regression model using the <code>hatvalues</code> function as applied to the model.</li>
+<li>The average leverage value is equal to k/n, where n is the number of observations included in the regression model, and k is the number of coefficients (slopes + intercept).</li>
+<li>Any point with a leverage value greater than 2.5 times the average leverage of a point in the data set is one that should be investigated closely.</li>
+</ul>
+<p>For instance, in the <code>hydrate</code> data, we have 36 observations, so the average leverage will be 4/36 = 0.111 and a high leverage point would have leverage <span class="math inline">\(\geq\)</span> 10/36 or .278. We can check this out directly, with a sorted list of leverage values…</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="regression-diagnostics.html#cb141-1"></a><span class="kw">sort</span>(<span class="kw">round</span>(<span class="kw">hatvalues</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data=</span>hydrate)),<span class="dv">3</span>))</span></code></pre></div>
+<pre><code>   11    15    20     2    35    22     3    30    12    33    21    32    17 
+0.035 0.037 0.040 0.047 0.048 0.056 0.063 0.063 0.067 0.068 0.073 0.077 0.078 
+    8    27    36    13    23     7     5    14    25    31    26    19    10 
+0.082 0.086 0.087 0.089 0.096 0.097 0.098 0.107 0.117 0.118 0.119 0.130 0.135 
+    1    16     6    28    18     9    29    34     4    24 
+0.136 0.137 0.141 0.150 0.154 0.171 0.200 0.207 0.284 0.307 </code></pre>
+<p>Two points - 4 and 24 - exceed our cutoff based on having more than 2.5 times the average leverage.</p>
+<p>Or we can look at a plot of residuals vs. leverage, which is diagnostic plot 5 for a linear model.</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="regression-diagnostics.html#cb143-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p35b-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We see that the most highly leveraged points (those furthest to the right in this plot) are in rows 4 and 24. They are also the two points that meet our 2.5 times the average standard.</p>
+<p>To see why points 4 and 24 are the most highly leveraged points, we remember that this just means that these points are unusual in terms of their predictor values.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="regression-diagnostics.html#cb144-1"></a>hydrate <span class="op">%&gt;%</span></span>
+<span id="cb144-2"><a href="regression-diagnostics.html#cb144-2"></a><span class="st">    </span><span class="kw">filter</span>(id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">24</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb144-3"><a href="regression-diagnostics.html#cb144-3"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(id, dose, age, weight)</span></code></pre></div>
+<pre><code># A tibble: 2 x 4
+     id  dose   age weight
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1     4   1       9     76
+2    24   2.5    11     64</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="regression-diagnostics.html#cb146-1"></a><span class="co"># create indicator for high leverage points</span></span>
+<span id="cb146-2"><a href="regression-diagnostics.html#cb146-2"></a>hydrate<span class="op">$</span>hilev &lt;-<span class="st"> </span><span class="kw">ifelse</span>(hydrate<span class="op">$</span>id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">24</span>), <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</span>
+<span id="cb146-3"><a href="regression-diagnostics.html#cb146-3"></a></span>
+<span id="cb146-4"><a href="regression-diagnostics.html#cb146-4"></a><span class="kw">ggplot</span>(hydrate, <span class="kw">aes</span>(<span class="dt">x =</span> weight, <span class="dt">y =</span> age, <span class="dt">color =</span> hilev)) <span class="op">+</span></span>
+<span id="cb146-5"><a href="regression-diagnostics.html#cb146-5"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb146-6"><a href="regression-diagnostics.html#cb146-6"></a><span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>)) <span class="op">+</span></span>
+<span id="cb146-7"><a href="regression-diagnostics.html#cb146-7"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb146-8"><a href="regression-diagnostics.html#cb146-8"></a><span class="st">    </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">60</span>, <span class="dt">y =</span> <span class="dv">11</span>, <span class="dt">label =</span> <span class="st">&quot;Point 24&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb146-9"><a href="regression-diagnostics.html#cb146-9"></a><span class="st">    </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="dv">72</span>, <span class="dt">y =</span> <span class="dv">9</span>, <span class="dt">label =</span> <span class="st">&quot;Point 4&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p36b-1.png" width="672" /></p>
+</div>
+<div id="outlier-diagnostics-identifying-points-with-high-influence-on-the-model" class="section level2">
+<h2><span class="header-section-number">6.8</span> Outlier Diagnostics: Identifying Points with High Influence on the Model</h2>
+<p>A point in a regression model has high <strong>influence</strong> if the inclusion (or exclusion) of that point will have substantial impact on the model, in terms of the estimated coefficients, and the summaries of fit. The measure I routinely use to describe the level of influence a point has on the model is called <strong>Cook’s distance</strong>.</p>
+<p>As a general rule, a Cook’s distance greater than 1 indicates a point likely to have substantial influence on the model, while a point in the 0.5 to 1.0 range is only occasionally worthy of investigation. Observations with Cook’s distance below 0.5 are unlikely to influence the model in any substantial way.</p>
+<div id="assessing-the-value-of-cooks-distance" class="section level3">
+<h3><span class="header-section-number">6.8.1</span> Assessing the Value of Cook’s Distance</h3>
+<p>You can obtain information on Cook’s distance in several ways in R.</p>
+<ul>
+<li>My favorite is model diagnostic plot 5 (the residuals vs. leverage plot) which uses contours to indicate the value of Cook’s distance.
+<ul>
+<li>This is possible because influence, as measured by Cook’s distance, is a function of both the observation’s standardized residual and its leverage.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="regression-diagnostics.html#cb147-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/cooks1-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="index-plot-of-cooks-distance" class="section level3">
+<h3><span class="header-section-number">6.8.2</span> Index Plot of Cook’s Distance</h3>
+<p>Model Diagnostic Plot 4 for a linear model is an index plot of Cook’s distance.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="regression-diagnostics.html#cb148-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">4</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/cooks2-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>It is clear from this plot that the largest Cook’s distance (somewhere between 0.15 and 0.2) is for the observation in row 24 of the data set.</p>
+<p>To see all of the Cook’s distances, we can simply ask for them using the <code>cooks.distance</code> function.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="regression-diagnostics.html#cb149-1"></a><span class="kw">sort</span>(<span class="kw">round</span>(<span class="kw">cooks.distance</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data=</span>hydrate)),<span class="dv">3</span>))</span></code></pre></div>
+<pre><code>   22     3     5    16    32    13     6    11    23     7    20    28    33 
+0.000 0.001 0.001 0.001 0.001 0.002 0.003 0.003 0.003 0.006 0.007 0.008 0.008 
+   18    21    25    36    26     1    35    27     2    31    10    15     9 
+0.010 0.011 0.011 0.012 0.013 0.015 0.016 0.018 0.019 0.022 0.023 0.028 0.031 
+   30     8    19    17    34    14    12    29     4    24 
+0.037 0.041 0.055 0.062 0.069 0.089 0.095 0.122 0.144 0.189 </code></pre>
+</div>
+</div>
+<div id="running-a-regression-model-while-excluding-a-point" class="section level2">
+<h2><span class="header-section-number">6.9</span> Running a Regression Model While Excluding A Point</h2>
+<p>Suppose that we wanted to remove row 24, the point with the most influence over the model. We could fit a model to the data without row 24 to see the impact…</p>
+<p>Note that I have to specify the new data set as <code>hydrate[-24,]</code>: <strong>the comma is often forgotten and crucial</strong>.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="regression-diagnostics.html#cb151-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data=</span>hydrate[<span class="op">-</span><span class="dv">24</span>,]))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = recov.score ~ dose + age + weight, data = hydrate[-24, 
+    ])
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.070  -5.609  -2.329   6.939  23.618 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  87.7981     6.1533  14.268 3.61e-15 ***
+dose          5.8235     1.7896   3.254  0.00275 ** 
+age          -1.4131     2.5958  -0.544  0.59008    
+weight       -0.3496     0.3517  -0.994  0.32791    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 9.81 on 31 degrees of freedom
+Multiple R-squared:  0.4808,	Adjusted R-squared:  0.4305 
+F-statistic: 9.568 on 3 and 31 DF,  p-value: 0.0001261</code></pre>
+<p>Compare these results to those obtained with the full data set, shown below.</p>
+<ul>
+<li>How is the model affected by removing point 24?</li>
+<li>What is the impact on the slopes?</li>
+<li>On the summary measures? Residuals?</li>
+</ul>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="regression-diagnostics.html#cb153-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data=</span>hydrate))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = recov.score ~ dose + age + weight, data = hydrate)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.682  -6.492  -2.204   7.667  22.128 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  85.4764     5.9653  14.329 1.79e-15 ***
+dose          6.1697     1.7908   3.445  0.00161 ** 
+age           0.2770     2.2847   0.121  0.90428    
+weight       -0.5428     0.3236  -1.677  0.10325    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 9.923 on 32 degrees of freedom
+Multiple R-squared:  0.4584,	Adjusted R-squared:  0.4077 
+F-statistic:  9.03 on 3 and 32 DF,  p-value: 0.0001769</code></pre>
+<p>While it is true that we can sometimes improve the performance of the model in some ways by removing this point, there’s no good reason to do so. We can’t just remove a point from the data set without a good reason (and, to be clear, “I ran my model and it doesn’t fit this point well” is NOT a good reason). Good reasons would include:</p>
+<ul>
+<li>This observation was included in the sample in error, for instance, because the subject was not eligible.</li>
+<li>An error was made in transcribing the value of this observation to the final data set.</li>
+<li>And, sometimes, even “This observation is part of a meaningful subgroup of patients that I had always intended to model separately…” assuming that’s true.</li>
+</ul>
+</div>
+<div id="summarizing-regression-diagnostics-for-431" class="section level2">
+<h2><span class="header-section-number">6.10</span> Summarizing Regression Diagnostics for 431</h2>
+<ol style="list-style-type: decimal">
+<li><p>Check the “straight enough” condition with scatterplots of the y variable (outcome) against each x-variable (predictor), usually via the top row of a scatterplot matrix.</p></li>
+<li><p>If the data are straight enough (that is, if it looks like the regression model is plausible), fit a regression model, to obtain residuals and influence measures.</p>
+<ul>
+<li>If not, consider using the Box-Cox approach to identify a possible transformation for the outcome variable, and then recheck the straight enough condition.</li>
+</ul></li>
+</ol>
+<p><strong>The <code>plot</code> function for a fitted linear model builds five diagnostic plots.</strong></p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>[<strong>Plot 1</strong>] A scatterplot of the residuals against the fitted values.</p>
+<ul>
+<li>This plot should look patternless. Check in particular for any bend (which would suggest that the data weren’t all that straight after all) and for any thickening, which would indicate non-constant variance.</li>
+<li>If the data are measured over time, check especially for evidence of patterns that might suggest they are not independent. For example, plot the residuals against time to look for patterns.</li>
+</ul></li>
+<li><p>[<strong>Plot 3</strong>] A scale-location plot of the square root of the standardized residuals against the fitted values to look for a non-flat loess smooth, which indicates non-constant variance. Standardized residuals are obtained via the <code>rstandard(model)</code> function.</p></li>
+<li><p>[<strong>Plot 2</strong>] If the plots above look OK, then consider a Normal Q-Q plot of the standardized residuals to check the nearly Normal condition.</p></li>
+<li><p>[<strong>Plot 5</strong>] The final plot we often look at is the plot of residuals vs. leverage, with influence contours. Sometimes, we’ll also look at [<strong>Plot 4</strong>] the index plot of the Cook’s distance for each observation in the data set.</p>
+<ul>
+<li>To look for points with substantial <strong>leverage</strong> on the model by virtue of having unusual values of the predictors - look for points whose leverage is at least 2.5 times as large as the average leverage value.
+- The average leverage is always k/n, where k is the number of coefficients fit by the model (including the slopes and intercept), and n is the number of observations in the model.
+- To obtain the leverage values, use the <code>hatvalues(model)</code> function.</li>
+<li>To look for points with substantial <strong>influence</strong> on the model, that is, removing them from the model would change it substantially, consider the Cook’s distance, plotted in contours in Plot 5, or in an index plot in Plot 4.
+- Any Cook’s d &gt; 1 will likely have a substantial impact on the model.
+- Even points with Cook’s d &gt; 0.5 may merit further investigation.
+- Find the Cook’s distances using the <code>cooks.distance(model)</code> function.</li>
+</ul></li>
+</ol>
+</div>
+<div id="back-to-hydrate-residual-diagnostics-for-dose-weight-model" class="section level2">
+<h2><span class="header-section-number">6.11</span> Back to <code>hydrate</code>: Residual Diagnostics for Dose + Weight Model</h2>
+<p>In class, we’ll walk through all five plots produced for the DW model (the model for hydrate recovery score using dose and weight alone).</p>
+<ol style="list-style-type: decimal">
+<li>What do these 5 plots tell us about the assumption of linearity?</li>
+<li>What do these 5 plots tell us about the assumption of independence?</li>
+<li>What do these 5 plots tell us about the assumption of constant variance?</li>
+<li>What do these 5 plots tell us about the assumption of Normality?</li>
+<li>What do these 5 plots tell us about leverage of individual observations?</li>
+<li>What do these 5 plots tell us about influence of individual observations?</li>
+</ol>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="regression-diagnostics.html#cb155-1"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/diagplotDW1-1.png" width="528" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="regression-diagnostics.html#cb156-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb156-2"><a href="regression-diagnostics.html#cb156-2"></a><span class="kw">plot</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate), <span class="dt">which=</span><span class="dv">2</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p41a-1.png" width="672" /></p>
+</div>
+<div id="violated-assumptions-problematic-residual-plots" class="section level2">
+<h2><span class="header-section-number">6.12</span> Violated Assumptions: Problematic Residual Plots?</h2>
+<p>So what do serious assumption violations look like, and what can we do about them?</p>
+</div>
+<div id="problems-with-linearity" class="section level2">
+<h2><span class="header-section-number">6.13</span> Problems with Linearity</h2>
+<p>Here is a simulated example that shows a clear problem with non-linearity.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="regression-diagnostics.html#cb157-1"></a><span class="kw">set.seed</span>(<span class="dv">4311</span>); x1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">15</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb157-2"><a href="regression-diagnostics.html#cb157-2"></a><span class="kw">set.seed</span>(<span class="dv">4312</span>); x2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb157-3"><a href="regression-diagnostics.html#cb157-3"></a><span class="kw">set.seed</span>(<span class="dv">4313</span>); e1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">15</span>)</span>
+<span id="cb157-4"><a href="regression-diagnostics.html#cb157-4"></a>y &lt;-<span class="st"> </span><span class="dv">15</span> <span class="op">+</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>e1</span>
+<span id="cb157-5"><a href="regression-diagnostics.html#cb157-5"></a>viol1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">outcome =</span> y, <span class="dt">pred1 =</span> x1, <span class="dt">pred2 =</span> x2) <span class="op">%&gt;%</span><span class="st"> </span>tbl_df</span></code></pre></div>
+<pre><code>Warning: `tbl_df()` is deprecated as of dplyr 1.0.0.
+Please use `tibble::as_tibble()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="regression-diagnostics.html#cb159-1"></a>model<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(outcome <span class="op">~</span><span class="st"> </span>pred1 <span class="op">+</span><span class="st"> </span>pred2, <span class="dt">data =</span> viol1)</span>
+<span id="cb159-2"><a href="regression-diagnostics.html#cb159-2"></a><span class="kw">plot</span>(model<span class="fl">.1</span>, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/violsim%201-1.png" width="672" /></p>
+<p>In light of this, I would be looking for a potential transformation of outcome. Does the Box-Cox plot make any useful suggestions?</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="regression-diagnostics.html#cb160-1"></a><span class="kw">boxCox</span>(model<span class="fl">.1</span>); <span class="kw">powerTransform</span>(model<span class="fl">.1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/boxCox_1_violsim1-1.png" width="672" /></p>
+<pre><code>Estimated transformation parameter 
+       Y1 
+0.4414775 </code></pre>
+<p>Note that if the outcome was negative, we would have to add some constant value to every outcome in order to get every outcome value to be positive, and Box-Cox to run. This suggests fitting a new model, using the square root of the outcome.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="regression-diagnostics.html#cb162-1"></a>model<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">sqrt</span>(outcome) <span class="op">~</span><span class="st"> </span>pred1 <span class="op">+</span><span class="st"> </span>pred2, <span class="dt">data =</span> viol1)</span>
+<span id="cb162-2"><a href="regression-diagnostics.html#cb162-2"></a><span class="kw">plot</span>(model<span class="fl">.2</span>, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/violsim_2-1.png" width="672" /></p>
+<p>This is meaningfully better in terms of curve, but now looks a bit fan-shaped, indicating a potential problem with heteroscedasticity. Let’s look at the scale-location plot for this model.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="regression-diagnostics.html#cb163-1"></a><span class="kw">plot</span>(model<span class="fl">.2</span>, <span class="dt">which =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/violsim_2b-1.png" width="672" /></p>
+<p>This definitely looks like there’s a trend down in this plot. So the square root transformation, by itself, probably hasn’t resolved assumptions sufficiently well. We’ll have to be very careful about our interpretation of the model.</p>
+</div>
+<div id="problems-with-non-normality-an-influential-point" class="section level2">
+<h2><span class="header-section-number">6.14</span> Problems with Non-Normality: An Influential Point</h2>
+<p>With 100 observations, a single value with a standardized residual above 3 is very surprising. In our initial model.1 here, we have a standardized residual value as large as 6, so we clearly have a problem with that outlier.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="regression-diagnostics.html#cb164-1"></a><span class="kw">plot</span>(model<span class="fl">.1</span>, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/violsim_2c-1.png" width="672" /></p>
+<p>Should we, perhaps, remove point 72, and try again? Only if we have a reason beyond “it was poorly fit” to drop that point. Is point 72 highly leveraged or influential?</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="regression-diagnostics.html#cb165-1"></a><span class="kw">plot</span>(model<span class="fl">.1</span>, <span class="dt">which =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/violsim_5-1.png" width="672" /></p>
+<p>What if we drop this point (72) and fit our linear model again. Does this resolve our difficulty with the assumption of linearity?</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="regression-diagnostics.html#cb166-1"></a>model.<span class="fl">1.</span>no72 &lt;-<span class="st"> </span><span class="kw">lm</span>(outcome <span class="op">~</span><span class="st"> </span>pred1 <span class="op">+</span><span class="st"> </span>pred2, <span class="dt">data =</span> viol1[<span class="op">-</span><span class="dv">72</span>,])</span>
+<span id="cb166-2"><a href="regression-diagnostics.html#cb166-2"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb166-3"><a href="regression-diagnostics.html#cb166-3"></a><span class="kw">plot</span>(model<span class="fl">.1</span>, <span class="dt">which =</span> <span class="dv">1</span>, <span class="dt">caption =</span> <span class="st">&quot;With Point 72&quot;</span>)</span>
+<span id="cb166-4"><a href="regression-diagnostics.html#cb166-4"></a><span class="kw">plot</span>(model.<span class="fl">1.</span>no72, <span class="dt">which =</span> <span class="dv">1</span>, <span class="dt">caption =</span> <span class="st">&quot;Without Point 72&quot;</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol_fit_without_72-1.png" width="672" /></p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="regression-diagnostics.html#cb167-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>No, it doesn’t. But what if we combine our outcome transformation with dropping point 72?</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="regression-diagnostics.html#cb168-1"></a>model.<span class="fl">2.</span>no72 &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">sqrt</span>(outcome) <span class="op">~</span><span class="st"> </span>pred1 <span class="op">+</span><span class="st"> </span>pred2, <span class="dt">data =</span> viol1[<span class="op">-</span><span class="dv">72</span>,])</span>
+<span id="cb168-2"><a href="regression-diagnostics.html#cb168-2"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb168-3"><a href="regression-diagnostics.html#cb168-3"></a><span class="kw">plot</span>(model.<span class="fl">2.</span>no72, <span class="dt">which =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol_fit_without_72_1and3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="regression-diagnostics.html#cb169-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>Nope. That still doesn’t alleviate the problem of heteroscedasticity very well. At least, we no longer have any especially influential points, nor do we have substantial non-Normality.</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="regression-diagnostics.html#cb170-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb170-2"><a href="regression-diagnostics.html#cb170-2"></a><span class="kw">plot</span>(model.<span class="fl">2.</span>no72, <span class="dt">which =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">5</span>))</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol_fit_without_72_2and5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="regression-diagnostics.html#cb171-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>At this point, I would be considering potential transformations of the predictors, quite possibly fitting some sort of polynomial term or cubic spline term in the predictors, but I’ll leave that for discussion in 432.</p>
+</div>
+<div id="problems-with-non-normality-skew" class="section level2">
+<h2><span class="header-section-number">6.15</span> Problems with Non-Normality: Skew</h2>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="regression-diagnostics.html#cb172-1"></a><span class="kw">set.seed</span>(<span class="dv">4314</span>); x1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">15</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb172-2"><a href="regression-diagnostics.html#cb172-2"></a><span class="kw">set.seed</span>(<span class="dv">4315</span>); x2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb172-3"><a href="regression-diagnostics.html#cb172-3"></a><span class="kw">set.seed</span>(<span class="dv">4316</span>); e2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">3</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb172-4"><a href="regression-diagnostics.html#cb172-4"></a>y2 &lt;-<span class="st"> </span><span class="dv">50</span> <span class="op">+</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>e2<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb172-5"><a href="regression-diagnostics.html#cb172-5"></a>viol2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">outcome =</span> y2, <span class="dt">pred1 =</span> x1, <span class="dt">pred2 =</span> x2) <span class="op">%&gt;%</span><span class="st"> </span>tbl_df</span>
+<span id="cb172-6"><a href="regression-diagnostics.html#cb172-6"></a>model<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(outcome <span class="op">~</span><span class="st"> </span>pred1 <span class="op">+</span><span class="st"> </span>pred2, <span class="dt">data =</span> viol2)</span>
+<span id="cb172-7"><a href="regression-diagnostics.html#cb172-7"></a><span class="kw">plot</span>(model<span class="fl">.3</span>, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol2sim-1.png" width="672" /></p>
+<p>Skewed residuals often show up in strange patterns in the plot of residuals vs. fitted values, too, as in this case.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="regression-diagnostics.html#cb173-1"></a><span class="kw">plot</span>(model<span class="fl">.3</span>, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol2sim_model3plot1-1.png" width="672" />
+Clearly, we have some larger residuals on the positive side, but not on the negative side. Would an outcome transformation be suggested by Box-Cox?</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="regression-diagnostics.html#cb174-1"></a><span class="kw">boxCox</span>(model<span class="fl">.3</span>); <span class="kw">powerTransform</span>(model<span class="fl">.3</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol2sim_model3plotboxcox-1.png" width="672" /></p>
+<pre><code>Estimated transformation parameter 
+       Y1 
+-1.438747 </code></pre>
+<p>The suggested transformation is either the inverse or the inverse square of our outcome. Let’s try the inverse.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="regression-diagnostics.html#cb176-1"></a>model<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dv">1</span><span class="op">/</span>outcome <span class="op">~</span><span class="st"> </span>pred1 <span class="op">+</span><span class="st"> </span>pred2, <span class="dt">data =</span> viol2)</span>
+<span id="cb176-2"><a href="regression-diagnostics.html#cb176-2"></a><span class="kw">plot</span>(model<span class="fl">.4</span>, <span class="dt">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol2sim_model4plot2-1.png" width="672" /></p>
+<p>OK. That’s something of an improvement. How about the other residual plots with this transformation?</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="regression-diagnostics.html#cb177-1"></a><span class="kw">plot</span>(model<span class="fl">.4</span>, <span class="dt">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/viol2sim_model4plot1-1.png" width="672" /></p>
+<p>The impact of the skew is reduced, at least. I might well be satisfied enough with this, in practice.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-BockVD">
+<p>Bock, David E., Paul F. Velleman, and Richard D. De Veaux. 2004. <em>Stats: Modelling the World</em>. Boston MA: Pearson Addison-Wesley.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="multiple-regression-with-the-hydrate-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/30_RegressionDiagnostics.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["431-notes.pdf", "431-notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

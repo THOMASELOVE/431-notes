@@ -307,7 +307,7 @@ p3a <- ggplot(sims_kurt, aes(x = platy, y = "")) +
 
 Graphical tools are in most cases the best way to identify issues related to kurtosis. 
 
-## More Detailed Numerical Summaries for Quantitative Variables
+## Numerical Summaries for Quantitative Variables
 
 ### `favstats` in the `mosaic` package
 
@@ -382,4 +382,7 @@ The package [`summarytools` has a function called `dfSummary`](https://cran.r-pr
 The [`naniar` package](http://naniar.njtierney.com/) is helpful for wrangling and visualizing missing values, and checking imputations.
 
 [`DataExplorer`](https://boxuancui.github.io/DataExplorer/) can be used for more automated exploratory data analyses (and some people also like [`skimr`](https://github.com/ropensci/skimr)) and [`visdat`](http://visdat.njtierney.com/), as well.
+
+The `df_stats` function available when the `mosaic` package is loaded allows you to run `favstats` for multiple outcome variables simultaneously.
+
 

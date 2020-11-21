@@ -268,7 +268,7 @@ Starting in October, we'll make use of a few scripts I've gathered for you.
 \section*{Additional R Packages installed for this book}\label{additional-r-packages-installed-for-this-book}}
 \addcontentsline{toc}{section}{Additional R Packages installed for this book}
 
-Some packages need to be installed on the user's system, but do not need to be loaded by R in order to run the code presented in this set of notes. These additional packages include the following.
+Some packages need to be installed on the user's system, but do not need to be loaded by R in order to run the code presented in this set of notes until later. These additional packages include the following.
 
 \begin{verbatim}
 boot
@@ -2612,8 +2612,8 @@ Warning: Removed 2 rows containing missing values (geom_bar).
 
 Graphical tools are in most cases the best way to identify issues related to kurtosis.
 
-\hypertarget{more-detailed-numerical-summaries-for-quantitative-variables}{%
-\section{More Detailed Numerical Summaries for Quantitative Variables}\label{more-detailed-numerical-summaries-for-quantitative-variables}}
+\hypertarget{numerical-summaries-for-quantitative-variables}{%
+\section{Numerical Summaries for Quantitative Variables}\label{numerical-summaries-for-quantitative-variables}}
 
 \hypertarget{favstats-in-the-mosaic-package}{%
 \subsection{\texorpdfstring{\texttt{favstats} in the \texttt{mosaic} package}{favstats in the mosaic package}}\label{favstats-in-the-mosaic-package}}
@@ -2823,6 +2823,8 @@ The package \href{https://cran.r-project.org/web/packages/summarytools/vignettes
 The \href{http://naniar.njtierney.com/}{\texttt{naniar} package} is helpful for wrangling and visualizing missing values, and checking imputations.
 
 \href{https://boxuancui.github.io/DataExplorer/}{\texttt{DataExplorer}} can be used for more automated exploratory data analyses (and some people also like \href{https://github.com/ropensci/skimr}{\texttt{skimr}}) and \href{http://visdat.njtierney.com/}{\texttt{visdat}}, as well.
+
+The \texttt{df\_stats} function available when the \texttt{mosaic} package is loaded allows you to run \texttt{favstats} for multiple outcome variables simultaneously.
 
 \hypertarget{summarizing-categorical-variables}{%
 \chapter{Summarizing Categorical Variables}\label{summarizing-categorical-variables}}
@@ -7632,7 +7634,7 @@ Suppose we want to describe force on the basis of height, across all 38 crabs. W
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/crabsscatter1-fig-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-112-1.pdf}
 
 A faceted plot for each species really highlights the difference in force between the \emph{Hemigraspus nudus} and the other two species of crab.
 
@@ -8285,7 +8287,7 @@ Consider the question of whether the distribution of the systolic blood pressure
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-116-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-121-1.pdf}
 
 Since the data contain both \texttt{sbp} and \texttt{lnsbp} (its natural logarithm), let's compare them. Note that in preparing the graph, we'll need to change the location for the text annotation.
 
@@ -8309,7 +8311,7 @@ Since the data contain both \texttt{sbp} and \texttt{lnsbp} (its natural logarit
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-117-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-122-1.pdf}
 
 We can also look at Normal Q-Q plots, for instance\ldots{}
 
@@ -8355,7 +8357,7 @@ It looks like there's an outlier (or a series of them) in the SBP data.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-118-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8510,7 +8512,7 @@ Let's build a scatter plot of SBP (Outcome) by Weight (Predictor), rather than b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 \begin{itemize}
 \tightlist
@@ -8586,7 +8588,7 @@ Let's build a version of the \texttt{wcgs} data that eliminates all missing data
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-123-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-128-1.pdf}
 
 \hypertarget{linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis}{%
 \section{Linear Model for SBP-Weight Relationship: subjects without Arcus Senilis}\label{linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis}}
@@ -8869,7 +8871,7 @@ We can use facets in \texttt{ggplot2} to show scatterplots across the levels of 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-127-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-132-1.pdf}
 
 \hypertarget{scatterplot-and-correlation-matrices}{%
 \section{Scatterplot and Correlation Matrices}\label{scatterplot-and-correlation-matrices}}
@@ -8882,7 +8884,7 @@ A \textbf{scatterplot matrix} can be very helpful in understanding relationships
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-133-1.pdf}
 
 \hypertarget{displaying-a-correlation-matrix}{%
 \subsection{Displaying a Correlation Matrix}\label{displaying-a-correlation-matrix}}
@@ -8918,7 +8920,7 @@ The \texttt{ggpairs} function provides a density plot on each diagonal, Pearson 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-130-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-135-1.pdf}
 
 \hypertarget{re-expression-tukeys-ladder-box-cox-plot}{%
 \chapter{Re-Expression, Tukey's Ladder \& Box-Cox Plot}\label{re-expression-tukeys-ladder-box-cox-plot}}
@@ -8993,7 +8995,7 @@ The \textbf{Box-Cox plot}, from the \texttt{boxCox} function in the \texttt{car}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-131-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-136-1} \end{center}
 
 Having simulated data that produces a curved scatterplot, I will now use the Box-Cox plot to lead my choice of an appropriate power transformation for Y in order to ``linearize'' the association of Y and X.
 
@@ -9004,7 +9006,7 @@ Having simulated data that produces a curved scatterplot, I will now use the Box
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-137-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9053,7 +9055,7 @@ If we use \(\lambda\) = 0.5, on Tukey's ladder of power transformations, it sugg
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-133-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-138-1.pdf}
 
 By eye, I think the square root plot better matches the linear fit.
 
@@ -9176,7 +9178,7 @@ We can fit the regression models, obtain plots of residuals against fitted value
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-141-1.pdf}
 
 What we're looking for in such a plot is the absence of a curve, among other things, we want to see ``fuzzy football'' shapes.
 
@@ -9275,7 +9277,7 @@ Next, we'll do a more thorough graphical summary of our outcome, recovery score.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-137-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-142-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9379,7 +9381,7 @@ The \texttt{tidy} method makes it easy to construct coefficient plots using \tex
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-140-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-145-1.pdf}
 
 Another option would be to use \texttt{geom\_errorbarh} in this setting, perhaps with a different color scheme\ldots{}
 
@@ -9396,7 +9398,7 @@ Another option would be to use \texttt{geom\_errorbarh} in this setting, perhaps
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-141-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-146-1.pdf}
 
 \hypertarget{the-summary-output}{%
 \section{The Summary Output}\label{the-summary-output}}
@@ -9903,7 +9905,7 @@ To save the residuals and predicted (fitted) values from this simple regression 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-146-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-151-1.pdf}
 
 We can also obtain a plot of residuals vs.~fitted values for \texttt{m1} using the following code from base R.
 
@@ -9913,7 +9915,7 @@ We can also obtain a plot of residuals vs.~fitted values for \texttt{m1} using t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-147-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-152-1.pdf}
 
 We hope in this plot to see a generally random scatter of points, perhaps looking like a ``fuzzy football''. Since we only have seven possible \texttt{dose} values, we obtain only seven distinct predicted values, which explains the seven vertical lines in the plot. Here, the smooth red line indicates a gentle curve, but no evidence of a strong curve, or any other regular pattern in this residual plot.
 
@@ -10009,6 +10011,10 @@ If the data are (approximately) Normally distributed, then
 \item
   Also relevant to us is the \textbf{Spearman rank correlation coefficient}, which is obtained by using the usual formula for a Pearson correlation, but on the ranks (1 = minimum, n = maximum, with average ranks are applied to the ties) of the X and Y values. This approach (running a correlation of the orderings of the data) substantially reduces the effect of outliers. The result still ranges from -1 to +1, with 0 indicating no monotone association.
 \end{itemize}
+
+\hypertarget{part-part-b.-comparing-summaries}{%
+\part*{Part B. Comparing Summaries}\label{part-part-b.-comparing-summaries}}
+\addcontentsline{toc}{part}{Part B. Comparing Summaries}
 
 \hypertarget{confidence-intervals-for-a-mean}{%
 \chapter{Confidence Intervals for a Mean}\label{confidence-intervals-for-a-mean}}
@@ -10140,7 +10146,7 @@ for the \texttt{zinc} results from the \texttt{serzinc} tibble.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-150-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-155-1.pdf}
 
 These results include some of the more useful plots and numerical summaries when assessing shape, center and spread. The \texttt{zinc} data in the \texttt{serzinc} data frame appear to be slightly right skewed, with five outlier values on the high end of the scale, in particular.
 
@@ -10327,7 +10333,7 @@ Student's t distribution looks a lot like a Normal distribution, when the sample
   t distributions with smaller degrees of freedom (say, with df \textless{} 30, in particular) are still symmetric, but are more outlier-prone than a Normal distribution
 \end{itemize}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-153-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-158-1.pdf}
 
 \hypertarget{building-the-ci-in-r}{%
 \section{Building the CI in R}\label{building-the-ci-in-r}}
@@ -11314,7 +11320,7 @@ Consider the following boxplot with violin of the \texttt{temp\_drop} data withi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-175-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-180-1.pdf}
 
 Next, we'll consider faceted histograms of the data.
 
@@ -11346,7 +11352,7 @@ Here's a pair of Normal Q-Q plots. It's not hard to use a Normal model to approx
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-176-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-181-1.pdf}
 
 We'll could perhaps also look at a ridgeline plot.
 
@@ -11365,7 +11371,7 @@ We'll could perhaps also look at a ridgeline plot.
 Picking joint bandwidth of 0.182
 \end{verbatim}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-177-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-182-1.pdf}
 
 The center of the ibuprofen distribution is shifted a bit towards the more positive (greater improvement) direction, it seems, than is the distribution for the placebo patients. This conclusion matches what we see in some key numerical summaries, within the treatment groups.
 
@@ -11782,7 +11788,7 @@ To address question 9, we'll need to look at the data in each sample, as we did 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-192-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-197-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11794,7 +11800,7 @@ To address question 9, we'll need to look at the data in each sample, as we did 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-193-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-198-1.pdf}
 
 From these plots we conclude that the data in the Ibuprofen sample follow a reasonably Normal distribution, but this isn't quite as true for the Placebo sample. It's hard to know whether the apparent Placebo group outliers will affect whether the Normal distribution assumption is reasonable, so we can see if the confidence intervals change much when we \emph{don't} assume Normality (for instance, comparing the bootstrap to the t-based approaches), as a way of understanding whether a Normal model has a large impact on our conclusions.
 
@@ -12207,12 +12213,11 @@ To begin, we focus on \texttt{lead\_diff} for our exploratory work, which is the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-204-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-209-1.pdf}
 
 Note that in all of this work, I plotted the paired differences. One obvious way to tell if you have paired samples is that you can pair every single subject from one exposure group to a unique subject in the other exposure group. Everyone has to be paired, so the sample sizes will always be the same in the two groups.
 
-\hypertarget{numerical-summaries}{%
-\subsection{Numerical Summaries}\label{numerical-summaries}}
+Here's a summary of the paired differences.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -12261,7 +12266,7 @@ Here, the data are paired by the study through matching on neighborhood, age and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-206-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-211-1.pdf}
 
 Each point here represents a \textbf{pair} of observations, one from a control child, and one from the matched exposed child. If there is a strong linear relationship (usually with a positive slope, thus positive correlation) between the paired outcomes, then the pairing will be more helpful in terms of improving statistical power of the estimates we build than if there is a weak relationship.
 
@@ -12357,7 +12362,7 @@ First, we'll look at a boxplot, showing all of the data.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-209-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-214-1.pdf}
 
 We'll also look at a ridgeline plot, because Dr.~Love likes them, even though they're really more useful when we're comparing more than two samples.
 
@@ -12375,7 +12380,7 @@ We'll also look at a ridgeline plot, because Dr.~Love likes them, even though th
 Picking joint bandwidth of 4.01
 \end{verbatim}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-210-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-215-1.pdf}
 
 Both the center and the spread of the distribution are substantially larger in the exposed group than in the controls. Of course, numerical summaries show these patterns, too.
 
@@ -13335,7 +13340,7 @@ The sample Pearson correlation coefficient is very strong and positive at 0.92, 
 
 We summarize the distribution of the paired differences (cornflakes - oatbran) below.
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-227-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-232-1.pdf}
 
 The Normal distribution doesn't look too ridiculous in this case for the paired (cornflakes-oatbran) differences. Suppose we assume Normality and run the paired t test.
 
@@ -14230,7 +14235,7 @@ Note that the default positioning of the y axis in the plot of Tukey HSD results
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-234-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-239-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14260,7 +14265,7 @@ We'll look at the full data set in \texttt{nyfs2} now, so we can look at BMI as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-235-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-240-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14275,7 +14280,7 @@ We'll look at the full data set in \texttt{nyfs2} now, so we can look at BMI as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-236-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-241-1.pdf}
 
 Here are the descriptive numerical summaries:
 
@@ -14326,7 +14331,7 @@ Let's consider the Tukey HSD results. First, we'll create a factor with shorter 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-239-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-244-1.pdf}
 
 It appears that there is a detectable difference between the \texttt{bmi} means of the ``Low'' group and both the ``High'' and ``Middle'' group at the 90\% confidence level, but no detectable difference between ``Middle'' and ``High.'' Details of those confidence intervals for those pairwise comparisons follow.
 
@@ -15957,7 +15962,7 @@ This is way more precision than we can really justify, but I just want you to se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-262-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-267-1.pdf}
 
 So in this case, it really doesn't matter which one you choose. With a smaller sample, we may not come to the same conclusion about the relative merits of these different approaches.
 
@@ -16022,7 +16027,7 @@ Plus4 & 0.1 & 0.034 & 0.395\\
 
 Note that the Wald procedure doesn't force the confidence interval to appear in the (0, 1) range.
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-265-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-270-1.pdf}
 
 \textbf{None of these three approaches is always better than any of the others.} When we have a sample size below 100, or the sample proportion of success is either below 0.10 or above 0.90, caution is warranted, although in many cases, the various methods give similar responses.
 
@@ -16431,6 +16436,1203 @@ Conditional MLE Odds Ratio:  0.3591    0.2772   0.4624
 \end{verbatim}
 
 I'll leave it as an exercise for you to interpret these results and draw some conclusions.
+
+\hypertarget{larger-contingency-tables}{%
+\chapter{Larger Contingency Tables}\label{larger-contingency-tables}}
+
+What will we do with tables describing data from more than two categories at a time, returning to the notion of independent (rather than paired or matched) samples? The chi-square tests we have already seen in our \texttt{twobytwo} table output will extend nicely to this scenario, especially the Pearson \(\chi^2\) (asymptotic) test.
+
+\hypertarget{a-2x3-table-comparing-response-to-active-vs.-placebo}{%
+\section{A 2x3 Table: Comparing Response to Active vs.~Placebo}\label{a-2x3-table-comparing-response-to-active-vs.-placebo}}
+
+The table below, containing 2 rows and 3 columns of data (ignoring the marginal totals) specifies the number of patients who show \emph{complete}, \emph{partial}, or \emph{no response} after treatment with either \textbf{active} medication or a \textbf{placebo}.
+
+\begin{longtable}[]{@{}rccc@{}}
+\toprule
+Group & None & Partial & Complete\tabularnewline
+\midrule
+\endhead
+Active & 16 & 26 & 29\tabularnewline
+Placebo & 24 & 26 & 18\tabularnewline
+\bottomrule
+\end{longtable}
+
+Is there a statistically significant association here? That is to say, is there a statistically significant difference between the treatment groups in the distribution of responses?
+
+\hypertarget{getting-the-table-into-r}{%
+\subsection{Getting the Table into R}\label{getting-the-table-into-r}}
+
+To answer this, we'll have to get the data from this contingency table into a matrix in R. Here's one approach\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{T1 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{,}\DecValTok{26}\NormalTok{,}\DecValTok{29}\NormalTok{,}\DecValTok{24}\NormalTok{,}\DecValTok{26}\NormalTok{,}\DecValTok{18}\NormalTok{), }\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{, }\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{, }\DataTypeTok{byrow=}\OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{rownames}\NormalTok{(T1) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Active"}\NormalTok{, }\StringTok{"Placebo"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(T1) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"None"}\NormalTok{, }\StringTok{"Partial"}\NormalTok{, }\StringTok{"Complete"}\NormalTok{)}
+
+\NormalTok{T1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        None Partial Complete
+Active    16      26       29
+Placebo   24      26       18
+\end{verbatim}
+
+\hypertarget{manipulating-the-tables-presentation}{%
+\subsection{Manipulating the Table's presentation}\label{manipulating-the-tables-presentation}}
+
+We can add margins to the matrix to get a table including row and column totals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{addmargins}\NormalTok{(T1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        None Partial Complete Sum
+Active    16      26       29  71
+Placebo   24      26       18  68
+Sum       40      52       47 139
+\end{verbatim}
+
+Instead of the counts, we can tabulate the proportion of all patients within each cell.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(T1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             None   Partial  Complete
+Active  0.1151079 0.1870504 0.2086331
+Placebo 0.1726619 0.1870504 0.1294964
+\end{verbatim}
+
+Now, to actually obtain a \emph{p} value and perform the significance test with \(H_0\): rows and columns are independent vs.~\(H_A\): rows and columns are associated, we simply run a Pearson chi-square test on T1 \ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{chisq.test}\NormalTok{(T1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Pearson's Chi-squared test
+
+data:  T1
+X-squared = 4.1116, df = 2, p-value = 0.128
+\end{verbatim}
+
+Thanks to a p-value of about 0.13 (using the Pearson chi-square test) our conclusion would be to retain the null hypothesis of independence in this setting.
+
+We could have run a Fisher's exact test, too, if we needed it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fisher.test}\NormalTok{(T1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Fisher's Exact Test for Count Data
+
+data:  T1
+p-value = 0.1346
+alternative hypothesis: two.sided
+\end{verbatim}
+
+The Fisher exact test \emph{p} value is also 0.13. Either way, there is insufficient evidence to conclude that there is a (true) difference in the distributions of responses.
+
+\hypertarget{accuracy-of-death-certificates-a-6x3-table}{%
+\section{Accuracy of Death Certificates (A 6x3 Table)}\label{accuracy-of-death-certificates-a-6x3-table}}
+
+The table below compiles data from six studies designed to investigate the accuracy of death certificates. The original citation is Kircher T, Nelson J, Burdo H (1985) The autopsy as a measure of accuracy of the death certificate. \emph{NEJM}, 313, 1263-1269. 5373 autopsies were compared to the causes of death listed on the certificates. Of those, 3726 were confirmed to be accurate, 783 either lacked information or contained inaccuracies but did not require recoding of the underlying cause of death, and 864 were incorrect and required recoding. Do the results across studies appear consistent?
+
+\begin{longtable}[]{@{}ccccc@{}}
+\toprule
+\begin{minipage}[b]{0.14\columnwidth}\centering
+Date of Study\strut
+\end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\centering
+{[}Confirmed{]} Accurate\strut
+\end{minipage} & \begin{minipage}[b]{0.24\columnwidth}\centering
+{[}Inaccurate{]} No Change\strut
+\end{minipage} & \begin{minipage}[b]{0.21\columnwidth}\centering
+{[}Incorrect{]} Recoding\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\centering
+Total\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.14\columnwidth}\centering
+1955-1965\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+2040\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\centering
+367\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+327\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\centering
+2734\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\centering
+1970\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+149\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\centering
+60\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+48\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\centering
+257\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\centering
+1970-1971\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+288\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\centering
+25\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+70\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\centering
+383\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\centering
+1975-1977\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+703\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\centering
+197\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+252\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\centering
+1152\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\centering
+1977-1978\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+425\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\centering
+62\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+88\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\centering
+575\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\centering
+1980\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+121\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\centering
+72\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+79\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\centering
+272\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\centering
+Total\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+3726\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\centering
+783\strut
+\end{minipage} & \begin{minipage}[t]{0.21\columnwidth}\centering
+864\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\centering
+5373\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{the-pearson-chi-square-test-of-independence}{%
+\section{The Pearson Chi-Square Test of Independence}\label{the-pearson-chi-square-test-of-independence}}
+
+We can assess the homogeneity of the confirmation results (columns) we observe in the table using a Pearson chi-squared test of independence.
+
+\begin{itemize}
+\tightlist
+\item
+  The null hypothesis is that the rows and columns are independent.
+\item
+  The alternative hypothesis is that there is an association between the rows and the columns.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{death.tab <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{2040}\NormalTok{,}\DecValTok{367}\NormalTok{,}\DecValTok{327}\NormalTok{,}\DecValTok{149}\NormalTok{,}\DecValTok{60}\NormalTok{,}\DecValTok{48}\NormalTok{,}\DecValTok{288}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{70}\NormalTok{,}\DecValTok{703}\NormalTok{,}
+                      \DecValTok{197}\NormalTok{,}\DecValTok{252}\NormalTok{,}\DecValTok{425}\NormalTok{,}\DecValTok{62}\NormalTok{,}\DecValTok{88}\NormalTok{,}\DecValTok{121}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{79}\NormalTok{), }\DataTypeTok{byrow=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{nrow=}\DecValTok{6}\NormalTok{)}
+\KeywordTok{rownames}\NormalTok{(death.tab) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"1955-65"}\NormalTok{, }\StringTok{"1970"}\NormalTok{, }\StringTok{"1970-71"}\NormalTok{, }\StringTok{"1975-77"}\NormalTok{, }\StringTok{"1977-78"}\NormalTok{,}
+                 \StringTok{"1980"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(death.tab) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Confirmed"}\NormalTok{, }\StringTok{"Inaccurate"}\NormalTok{, }\StringTok{"Incorrect"}\NormalTok{)}
+ 
+\KeywordTok{addmargins}\NormalTok{(death.tab)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        Confirmed Inaccurate Incorrect  Sum
+1955-65      2040        367       327 2734
+1970          149         60        48  257
+1970-71       288         25        70  383
+1975-77       703        197       252 1152
+1977-78       425         62        88  575
+1980          121         72        79  272
+Sum          3726        783       864 5373
+\end{verbatim}
+
+To see the potential heterogeneity across rows in these data, we should perhaps also look at the proportions of autopsies in each of the three accuracy categories for each study.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{addmargins}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\DecValTok{100}\OperatorTok{*}\KeywordTok{prop.table}\NormalTok{(death.tab,}\DecValTok{1}\NormalTok{),}\DecValTok{1}\NormalTok{),}\DecValTok{2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+        Confirmed Inaccurate Incorrect Sum
+1955-65      74.6       13.4      12.0 100
+1970         58.0       23.3      18.7 100
+1970-71      75.2        6.5      18.3 100
+1975-77      61.0       17.1      21.9 100
+1977-78      73.9       10.8      15.3 100
+1980         44.5       26.5      29.0 100
+\end{verbatim}
+
+In three of the studies, approximately 3/4 of the results were confirmed. In the other three, 45\%, 58\% and 61\% were confirmed. It looks like there's a fair amount of variation in results across studies. To see if this is true, formally, we run Pearson's chi-square test of independence, where the null hypothesis is that the rows and columns are independent, and the alternative hypothesis is that there is an association between the rows and the columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{chisq.test}\NormalTok{(death.tab)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Pearson's Chi-squared test
+
+data:  death.tab
+X-squared = 209.09, df = 10, p-value < 2.2e-16
+\end{verbatim}
+
+The chi-square test statistic is 200 on 10 degrees of freedom, yielding p \textless{} 0.0001.
+
+Autopsies are not performed at random; in fact, many are done because the cause of death listed on the certificate is uncertain. What problems may arise if you attempt to use the results of these studies to make inference about the population as a whole?
+
+\hypertarget{three-way-tables-a-2x2xk-table-and-a-mantel-haenszel-analysis}{%
+\section{Three-Way Tables: A 2x2xK Table and a Mantel-Haenszel Analysis}\label{three-way-tables-a-2x2xk-table-and-a-mantel-haenszel-analysis}}
+
+The material I discuss in this section is attributable to Jeff Simonoff and his book \emph{Analyzing Categorical Data}. The example is taken from Section 8.1 of that book.
+
+A three-dimensional or three-way table of counts often reflects a situation where the rows and columns refer to variables whose association is of primary interest to us, and the third factor (a layer, or strata) describes a control variable, whose effect on our primary association is something we are \emph{controlling} for in the analysis.
+
+\hypertarget{smoking-and-mortality-in-the-uk}{%
+\subsection{Smoking and Mortality in the UK}\label{smoking-and-mortality-in-the-uk}}
+
+In the early 1970s and then again 20 years later, in Whickham, United Kingdom, surveys yielded the following relationship between whether a person was a smoker at the time of the original survey and whether they were still alive 20 years later\footnote{See Appleton et al. 1996. Ignoring a Covariate: An Example of Simpson's Paradox. The American Statistician, 50, 340-341.}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{whickham1 <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{502}\NormalTok{, }\DecValTok{230}\NormalTok{, }\DecValTok{443}\NormalTok{, }\DecValTok{139}\NormalTok{), }\DataTypeTok{byrow=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{nrow=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{rownames}\NormalTok{(whickham1) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Non-Smoker"}\NormalTok{, }\StringTok{"Smoker"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(whickham1) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Alive"}\NormalTok{, }\StringTok{"Dead"}\NormalTok{)}
+\KeywordTok{addmargins}\NormalTok{(whickham1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+           Alive Dead  Sum
+Non-Smoker   502  230  732
+Smoker       443  139  582
+Sum          945  369 1314
+\end{verbatim}
+
+Here's the two-by-two table analysis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Epi}\OperatorTok{::}\KeywordTok{twoby2}\NormalTok{(whickham1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : Alive 
+Comparing : Non-Smoker vs. Smoker 
+
+           Alive Dead    P(Alive) 95% conf. interval
+Non-Smoker   502  230      0.6858    0.6512   0.7184
+Smoker       443  139      0.7612    0.7248   0.7941
+
+                                    95% conf. interval
+             Relative Risk:  0.9010    0.8427   0.9633
+         Sample Odds Ratio:  0.6848    0.5353   0.8761
+Conditional MLE Odds Ratio:  0.6850    0.5307   0.8822
+    Probability difference: -0.0754   -0.1230  -0.0266
+
+             Exact P-value: 0.0030 
+        Asymptotic P-value: 0.0026 
+------------------------------------------------------
+\end{verbatim}
+
+There is a detectable association between smoking and mortality, but it isn't the one you might expect.
+
+\begin{itemize}
+\tightlist
+\item
+  The odds ratio is 0.68, implying that the odds of having lived were only 68\% as large for non-smokers as for smokers.
+\item
+  Does that mean that smoking is \emph{good} for you?
+\end{itemize}
+
+Not likely. There is a key ``lurking'' variable here - a variable that is related to both smoking and mortality that is obscuring the actual relationship - namely, age.
+
+\hypertarget{the-whickham-data-with-age-too}{%
+\subsection{\texorpdfstring{The \texttt{whickham} data with age, too}{The whickham data with age, too}}\label{the-whickham-data-with-age-too}}
+
+The table below gives the mortality experience separated into subtables by initial age group.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{age <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{"18-24"}\NormalTok{, }\DecValTok{4}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\StringTok{"25-34"}\NormalTok{, }\DecValTok{4}\NormalTok{), }
+         \KeywordTok{rep}\NormalTok{(}\StringTok{"35-44"}\NormalTok{, }\DecValTok{4}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\StringTok{"45-54"}\NormalTok{, }\DecValTok{4}\NormalTok{), }
+         \KeywordTok{rep}\NormalTok{(}\StringTok{"55-64"}\NormalTok{, }\DecValTok{4}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\StringTok{"65-74"}\NormalTok{, }\DecValTok{4}\NormalTok{), }
+         \KeywordTok{rep}\NormalTok{(}\StringTok{"75+"}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\NormalTok{smoking <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"Smoker"}\NormalTok{, }\StringTok{"Smoker"}\NormalTok{, }\StringTok{"Non-Smoker"}\NormalTok{, }\StringTok{"Non-Smoker"}\NormalTok{), }\DecValTok{7}\NormalTok{))}
+\NormalTok{status <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"Alive"}\NormalTok{, }\StringTok{"Dead"}\NormalTok{), }\DecValTok{14}\NormalTok{))}
+\NormalTok{counts <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{53}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{61}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{121}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{152}\NormalTok{, }\DecValTok{5}\NormalTok{,}
+            \DecValTok{95}\NormalTok{, }\DecValTok{14}\NormalTok{, }\DecValTok{114}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{103}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{66}\NormalTok{, }\DecValTok{12}\NormalTok{,}
+            \DecValTok{64}\NormalTok{, }\DecValTok{51}\NormalTok{, }\DecValTok{81}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{29}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{101}\NormalTok{,}
+            \DecValTok{0}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{64}\NormalTok{)}
+
+\NormalTok{whickham2 <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(smoking, status, age, counts) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{smoking =} \KeywordTok{factor}\NormalTok{(smoking),}
+           \DataTypeTok{status =} \KeywordTok{factor}\NormalTok{(status),}
+           \DataTypeTok{age =} \KeywordTok{factor}\NormalTok{(age))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{whickham2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 28 x 4
+   smoking    status age   counts
+   <fct>      <fct>  <fct>  <dbl>
+ 1 Smoker     Alive  18-24     53
+ 2 Smoker     Dead   18-24      2
+ 3 Non-Smoker Alive  18-24     61
+ 4 Non-Smoker Dead   18-24      1
+ 5 Smoker     Alive  25-34    121
+ 6 Smoker     Dead   25-34      3
+ 7 Non-Smoker Alive  25-34    152
+ 8 Non-Smoker Dead   25-34      5
+ 9 Smoker     Alive  35-44     95
+10 Smoker     Dead   35-44     14
+# ... with 18 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{whick_t2 <-}\StringTok{ }
+\StringTok{    }\KeywordTok{xtabs}\NormalTok{(counts }\OperatorTok{~}\StringTok{ }\NormalTok{smoking }\OperatorTok{+}\StringTok{ }\NormalTok{status }\OperatorTok{+}\StringTok{ }\NormalTok{age, }\DataTypeTok{data =}\NormalTok{ whickham2)}
+
+\NormalTok{whick_t2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+, , age = 18-24
+
+            status
+smoking      Alive Dead
+  Non-Smoker    61    1
+  Smoker        53    2
+
+, , age = 25-34
+
+            status
+smoking      Alive Dead
+  Non-Smoker   152    5
+  Smoker       121    3
+
+, , age = 35-44
+
+            status
+smoking      Alive Dead
+  Non-Smoker   114    7
+  Smoker        95   14
+
+, , age = 45-54
+
+            status
+smoking      Alive Dead
+  Non-Smoker    66   12
+  Smoker       103   27
+
+, , age = 55-64
+
+            status
+smoking      Alive Dead
+  Non-Smoker    81   40
+  Smoker        64   51
+
+, , age = 65-74
+
+            status
+smoking      Alive Dead
+  Non-Smoker    28  101
+  Smoker         7   29
+
+, , age = 75+
+
+            status
+smoking      Alive Dead
+  Non-Smoker     0   64
+  Smoker         0   13
+\end{verbatim}
+
+The sample odds ratios for remaining Alive comparing Non-Smokers to Smokers for each of these subtables (except the last one, where the odds ratio is undefined because of the zero cells) are calculated using the usual cross-product ratio approach, which yields the following results.
+
+\begin{longtable}[]{@{}rr@{}}
+\toprule
+Age Group & Odds Ratio\tabularnewline
+\midrule
+\endhead
+18-24 & 2.30\tabularnewline
+25-34 & 0.75\tabularnewline
+35-44 & 2.40\tabularnewline
+45-54 & 1.44\tabularnewline
+55-64 & 1.61\tabularnewline
+65-74 & 1.15\tabularnewline
+75+ & Undefined\tabularnewline
+\bottomrule
+\end{longtable}
+
+Thus, for all age groups except 25-34 year olds, not smoking appears to be associated with higher odds of remaining alive.
+
+Why? Not surprisingly, there is a strong association between age and mortality, with mortality rates being very low for young people (2.5\% for 18-24 year olds) and increasing to 100\% for 75+ year olds.
+
+There is also an association between age and smoking, with smoking rates peaking in the 45-54 year old range and then falling off rapidly. In particular, respondents who were 65 and older at the time of the first survey had very low smoking rates (25.4\%) but very high mortality rates (85.5\%). Smoking was hardly the cause, however, since even among the 65-74 year olds mortality was higher among smokers (80.6\%) than it was among non-smokers (78.3\%). A flat version of the table (\texttt{ftable} in R) can help us with these calculations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ftable}\NormalTok{(whick_t2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                  age 18-24 25-34 35-44 45-54 55-64 65-74 75+
+smoking    status                                            
+Non-Smoker Alive         61   152   114    66    81    28   0
+           Dead           1     5     7    12    40   101  64
+Smoker     Alive         53   121    95   103    64     7   0
+           Dead           2     3    14    27    51    29  13
+\end{verbatim}
+
+\hypertarget{checking-assumptions-the-woolf-test}{%
+\subsection{Checking Assumptions: The Woolf test}\label{checking-assumptions-the-woolf-test}}
+
+We can also obtain a test (using the \texttt{woolf\_test} function, in the \texttt{vcd} library) to see if the common odds ratio estimated in the Mantel-Haenszel procedure is reasonable for all age groups. In other words, the Woolf test is a test of the assumption of homogeneous odds ratios across the six age groups.
+
+If the Woolf test is significant, it suggests that the Cochran-Mantel-Haenszel test is not appropriate, since the odds ratios for smoking and mortality vary too much in the sub-tables by age group. Here, we have the following log odds ratios (estimated using conditional maximum likelihood, rather than cross-product ratios) and the associated Woolf test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## Next two results use the vcd package}
+\NormalTok{vcd}\OperatorTok{::}\KeywordTok{oddsratio}\NormalTok{(whick_t2, }\DataTypeTok{log =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+log odds ratios for smoking and status by age 
+
+      18-24       25-34       35-44       45-54       55-64       65-74 
+ 0.65018114 -0.22473479  0.84069420  0.34608770  0.47421763  0.09933253 
+        75+ 
+-1.56397554 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vcd}\OperatorTok{::}\KeywordTok{woolf_test}\NormalTok{(whick_t2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Woolf-test on Homogeneity of Odds Ratios (no 3-Way assoc.)
+
+data:  whick_t2
+X-squared = 3.2061, df = 6, p-value = 0.7826
+\end{verbatim}
+
+As you can see, the Woolf test is not close to our usual standards for statistically detectable results, implying the common odds ratio is at least potentially reasonable for all age groups (or at least the ones under ages 75, where some data are available.)
+
+\hypertarget{the-cochran-mantel-haenszel-test}{%
+\subsection{The Cochran-Mantel-Haenszel Test}\label{the-cochran-mantel-haenszel-test}}
+
+So, the marginal table looking at smoking and mortality combining all age groups isn't the most meaningful summary of the relationship between smoking and mortality. Instead, we need to look at the \emph{conditional} association of smoking and mortality, \textbf{given age}, to address our interests.
+
+The null hypothesis would be that, in the population, smoking and mortality are independent within strata formed by age group. In other words, \(H_0\) requires that smoking be of no value in predicting mortality once age has been accounted for.
+
+The alternative hypothesis would be that, in the population, smoking and mortality are associated within the strata formed by age group. In other words, \(H_A\) requires that smoking be of at least some value in predicting mortality even after age has been accounted for.
+
+We can consider the evidence that helps us choose between these two hypotheses with a Cochran-Mantel-Haenszel test, which is obtained in R through the \texttt{mantelhaen.test} function. This test requires us to assume that, in the population and within each age group, the smoking-mortality odds ratio is the same. Essentially, this means that the association of smoking with mortality is the same for older and younger people.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mantelhaen.test}\NormalTok{(whick_t2, }\DataTypeTok{conf.level  =} \FloatTok{0.90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Mantel-Haenszel chi-squared test with continuity correction
+
+data:  whick_t2
+Mantel-Haenszel X-squared = 5.435, df = 1, p-value = 0.01974
+alternative hypothesis: true common odds ratio is not equal to 1
+90 percent confidence interval:
+ 1.143198 2.041872
+sample estimates:
+common odds ratio 
+          1.52783 
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The Cochran-Mantel-Haenszel test statistic is a bit larger than 5 (after a continuity correction) leading to a \emph{p} value of 0.02, indicating strong rejection of the null hypothesis of conditional independence of smoking and survival given age.
+\item
+  The estimated common conditional odds ratio is 1.53. This implies that (adjusting for age) being a non-smoker is associated with 53\% higher odds of being alive 20 years later than being a smoker.
+\item
+  A 90\% confidence interval for that common odds ratio is (1.14, 2.04), reinforcing rejection of the null hypothesis of conditional independence (where the odds ratio would be 1).
+\end{itemize}
+
+\hypertarget{without-the-continuity-correction}{%
+\subsection{Without the Continuity Correction}\label{without-the-continuity-correction}}
+
+By default, R presents the Mantel-Haenszel test with a continuity correction, when used for a 2x2xK table. In virtually all cases, go ahead and do this, but as you can see below, the difference it makes in this case is modest.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mantelhaen.test}\NormalTok{(whick_t2, }\DataTypeTok{correct=}\OtherTok{FALSE}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Mantel-Haenszel chi-squared test without continuity correction
+
+data:  whick_t2
+Mantel-Haenszel X-squared = 5.8443, df = 1, p-value = 0.01563
+alternative hypothesis: true common odds ratio is not equal to 1
+90 percent confidence interval:
+ 1.143198 2.041872
+sample estimates:
+common odds ratio 
+          1.52783 
+\end{verbatim}
+
+\hypertarget{power-and-proportions}{%
+\chapter{Power and Proportions}\label{power-and-proportions}}
+
+\hypertarget{tuberculosis-prevalence-among-iv-drug-users}{%
+\section{Tuberculosis Prevalence Among IV Drug Users}\label{tuberculosis-prevalence-among-iv-drug-users}}
+
+Consider a study to investigate factors affecting tuberculosis prevalence among intravenous drug users. The original data source is Graham NMH et al.~(1992) Prevalence of Tuberculin Positivity and Skin Test Anergy in HIV-1-Seropositive and Seronegative Intravenous Drug Users. \emph{JAMA}, 267, 369-373. Among 97 individuals who admit to sharing needles, 24 (24.7\%) had a positive tuberculin skin test result; among 161 drug users who deny sharing needles, 28 (17.4\%) had a positive test result. To start, we'll test the null hypothesis that the proportions of intravenous drug users who have a positive tuberculin skin test result are identical for those who share needles and those who do not.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{twobytwo}\NormalTok{(}\DecValTok{24}\NormalTok{, }\DecValTok{73}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{133}\NormalTok{, }
+         \StringTok{"Sharing Needles"}\NormalTok{, }\StringTok{"Not Sharing"}\NormalTok{, }
+         \StringTok{"TB test+"}\NormalTok{, }\StringTok{"TB test-"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : TB test+ 
+Comparing : Sharing Needles vs. Not Sharing 
+
+                TB test+ TB test-    P(TB test+) 95% conf. interval
+Sharing Needles       24       73         0.2474    0.1717   0.3427
+Not Sharing           28      133         0.1739    0.1229   0.2404
+
+                                   95% conf. interval
+             Relative Risk: 1.4227    0.8772   2.3073
+         Sample Odds Ratio: 1.5616    0.8439   2.8898
+Conditional MLE Odds Ratio: 1.5588    0.8014   3.0191
+    Probability difference: 0.0735   -0.0265   0.1807
+
+             Exact P-value: 0.1996 
+        Asymptotic P-value: 0.1557 
+------------------------------------------------------
+\end{verbatim}
+
+What conclusions should we draw?
+
+\hypertarget{designing-a-new-tb-study}{%
+\section{Designing a New TB Study}\label{designing-a-new-tb-study}}
+
+Now, suppose we wanted to design a new study with as many non-sharers as needle-sharers participating, and suppose that we wanted to detect any difference in the proportion of positive skin test results between the two groups that was identical to the data presented above or larger with at least 90\% power, using a two-sided test and \(\alpha\) = .05. What sample size would be required to accomplish these aims?
+
+\hypertarget{using-power.prop.test-for-balanced-designs}{%
+\section{\texorpdfstring{Using \texttt{power.prop.test} for Balanced Designs}{Using power.prop.test for Balanced Designs}}\label{using-power.prop.test-for-balanced-designs}}
+
+Our constraints are that we want to find the sample size for a two-sample comparison of proportions using a balanced design, we will use \(\alpha\) = .05, and power = .90, and that we estimate that the non-sharers will have a .174 proportion of positive tests, and we will try to detect a difference between this group and the needle sharers, who we estimate will have a proportion of .247, using a two-sided hypothesis test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{power.prop.test}\NormalTok{(}\DataTypeTok{p1 =} \FloatTok{.174}\NormalTok{, }\DataTypeTok{p2  =} \FloatTok{.247}\NormalTok{, }\DataTypeTok{sig.level =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{power =} \FloatTok{0.90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+     Two-sample comparison of proportions power calculation 
+
+              n = 653.2876
+             p1 = 0.174
+             p2 = 0.247
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+\end{verbatim}
+
+So, we'd need at least 654 non-sharing subjects, and 654 more who share needles to accomplish the aims of the study.
+
+\hypertarget{how-power.prop.test-works}{%
+\section{\texorpdfstring{How \texttt{power.prop.test} works}{How power.prop.test works}}\label{how-power.prop.test-works}}
+
+\texttt{power.prop.test} works much like the \texttt{power.t.test} we saw for means.
+
+Again, we specify 4 of the following 5 elements of the comparison, and R calculates the fifth.
+
+\begin{itemize}
+\tightlist
+\item
+  The sample size (interpreted as the \# in each group, so half the total sample size)
+\item
+  The true probability in group 1
+\item
+  The true probability in group 2
+\item
+  The significance level (\(\alpha\))
+\item
+  The power (1 - \(\beta\))
+\end{itemize}
+
+The big weakness with the \texttt{power.prop.test} tool is that it doesn't allow you to work with unbalanced designs.
+
+\hypertarget{a-revised-scenario}{%
+\section{A Revised Scenario}\label{a-revised-scenario}}
+
+Suppose we can get exactly 800 subjects in total (400 sharing and 400 non-sharing). How much power would we have to detect a difference in the proportion of positive skin test results between the two groups that was identical to the data presented above or larger, using a one-sided test, with \(\alpha\) = .10?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{power.prop.test}\NormalTok{(}\DataTypeTok{n=}\DecValTok{400}\NormalTok{, }\DataTypeTok{p1=}\NormalTok{.}\DecValTok{174}\NormalTok{, }\DataTypeTok{p2=}\NormalTok{.}\DecValTok{247}\NormalTok{, }\DataTypeTok{sig.level =} \FloatTok{0.10}\NormalTok{,}
+                \DataTypeTok{alternative=}\StringTok{"one.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+     Two-sample comparison of proportions power calculation 
+
+              n = 400
+             p1 = 0.174
+             p2 = 0.247
+      sig.level = 0.1
+          power = 0.8954262
+    alternative = one.sided
+
+NOTE: n is number in *each* group
+\end{verbatim}
+
+We would have just under 90\% power to detect such an effect.
+
+\hypertarget{using-the-pwr-library-for-unbalanced-designs}{%
+\section{\texorpdfstring{Using the \texttt{pwr} library for Unbalanced Designs}{Using the pwr library for Unbalanced Designs}}\label{using-the-pwr-library-for-unbalanced-designs}}
+
+The \texttt{pwr.2p2n.test} function in the \texttt{pwr} library can help assess the power of a test to determine a particular effect size using an unbalanced design, where \(n_1\) is not equal to \(n_2\).
+
+As before, we specify four of the following five elements of the comparison, and R calculates the fifth.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{n1} = The sample size in group 1
+\item
+  \texttt{n2} = The sample size in group 2
+\item
+  \texttt{sig.level} = The significance level (\(\alpha\))
+\item
+  \texttt{power} = The power (1 - \(\beta\))
+\item
+  \texttt{h} = the effect size h, which can be calculated separately in R based on the two proportions being compared: \texttt{p1} and \texttt{p2}.
+\end{itemize}
+
+\hypertarget{calculating-the-effect-size-h}{%
+\subsection{\texorpdfstring{Calculating the Effect Size \texttt{h}}{Calculating the Effect Size h}}\label{calculating-the-effect-size-h}}
+
+To calculate the effect size for a given set of proportions, just use \texttt{ES.h(p1,\ p2)} which is available in the \texttt{pwr} library.
+
+For instance, in our comparison, we have the following effect size.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pwr}\OperatorTok{::}\KeywordTok{ES.h}\NormalTok{(}\DataTypeTok{p1 =} \FloatTok{.174}\NormalTok{, }\DataTypeTok{p2 =} \FloatTok{.247}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] -0.1796783
+\end{verbatim}
+
+\hypertarget{using-pwr.2p2n.test-in-r}{%
+\section{\texorpdfstring{Using \texttt{pwr.2p2n.test} in R}{Using pwr.2p2n.test in R}}\label{using-pwr.2p2n.test-in-r}}
+
+Suppose we can have 700 samples in group 1 (the not sharing group) but only half that many in group 2 (the group of users who share needles). How much power would we have to detect this same difference (\(p_1\) = .174, \(p_2\) = .247) with a 5\% significance level in a two-sided test?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pwr}\OperatorTok{::}\KeywordTok{pwr.2p2n.test}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ pwr}\OperatorTok{::}\KeywordTok{ES.h}\NormalTok{(}\DataTypeTok{p1 =} \FloatTok{.174}\NormalTok{, }\DataTypeTok{p2 =} \FloatTok{.247}\NormalTok{), }
+              \DataTypeTok{n1 =} \DecValTok{700}\NormalTok{, }\DataTypeTok{n2 =} \DecValTok{350}\NormalTok{,}
+              \DataTypeTok{sig.level =} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+     difference of proportion power calculation for binomial distribution (arcsine transformation) 
+
+              h = 0.1796783
+             n1 = 700
+             n2 = 350
+      sig.level = 0.05
+          power = 0.7836768
+    alternative = two.sided
+
+NOTE: different sample sizes
+\end{verbatim}
+
+Note that the headline for this output actually reads:
+
+\begin{verbatim}
+difference of proportion power calculation for binomial distribution 
+(arcsine transformation) 
+\end{verbatim}
+
+It appears we will have about 78\% power under these circumstances.
+
+\hypertarget{comparison-to-balanced-design}{%
+\subsection{Comparison to Balanced Design}\label{comparison-to-balanced-design}}
+
+How does this compare to the results with a balanced design using only 1000 drug users in total, so that we have 500 patients in each group?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pwr}\OperatorTok{::}\KeywordTok{pwr.2p2n.test}\NormalTok{(}\DataTypeTok{h =}\NormalTok{ pwr}\OperatorTok{::}\KeywordTok{ES.h}\NormalTok{(}\DataTypeTok{p1 =} \FloatTok{.174}\NormalTok{, }\DataTypeTok{p2 =} \FloatTok{.247}\NormalTok{), }
+                   \DataTypeTok{n1 =} \DecValTok{500}\NormalTok{, }\DataTypeTok{n2 =} \DecValTok{500}\NormalTok{, }\DataTypeTok{sig.level =} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+     difference of proportion power calculation for binomial distribution (arcsine transformation) 
+
+              h = 0.1796783
+             n1 = 500
+             n2 = 500
+      sig.level = 0.05
+          power = 0.8108416
+    alternative = two.sided
+
+NOTE: different sample sizes
+\end{verbatim}
+
+or we could instead have used\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{power.prop.test}\NormalTok{(}\DataTypeTok{p1 =} \FloatTok{.174}\NormalTok{, }\DataTypeTok{p2 =} \FloatTok{.247}\NormalTok{, }
+                \DataTypeTok{sig.level =} \FloatTok{0.05}\NormalTok{, }\DataTypeTok{n =} \DecValTok{500}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+     Two-sample comparison of proportions power calculation 
+
+              n = 500
+             p1 = 0.174
+             p2 = 0.247
+      sig.level = 0.05
+          power = 0.8091808
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+\end{verbatim}
+
+Note that these two sample size estimation approaches are approximations, and use slightly different approaches, so it's not surprising that the answers are similar, but not completely identical.
+
+\hypertarget{quiz-2-review}{%
+\chapter{Quiz 2 Review}\label{quiz-2-review}}
+
+There are 15 items here, and then a set of answer sketches follow the questions. This \textbf{isn't a complete review} - there are no questions here about regression models, and that will certainly show up on Quiz 2, as an example.
+
+\hypertarget{review-items-1-7}{%
+\section{Review Items 1-7}\label{review-items-1-7}}
+
+Researchers comparing the effectiveness of two pain medications randomly selected a group of patients who had been complaining of a certain kind of joint pain. They randomly divided those people into two groups, then administered the medications. Of the 85 people in the group who received medication A, 65 said that it provided relief. Of the 70 people in the group receiving medication B, 45 reported that it provided relief.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use the Agresti-Coull approach to specify a 95\% confidence interval for the proportion of people who find relief from this kind of joint pain by using medication A.
+\item
+  Now use the same approach to specify a 95\% confidence interval for the proportion of people who find relief using medication B.
+\item
+  Do the confidence intervals in items 1 and 2 overlap? What conclusions can you draw in light of that overlap (or lack thereof) about whether medication A or medication B is clearly more effective?
+\item
+  Specify and display the correct 2x2 table (incorporating a Bayesian augmentation) analysis to enable you to study the A - B difference in the true proportions of people who find these medications effective.
+\item
+  Use the 2x2 table results to specify an appropriate odds ratio and its 95\% confidence interval in this situation, and explain what the values mean in context.
+\item
+  Specify the hypotheses (\(H_0\) and \(H_A\)) tested by the Fisher exact test you obtain in your 2x2 table. What does the provided \emph{p} value tell you about what conclusion you should draw in this case regarding those hypotheses?
+\item
+  If you have made an error in your conclusion for item 6, was it a Type I error or a Type II error? How do you know?
+\end{enumerate}
+
+\hypertarget{review-items-8-9}{%
+\section{Review Items 8-9}\label{review-items-8-9}}
+
+For each of the following statements, indicate whether or not the statement is true or false, and specify how you know.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  If there is sufficient evidence to reject a null hypothesis at the 10\% level, then there is sufficient evidence to reject it at the 5\% level.
+\item
+  A sample histogram will follow a normal distribution if the sample size is large enough.
+\end{enumerate}
+
+\hypertarget{review-items-10-13}{%
+\section{Review Items 10-13}\label{review-items-10-13}}
+
+Charles Darwin carried out an experiment to study whether seedlings from cross-fertilized plants tend to be superior to those from self-fertilized plants. He covered a number of plants with fine netting so that insects would be unable to fertilize them. He fertilized a number of flowers on each plant with their own pollen and he fertilized an equal number of flowers on the same plant with pollen from a distant plant. (He did not specify how he decided which flowers received which treatments.) The seeds from the flowers were allowed to ripen and were set in wet sand to germinate. He placed two seedlings of the same age in a pot, one from a seed from a self-fertilized flower and one from a cross-fertilized flower.
+
+He repeated this process with a total of 15 such pots. Each pot was then set aside for a time, so that the two plants in the plot would receive similar exposure to atmospheric conditions (sun, rainfall, etc.). Later, he gathered the heights of the plants (in inches) that came from those 15 cross-fertilized and 15 self-fertilized seeds at certain points in time. Those data are contained in the \texttt{darwin.csv} data set on our course website.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  Does this study call for a paired samples or independent samples comparison? How do you know?
+\item
+  Display and interpret an appropriate graph to determine whether a t-test or a Wilcoxon test would be more appropriate for these data.
+\item
+  Use the method (t or Wilcoxon) you specified in item 11 to find an appropriate 95\% confidence interval for the average height difference between cross-fertilized and self-fertilized seedlings. Verify that your confidence interval describes the ``cross'' - ``self'' difference, rather than the opposite direction.
+\item
+  Use an appropriate bootstrap procedure (setting your random seed to be \texttt{4310}) to provide an alternative answer for the question posed in item 12. Is this bootstrap confidence interval wider or narrower than the interval you produced in item 12?
+\end{enumerate}
+
+\hypertarget{review-items-14-15}{%
+\section{Review Items 14-15}\label{review-items-14-15}}
+
+You have been asked how large a sample size will be required for a clinical trial comparing two different approaches to blood pressure control. In approach A, we believe that the average systolic blood pressure will drop by 7 mm Hg, on the basis of our prior work in this area, while in the new approach B, we hope to see a clinically meaningful additional decline - specifically, we are looking for at least a 50\% larger decline, so that the average systolic blood pressure will drop by 10.5 mm Hg or more over the same amount of time. Thus, the minimum clinically meaningful difference we are looking for is 3.5 mm Hg. Suppose we believe that the relevant standard deviation is 9 mm Hg, and we want to complete the trial using a 5\% significance level and a two-sided t test.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{13}
+\tightlist
+\item
+  What will be the power of the test if we have a balanced design with 120 subjects in approach A and 120 different subjects in approach B? Show your calculation, and state your final result in a sentence.
+\item
+  What is the smallest total sample size that we can use in a balanced design to maintain at least 90\% power to detect the difference of interest, while still using independent samples? Show your calculation, and state your final result in a sentence.
+\end{enumerate}
+
+\hypertarget{answer-sketch-for-review-items}{%
+\section{Answer Sketch for Review Items}\label{answer-sketch-for-review-items}}
+
+\hypertarget{answer-1}{%
+\subsection{Answer 1}\label{answer-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{65}\NormalTok{, }\DataTypeTok{n =} \DecValTok{85}\NormalTok{, }\DataTypeTok{ci.method =} \StringTok{"agresti-coull"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Exact binomial test (Agresti-Coull CI)
+
+data:  65 out of 85
+number of successes = 65, number of trials = 85, p-value = 1.03e-06
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.6636138 0.8429064
+sample estimates:
+probability of success 
+             0.7647059 
+\end{verbatim}
+
+The 95\% confidence interval for the proportion of people using medication A who obtain relief is (0.664, 0.843). We are 95\% confident that the true percentage of people who find relief using medication A is between 66.4\% and 84.3\%.
+
+\hypertarget{answer-2}{%
+\subsection{Answer 2}\label{answer-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{45}\NormalTok{, }\DataTypeTok{n =} \DecValTok{70}\NormalTok{, }\DataTypeTok{ci.method =} \StringTok{"agresti-coull"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Exact binomial test (Agresti-Coull CI)
+
+data:  45 out of 70
+number of successes = 45, number of trials = 70, p-value = 0.02246
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.5256452 0.7452053
+sample estimates:
+probability of success 
+             0.6428571 
+\end{verbatim}
+
+The 95\% confidence interval for the proportion of people using medication B who obtain relief is (0.526, 0.745).
+
+\hypertarget{answer-3}{%
+\subsection{Answer 3}\label{answer-3}}
+
+The confidence intervals do overlap, so we cannot conclude from the separate intervals that there is (or isn't) a statistically significant difference in the effectiveness rates for medications A and B. If the confidence intervals didn't overlap, then we would know that there was a statistically significant difference in effectiveness between the two medications.
+
+\hypertarget{answer-4}{%
+\subsection{Answer 4}\label{answer-4}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{twobytwo}\NormalTok{(}\DecValTok{65}\OperatorTok{+}\DecValTok{2}\NormalTok{, }\DecValTok{20}\OperatorTok{+}\DecValTok{2}\NormalTok{, }\DecValTok{45}\OperatorTok{+}\DecValTok{2}\NormalTok{, }\DecValTok{25}\OperatorTok{+}\DecValTok{2}\NormalTok{, }\StringTok{"Med. A"}\NormalTok{, }\StringTok{"Med. B"}\NormalTok{, }\StringTok{"Relief"}\NormalTok{, }\StringTok{"No Relief"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : Relief 
+Comparing : Med. A vs. Med. B 
+
+       Relief No Relief    P(Relief) 95% conf. interval
+Med. A     67        22       0.7528    0.6530   0.8314
+Med. B     47        27       0.6351    0.5202   0.7365
+
+                                   95% conf. interval
+             Relative Risk: 1.1853    0.9610   1.4619
+         Sample Odds Ratio: 1.7495    0.8906   3.4370
+Conditional MLE Odds Ratio: 1.7435    0.8434   3.6398
+    Probability difference: 0.1177   -0.0233   0.2556
+
+             Exact P-value: 0.1234 
+        Asymptotic P-value: 0.1045 
+------------------------------------------------------
+\end{verbatim}
+
+\hypertarget{answer-5}{%
+\subsection{Answer 5}\label{answer-5}}
+
+The odds ratio is 1.75, with 95\% confidence interval (0.89, 3.44). The point estimate states that the odds of finding relief with medication A are 75\% higher than the odds of finding relief with medication B. But the confidence interval indicates that, with 95\% confidence, we can conclude only that the odds of relief with medication A are between 0.89 and 3.44 times as high as the odds of relief with medication B. Note that 1 is included in that interval.
+
+\hypertarget{answer-6}{%
+\subsection{Answer 6}\label{answer-6}}
+
+\begin{itemize}
+\tightlist
+\item
+  \(H_0\): Medication Choice (A or B) is unrelated to the probability of Relief
+\item
+  \(H_A\): Medication Choice and Relief are associated
+\end{itemize}
+
+The \emph{p} value is 0.12, from the Fisher exact test. This means that we must retain the null hypothesis, and we cannot conclude that there is a detectable association between Medication choice and the probability of Relief based on this sample.
+
+\hypertarget{answer-7}{%
+\subsection{Answer 7}\label{answer-7}}
+
+You would have made a Type II error. A Type II error can be made if you incorrectly retain \(H_0\). Since we retain \(H_0\), if we've made an error, it must have been a Type II error, since a Type I error occurs when you incorrectly reject \(H_0\).
+
+\hypertarget{answer-8}{%
+\subsection{Answer 8}\label{answer-8}}
+
+This is FALSE. Sufficient evidence to reject \(H_0\) at the 10\% level means that we have a \emph{p} value \textless{} 0.10. In order to have sufficient evidence to reject \(H_0\) at the 5\% level, we'd need to have a \emph{p} value \textless{} 0.05. If our \emph{p} \textless{} 0.10, this doesn't guarantee that it is also true that \emph{p} \textless{} 0.05.
+
+\hypertarget{answer-9}{%
+\subsection{Answer 9}\label{answer-9}}
+
+Also FALSE. The mean of a sample will approach a Normal distribution, but if the data are skewed, the data will still be skewed no matter how many observations we see.
+
+\hypertarget{answer-10}{%
+\subsection{Answer 10}\label{answer-10}}
+
+These samples are paired by the pot. Each pot provides a cross-fertilized seedling height and a self-fertilized seedling height. We should be comparing paired differences.
+
+\hypertarget{answer-11}{%
+\subsection{Answer 11}\label{answer-11}}
+
+We need a plot of the 15 paired differences, for example a boxplot, or a normal Q-Q plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{darwin <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"data/darwin.csv"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{clean_names}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Parsed with column specification:
+cols(
+  pair = col_double(),
+  `cross-fertilized` = col_double(),
+  `self-fertilized` = col_double()
+)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{darwin <-}\StringTok{ }\NormalTok{darwin }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{diffs =}\NormalTok{ cross_fertilized }\OperatorTok{-}\StringTok{ }\NormalTok{self_fertilized)}
+
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(darwin, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ diffs)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_violin}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"forestgreen"}\NormalTok{, }\DataTypeTok{outlier.color =} \StringTok{"forestgreen"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Boxplot"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Difference in Seedling Height (inches)"}\NormalTok{, }\DataTypeTok{x =} \StringTok{""}\NormalTok{)}
+
+\NormalTok{p2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(darwin, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ diffs)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_qq}\NormalTok{(}\DataTypeTok{col =} \StringTok{"forestgreen"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_qq_line}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Normal Q-Q"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Difference in Seedling Height (inches)"}\NormalTok{, }\DataTypeTok{x =} \StringTok{""}\NormalTok{)}
+
+\NormalTok{p1 }\OperatorTok{+}\StringTok{ }\NormalTok{p2 }\OperatorTok{+}
+\StringTok{  }\KeywordTok{plot_annotation}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Cross-Self Fertilized Difference in Seedling Height"}\NormalTok{,}
+                  \DataTypeTok{subtitle =} \StringTok{"in inches for 15 pairs of seedlings"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/a11-1.pdf}
+
+It appears that we have two low outliers out of the 15 paired differences. Assuming normality seems inappropriate here. I would probably use a Wilcoxon approach instead.
+
+\hypertarget{answer-12}{%
+\subsection{Answer 12}\label{answer-12}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{wilcox.test}\NormalTok{(darwin}\OperatorTok{$}\NormalTok{diffs, }\DataTypeTok{conf.int=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{conf.level=}\FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Wilcoxon signed rank exact test
+
+data:  darwin$diffs
+V = 96, p-value = 0.04126
+alternative hypothesis: true location is not equal to 0
+95 percent confidence interval:
+ 0.5000 5.1875
+sample estimates:
+(pseudo)median 
+         3.125 
+\end{verbatim}
+
+The cross-self differences appear to have a population pseudomedian which we are 95\% confident is between 0.5 and 5.2 inches. The cross-fertilized plants appear to be taller on average than the self-fertilized plants in the same pot.
+
+\hypertarget{answer-13}{%
+\subsection{Answer 13}\label{answer-13}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4310}\NormalTok{); Hmisc}\OperatorTok{::}\KeywordTok{smean.cl.boot}\NormalTok{(darwin}\OperatorTok{$}\NormalTok{diffs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    Mean    Lower    Upper 
+2.616667 0.316250 4.758958 
+\end{verbatim}
+
+This confidence interval is a bit narrower than the interval in item 12, and also shifted a bit closer to zero. We are 95\% confident that the population mean cross-self difference is between 0.3 and 4.8 inches.
+
+\hypertarget{answer-14}{%
+\subsection{Answer 14}\label{answer-14}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{power.t.test}\NormalTok{(}\DataTypeTok{n =} \DecValTok{120}\NormalTok{, }\DataTypeTok{delta =} \FloatTok{3.5}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{9}\NormalTok{, }\DataTypeTok{sig.level =} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+     Two-sample t test power calculation 
+
+              n = 120
+          delta = 3.5
+             sd = 9
+      sig.level = 0.05
+          power = 0.8508717
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+\end{verbatim}
+
+Such a test will have just over 85\% power to detect the specified minimum clinically meaningful difference of 3.5 mm Hg, using a 5\% two-sided significance level.
+
+\hypertarget{answer-15}{%
+\subsection{Answer 15}\label{answer-15}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{power.t.test}\NormalTok{(}\DataTypeTok{power=}\FloatTok{0.9}\NormalTok{, }\DataTypeTok{delta =} \FloatTok{3.5}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{9}\NormalTok{, }\DataTypeTok{sig.level =} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+     Two-sample t test power calculation 
+
+              n = 139.9227
+          delta = 3.5
+             sd = 9
+      sig.level = 0.05
+          power = 0.9
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+\end{verbatim}
+
+The minimum sample size we'll need is 140 subjects in each approach (A and B), so that's a total sample size of 280, to achieve 90\% or higher power for the specified test while still using independent samples.
 
   \bibliography{book.bib,packages.bib}
 

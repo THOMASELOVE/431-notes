@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.2" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#skew"><i class="fa fa-check"></i><b>5.4.2</b> Skew</a></li>
 <li class="chapter" data-level="5.4.3" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#kurtosis"><i class="fa fa-check"></i><b>5.4.3</b> Kurtosis</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#more-detailed-numerical-summaries-for-quantitative-variables"><i class="fa fa-check"></i><b>5.5</b> More Detailed Numerical Summaries for Quantitative Variables</a><ul>
+<li class="chapter" data-level="5.5" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#numerical-summaries-for-quantitative-variables"><i class="fa fa-check"></i><b>5.5</b> Numerical Summaries for Quantitative Variables</a><ul>
 <li class="chapter" data-level="5.5.1" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#favstats-in-the-mosaic-package"><i class="fa fa-check"></i><b>5.5.1</b> <code>favstats</code> in the <code>mosaic</code> package</a></li>
 <li class="chapter" data-level="5.5.2" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#describe-in-the-psych-package"><i class="fa fa-check"></i><b>5.5.2</b> <code>describe</code> in the <code>psych</code> package</a></li>
 <li class="chapter" data-level="5.5.3" data-path="summarizing-quantities.html"><a href="summarizing-quantities.html#the-hmisc-packages-version-of-describe"><i class="fa fa-check"></i><b>5.5.3</b> The <code>Hmisc</code> package’s version of <code>describe</code></a></li>
@@ -529,8 +529,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="19.3" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#exploratory-data-analysis-for-paired-samples"><i class="fa fa-check"></i><b>19.3</b> Exploratory Data Analysis for Paired Samples</a><ul>
 <li class="chapter" data-level="19.3.1" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#the-paired-differences"><i class="fa fa-check"></i><b>19.3.1</b> The Paired Differences</a></li>
-<li class="chapter" data-level="19.3.2" data-path="confidence-intervals-for-a-mean.html"><a href="confidence-intervals-for-a-mean.html#numerical-summaries"><i class="fa fa-check"></i><b>19.3.2</b> Numerical Summaries</a></li>
-<li class="chapter" data-level="19.3.3" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#impact-of-matching---scatterplot-and-correlation"><i class="fa fa-check"></i><b>19.3.3</b> Impact of Matching - Scatterplot and Correlation</a></li>
+<li class="chapter" data-level="19.3.2" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#impact-of-matching---scatterplot-and-correlation"><i class="fa fa-check"></i><b>19.3.2</b> Impact of Matching - Scatterplot and Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#looking-at-separate-samples-using-pivot_longer"><i class="fa fa-check"></i><b>19.4</b> Looking at Separate Samples: Using <code>pivot_longer</code></a></li>
 <li class="chapter" data-level="19.5" data-path="comparing-means-with-paired-samples.html"><a href="comparing-means-with-paired-samples.html#estimating-the-difference-in-means-with-paired-samples"><i class="fa fa-check"></i><b>19.5</b> Estimating the Difference in Means with Paired Samples</a><ul>
@@ -743,8 +742,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 25</span> Power and Sample Size for Comparing Two Population Proportions</h1>
 <div id="tuberculosis-prevalence-among-iv-drug-users" class="section level2">
 <h2><span class="header-section-number">25.1</span> Tuberculosis Prevalence Among IV Drug Users</h2>
-<p><span class="citation">Pagano and Gauvreau (<a href="#ref-PaganoGauvreau" role="doc-biblioref">2000</a>)</span> describe a study to investigate factors affecting tuberculosis prevalence among intravenous drug users. Among 97 individuals who admit to sharing needles, 24 (24.7%) had a positive tuberculin skin test result; among 161 drug users who deny sharing needles, 28 (17.4%) had a positive test result. To start, we’ll test the null hypothesis that the proportions of intravenous drug users who have a positive tuberculin skin test result are identical for those who share needles and those who do not.</p>
-<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="power-and-sample-size-for-comparing-two-population-proportions.html#cb836-1"></a><span class="kw">twobytwo</span>(<span class="dv">24</span>,<span class="dv">73</span>, <span class="dv">28</span>, <span class="dv">133</span>, </span>
+<p>Consider a study to investigate factors affecting tuberculosis prevalence among intravenous drug users. Among 97 individuals who admit to sharing needles, 24 (24.7%) had a positive tuberculin skin test result; among 161 drug users who deny sharing needles, 28 (17.4%) had a positive test result. To start, we’ll test the null hypothesis that the proportions of intravenous drug users who have a positive tuberculin skin test result are identical for those who share needles and those who do not.</p>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="power-and-sample-size-for-comparing-two-population-proportions.html#cb836-1"></a><span class="kw">twobytwo</span>(<span class="dv">24</span>, <span class="dv">73</span>, <span class="dv">28</span>, <span class="dv">133</span>, </span>
 <span id="cb836-2"><a href="power-and-sample-size-for-comparing-two-population-proportions.html#cb836-2"></a>         <span class="st">&quot;Sharing Needles&quot;</span>, <span class="st">&quot;Not Sharing&quot;</span>, </span>
 <span id="cb836-3"><a href="power-and-sample-size-for-comparing-two-population-proportions.html#cb836-3"></a>         <span class="st">&quot;TB test+&quot;</span>, <span class="st">&quot;TB test-&quot;</span>)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
@@ -890,12 +889,6 @@ NOTE: n is number in *each* group</code></pre>
 <p>Note that these two sample size estimation approaches are approximations, and use slightly different approaches, so it’s not surprising that the answers are similar, but not completely identical.</p>
 
 </div>
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-PaganoGauvreau">
-<p>Pagano, Marcello, and Kimberlee Gauvreau. 2000. <em>Principles of Biostatistics</em>. Second. Duxbury Press.</p>
 </div>
 </div>
             </section>

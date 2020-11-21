@@ -105,7 +105,7 @@ p1 + (p2 / p3 + plot_layout(heights = c(4,1))) +
 
 Note that in all of this work, I plotted the paired differences. One obvious way to tell if you have paired samples is that you can pair every single subject from one exposure group to a unique subject in the other exposure group. Everyone has to be paired, so the sample sizes will always be the same in the two groups. 
 
-### Numerical Summaries
+Here's a summary of the paired differences.
 
 ```{r, message=FALSE}
 mosaic::favstats(~ lead_diff, data = bloodlead)

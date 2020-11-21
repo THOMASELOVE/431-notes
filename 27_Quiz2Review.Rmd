@@ -1,0 +1,157 @@
+# Quiz 2 Review
+
+There are 15 items here, and then a set of answer sketches follow the questions. This **isn't a complete review** - there are no questions here about regression models, and that will certainly show up on Quiz 2, as an example.
+
+## Review Items 1-7
+
+Researchers comparing the effectiveness of two pain medications randomly selected a group of patients who had been complaining of a certain kind of joint pain. They randomly divided those people into two groups, then administered the medications. Of the 85 people in the group who received medication A, 65 said that it provided relief. Of the 70 people in the group receiving medication B, 45 reported that it provided relief.
+
+1. Use the Agresti-Coull approach to specify a 95% confidence interval for the proportion of people who find relief from this kind of joint pain by using medication A. 
+2. Now use the same approach to specify a 95% confidence interval for the proportion of people who find relief using medication B. 
+3. Do the confidence intervals in items 1 and 2 overlap? What conclusions can you draw in light of that overlap (or lack thereof) about whether medication A or medication B is clearly more effective?
+4. Specify and display the correct 2x2 table (incorporating a Bayesian augmentation) analysis to enable you to study the A - B difference in the true proportions of people who find these medications effective.
+5. Use the 2x2 table results to specify an appropriate odds ratio and its 95% confidence interval in this situation, and explain what the values mean in context.
+6. Specify the hypotheses ($H_0$ and $H_A$) tested by the Fisher exact test you obtain in your 2x2 table. What does the provided *p* value tell you about what conclusion you should draw in this case regarding those hypotheses?
+7. If you have made an error in your conclusion for item 6, was it a Type I error or a Type II error? How do you know?
+
+## Review Items 8-9
+
+For each of the following statements, indicate whether or not the statement is true or false, and specify how you know.
+
+8. If there is sufficient evidence to reject a null hypothesis at the 10% level, then there is sufficient evidence to reject it at the 5% level.
+9. A sample histogram will follow a normal distribution if the sample size is large enough.
+
+## Review Items 10-13
+
+Charles Darwin carried out an experiment to study whether seedlings from cross-fertilized plants tend to be superior to those from self-fertilized plants. He covered a number of plants with fine netting so that insects would be unable to fertilize them. He fertilized a number of flowers on each plant with their own pollen and he fertilized an equal number of flowers on the same plant with pollen from a distant plant. (He did not specify how he decided which flowers received which treatments.) The seeds from the flowers were allowed to ripen and were set in wet sand to germinate. He placed two seedlings of the same age in a pot, one from a seed from a self-fertilized flower and one from a cross-fertilized flower. 
+
+He repeated this process with a total of 15 such pots. Each pot was then set aside for a time, so that the two plants in the plot would receive similar exposure to atmospheric conditions (sun, rainfall, etc.). Later, he gathered the heights of the plants (in inches) that came from those 15 cross-fertilized and 15 self-fertilized seeds at certain points in time. Those data are contained in the `darwin.csv` data set on our course website.
+
+10. Does this study call for a paired samples or independent samples comparison? How do you know?
+11. Display and interpret an appropriate graph to determine whether a t-test or a Wilcoxon test would be more appropriate for these data.
+12. Use the method (t or Wilcoxon) you specified in item 11 to find an appropriate 95% confidence interval for the average height difference between cross-fertilized and self-fertilized seedlings. Verify that your confidence interval describes the "cross" - "self" difference, rather than the opposite direction.
+13. Use an appropriate bootstrap procedure (setting your random seed to be `4310`) to provide an alternative answer for the question posed in item 12. Is this bootstrap confidence interval wider or narrower than the interval you produced in item 12?
+
+## Review Items 14-15
+
+You have been asked how large a sample size will be required for a clinical trial comparing two different approaches to blood pressure control. In approach A, we believe that the average systolic blood pressure will drop by 7 mm Hg, on the basis of our prior work in this area, while in the new approach B, we hope to see a clinically meaningful additional decline - specifically, we are looking for at least a 50% larger decline, so that the average systolic blood pressure will drop by 10.5 mm Hg or more over the same amount of time. Thus, the minimum clinically meaningful difference we are looking for is 3.5 mm Hg. Suppose we believe that the relevant standard deviation is 9 mm Hg, and we want to complete the trial using a 5% significance level and a two-sided t test.
+
+14. What will be the power of the test if we have a balanced design with 120 subjects in approach A and 120 different subjects in approach B? Show your calculation, and state your final result in a sentence.
+15. What is the smallest total sample size that we can use in a balanced design to maintain at least 90% power to detect the difference of interest, while still using independent samples? Show your calculation, and state your final result in a sentence.
+
+## Answer Sketch for Review Items
+
+### Answer 1
+
+```{r a1}
+mosaic::binom.test(x = 65, n = 85, ci.method = "agresti-coull")
+```
+
+The 95% confidence interval for the proportion of people using medication A who obtain relief is (0.664, 0.843). We are 95% confident that the true percentage of people who find relief using medication A is between 66.4% and 84.3%.
+
+### Answer 2
+
+```{r a2}
+mosaic::binom.test(x = 45, n = 70, ci.method = "agresti-coull")
+```
+
+The 95% confidence interval for the proportion of people using medication B who obtain relief is (0.526, 0.745).
+
+### Answer 3
+
+The confidence intervals do overlap, so we cannot conclude from the separate intervals that there is (or isn't) a statistically significant difference in the effectiveness rates for medications A and B. If the confidence intervals didn't overlap, then we would know that there was a statistically significant difference in effectiveness between the two medications.
+
+### Answer 4
+
+```{r a4}
+twobytwo(65+2, 20+2, 45+2, 25+2, "Med. A", "Med. B", "Relief", "No Relief")
+```
+
+### Answer 5
+
+The odds ratio is 1.75, with 95% confidence interval (0.89, 3.44). The point estimate states that the odds of finding relief with medication A are 75% higher than the odds of finding relief with medication B. But the confidence interval indicates that, with 95% confidence, we can conclude only that the odds of relief with medication A are between 0.89 and 3.44 times as high as the odds of relief with medication B. Note that 1 is included in that interval.
+
+### Answer 6
+
+- $H_0$: Medication Choice (A or B) is unrelated to the probability of Relief
+- $H_A$: Medication Choice and Relief are associated
+
+The *p* value is 0.12, from the Fisher exact test. This means that we must retain the null hypothesis, and we cannot conclude that there is a detectable association between Medication choice and the probability of Relief based on this sample.
+
+### Answer 7
+
+You would have made a Type II error. A Type II error can be made if you incorrectly retain $H_0$. Since we retain $H_0$, if we've made an error, it must have been a Type II error, since a Type I error occurs when you incorrectly reject $H_0$.
+
+### Answer 8
+
+This is FALSE. Sufficient evidence to reject $H_0$ at the 10% level means that we have a *p* value < 0.10. In order to have sufficient evidence to reject $H_0$ at the 5% level, we'd need to have a *p* value < 0.05. If our *p* < 0.10, this doesn't guarantee that it is also true that *p* < 0.05.
+
+### Answer 9
+
+Also FALSE. The mean of a sample will approach a Normal distribution, but if the data are skewed, the data will still be skewed no matter how many observations we see.
+
+### Answer 10
+
+These samples are paired by the pot. Each pot provides a cross-fertilized seedling height and a self-fertilized seedling height. We should be comparing paired differences.
+
+### Answer 11
+
+We need a plot of the 15 paired differences, for example a boxplot, or a normal Q-Q plot.
+
+```{r a11}
+darwin <- read_csv("data/darwin.csv") %>% clean_names()
+
+darwin <- darwin %>%
+  mutate(diffs = cross_fertilized - self_fertilized)
+
+p1 <- ggplot(darwin, aes(x = 1, y = diffs)) +
+  geom_violin() +
+  geom_boxplot(width = 0.3, fill = "forestgreen", outlier.color = "forestgreen") +
+  labs(title = "Boxplot",
+       y = "Difference in Seedling Height (inches)", x = "")
+
+p2 <- ggplot(darwin, aes(sample = diffs)) +
+  geom_qq(col = "forestgreen", size = 2) +
+  geom_qq_line() +
+  labs(title = "Normal Q-Q",
+       y = "Difference in Seedling Height (inches)", x = "")
+
+p1 + p2 +
+  plot_annotation(title = "Cross-Self Fertilized Difference in Seedling Height",
+                  subtitle = "in inches for 15 pairs of seedlings")
+```
+
+It appears that we have two low outliers out of the 15 paired differences. Assuming normality seems inappropriate here. I would probably use a Wilcoxon approach instead.
+
+### Answer 12
+
+```{r a12}
+wilcox.test(darwin$diffs, conf.int=TRUE, conf.level=0.95)
+```
+
+The cross-self differences appear to have a population pseudomedian which we are 95% confident is between 0.5 and 5.2 inches. The cross-fertilized plants appear to be taller on average than the self-fertilized plants in the same pot.
+
+### Answer 13
+
+```{r a13}
+set.seed(4310); Hmisc::smean.cl.boot(darwin$diffs)
+```
+
+This confidence interval is a bit narrower than the interval in item 12, and also shifted a bit closer to zero. We are 95% confident that the population mean cross-self difference is between 0.3 and 4.8 inches.
+
+### Answer 14
+
+```{r a14}
+power.t.test(n = 120, delta = 3.5, sd = 9, sig.level = 0.05)
+```
+
+Such a test will have just over 85% power to detect the specified minimum clinically meaningful difference of 3.5 mm Hg, using a 5% two-sided significance level.
+
+### Answer 15
+
+```{r a15}
+power.t.test(power=0.9, delta = 3.5, sd = 9, sig.level = 0.05)
+```
+
+The minimum sample size we'll need is 140 subjects in each approach (A and B), so that's a total sample size of 280, to achieve 90% or higher power for the specified test while still using independent samples.
+

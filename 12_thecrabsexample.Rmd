@@ -36,13 +36,13 @@ crabs <- crabs %>%
 
 Here's a quick summary of the data. Take care to note the useless results for the first two variables. At least the function flags with a `*` those variables it thinks are non-numeric.
 
-```{r numerical summary of the data in crabs}
+```{r}
 psych::describe(crabs)
 ```
 
 Actually, we're more interested in these results after grouping by species.
 
-```{r numerical summary by species for force and height}
+```{r}
 crabs %>%
     group_by(species) %>%
     summarise(n = n(), median(force), median(height))
@@ -52,7 +52,7 @@ crabs %>%
 
 Suppose we want to describe force on the basis of height, across all 38 crabs. We'll add titles and identify the three species of crab, using shape and color.
 
-```{r crabsscatter1-fig}
+```{r}
 ggplot(crabs, aes(x = height, y = force, color = species, shape = species)) +
     geom_point(size = 3) +
     labs(title = "Crab Claw Force by Size", 
@@ -183,7 +183,7 @@ log(force) and log(height) | `r round(cor(log(crabs$force), log(crabs$height)),3
 
 ### The log-log model
 
-```{r log log model summary}
+```{r}
 crab_loglog <- lm(log(force) ~ log(height), data = crabs)
 
 summary(crab_loglog)
@@ -200,7 +200,7 @@ So, for example, if we found a crab with propodus height = 10 mm, our prediction
 
 ### How does this compare to our original linear model?
 
-```{r linear model summary}
+```{r}
 crab_linear <- lm(force ~ height, data = crabs)
 
 summary(crab_linear)

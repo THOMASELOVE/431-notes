@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Multiple Regression with the hydrate data | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</title>
+  <meta name="description" content="This book describes some fundamental approaches to doing biostatistical and data science in research." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Multiple Regression with the hydrate data | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This book describes some fundamental approaches to doing biostatistical and data science in research." />
+  <meta name="github-repo" content="thomaselove/431-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Multiple Regression with the hydrate data | Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431" />
+  
+  <meta name="twitter:description" content="This book describes some fundamental approaches to doing biostatistical and data science in research." />
+  
+
+<meta name="author" content="Thomas E. Love" />
+
+
+<meta name="date" content="2020-11-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-for-part-c.html"/>
+<link rel="next" href="regression-diagnostics.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Dr. Love's Notes for 431</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Working with These Notes</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#the-431-course-online"><i class="fa fa-check"></i>The 431 Course online</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#what-youll-find-here"><i class="fa fa-check"></i>What You’ll Find Here</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#setting-up-r"><i class="fa fa-check"></i>Setting Up R</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#initial-setup-of-r-packages"><i class="fa fa-check"></i>Initial Setup of R Packages</a></li>
+<li><a href="index.html#the-love-boost.r-script">The <code>Love-boost.R</code> script</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#additional-r-packages-installed-for-this-book"><i class="fa fa-check"></i>Additional R Packages installed for this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html"><i class="fa fa-check"></i><b>1</b> Larger Contingency Tables</a><ul>
+<li class="chapter" data-level="1.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#a-2x3-table-comparing-response-to-active-vs.-placebo"><i class="fa fa-check"></i><b>1.1</b> A 2x3 Table: Comparing Response to Active vs. Placebo</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#getting-the-table-into-r"><i class="fa fa-check"></i><b>1.1.1</b> Getting the Table into R</a></li>
+<li class="chapter" data-level="1.1.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#manipulating-the-tables-presentation"><i class="fa fa-check"></i><b>1.1.2</b> Manipulating the Table’s presentation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#accuracy-of-death-certificates-a-6x3-table"><i class="fa fa-check"></i><b>1.2</b> Accuracy of Death Certificates (A 6x3 Table)</a></li>
+<li class="chapter" data-level="1.3" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-pearson-chi-square-test-of-independence"><i class="fa fa-check"></i><b>1.3</b> The Pearson Chi-Square Test of Independence</a></li>
+<li class="chapter" data-level="1.4" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#three-way-tables-a-2x2xk-table-and-a-mantel-haenszel-analysis"><i class="fa fa-check"></i><b>1.4</b> Three-Way Tables: A 2x2xK Table and a Mantel-Haenszel Analysis</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#smoking-and-mortality-in-the-uk"><i class="fa fa-check"></i><b>1.4.1</b> Smoking and Mortality in the UK</a></li>
+<li class="chapter" data-level="1.4.2" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-whickham-data-with-age-too"><i class="fa fa-check"></i><b>1.4.2</b> The <code>whickham</code> data with age, too</a></li>
+<li class="chapter" data-level="1.4.3" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#checking-assumptions-the-woolf-test"><i class="fa fa-check"></i><b>1.4.3</b> Checking Assumptions: The Woolf test</a></li>
+<li class="chapter" data-level="1.4.4" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#the-cochran-mantel-haenszel-test"><i class="fa fa-check"></i><b>1.4.4</b> The Cochran-Mantel-Haenszel Test</a></li>
+<li class="chapter" data-level="1.4.5" data-path="larger-contingency-tables.html"><a href="larger-contingency-tables.html#without-the-continuity-correction"><i class="fa fa-check"></i><b>1.4.5</b> Without the Continuity Correction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="power-and-proportions.html"><a href="power-and-proportions.html"><i class="fa fa-check"></i><b>2</b> Power and Proportions</a><ul>
+<li class="chapter" data-level="2.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#tuberculosis-prevalence-among-iv-drug-users"><i class="fa fa-check"></i><b>2.1</b> Tuberculosis Prevalence Among IV Drug Users</a></li>
+<li class="chapter" data-level="2.2" data-path="power-and-proportions.html"><a href="power-and-proportions.html#designing-a-new-tb-study"><i class="fa fa-check"></i><b>2.2</b> Designing a New TB Study</a></li>
+<li class="chapter" data-level="2.3" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-power.prop.test-for-balanced-designs"><i class="fa fa-check"></i><b>2.3</b> Using <code>power.prop.test</code> for Balanced Designs</a></li>
+<li class="chapter" data-level="2.4" data-path="power-and-proportions.html"><a href="power-and-proportions.html#how-power.prop.test-works"><i class="fa fa-check"></i><b>2.4</b> How <code>power.prop.test</code> works</a></li>
+<li class="chapter" data-level="2.5" data-path="power-and-proportions.html"><a href="power-and-proportions.html#another-scenario"><i class="fa fa-check"></i><b>2.5</b> Another Scenario</a></li>
+<li class="chapter" data-level="2.6" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-the-pwr-library-for-unbalanced-designs"><i class="fa fa-check"></i><b>2.6</b> Using the <code>pwr</code> library for Unbalanced Designs</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#calculating-the-effect-size-h"><i class="fa fa-check"></i><b>2.6.1</b> Calculating the Effect Size <code>h</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="power-and-proportions.html"><a href="power-and-proportions.html#using-pwr.2p2n.test-in-r"><i class="fa fa-check"></i><b>2.7</b> Using <code>pwr.2p2n.test</code> in R</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="power-and-proportions.html"><a href="power-and-proportions.html#comparison-to-balanced-design"><i class="fa fa-check"></i><b>2.7.1</b> Comparison to Balanced Design</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="quiz-2-review.html"><a href="quiz-2-review.html"><i class="fa fa-check"></i><b>3</b> Quiz 2 Review</a><ul>
+<li class="chapter" data-level="3.1" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-1-7"><i class="fa fa-check"></i><b>3.1</b> Review Items 1-7</a></li>
+<li class="chapter" data-level="3.2" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-8-9"><i class="fa fa-check"></i><b>3.2</b> Review Items 8-9</a></li>
+<li class="chapter" data-level="3.3" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-10-13"><i class="fa fa-check"></i><b>3.3</b> Review Items 10-13</a></li>
+<li class="chapter" data-level="3.4" data-path="quiz-2-review.html"><a href="quiz-2-review.html#review-items-14-15"><i class="fa fa-check"></i><b>3.4</b> Review Items 14-15</a></li>
+<li class="chapter" data-level="3.5" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-sketch-for-review-items"><i class="fa fa-check"></i><b>3.5</b> Answer Sketch for Review Items</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-1"><i class="fa fa-check"></i><b>3.5.1</b> Answer 1</a></li>
+<li class="chapter" data-level="3.5.2" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-2"><i class="fa fa-check"></i><b>3.5.2</b> Answer 2</a></li>
+<li class="chapter" data-level="3.5.3" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-3"><i class="fa fa-check"></i><b>3.5.3</b> Answer 3</a></li>
+<li class="chapter" data-level="3.5.4" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-4"><i class="fa fa-check"></i><b>3.5.4</b> Answer 4</a></li>
+<li class="chapter" data-level="3.5.5" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-5"><i class="fa fa-check"></i><b>3.5.5</b> Answer 5</a></li>
+<li class="chapter" data-level="3.5.6" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-6"><i class="fa fa-check"></i><b>3.5.6</b> Answer 6</a></li>
+<li class="chapter" data-level="3.5.7" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-7"><i class="fa fa-check"></i><b>3.5.7</b> Answer 7</a></li>
+<li class="chapter" data-level="3.5.8" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-8"><i class="fa fa-check"></i><b>3.5.8</b> Answer 8</a></li>
+<li class="chapter" data-level="3.5.9" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-9"><i class="fa fa-check"></i><b>3.5.9</b> Answer 9</a></li>
+<li class="chapter" data-level="3.5.10" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-10"><i class="fa fa-check"></i><b>3.5.10</b> Answer 10</a></li>
+<li class="chapter" data-level="3.5.11" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-11"><i class="fa fa-check"></i><b>3.5.11</b> Answer 11</a></li>
+<li class="chapter" data-level="3.5.12" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-12"><i class="fa fa-check"></i><b>3.5.12</b> Answer 12</a></li>
+<li class="chapter" data-level="3.5.13" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-13"><i class="fa fa-check"></i><b>3.5.13</b> Answer 13</a></li>
+<li class="chapter" data-level="3.5.14" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-14"><i class="fa fa-check"></i><b>3.5.14</b> Answer 14</a></li>
+<li class="chapter" data-level="3.5.15" data-path="quiz-2-review.html"><a href="quiz-2-review.html#answer-15"><i class="fa fa-check"></i><b>3.5.15</b> Answer 15</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Part C. Building Models</b></span></li>
+<li class="chapter" data-level="4" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html"><i class="fa fa-check"></i><b>4</b> Introduction for Part C</a><ul>
+<li class="chapter" data-level="4.1" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#additional-reading"><i class="fa fa-check"></i><b>4.1</b> Additional Reading</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#scatterplots"><i class="fa fa-check"></i><b>4.2</b> Scatterplots</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#correlation-coefficients"><i class="fa fa-check"></i><b>4.3</b> Correlation Coefficients</a></li>
+<li class="chapter" data-level="4.4" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>4.4</b> Fitting a Linear Model</a></li>
+<li class="chapter" data-level="4.5" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#building-predictions-from-a-linear-model"><i class="fa fa-check"></i><b>4.5</b> Building Predictions from a Linear Model</a></li>
+<li class="chapter" data-level="4.6" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#data-sets-for-part-c"><i class="fa fa-check"></i><b>4.6</b> Data Sets for Part C</a></li>
+<li class="chapter" data-level="4.7" data-path="introduction-for-part-c.html"><a href="introduction-for-part-c.html#add-some-packages"><i class="fa fa-check"></i><b>4.7</b> Add Some Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html"><i class="fa fa-check"></i><b>5</b> Multiple Regression with the <code>hydrate</code> data</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#a-multiple-regression-for-recov.score"><i class="fa fa-check"></i><b>5.1</b> A Multiple Regression for <code>recov.score</code></a><ul>
+<li class="chapter" data-level="5.1.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-specification"><i class="fa fa-check"></i><b>5.1.1</b> Model Specification</a></li>
+<li class="chapter" data-level="5.1.2" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-residuals"><i class="fa fa-check"></i><b>5.1.2</b> Model Residuals</a></li>
+<li class="chapter" data-level="5.1.3" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-coefficients"><i class="fa fa-check"></i><b>5.1.3</b> Model Coefficients</a></li>
+<li class="chapter" data-level="5.1.4" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#interpreting-the-t-tests-last-predictor-in"><i class="fa fa-check"></i><b>5.1.4</b> Interpreting the t tests (last predictor in)</a></li>
+<li class="chapter" data-level="5.1.5" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#the-effect-of-collinearity"><i class="fa fa-check"></i><b>5.1.5</b> The Effect of Collinearity</a></li>
+<li class="chapter" data-level="5.1.6" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#confidence-intervals-for-the-slopes-in-a-multiple-regression-model"><i class="fa fa-check"></i><b>5.1.6</b> Confidence Intervals for the Slopes in a Multiple Regression Model</a></li>
+<li class="chapter" data-level="5.1.7" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#model-summaries"><i class="fa fa-check"></i><b>5.1.7</b> Model Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#anova-for-sequential-comparison-of-models"><i class="fa fa-check"></i><b>5.2</b> ANOVA for Sequential Comparison of Models</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#building-the-anova-table-for-the-model"><i class="fa fa-check"></i><b>5.2.1</b> Building The ANOVA Table for The Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#standardizing-the-coefficients-of-a-model"><i class="fa fa-check"></i><b>5.3</b> Standardizing the Coefficients of a Model</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#a-semi-standardized-model-for-the-hydrate-data"><i class="fa fa-check"></i><b>5.3.1</b> A Semi-Standardized Model for the <code>hydrate</code> data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#comparing-fits-of-several-possible-models-for-recovery-score"><i class="fa fa-check"></i><b>5.4</b> Comparing Fits of Several Possible Models for Recovery Score</a></li>
+<li class="chapter" data-level="5.5" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#comparing-model-fit-the-aic-or-akaike-information-criterion"><i class="fa fa-check"></i><b>5.5</b> Comparing Model Fit: The AIC, or Akaike Information Criterion</a></li>
+<li class="chapter" data-level="5.6" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#comparing-model-fit-with-the-bic-or-bayesian-information-criterion"><i class="fa fa-check"></i><b>5.6</b> Comparing Model Fit with the BIC, or Bayesian Information Criterion</a></li>
+<li class="chapter" data-level="5.7" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#making-predictions-for-new-data-prediction-vs.-confidence-intervals"><i class="fa fa-check"></i><b>5.7</b> Making Predictions for New Data: Prediction vs. Confidence Intervals</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#making-a-prediction-using-the-hydrate-data"><i class="fa fa-check"></i><b>5.7.1</b> Making a Prediction using the <code>hydrate</code> data</a></li>
+<li class="chapter" data-level="5.7.2" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#a-new-prediction"><i class="fa fa-check"></i><b>5.7.2</b> A New Prediction?</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="multiple-regression-with-the-hydrate-data.html"><a href="multiple-regression-with-the-hydrate-data.html#interpreting-the-regression-model-two-key-questions"><i class="fa fa-check"></i><b>5.8</b> Interpreting the Regression Model: Two Key Questions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html"><i class="fa fa-check"></i><b>6</b> Regression Diagnostics</a><ul>
+<li class="chapter" data-level="6.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-four-key-regression-assumptions"><i class="fa fa-check"></i><b>6.1</b> The Four Key Regression Assumptions</a></li>
+<li class="chapter" data-level="6.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-linearity-assumption"><i class="fa fa-check"></i><b>6.2</b> The Linearity Assumption</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#initial-scatterplots-for-the-straight-enough-condition"><i class="fa fa-check"></i><b>6.2.1</b> Initial Scatterplots for the “Straight Enough” Condition</a></li>
+<li class="chapter" data-level="6.2.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#residuals-vs.-predicted-values-to-check-for-non-linearity"><i class="fa fa-check"></i><b>6.2.2</b> Residuals vs. Predicted Values to Check for Non-Linearity</a></li>
+<li class="chapter" data-level="6.2.3" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#residuals-vs.-predictors-to-further-check-for-non-linearity"><i class="fa fa-check"></i><b>6.2.3</b> Residuals vs. Predictors To Further Check for Non-Linearity</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-independence-assumption"><i class="fa fa-check"></i><b>6.3</b> The Independence Assumption</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#residuals-vs.-fitted-values-to-check-for-dependence"><i class="fa fa-check"></i><b>6.3.1</b> Residuals vs. Fitted Values to Check for Dependence</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-constant-variance-assumption"><i class="fa fa-check"></i><b>6.4</b> The Constant Variance Assumption</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-scale-location-plot-to-check-for-non-constant-variance"><i class="fa fa-check"></i><b>6.4.1</b> The Scale-Location Plot to Check for Non-Constant Variance</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-the-equal-variances-assumption"><i class="fa fa-check"></i><b>6.4.2</b> Assessing the Equal Variances Assumption</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#the-normality-assumption"><i class="fa fa-check"></i><b>6.5</b> The Normality Assumption</a></li>
+<li class="chapter" data-level="6.6" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#outlier-diagnostics-points-with-unusual-residuals"><i class="fa fa-check"></i><b>6.6</b> Outlier Diagnostics: Points with Unusual Residuals</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#standardized-residuals"><i class="fa fa-check"></i><b>6.6.1</b> Standardized Residuals</a></li>
+<li class="chapter" data-level="6.6.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#checking-the-normality-assumption-with-a-plot"><i class="fa fa-check"></i><b>6.6.2</b> Checking the Normality Assumption with a Plot</a></li>
+<li class="chapter" data-level="6.6.3" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-the-size-of-the-standardized-residuals"><i class="fa fa-check"></i><b>6.6.3</b> Assessing the Size of the Standardized Residuals</a></li>
+<li class="chapter" data-level="6.6.4" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-standardized-residuals-with-an-outlier-test"><i class="fa fa-check"></i><b>6.6.4</b> Assessing Standardized Residuals with an Outlier Test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#outlier-diagnostics-identifying-points-with-unusually-high-leverage"><i class="fa fa-check"></i><b>6.7</b> Outlier Diagnostics: Identifying Points with Unusually High Leverage</a></li>
+<li class="chapter" data-level="6.8" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#outlier-diagnostics-identifying-points-with-high-influence-on-the-model"><i class="fa fa-check"></i><b>6.8</b> Outlier Diagnostics: Identifying Points with High Influence on the Model</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#assessing-the-value-of-cooks-distance"><i class="fa fa-check"></i><b>6.8.1</b> Assessing the Value of Cook’s Distance</a></li>
+<li class="chapter" data-level="6.8.2" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#index-plot-of-cooks-distance"><i class="fa fa-check"></i><b>6.8.2</b> Index Plot of Cook’s Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#running-a-regression-model-while-excluding-a-point"><i class="fa fa-check"></i><b>6.9</b> Running a Regression Model While Excluding A Point</a></li>
+<li class="chapter" data-level="6.10" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#summarizing-regression-diagnostics-for-431"><i class="fa fa-check"></i><b>6.10</b> Summarizing Regression Diagnostics for 431</a></li>
+<li class="chapter" data-level="6.11" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#back-to-hydrate-residual-diagnostics-for-dose-weight-model"><i class="fa fa-check"></i><b>6.11</b> Back to <code>hydrate</code>: Residual Diagnostics for Dose + Weight Model</a></li>
+<li class="chapter" data-level="6.12" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#violated-assumptions-problematic-residual-plots"><i class="fa fa-check"></i><b>6.12</b> Violated Assumptions: Problematic Residual Plots?</a></li>
+<li class="chapter" data-level="6.13" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#problems-with-linearity"><i class="fa fa-check"></i><b>6.13</b> Problems with Linearity</a></li>
+<li class="chapter" data-level="6.14" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#problems-with-non-normality-an-influential-point"><i class="fa fa-check"></i><b>6.14</b> Problems with Non-Normality: An Influential Point</a></li>
+<li class="chapter" data-level="6.15" data-path="regression-diagnostics.html"><a href="regression-diagnostics.html#problems-with-non-normality-skew"><i class="fa fa-check"></i><b>6.15</b> Problems with Non-Normality: Skew</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="multiple-regression-with-the-hydrate-data" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Multiple Regression with the <code>hydrate</code> data</h1>
+<p>Recall our study of dehydration recovery from earlier in these notes. The <code>hydrate</code> data describe the degree of recovery that takes place 90 minutes following treatment of moderate to severe dehydration, for 36 children diagnosed at a hospital’s main pediatric clinic.</p>
+<p>Upon diagnosis and study entry, patients were treated with an electrolytic solution at one of seven <code>dose</code> levels (0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0 mEq/l) in a frozen, flavored, ice popsicle. The degree of rehydration was determined using a subjective scale based on physical examination and parental input, converted to a 0 to 100 point scale, representing the percent of recovery (<code>recov.score</code>). Each child’s <code>age</code> (in years) and <code>weight</code> (in pounds) are also available.</p>
+<p>Previously, we looked at a scatterplot matrix for these data at the start of our discussion of a simple regression model. Let’s repeat that here.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="multiple-regression-with-the-hydrate-data.html#cb92-1"></a>GGally<span class="op">::</span><span class="kw">ggpairs</span>(dplyr<span class="op">::</span><span class="kw">select</span>(hydrate, age, weight, dose, recov.score), </span>
+<span id="cb92-2"><a href="multiple-regression-with-the-hydrate-data.html#cb92-2"></a>                <span class="dt">title =</span> <span class="st">&quot;Scatterplot Matrix for hydrate data&quot;</span>)</span></code></pre></div>
+<pre><code>Registered S3 method overwritten by &#39;GGally&#39;:
+  method from   
+  +.gg   ggplot2</code></pre>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>What can we conclude here?</p>
+<ul>
+<li>It looks like <code>recov.score</code> has a moderately strong negative relationship with both <code>age</code> and <code>weight</code> (with correlations in each case around -0.5), but a positive relationship with <code>dose</code> (correlation = 0.36).</li>
+<li>The distribution of <code>recov.score</code> looks to be pretty close to Normal. No potential predictors (<code>age</code>, <code>weight</code> and <code>dose</code>) show substantial non-Normality.</li>
+<li><code>age</code> and <code>weight</code>, as we’d expect, show a very strong and positive linear relationship, with <em>r</em> = 0.94</li>
+<li>Neither <code>age</code> nor <code>weight</code> shows a meaningful relationship with <code>dose</code>. (<em>r</em> = 0.16)</li>
+</ul>
+<div id="a-multiple-regression-for-recov.score" class="section level2">
+<h2><span class="header-section-number">5.1</span> A Multiple Regression for <code>recov.score</code></h2>
+<p>Our first multiple linear regression model will predict <code>recov.score</code> using three predictors: <code>dose</code>, <code>age</code> and <code>weight</code>.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="multiple-regression-with-the-hydrate-data.html#cb94-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = recov.score ~ dose + age + weight, data = hydrate)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.682  -6.492  -2.204   7.667  22.128 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  85.4764     5.9653  14.329 1.79e-15 ***
+dose          6.1697     1.7908   3.445  0.00161 ** 
+age           0.2770     2.2847   0.121  0.90428    
+weight       -0.5428     0.3236  -1.677  0.10325    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 9.923 on 32 degrees of freedom
+Multiple R-squared:  0.4584,	Adjusted R-squared:  0.4077 
+F-statistic:  9.03 on 3 and 32 DF,  p-value: 0.0001769</code></pre>
+<div id="model-specification" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Model Specification</h3>
+<pre><code>Call:
+lm(formula = recov.score ~ dose + age + weight)</code></pre>
+<p>The output begins by presenting the R function call. Here, we have a linear model, with <code>recov.score</code> being predicted using <code>dose</code>, <code>age</code> and <code>weight</code>, all from the <code>hydrate</code> data.</p>
+</div>
+<div id="model-residuals" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Model Residuals</h3>
+<pre><code>Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.682  -6.492  -2.204   7.667  22.128 </code></pre>
+<p>Next, we summarize the residuals, where Residual = Actual Value - Predicted Value.</p>
+<ul>
+<li>This gives us a sense of how incorrect our predictions are for the <code>hydrate</code> observations.
+<ul>
+<li>The residuals will center near 0 (least squares is designed so the mean will always be zero, here the median prediction is 2.2 points too high)</li>
+<li>Here, we predicted a <code>recov.score</code> that was 16.68 points too high for one patient, and another of our predicted <code>recov.score</code> values was 22.13 points too low.</li>
+<li>The middle half of our predictions were between 6.5 points too high (so the residual = observed - predicted is -6.5) and 7.7 points too low.</li>
+</ul></li>
+</ul>
+</div>
+<div id="model-coefficients" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> Model Coefficients</h3>
+<pre><code>Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  85.4764     5.9653  14.329 1.79e-15 ***
+dose          6.1697     1.7908   3.445  0.00161 ** 
+age           0.2770     2.2847   0.121  0.90428    
+weight       -0.5428     0.3236  -1.677  0.10325    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The first column of this table gives the estimated coefficients for our model (including the intercept, and slopes for each of our three predictors). Our least squares equation is <code>recov.score</code> = 85.48 + 6.17 <code>dose</code> + 0.28 <code>age</code> - 0.54 <code>weight</code>.</p>
+</div>
+<div id="interpreting-the-t-tests-last-predictor-in" class="section level3">
+<h3><span class="header-section-number">5.1.4</span> Interpreting the t tests (last predictor in)</h3>
+<p>Next to each coefficient is its estimated standard error, followed by the coefficient’s t value (the coefficient value divided by the standard error), and the associated two-tailed <em>p</em> value. The <em>p</em> value addresses <span class="math inline">\(H_0\)</span>: This coefficient’s <span class="math inline">\(\beta\)</span> value = 0, as <strong>last predictor into the model</strong>.</p>
+<ul>
+<li>The t test of the intercept is rarely of interest, because
+<ol style="list-style-type: lower-alpha">
+<li>we rarely care about the situation that the intercept predicts; where all of the predictor variables are equal to zero, and</li>
+<li>we usually are going to keep the intercept in the model regardless of its statistical significance.</li>
+</ol></li>
+</ul>
+<p>The t test for dose tests the hypothesis that the slope of dose should be zero, as <strong>last predictor in</strong>.</p>
+<ul>
+<li>If the slope of <code>dose</code> was in fact zero, that would mean that knowing the <code>dose</code> information would be of no additional value in predicting the outcome after you have accounted for <code>age</code> and <code>weight</code> in your model.</li>
+<li><strong>Last predictor in</strong>
+<ul>
+<li>This <strong>last predictor in</strong> business means that the test is comparing a model with <code>dose</code>, <code>age</code> and <code>weight</code> to a model with <code>age</code> and <code>weight</code> alone, to see if the incremental benefit of adding dose provides statistically significant additional predictive value for <code>recov.score</code>.</li>
+<li>The t test tells us if <code>dose</code> is a useful addition to a model that already contains the other two variables.</li>
+<li>The <em>p</em> value = .0016, so, at any reasonable <span class="math inline">\(\alpha\)</span> level, the <code>dose</code> received is a significant part of the predictive model, even after accounting for <code>age</code> and <code>weight</code>.</li>
+</ul></li>
+</ul>
+<div id="the-t-test-of-age" class="section level4">
+<h4><span class="header-section-number">5.1.4.1</span> The t test of <code>age</code></h4>
+<p>The t test of <code>age</code> tests <span class="math inline">\(H_0\)</span>: <code>age</code> has no predictive value for <code>recov.score</code> as last predictor in.</p>
+<ul>
+<li>Here <em>p</em> = .9043, which indicates that <code>age</code> doesn’t add statistically significant predictive value to the model once we have adjusted for <code>dose</code> and <code>weight</code>.</li>
+<li>This <strong>does not</strong> mean that <code>age</code>, by itself, has no linear relationship with <code>recov.score</code>, but it does mean that in this model, it doesn’t help to add <code>age</code> once we already have <code>dose</code> and <code>weight</code>.</li>
+<li>This shouldn’t be surprising, given the strong correlation between <code>age</code> and <code>weight</code> shown in the scatterplot matrix.</li>
+</ul>
+</div>
+<div id="the-t-test-of-weight" class="section level4">
+<h4><span class="header-section-number">5.1.4.2</span> The t test of <code>weight</code></h4>
+<p>The t test of weight tests the null hypothesis that <code>weight</code> has no predictive value for <code>recov.score</code> as last predictor in.</p>
+<ul>
+<li>Here <em>p</em> = .1032, which is better than we saw in the <code>age</code> variable, but still indicates that <code>weight</code> adds no significant predictive value to the model for <code>recov.score</code> if we already have <code>dose</code> and <code>age</code>.</li>
+</ul>
+</div>
+</div>
+<div id="the-effect-of-collinearity" class="section level3">
+<h3><span class="header-section-number">5.1.5</span> The Effect of Collinearity</h3>
+<p>The situation we see here with <code>age</code> and <code>weight</code>, where two predictors are highly correlated with one another, making it hard to see significant predictive value for either one of them after the other is already in the model is referred to as <strong>collinearity</strong>.</p>
+<ul>
+<li>Our usual approach to dealing with this collinearity will be to consider dropping one predictor from our model, and refit.</li>
+<li>Dropping either predictor will likely have a fairly small impact on the fit quality of our model, but if we drop both, we may do a lot of damage.</li>
+</ul>
+</div>
+<div id="confidence-intervals-for-the-slopes-in-a-multiple-regression-model" class="section level3">
+<h3><span class="header-section-number">5.1.6</span> Confidence Intervals for the Slopes in a Multiple Regression Model</h3>
+<p>Here are the confidence intervals for the coefficients of our multiple regression model.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="multiple-regression-with-the-hydrate-data.html#cb99-1"></a><span class="kw">confint</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>                2.5 %    97.5 %
+(Intercept) 73.325486 97.627225
+dose         2.521929  9.817450
+age         -4.376910  4.930819
+weight      -1.201974  0.116423</code></pre>
+<p>We conclude, for instance, with 95% confidence, that that true slope of dose is between 2.52 and 9.82 points on the recovery score scale.</p>
+<p>This is pretty different from the confidence interval we found for the slope of dose in a simple regression on dose alone that we saw previously, and repeat below.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="multiple-regression-with-the-hydrate-data.html#cb101-1"></a><span class="kw">confint</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose, <span class="dt">data =</span> hydrate), <span class="dt">level =</span> <span class="fl">.95</span>)</span></code></pre></div>
+<pre><code>                2.5 %    97.5 %
+(Intercept) 55.826922 71.964589
+dose         0.465695  9.295466</code></pre>
+<p>In both cases, the reasonable range of values for the slope of <code>dose</code> appears to be positive, but the range of values is much tighter in the multiple regression.</p>
+</div>
+<div id="model-summaries" class="section level3">
+<h3><span class="header-section-number">5.1.7</span> Model Summaries</h3>
+<pre><code>Residual standard error: 9.923 on 32 degrees of freedom
+Multiple R-squared:  0.4584,	Adjusted R-squared:  0.4077 
+F-statistic:  9.03 on 3 and 32 DF,  p-value: 0.0001769</code></pre>
+<p>The <strong>residual standard error</strong> estimates the standard deviation of our model’s errors to be 9.923.</p>
+<ul>
+<li>We’d expect roughly 95% of our residuals to fall between -2(9.923) and +2(9.923), or roughly -20 to +20.</li>
+<li>We’d expect to see virtually no residuals outside the range of <span class="math inline">\(\pm\)</span> 3(9.923) or roughly -30 to +30.</li>
+</ul>
+<p>The <strong>coefficient of determination</strong>, <span class="math inline">\(R^2\)</span>, is estimated to be 0.4584</p>
+<ul>
+<li>We accounted for just under 46% of the variation in <code>recov.score</code> using <code>dose</code>, <code>age</code> and <code>weight</code>.</li>
+</ul>
+<p><span class="math inline">\(R^2\)</span> will always suggest that we make our models as big as possible, often including variables of dubious predictive value.</p>
+<ul>
+<li>An important thing to realize is that <strong>if you add a variable to a model, <span class="math inline">\(R^2\)</span> cannot decrease</strong>.</li>
+<li>Similarly, removing a variable from a model, no matter how unrelated to the outcome, cannot increase the <span class="math inline">\(R^2\)</span> value.</li>
+<li>Thus, using <span class="math inline">\(R^2\)</span> as the be-all and end-all of model fit for a regression model goes against the general notion that we would like to have parsimonious models; that is to say, we favor simple models when possible.</li>
+</ul>
+<p>The overall ANOVA F test is presented last.</p>
+<ul>
+<li>The test gives an F-statistic of 9.03 on 3 and 32 degrees of freedom, yielding a p value of .00018.</li>
+<li>We can conclude (at any reasonable <span class="math inline">\(\alpha\)</span> level) that there is statistically significant predictive value somewhere in this model.</li>
+<li>The F test for a multiple regression is a very low standard; specifying only that we have conclusive evidence that some part of the model predicts the outcome to a degree beyond that easily attributed to chance alone.</li>
+<li>We return to the individual t tests to assess significance after adjusting for the other predictors.</li>
+<li>Concluding that the F test is significant means that the multiple <span class="math inline">\(R^2\)</span> accounted for by the model is also statistically significant.</li>
+</ul>
+<div id="verifying-the-r2-calculations" class="section level4">
+<h4><span class="header-section-number">5.1.7.1</span> Verifying the <span class="math inline">\(R^2\)</span> Calculations</h4>
+<p>The formula for <span class="math inline">\(R^2\)</span> is simply the sum of squares accounted for by the regression model divided by the total sum of squares.</p>
+<ul>
+<li>This is the same as 1 minus [residual sum of squares divided by total sum of squares].</li>
+<li>We can verify the calculation with the complete ANOVA table for this model</li>
+</ul>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="multiple-regression-with-the-hydrate-data.html#cb104-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>age, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>Analysis of Variance Table
+
+Response: recov.score
+          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+dose       1  752.15  752.15  7.6379 0.0093992 ** 
+weight     1 1914.07 1914.07 19.4370 0.0001097 ***
+age        1    1.45    1.45  0.0147 0.9042753    
+Residuals 32 3151.22   98.48                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>So <span class="math inline">\(R^2 = 1 - \frac{SS(Residual)}{SS(Total)} = 1 - \frac{3151.22}{752.15 + 1914.07 + 1.45 + 3151.22} = 1 - \frac{3151.22}{5818.89}\)</span> = 1 - 0.5416 = .4584</p>
+<p>If we are fitting a model to <em>n</em> data points, and we have <em>k</em> coefficients (slopes + intercept) in our model, then the model’s adjusted <span class="math inline">\(R^2\)</span> is <span class="math inline">\(R^2_{adj} = 1 - \frac{(1-R^2)(n - 1)}{n - k}\)</span>.</p>
+<p>In the <code>hydrate</code> data, we have <em>n</em> = 36 data points, and <em>k</em> = 4 coefficients (3 slopes, plus the intercept), so <span class="math inline">\(R^2_{adj} = 1 - \frac{(1-.4584)(36 - 1)}{36 - 4}\)</span> = .4077</p>
+<ul>
+<li>Again, the adjusted <span class="math inline">\(R^2\)</span> is <em>not</em> interpreted as a percentage of anything, and can in fact be negative.</li>
+<li><span class="math inline">\(R^2_{adj}\)</span> will always be less than the original <span class="math inline">\(R^2\)</span> so long as there is at least one predictor besides the intercept term, so that k &gt; 1 in the equation above.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="anova-for-sequential-comparison-of-models" class="section level2">
+<h2><span class="header-section-number">5.2</span> ANOVA for Sequential Comparison of Models</h2>
+<p>Outside of the main summary, we can also run a sequence of comparisons of the impact of various predictors in our model with the <code>anova</code> function.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="multiple-regression-with-the-hydrate-data.html#cb106-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>Analysis of Variance Table
+
+Response: recov.score
+          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+dose       1  752.15  752.15  7.6379 0.0093992 ** 
+age        1 1638.51 1638.51 16.6387 0.0002803 ***
+weight     1  277.01  277.01  2.8129 0.1032498    
+Residuals 32 3151.22   98.48                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>This ANOVA table is very different from the one we saw in our simple regression model. The various <em>p</em> values shown here indicate the significance of predictors taken in turn, specifically…</p>
+<ol style="list-style-type: decimal">
+<li>The <em>p</em> value for <span class="math inline">\(H_0\)</span>: <code>dose</code> has significant predictive value by itself is 0.009</li>
+<li>The <em>p</em> value for <span class="math inline">\(H_0\)</span>: <code>age</code> adds significant predictive value once you already have <code>dose</code> in the model is 0.0003</li>
+<li>The <em>p</em> value for <span class="math inline">\(H_0\)</span>: <code>weight</code> adds significant predictive value once you already have <code>dose</code> and <code>age</code> in the model (i.e. as last predictor in) is 0.1032</li>
+</ol>
+<p>Note that this last p value is the same as the t test for weight we have already seen in the main summary of the model.</p>
+<p>If we change the order of the predictors entering the model, the main summary of our linear model will not change, but these ANOVA results will change.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="multiple-regression-with-the-hydrate-data.html#cb108-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>age, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = recov.score ~ dose + weight + age, data = hydrate)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.682  -6.492  -2.204   7.667  22.128 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  85.4764     5.9653  14.329 1.79e-15 ***
+dose          6.1697     1.7908   3.445  0.00161 ** 
+weight       -0.5428     0.3236  -1.677  0.10325    
+age           0.2770     2.2847   0.121  0.90428    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 9.923 on 32 degrees of freedom
+Multiple R-squared:  0.4584,	Adjusted R-squared:  0.4077 
+F-statistic:  9.03 on 3 and 32 DF,  p-value: 0.0001769</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="multiple-regression-with-the-hydrate-data.html#cb110-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>weight <span class="op">+</span><span class="st"> </span>age, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>Analysis of Variance Table
+
+Response: recov.score
+          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+dose       1  752.15  752.15  7.6379 0.0093992 ** 
+weight     1 1914.07 1914.07 19.4370 0.0001097 ***
+age        1    1.45    1.45  0.0147 0.9042753    
+Residuals 32 3151.22   98.48                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<ul>
+<li>Does <code>age</code> add significant predictive value to the model including <code>dose</code> and <code>weight</code>?
+<ul>
+<li><strong>No</strong>, because the <em>p</em> value for <code>age</code> is 0.904 once we have previously accounted for <code>dose</code> and <code>weight</code>.</li>
+</ul></li>
+<li>Does <code>weight</code> add significant predictive value to the model that includes <code>dose</code> only?
+<ul>
+<li><strong>Yes</strong>, because the <em>p</em> value for <code>weight</code> is 0.00011 once we have accounted for <code>dose</code>.</li>
+</ul></li>
+</ul>
+<div id="building-the-anova-table-for-the-model" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Building The ANOVA Table for The Model</h3>
+<p>Sometimes, we want an ANOVA table for the Regression as a whole, to compare directly to the Residuals. We can build this by adding up the sums of squares and degrees of freedom from the individual predictors, then calculating the Mean Square and F ratio for the Regression.</p>
+<ul>
+<li>The degrees of freedom are easy. We have three predictors (slopes), each accounting for one DF, and we have 32 DF applied to the residuals, so total DF = n - 1 = 35</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">ANOVA Table</th>
+<th align="right">DF</th>
+<th align="right">SS</th>
+<th align="right">MS</th>
+<th align="right">F</th>
+<th align="right"><em>p</em> value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Regression</td>
+<td align="right">3</td>
+<td align="right">?</td>
+<td align="right">?</td>
+<td align="right">?</td>
+<td align="right">?</td>
+</tr>
+<tr class="even">
+<td align="right">Residuals</td>
+<td align="right">32</td>
+<td align="right">3151.22</td>
+<td align="right">98.48</td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">Total</td>
+<td align="right">35</td>
+<td align="right">?</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>To obtain the sum of squares due to the regression model, we just add the sums of squares for the individual predictors, so SS(Regression) = 752.15 + 1914.07 + 1.45 = 2667.67</li>
+<li>The total sum of squares is then the sum of SS(Regression) and SS(Residuals): here, 2667.67 + 3151.22 = 5818.89</li>
+<li>Now, we recall that the Mean Square for any row in this table is just the Sum of Squares divided by the degrees of freedom, so that MS(Regression) = 2667.67 / 3 = 889.22</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">ANOVA Table</th>
+<th align="right">DF</th>
+<th align="right">SS</th>
+<th align="right">MS</th>
+<th align="right">F</th>
+<th align="right"><em>p</em> value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Regression</td>
+<td align="right">3</td>
+<td align="right">2667.67</td>
+<td align="right">889.22</td>
+<td align="right">?</td>
+<td align="right">?</td>
+</tr>
+<tr class="even">
+<td align="right">Residuals</td>
+<td align="right">32</td>
+<td align="right">3151.22</td>
+<td align="right">98.48</td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">Total</td>
+<td align="right">35</td>
+<td align="right">5818.89</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The F ratio and p value can be obtained from the original summary of the model.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="right">ANOVA Table</th>
+<th align="right">DF</th>
+<th align="right">SS</th>
+<th align="right">MS</th>
+<th align="right">F</th>
+<th align="right"><em>p</em> value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Regression</td>
+<td align="right">3</td>
+<td align="right">2667.67</td>
+<td align="right">889.22</td>
+<td align="right">9.03</td>
+<td align="right">0.00018</td>
+</tr>
+<tr class="even">
+<td align="right">Residuals</td>
+<td align="right">32</td>
+<td align="right">3151.22</td>
+<td align="right">98.48</td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="right">Total</td>
+<td align="right">35</td>
+<td align="right">5818.89</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<p>We can use this to verify that the <span class="math inline">\(R^2\)</span> for the model is also equal to SS(Regression) / SS(Total)</p>
+<p><span class="math inline">\(R^2 = \frac{SS(Regression)}{SS(Total)} = \frac{2667.67}{5818.89}\)</span> = 0.4584</p>
+</div>
+</div>
+<div id="standardizing-the-coefficients-of-a-model" class="section level2">
+<h2><span class="header-section-number">5.3</span> Standardizing the Coefficients of a Model</h2>
+<p>Which of the three predictors: <code>dose</code>, <code>age</code> and <code>weight</code>, in our model for <code>recov.score</code>, has the largest effect?</p>
+<p>Sometimes, we want to express the coefficients of the regression in a standardized way, to compare the impact of each predictor within the model on a fairer scale. A common trick is to “standardize” each input variable (predictor) by subtracting its mean and dividing by its standard deviation. Each coefficient in this semi-standardized model is the expected difference in the outcome, comparing subjects that differ by one standard deviation in one variable with all other variables fixed at their average. R can do this rescaling quite efficiently, with the use of the <code>scale</code> function.</p>
+<div id="a-semi-standardized-model-for-the-hydrate-data" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> A Semi-Standardized Model for the <code>hydrate</code> data</h3>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="multiple-regression-with-the-hydrate-data.html#cb112-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(dose) <span class="op">+</span><span class="st"> </span><span class="kw">scale</span>(weight) <span class="op">+</span><span class="st"> </span><span class="kw">scale</span>(age), <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = recov.score ~ scale(dose) + scale(weight) + scale(age), 
+    data = hydrate)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.682  -6.492  -2.204   7.667  22.128 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    71.5556     1.6539  43.264  &lt; 2e-16 ***
+scale(dose)     5.8602     1.7010   3.445  0.00161 ** 
+scale(weight)  -8.0400     4.7937  -1.677  0.10325    
+scale(age)      0.5809     4.7925   0.121  0.90428    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 9.923 on 32 degrees of freedom
+Multiple R-squared:  0.4584,	Adjusted R-squared:  0.4077 
+F-statistic:  9.03 on 3 and 32 DF,  p-value: 0.0001769</code></pre>
+<p>The only things that change here are the estimates and standard errors of the coefficients: every other bit of the output is unchanged from our original summary.</p>
+<ul>
+<li>Each of the scaled covariates has mean zero and standard deviation one.
+<ul>
+<li><code>scale(dose)</code>, for instance, is obtained by subtracting the mean from the original <code>dose</code> variable (so the result is centered at zero) and dividing that by the standard deviation (so that <code>scale(dose)</code> has mean 0 and standard deviation 1.)</li>
+<li>We interpret the coefficient of <code>scale(dose)</code> = 5.86 as the change in our outcome (<code>recov.score</code>) that we anticipate when the dose increases by one standard deviation from its mean, while all of the other inputs (<code>weight</code> and <code>age</code>, specifically) remain at their means.</li>
+</ul></li>
+</ul>
+<p>This allows us to compare the effects on <code>recov.score</code> due to <code>dose</code>, to <code>weight</code> and to <code>age</code> in terms of a change of one standard deviation in each, while holding the others constant.</p>
+<ul>
+<li>Which of the inputs appears to have the biggest impact on recovery score in this sense?</li>
+</ul>
+<div id="interpreting-the-intercept-in-a-model-with-semi-standardized-coefficients" class="section level4">
+<h4><span class="header-section-number">5.3.1.1</span> Interpreting the Intercept in a Model with Semi-Standardized Coefficients</h4>
+<p>The semi-standardized model has an interesting intercept term. The intercept is equal to the mean of our outcome (<code>recov.score</code>) across the full set of subjects.</p>
+<ul>
+<li>When <code>scale(dose)</code>, <code>scale(weight)</code> and <code>scale(age)</code> are all zero, this means that <code>dose</code>, <code>weight</code> and <code>age</code> are at their means.</li>
+<li>So the intercept tells you the value of <code>recov.score</code> that we would predict when all of the scaled predictors are zero, e.g., when all of the original inputs to the model (<code>dose</code>, <code>weight</code> and <code>age</code>) are at their average values.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="comparing-fits-of-several-possible-models-for-recovery-score" class="section level2">
+<h2><span class="header-section-number">5.4</span> Comparing Fits of Several Possible Models for Recovery Score</h2>
+<p>Below, I summarize the results for five possible models for <code>recov.score</code>. What can we conclude? By this set of results, which of the models looks best?</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Model</th>
+<th align="left">Fitted Equation</th>
+<th align="right"><span class="math inline">\(R^2\)</span></th>
+<th align="right"><span class="math inline">\(R^2_{adj}\)</span></th>
+<th align="right">RSE</th>
+<th align="right">F test <em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">[Int]</td>
+<td align="left">71.6</td>
+<td align="right">-</td>
+<td align="right">-</td>
+<td align="right">12.89</td>
+<td align="right">-</td>
+</tr>
+<tr class="even">
+<td align="right">D</td>
+<td align="left">63.9 + 4.88 <code>dose</code></td>
+<td align="right">.1293</td>
+<td align="right">.1037</td>
+<td align="right">12.21</td>
+<td align="right">0.0313</td>
+</tr>
+<tr class="odd">
+<td align="right">DA</td>
+<td align="left">84.1 + 6.07 <code>dose</code> - 3.31 <code>age</code></td>
+<td align="right">.4108</td>
+<td align="right">.3751</td>
+<td align="right">10.19</td>
+<td align="right">0.0002</td>
+</tr>
+<tr class="even">
+<td align="right">DW</td>
+<td align="left">85.6 + 6.18 <code>dose</code> - 0.51 <code>weight</code></td>
+<td align="right">.4582</td>
+<td align="right">.4254</td>
+<td align="right">9.77</td>
+<td align="right">4.1e-05</td>
+</tr>
+<tr class="odd">
+<td align="right">DAW</td>
+<td align="left">85.5 + 6.17 <code>dose</code> + 0.28 <code>age</code> - 0.54 <code>weight</code></td>
+<td align="right">.4584</td>
+<td align="right">.4077</td>
+<td align="right">9.92</td>
+<td align="right">0.0002</td>
+</tr>
+</tbody>
+</table>
+<p>It appears as though the DW model is almost as good as the DAW model using the multiple <span class="math inline">\(R^2\)</span> as a criterion, and is the best of these five models using any of the other criteria.</p>
+<p>The five summaries I used to obtain this table were obtained with the following code (not evaluated here):</p>
+<pre><code>summary(lm(recov.score ~ 1))
+summary(lm(recov.score ~ dose))
+summary(lm(recov.score ~ dose + age))
+summary(lm(recov.score ~ dose + weight))
+summary(lm(recov.score ~ dose + age + weight))</code></pre>
+</div>
+<div id="comparing-model-fit-the-aic-or-akaike-information-criterion" class="section level2">
+<h2><span class="header-section-number">5.5</span> Comparing Model Fit: The AIC, or Akaike Information Criterion</h2>
+<p>Another summary we’ll use to evaluate a series of potential regression models for the same outcome is the Akaike Information Criterion or AIC. Smaller values indicate better models, by this criterion, which is just a measure of relative quality.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Model</th>
+<th align="right">Intercept only</th>
+<th align="right">D</th>
+<th align="right">DA</th>
+<th align="right">DW</th>
+<th align="right">DAW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">AIC</td>
+<td align="right">289.24</td>
+<td align="right">286.25</td>
+<td align="right">274.19</td>
+<td align="right">271.17</td>
+<td align="right">273.16</td>
+</tr>
+</tbody>
+</table>
+<p>By the AIC, DW looks best out of these five models.</p>
+<p><em>Note</em>: R uses the <code>AIC</code> function applied to a model to derive these results. For example,</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="multiple-regression-with-the-hydrate-data.html#cb115-1"></a><span class="kw">AIC</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>[1] 289.236</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="multiple-regression-with-the-hydrate-data.html#cb117-1"></a><span class="kw">AIC</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>[1] 273.1565</code></pre>
+</div>
+<div id="comparing-model-fit-with-the-bic-or-bayesian-information-criterion" class="section level2">
+<h2><span class="header-section-number">5.6</span> Comparing Model Fit with the BIC, or Bayesian Information Criterion</h2>
+<p>Another summary we’ll use to evaluate potential regression models for the same outcome is the Bayesian Information Criterion or BIC. Like the AIC, smaller values indicate better models, by this criterion, which is also a measure of relative quality.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Model</th>
+<th align="right">Intercept only</th>
+<th align="right">D</th>
+<th align="right">DA</th>
+<th align="right">DW</th>
+<th align="right">DAW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">BIC</td>
+<td align="right">292.4</td>
+<td align="right">291.0</td>
+<td align="right">280.5</td>
+<td align="right">277.5</td>
+<td align="right">281.1</td>
+</tr>
+</tbody>
+</table>
+<p>By the BIC, as well, DW looks best out of these five models.</p>
+<p>To obtain the results, just apply <code>BIC</code> instead of <code>AIC</code> to the model.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="multiple-regression-with-the-hydrate-data.html#cb119-1"></a><span class="kw">BIC</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>[1] 277.5071</code></pre>
+</div>
+<div id="making-predictions-for-new-data-prediction-vs.-confidence-intervals" class="section level2">
+<h2><span class="header-section-number">5.7</span> Making Predictions for New Data: Prediction vs. Confidence Intervals</h2>
+<p>The <code>predict</code> function, like the <code>fitted</code> function, when applied to a linear model, can produce the fitted values predicted by the model. Yet there is more we can do with <code>predict</code>.</p>
+<p>Suppose we want to use the model to predict our outcome (recovery score, or <code>recov.score</code>) on the basis of the three predictors (<code>dose</code>, <code>age</code> and <code>weight</code>.) Building an interval forecast around a fitted value requires us to decide whether we are:</p>
+<ul>
+<li>predicting the <code>recov.score</code> for <strong>one particular child</strong> with the specified characteristics (in which case we use something called a <strong>prediction interval</strong>) or</li>
+<li>predicting the mean <code>recov.score</code> across <strong>all children</strong> that have the specified <code>dose</code>, <code>age</code> and <code>weight</code> characteristics (in which case we use a <strong>confidence interval</strong>).</li>
+</ul>
+<p>The <em>prediction</em> interval will always be wider than the related <em>confidence</em> interval.</p>
+<div id="making-a-prediction-using-the-hydrate-data" class="section level3">
+<h3><span class="header-section-number">5.7.1</span> Making a Prediction using the <code>hydrate</code> data</h3>
+<p>Now, suppose that we wish to predict a <code>recov.score</code> associated with <code>dose</code> = 2, <code>age</code> = 7 and <code>weight</code> = 50. The approach I would use follows…</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="multiple-regression-with-the-hydrate-data.html#cb121-1"></a>modela &lt;-<span class="st"> </span><span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate)</span>
+<span id="cb121-2"><a href="multiple-regression-with-the-hydrate-data.html#cb121-2"></a>newdata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dose =</span> <span class="dv">2</span>, <span class="dt">age =</span> <span class="dv">7</span>, <span class="dt">weight =</span> <span class="dv">50</span>)</span>
+<span id="cb121-3"><a href="multiple-regression-with-the-hydrate-data.html#cb121-3"></a><span class="kw">predict</span>(modela, newdata, <span class="dt">interval=</span><span class="st">&quot;prediction&quot;</span>, <span class="dt">level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>       fit      lwr      upr
+1 72.61563 52.05549 93.17577</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="multiple-regression-with-the-hydrate-data.html#cb123-1"></a><span class="kw">predict</span>(modela, newdata, <span class="dt">interval=</span><span class="st">&quot;confidence&quot;</span>, <span class="dt">level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>       fit      lwr     upr
+1 72.61563 68.85606 76.3752</code></pre>
+<p>So, our conclusions are:</p>
+<ul>
+<li>If we have one particular child with <code>dose</code> = 2, <code>age</code> = 7 and <code>weight</code> = 50, we have 95% confidence that the <code>recov.score</code> for this child will be between 52.1 and 93.2.</li>
+<li>If we have a large group of children with <code>dose</code> = 2, <code>age</code> = 7 and <code>weight</code> = 50, we have 95% confidence that the average <code>recov.score</code> for these children will be between 68.9 and 76.4.</li>
+</ul>
+</div>
+<div id="a-new-prediction" class="section level3">
+<h3><span class="header-section-number">5.7.2</span> A New Prediction?</h3>
+<p>Suppose that now you wanted to make a prediction for a <code>recov.score</code> with <code>dose</code> = 1, <code>age</code> = 4 and <code>weight</code> = 60. Why would this be a meaningfully worse idea than the prediction we just made, and how does the plot below tell us this?</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="multiple-regression-with-the-hydrate-data.html#cb125-1"></a><span class="kw">ggplot</span>(hydrate, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> weight)) <span class="op">+</span></span>
+<span id="cb125-2"><a href="multiple-regression-with-the-hydrate-data.html#cb125-2"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb125-3"><a href="multiple-regression-with-the-hydrate-data.html#cb125-3"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Weight vs. Age in the hydrate data&quot;</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/p23b-1.png" width="672" /></p>
+</div>
+</div>
+<div id="interpreting-the-regression-model-two-key-questions" class="section level2">
+<h2><span class="header-section-number">5.8</span> Interpreting the Regression Model: Two Key Questions</h2>
+<p>Suppose we land, finally, on the DW model…</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="multiple-regression-with-the-hydrate-data.html#cb126-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(recov.score <span class="op">~</span><span class="st"> </span>dose <span class="op">+</span><span class="st"> </span>weight, <span class="dt">data =</span> hydrate))</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = recov.score ~ dose + weight, data = hydrate)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.613  -6.494  -2.118   7.599  22.248 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  85.5942     5.7971  14.765 4.25e-16 ***
+dose          6.1753     1.7633   3.502  0.00135 ** 
+weight       -0.5061     0.1131  -4.476 8.56e-05 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 9.774 on 33 degrees of freedom
+Multiple R-squared:  0.4582,	Adjusted R-squared:  0.4254 
+F-statistic: 13.95 on 2 and 33 DF,  p-value: 4.058e-05</code></pre>
+<p>Suppose we decide that this model is a reasonable choice, based on adherence to regression assumptions (as we’ll discuss shortly), and quality of fit as measured both by <span class="math inline">\(R^2\)</span> measures, the various hypothesis tests, and the information criteria (AIC and BIC).</p>
+<p><strong>Question 1. Can we summarize the model and how well it fits the data in a reasonable English sentence or two?</strong></p>
+<ul>
+<li>Together, dose and weight account for just under 46% of the variation in recovery scores, and this is highly statistically significant (<em>p</em> &lt; 0.001). Higher recovery scores are associated with higher doses and with lower weights among the 36 children assessed in this study.</li>
+</ul>
+<p><strong>Question 2. How might we interpret the coefficient of <code>dose</code> for someone who was smart but not a student of statistics?</strong></p>
+<ul>
+<li>If we have two kids who are the same weight, then if kid A receives a dose that is 1 mEq/L larger than kid B, we’d expect kid A’s recovery score to be a little over 6 points better than the score for kid B.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-for-part-c.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression-diagnostics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/29_MultipleRegression_Hydrate.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["431-notes.pdf", "431-notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

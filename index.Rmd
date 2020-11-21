@@ -103,7 +103,7 @@ source("data/Love-boost.R")
 
 ## Additional R Packages installed for this book {-}
 
-Some packages need to be installed on the user's system, but do not need to be loaded by R in order to run the code presented in this set of notes. These additional packages include the following.
+Some packages need to be installed on the user's system, but do not need to be loaded by R in order to run the code presented in this set of notes until later. These additional packages include the following.
 
 ```
 boot
