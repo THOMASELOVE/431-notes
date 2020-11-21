@@ -120,7 +120,7 @@
 
 \title{Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431}
 \author{Thomas E. Love}
-\date{2020-10-01}
+\date{2020-11-21}
 
 \begin{document}
 \maketitle
@@ -241,6 +241,8 @@ To start, I'll present a series of commands I run at the beginning of these Note
 \KeywordTok{library}\NormalTok{(palmerpenguins)}
 \KeywordTok{library}\NormalTok{(patchwork)}
 \KeywordTok{library}\NormalTok{(rms)}
+\KeywordTok{library}\NormalTok{(mosaic)}
+\KeywordTok{library}\NormalTok{(Epi)}
 \KeywordTok{library}\NormalTok{(tidymodels) }\CommentTok{# note: tidymodels includes the broom package}
 \KeywordTok{library}\NormalTok{(tidyverse) }\CommentTok{# note: tidyverse includes the dplyr and ggplot2 packages}
 
@@ -271,12 +273,10 @@ Some packages need to be installed on the user's system, but do not need to be l
 \begin{verbatim}
 boot
 car
-Epi
 GGally
 gt
 psych
 modelsummary
-mosaic
 naniar
 visdat
 \end{verbatim}
@@ -12946,9 +12946,9 @@ So we have \emph{N} = 32 pairs, with \(W\) = 28 that are positive. We then use t
 
 \begin{verbatim}
 
-	Exact binomial test
 
-data:  28 and 32
+
+data:  28 out of 32
 number of successes = 28, number of trials = 32, p-value = 1.93e-05
 alternative hypothesis: true probability of success is not equal to 0.5
 95 percent confidence interval:
@@ -15284,6 +15284,1153 @@ We saw earlier that a test with 60 subjects in each group would yield just under
 As we'd expect, the power is stronger for a balanced design than for an unbalanced design with the same overall sample size.
 
 Note that I used a two-sided test to establish my power calculation -- in general, this is the most conservative and defensible approach for any such calculation, \textbf{unless there is a strong and specific reason to use a one-sided approach in building a power calculation, don't}.
+
+\hypertarget{estimating-a-population-proportion}{%
+\chapter{Estimating a Population Proportion}\label{estimating-a-population-proportion}}
+
+We've focused on creating statistical inferences about a population mean, or difference between means, where we care about a quantitative outcome. Now, we'll tackle \textbf{categorical} outcomes, by estimating a confidence interval around a population proportion.
+
+\hypertarget{a-first-example-serum-zinc-in-the-normal-range}{%
+\section{A First Example: Serum Zinc in the ``Normal'' Range?}\label{a-first-example-serum-zinc-in-the-normal-range}}
+
+Recall that in the serum zinc study, we have 462 teenage male subjects, of whom 395 (or 85.5\%) fell in the ``normal range'' of 66 to 110 micrograms per deciliter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{serzinc <-}\StringTok{ }\NormalTok{serzinc }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{in_range =} \KeywordTok{ifelse}\NormalTok{(zinc }\OperatorTok{>=}\StringTok{ }\DecValTok{66} \OperatorTok{&}\StringTok{ }\NormalTok{zinc }\OperatorTok{<=}\StringTok{ }\DecValTok{110}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+
+\NormalTok{serzinc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tabyl}\NormalTok{(in_range) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{adorn_totals}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{adorn_pct_formatting}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ in_range   n percent
+        0  67   14.5%
+        1 395   85.5%
+    Total 462  100.0%
+\end{verbatim}
+
+Previously, we estimated a confidence interval for the \emph{mean} of the population zinc levels. Now, we want to estimate a confidence interval for the \emph{proportion} of the population whose serum zinc levels are in the range of 66 to 110. We want to build both a point estimate for the population proportion, and a confidence interval for the population proportion.
+
+Now, let's identify a 95\% confidence interval for the proportion of the population whose zinc levels are within the ``normal'' range. We have seen that 395 / 462 subjects (or a proportion of 0.855) fall in the ``normal range'' in our sample. For now, that will also be our \emph{point estimate} of the proportion in the ``normal range'' across the entire population of teenagers like those in our sample.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{serzinc <-}\StringTok{ }\NormalTok{serzinc }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{in_range =} \KeywordTok{ifelse}\NormalTok{(zinc }\OperatorTok{>}\StringTok{ }\DecValTok{65} \OperatorTok{&}\StringTok{ }\NormalTok{zinc }\OperatorTok{<}\StringTok{ }\DecValTok{111}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+
+\NormalTok{serzinc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tabyl}\NormalTok{(in_range)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ in_range   n   percent
+        0  67 0.1450216
+        1 395 0.8549784
+\end{verbatim}
+
+Once we've created this 0-1 variable, there are several available approaches for wrapping a confidence interval around this proportion.
+
+\hypertarget{using-an-intercept-only-regression-again}{%
+\subsection{Using an Intercept-Only Regression Again?}\label{using-an-intercept-only-regression-again}}
+
+We might consider taking the same approach as we did with the population mean earlier:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model_zincprop <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(in_range }\OperatorTok{~}\StringTok{ }\DecValTok{1}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ serzinc)}
+
+\KeywordTok{tidy}\NormalTok{(model_zincprop, }\DataTypeTok{conf.int =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{conf =} \FloatTok{0.90}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r|r|r}
+\hline
+term & estimate & std.error & statistic & p.value & conf.low & conf.high\\
+\hline
+(Intercept) & 0.855 & 0.016 & 52.133 & 0 & 0.828 & 0.882\\
+\hline
+\end{tabular}
+
+While there are more powerful approaches to estimate a confidence interval around this proportion, this simple approach turns out not to be too bad, so long as the sample proportion isn't very close to either 0 or 1.
+
+\hypertarget{a-1001-alpha-confidence-interval-for-a-population-proportion}{%
+\subsection{\texorpdfstring{A 100(1-\(\alpha\))\% Confidence Interval for a Population Proportion}{A 100(1-\textbackslash alpha)\% Confidence Interval for a Population Proportion}}\label{a-1001-alpha-confidence-interval-for-a-population-proportion}}
+
+Suppose we want to estimate a confidence interval for an unknown population proportion, \(\pi\), on the basis of a random sample of n observations from that population which yields a sample proportion of p.~Note that this p is the sample proportion -- it's not a \emph{p} value.
+
+\begin{itemize}
+\tightlist
+\item
+  In our serum zinc example, we have n = 462 observations, with a sample proportion (``in range'') of p = 0.855.
+\end{itemize}
+
+A 100(1-\(\alpha\))\% confidence interval for the population proportion \(\pi\) can be created by using the standard normal distribution, the sample proportion, p, and the standard error of a sample proportion, which is defined as the square root of p multiplied by (1-p) divided by the sample size, n.~
+
+\begin{itemize}
+\tightlist
+\item
+  So the standard error is estimated in our serum zinc example as:
+\end{itemize}
+
+\[
+\sqrt{\frac{p (1-p)}{n}} = \sqrt{\frac{0.855(1-0.855)}{462}} = \sqrt{0.000268} = 0.016
+\]
+
+And thus, our confidence interval is \(p \pm Z_{\alpha/2} \sqrt{\frac{p(1-p)}{n}}\)
+
+where \(Z_{\alpha/2}\) = the value from a standard Normal distribution cutting off the top \(\alpha/2\) of the distribution, obtained in R by substituting the desired \(\alpha/2\) value into the following command: \texttt{qnorm(alpha/2,\ lower.tail=FALSE)}.
+
+\emph{Note}: This interval is reasonably accurate so long as np and n(1-p) are each at least 5.
+
+\begin{itemize}
+\item
+  For the serum zinc data, we have np = (462)(0.855) = 395 and n(1-p) = 462(1 - 0.855) = 67, so this should be ok.
+\item
+  For \(\alpha\) = 0.05, we have \(Z_{\alpha/2}\) = 1.96, approximately.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qnorm}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.959964
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Thus, for the serum zinc estimate, this confidence interval would be:
+\end{itemize}
+
+\[
+p \pm Z_{\alpha/2} \sqrt{\frac{p(1-p)}{n}} = 
+\frac{395}{462} \pm 1.96 \sqrt{\frac{0.855(1-0.855)}{462}} = 0.855 \pm 0.032
+\]
+
+or (0.823, 0.887).
+
+\hypertarget{using-binom.test-from-the-mosaic-package}{%
+\section{\texorpdfstring{Using \texttt{binom.test} from the \texttt{mosaic} package}{Using binom.test from the mosaic package}}\label{using-binom.test-from-the-mosaic-package}}
+
+I am aware of at least seven different procedures for estimating a confidence interval for a population proportion using R. All have minor weaknesses: none is importantly different from the others in many practical situations. Five of these methods are available using the \texttt{binom.test} function from the \texttt{mosaic} package in R.
+
+The general format for using the \texttt{binom.test} function is as follows:
+
+\begin{verbatim}
+mosaic::binom.test(x = 395,  # substitute in number of successes
+                   n = 462,  # substitute in number of trials
+                   conf.level = 0.95, # default confidence level
+                   p = 0.5,  # default null hypothesis proportion
+                   ci.method = "XXX") # see below for XXX options
+\end{verbatim}
+
+where the appropriate \texttt{ci.method} is obtained from the table below.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Approach & \texttt{ci.method} to be used\tabularnewline
+\midrule
+\endhead
+Wald & ``Wald''\tabularnewline
+Clopper-Pearson & ``Clopper-Pearson'' or ``binom.test''\tabularnewline
+Score & ``Score'' or ``prop.test''\tabularnewline
+Agresti-Coull & ``agresti-coull''\tabularnewline
+Plus4 & ``plus4''\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{the-wald-test-approach}{%
+\subsection{The Wald test approach}\label{the-wald-test-approach}}
+
+The Wald approach can be used to establish a very similar confidence interval to the one we calculated above, based on something called the Wald test.
+
+Here, we specify the \texttt{x} and \texttt{n} values. \texttt{n} is the total number of observations, and \texttt{x} is the number where the event of interest (in this case, serum zinc levels in the normal range) occurs. So \texttt{x} = 395 and \texttt{n} = 462.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_wald <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{,}
+                     \DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                     \DataTypeTok{ci.method =} \StringTok{"Wald"}\NormalTok{)}
+\NormalTok{m_wald}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Exact binomial test (Wald CI)
+
+data:  395 out of 462
+number of successes = 395, number of trials = 462, p-value < 2.2e-16
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.8228698 0.8870869
+sample estimates:
+probability of success 
+             0.8549784 
+\end{verbatim}
+
+The Wald confidence interval is always symmetric around our point estimate, and can dip below 0 or above 1.
+
+When I fit intervals using the approaches in \texttt{mosaic::binom\_test()} I will usually tidy them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(m_wald) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high, statistic, parameter) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r}
+\hline
+estimate & conf.low & conf.high & statistic & parameter\\
+\hline
+0.855 & 0.823 & 0.887 & 395 & 462\\
+\hline
+\end{tabular}
+
+The other elements of the tidied result are shown below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(m_wald) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(method, alternative, p.value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  method                        alternative  p.value
+  <chr>                         <chr>          <dbl>
+1 Exact binomial test (Wald CI) two.sided   1.23e-57
+\end{verbatim}
+
+\hypertarget{the-clopper-pearson-approach}{%
+\subsection{The Clopper-Pearson approach}\label{the-clopper-pearson-approach}}
+
+The \texttt{binom.test} command can be used to establish an ``exact'' confidence interval. This uses the method of Clopper and Pearson from 1934, and is exact in the sense that it guarantees, for instance, that the confidence level associated with the interval is at least as large as the nominal level of 95\%, but not that the interval isn't wider than perhaps it needs to be.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_clopper <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{,}
+                                \DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                \DataTypeTok{ci.method =} \StringTok{"Clopper-Pearson"}\NormalTok{)}
+
+\NormalTok{m_clopper}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+
+
+data:  395 out of 462
+number of successes = 395, number of trials = 462, p-value < 2.2e-16
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.8195187 0.8858100
+sample estimates:
+probability of success 
+             0.8549784 
+\end{verbatim}
+
+Clopper-Pearson is used by \texttt{stats::binom.test()} in R as well. Again, it guarantees coverage at least as large as the nominal coverage rate, but may produce wider intervals than the other methods we'll see. The 95\% confidence interval by this method is (0.820, 0.886), which is in the same general range as our previous estimates.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(m_clopper) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high, statistic, parameter) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r}
+\hline
+estimate & conf.low & conf.high & statistic & parameter\\
+\hline
+0.855 & 0.82 & 0.886 & 395 & 462\\
+\hline
+\end{tabular}
+
+\hypertarget{the-score-approach}{%
+\subsection{The Score approach}\label{the-score-approach}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_score <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{,}
+                              \DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                              \DataTypeTok{ci.method =} \StringTok{"Score"}\NormalTok{)}
+
+\NormalTok{m_score}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Exact binomial test (Score CI without continuity correction)
+
+data:  395 out of 462
+number of successes = 395, number of trials = 462, p-value < 2.2e-16
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.8199415 0.8841607
+sample estimates:
+probability of success 
+             0.8549784 
+\end{verbatim}
+
+The Score approach is also used by \texttt{stats::prop.test()} and creates CIs by inverting p-values from score tests. It can be applied with a continuity correction (use \texttt{ci.method} = ``prop.test'') or without.
+
+In this case, we see that the Score approach and the Clopper-Pearson approach give very similar results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(m_score) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high, statistic, parameter) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r}
+\hline
+estimate & conf.low & conf.high & statistic & parameter\\
+\hline
+0.855 & 0.82 & 0.884 & 395 & 462\\
+\hline
+\end{tabular}
+
+As mentioned, the score test can also be run incorporating something called a \emph{continuity correction}, since we are using a Normal approximation to the exact binomial distribution to establish our margin for error. R, by default, includes this continuity correction for the Score test when we use \texttt{prop.test} to collect it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_score_cor <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{,}
+                                  \DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                  \DataTypeTok{ci.method =} \StringTok{"prop.test"}\NormalTok{)}
+
+\NormalTok{m_score_cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Exact binomial test (Score CI with continuity correction)
+
+data:  395 out of 462
+number of successes = 395, number of trials = 462, p-value < 2.2e-16
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.8187706 0.8851359
+sample estimates:
+probability of success 
+             0.8549784 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(m_score_cor) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high, statistic, parameter) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r}
+\hline
+estimate & conf.low & conf.high & statistic & parameter\\
+\hline
+0.855 & 0.819 & 0.885 & 395 & 462\\
+\hline
+\end{tabular}
+
+\hypertarget{the-agresti-coull-approach}{%
+\subsection{The Agresti-Coull Approach}\label{the-agresti-coull-approach}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_agresti <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{,}
+                                \DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                \DataTypeTok{ci.method =} \StringTok{"agresti-coull"}\NormalTok{)}
+
+\NormalTok{m_agresti}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Exact binomial test (Agresti-Coull CI)
+
+data:  395 out of 462
+number of successes = 395, number of trials = 462, p-value < 2.2e-16
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.8198094 0.8842928
+sample estimates:
+probability of success 
+             0.8549784 
+\end{verbatim}
+
+The Agresti-Coull approach is the Wald method after adding Z successes and Z failures to the data, where Z is the appropriate quantile for a standard Normal distribution (1.96 for a 95\% CI).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(m_agresti) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high, statistic, parameter) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r}
+\hline
+estimate & conf.low & conf.high & statistic & parameter\\
+\hline
+0.855 & 0.82 & 0.884 & 395 & 462\\
+\hline
+\end{tabular}
+
+\hypertarget{the-plus-4-approach}{%
+\subsection{The ``Plus 4'' approach}\label{the-plus-4-approach}}
+
+This approach is just the Wald method after adding 2 successes and 2 failures (so 4 observations) to the data. It will be very similar to the Agresti-Coull method if we are working with a 95\% confidence interval.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m_plus4 <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{,}
+                              \DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                              \DataTypeTok{ci.method =} \StringTok{"plus4"}\NormalTok{)}
+
+\NormalTok{m_plus4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+	Exact binomial test (Plus 4 CI)
+
+data:  395 out of 462
+number of successes = 395, number of trials = 462, p-value < 2.2e-16
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.8196844 0.8841783
+sample estimates:
+probability of success 
+             0.8549784 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(m_plus4) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high, statistic, parameter) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r}
+\hline
+estimate & conf.low & conf.high & statistic & parameter\\
+\hline
+0.855 & 0.82 & 0.884 & 395 & 462\\
+\hline
+\end{tabular}
+
+\hypertarget{saifs-single-augmentation-with-an-imaginary-failure-or-success}{%
+\subsection{SAIFS: single augmentation with an imaginary failure or success}\label{saifs-single-augmentation-with-an-imaginary-failure-or-success}}
+
+SAIFS stands for ``single augmentation with an imaginary failure or success'' and the method I'll describe is one of several similar approaches. The next subsection describes the R code for calculating the relevant confidence interval.
+
+An approach I like for the estimation of a confidence interval for a single population proportion/rate\footnote{See Borkowf CB (2006) Constructing binomial confidence intervals with near nominal coverage by adding a single imaginary failure or success. Statistics in Medicine. 25(21): 3679-3695. doi: 10.1002/sim.2469, or get the whole PDF of the paper at http://onlinelibrary.wiley.com/doi/10.1002/sim.2469/pdf} is to estimate the lower bound of a confidence interval with an imaginary failure added to the observed data, and estimate the upper bound of a confidence interval with an imaginary success added to the data.
+
+Suppose we have X successes in n trials, and we want to establish a confidence interval for the population proportion of successes.
+
+Let \(p_1 = (X+0)/(n+1), p_2 = (X+1)/(n+1), q_1 = 1 - p_1, q_2 = 1 - p_2\)
+
+\begin{itemize}
+\item
+  The lower bound of a 100(1-\(\alpha\))\% confidence interval for the population proportion of successes using the SAIFS procedure is then \(LB_{SAIFS}(x,n,\alpha) = p_1 - t_{\alpha/2, n-1}\sqrt{\frac{p_1 q_1}{n}}\)
+\item
+  The upper bound of that same 100(1-\(\alpha\))\% confidence interval for the population proportion of successes using the SAIFS procedure is \(UB_{SAIFS}(x,n,\alpha) = p_2 + t_{\alpha/2, n-1}\sqrt{\frac{p_2 q_2}{n}}\)
+\end{itemize}
+
+Returning to the serum zinc example, we've got 395 ``successes'' (value in the normal range) out of 462 ``trials'' (values measured), so that X = 395 and n = 462
+
+So we have \(p_1 = \frac{X + 0}{n + 1} = \frac{395}{463} = 0.8531\), \(p_2 = \frac{X + 1}{n + 1} = \frac{396}{463} = 0.8553\), and \(q_1 = 1 - p_1 = 0.1469\) and \(q_2 = 1 - p_2 = 0.1447\)
+
+We have \(n = 462\) so if we want a 95\% confidence interval (\(\alpha = 0.05\)), then we have \(t_{\alpha/2, n-1} = t_{0.025, 461} = 1.9651\), which I determined using R's \texttt{qt} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qt}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\DataTypeTok{df =} \DecValTok{461}\NormalTok{, }\DataTypeTok{lower.tail=}\OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.965123
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Thus, our lower bound for a 95\% confidence interval is \(p_1 - t_{\alpha/2, n-1}\sqrt{\frac{p_1 q_1}{n}}\), or \(0.8531 - 1.9651 \sqrt{\frac{0.8531(0.1469)}{462}}\), which is 0.8531 - 0.0324 or 0.8207.
+\item
+  Our upper bound is \(p_2 + t_{\alpha/2, n-1}\sqrt{\frac{p_2 q_2}{n}}\), or \(0.8553 - 1.9651 \sqrt{\frac{0.8553(0.1447)}{462}}\), which is 0.8553 + 0.0323, or 0.8876.
+\end{itemize}
+
+So the 95\% SAIFS confidence interval estimate for the population proportion, \(\pi\), of teenage males whose serum zinc levels fall within the ``normal range'' is (0.821, 0.888).
+
+\hypertarget{a-function-in-r-to-calculate-the-saifs-confidence-interval}{%
+\subsection{A Function in R to Calculate the SAIFS Confidence Interval}\label{a-function-in-r-to-calculate-the-saifs-confidence-interval}}
+
+I built an R function, called \texttt{saifs.ci} and contained in the Markdown for this document as well as the \texttt{Love-boost.R} script on the web site, which takes as its arguments a value for X = the number of successes, n = the number of trials, and conf.level = the confidence level, and produces the sample proportion, the SAIFS lower bound and upper bound for the specified two-sided confidence interval for the population proportion, using the equations above.
+
+Here, for instance, are 95\%, 90\% and 99\% confidence intervals for the population proportion \(\pi\) that we have been studying in the serum zinc data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{saifs.ci}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Sample Proportion             0.025             0.975 
+            0.855             0.821             0.887 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{saifs.ci}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{, }\DataTypeTok{conf=}\FloatTok{0.9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Sample Proportion              0.05              0.95 
+            0.855             0.826             0.882 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{saifs.ci}\NormalTok{(}\DataTypeTok{x =} \DecValTok{395}\NormalTok{, }\DataTypeTok{n =} \DecValTok{462}\NormalTok{, }\DataTypeTok{conf=}\FloatTok{0.99}\NormalTok{, }\DataTypeTok{dig=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Sample Proportion             0.005             0.995 
+          0.85498           0.81054           0.89763 
+\end{verbatim}
+
+Note that in the final interval, I asked the machine to round to five digits rather than the default of three. On my desktop (and probably yours), doing so results in this output:
+
+\begin{verbatim}
+Sample Proportion             0.005             0.995 
+          0.85498           0.81054           0.89763 
+\end{verbatim}
+
+I've got some setting wrong in my \texttt{bookdown} work so that this doesn't show up above when the function is called. Sorry!
+
+\hypertarget{the-saifs.ci-function-in-r}{%
+\subsection{\texorpdfstring{The \texttt{saifs.ci} function in R}{The saifs.ci function in R}}\label{the-saifs.ci-function-in-r}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{`}\DataTypeTok{saifs.ci}\StringTok{`}\NormalTok{ <-}\StringTok{ }
+\StringTok{  }\ControlFlowTok{function}\NormalTok{(x, n, }\DataTypeTok{conf.level=}\FloatTok{0.95}\NormalTok{, }\DataTypeTok{dig=}\DecValTok{3}\NormalTok{)}
+\NormalTok{  \{}
+\NormalTok{    p.sample <-}\StringTok{ }\KeywordTok{round}\NormalTok{(x}\OperatorTok{/}\NormalTok{n, }\DataTypeTok{digits=}\NormalTok{dig)}
+    
+\NormalTok{    p1 <-}\StringTok{ }\NormalTok{x }\OperatorTok{/}\StringTok{ }\NormalTok{(n}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+\NormalTok{    p2 <-}\StringTok{ }\NormalTok{(x}\OperatorTok{+}\DecValTok{1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(n}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+    
+\NormalTok{    var1 <-}\StringTok{ }\NormalTok{(p1}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{p1))}\OperatorTok{/}\NormalTok{n}
+\NormalTok{    se1 <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(var1)}
+\NormalTok{    var2 <-}\StringTok{ }\NormalTok{(p2}\OperatorTok{*}\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{p2))}\OperatorTok{/}\NormalTok{n}
+\NormalTok{    se2 <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(var2)}
+    
+\NormalTok{    lowq =}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{conf.level)}\OperatorTok{/}\DecValTok{2}
+\NormalTok{    tcut <-}\StringTok{ }\KeywordTok{qt}\NormalTok{(lowq, }\DataTypeTok{df=}\NormalTok{n}\DecValTok{-1}\NormalTok{, }\DataTypeTok{lower.tail=}\OtherTok{FALSE}\NormalTok{)}
+    
+\NormalTok{    lower.bound <-}\StringTok{ }\KeywordTok{round}\NormalTok{(p1 }\OperatorTok{-}\StringTok{ }\NormalTok{tcut}\OperatorTok{*}\NormalTok{se1, }\DataTypeTok{digits=}\NormalTok{dig)}
+\NormalTok{    upper.bound <-}\StringTok{ }\KeywordTok{round}\NormalTok{(p2 }\OperatorTok{+}\StringTok{ }\NormalTok{tcut}\OperatorTok{*}\NormalTok{se2, }\DataTypeTok{digits=}\NormalTok{dig)}
+\NormalTok{    res <-}\StringTok{ }\KeywordTok{c}\NormalTok{(p.sample, lower.bound, upper.bound)}
+    \KeywordTok{names}\NormalTok{(res) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'Sample Proportion'}\NormalTok{,lowq, }\DecValTok{1}\OperatorTok{-}\NormalTok{lowq)}
+\NormalTok{    res}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{a-second-example-ebola-mortality-rates-through-9-months-of-the-epidemic}{%
+\section{A Second Example: Ebola Mortality Rates through 9 Months of the Epidemic}\label{a-second-example-ebola-mortality-rates-through-9-months-of-the-epidemic}}
+
+The World Health Organization's Ebola Response Team published an article\footnote{WHO Ebola Response Team (2014) Ebola virus disease in West Africa: The first 9 months of the epidemic and forward projections. {\it New Engl J Med} 371: 1481-1495 doi: 10.1056/NEJMoa1411100} in the October 16, 2014 issue of the New England Journal of Medicine, which contained some data I will use in this example, focusing on materials from their Table 2.
+
+As of September 14, 2014, a total of 4,507 confirmed and probable cases of Ebola virus disease (EVD) had been reported from West Africa. In our example, we will look at a set of 1,737 cases, with definitive outcomes, reported in Guinea, Liberia, Nigeria and Sierra Leone.
+
+Across these 1,737 cases, a total of 1,229 cases led to death. Based on these sample data, what can be said about the case fatality rate in the population of EVD cases with definitive outcomes for this epidemic?
+
+\hypertarget{working-through-the-ebola-virus-disease-example}{%
+\subsection{Working through the Ebola Virus Disease Example}\label{working-through-the-ebola-virus-disease-example}}
+
+We have n = 1,737 subjects, of whom we observed death in 1,229, for a sample proportion of \(p = \frac{1229}{1737} = 0.708\). The standard error of that sample proportion will be
+
+\(SE(p) = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.708(1-0.708)}{1737}} = 0.011\)
+
+And our 95\% confidence interval (so that we'll use \(\alpha\) = 0.05) for the true population proportion, \(\pi\), of EVD cases with definitive outcomes, who will die is
+\(p \pm Z_{.025} \sqrt{\frac{p(1-p)}{n}}\), or 0.708 \(\pm\) 1.96(0.011) = \(0.708 \pm 0.022\), or (0.686, 0.730)
+
+Note that I simply recalled from our prior work that \(Z_{0.025} = 1.96\), but we can verify this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qnorm}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\DataTypeTok{lower.tail=}\OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.959964
+\end{verbatim}
+
+Since both np=(1737)(0.708)=1230 and n(1-p)=(1737)(1-0.708)=507 are substantially greater than 5, this should be a reasonably accurate confidence interval.
+
+We have 95\% confidence in an interval estimate for the true population proportion that falls between 0.686 and 0.730. Equivalently, we could say that we're 95\% confident that the true case fatality rate expressed as a percentage rather than a proportion, is between 68.6\% and 73.0\%.
+
+\hypertarget{using-r-to-estimate-the-ci-for-our-ebola-example}{%
+\subsection{Using R to estimate the CI for our Ebola example}\label{using-r-to-estimate-the-ci-for-our-ebola-example}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ebola_wald <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1229}\NormalTok{, }\DataTypeTok{n =} \DecValTok{1737}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                 \DataTypeTok{ci.method =} \StringTok{"Wald"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{tidy}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high)}
+\NormalTok{ebola_clop <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1229}\NormalTok{, }\DataTypeTok{n =} \DecValTok{1737}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                 \DataTypeTok{ci.method =} \StringTok{"Clopper-Pearson"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{tidy}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high)}
+\NormalTok{ebola_scor <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1229}\NormalTok{, }\DataTypeTok{n =} \DecValTok{1737}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                 \DataTypeTok{ci.method =} \StringTok{"Score"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{tidy}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high)}
+\NormalTok{ebola_agco <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1229}\NormalTok{, }\DataTypeTok{n =} \DecValTok{1737}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                 \DataTypeTok{ci.method =} \StringTok{"agresti-coull"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{tidy}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high)}
+\NormalTok{ebola_plus <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1229}\NormalTok{, }\DataTypeTok{n =} \DecValTok{1737}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{,}
+                                 \DataTypeTok{ci.method =} \StringTok{"plus4"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{tidy}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(estimate, conf.low, conf.high)}
+
+\NormalTok{ebola_res <-}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(ebola_wald, ebola_clop, ebola_scor, }
+\NormalTok{                       ebola_agco, ebola_plus) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{approach =} \KeywordTok{c}\NormalTok{(}\StringTok{"Wald"}\NormalTok{, }\StringTok{"Clopper-Pearson"}\NormalTok{, }\StringTok{"Score"}\NormalTok{,}
+                      \StringTok{"Agresti-Coull"}\NormalTok{, }\StringTok{"Plus4"}\NormalTok{))}
+
+\NormalTok{ebola_res }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|l}
+\hline
+estimate & conf.low & conf.high & approach\\
+\hline
+0.707542 & 0.686150 & 0.728934 & Wald\\
+\hline
+0.707542 & 0.685524 & 0.728856 & Clopper-Pearson\\
+\hline
+0.707542 & 0.685710 & 0.728457 & Score\\
+\hline
+0.707542 & 0.685705 & 0.728462 & Agresti-Coull\\
+\hline
+0.707542 & 0.685687 & 0.728443 & Plus4\\
+\hline
+\end{tabular}
+
+This is way more precision than we can really justify, but I just want you to see that the five results are all (slightly) different.
+
+\hypertarget{plotting-the-confidence-intervals-for-the-ebola-virus-disease-example}{%
+\subsection{Plotting the Confidence Intervals for the Ebola Virus Disease Example}\label{plotting-the-confidence-intervals-for-the-ebola-virus-disease-example}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(ebola_res, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ approach, }\DataTypeTok{y =}\NormalTok{ estimate)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =}\NormalTok{ conf.low, }\DataTypeTok{ymax =}\NormalTok{ conf.high)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"95% CIs for x = 1229, n = 1737"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-262-1.pdf}
+
+So in this case, it really doesn't matter which one you choose. With a smaller sample, we may not come to the same conclusion about the relative merits of these different approaches.
+
+\hypertarget{what-about-the-saifs.ci-result}{%
+\subsection{\texorpdfstring{What about the \texttt{saifs.ci()} result?}{What about the saifs.ci() result?}}\label{what-about-the-saifs.ci-result}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{saifs.ci}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1229}\NormalTok{, }\DataTypeTok{n =} \DecValTok{1737}\NormalTok{, }\DataTypeTok{conf.level=}\FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Sample Proportion             0.025             0.975 
+            0.708             0.686             0.729 
+\end{verbatim}
+
+\hypertarget{can-the-choice-of-confidence-interval-method-matter}{%
+\section{Can the Choice of Confidence Interval Method Matter?}\label{can-the-choice-of-confidence-interval-method-matter}}
+
+Yes. This will especially be the case when we have a small sample size, and a probability of ``success'' that is close to either 0 or 1. For instance, suppose we run 10 trials, and obtain a single success, then use these data to estimate the true proportion of success, \(\pi\).
+
+The 90\% confidence intervals under this circumstance are very different.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy1 <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{, }\DataTypeTok{n =} \DecValTok{10}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{,}
+                            \DataTypeTok{ci.method =} \StringTok{"Wald"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tidy}\NormalTok{()}
+\NormalTok{tidy2 <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{, }\DataTypeTok{n =} \DecValTok{10}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{, }
+                            \DataTypeTok{ci.method =} \StringTok{"Clopper-Pearson"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tidy}\NormalTok{()}
+\NormalTok{tidy3 <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{, }\DataTypeTok{n =} \DecValTok{10}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{, }
+                            \DataTypeTok{ci.method =} \StringTok{"Score"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tidy}\NormalTok{()}
+\NormalTok{tidy4 <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{, }\DataTypeTok{n =} \DecValTok{10}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{, }
+                            \DataTypeTok{ci.method =} \StringTok{"agresti-coull"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tidy}\NormalTok{()}
+\NormalTok{tidy5 <-}\StringTok{ }\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{binom.test}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{, }\DataTypeTok{n =} \DecValTok{10}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{, }
+                            \DataTypeTok{ci.method =} \StringTok{"plus4"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tidy}\NormalTok{()}
+
+\NormalTok{res <-}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(tidy1, tidy2, tidy3, tidy4, tidy5) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{approach =} \KeywordTok{c}\NormalTok{(}\StringTok{"Wald"}\NormalTok{, }\StringTok{"Clopper-Pearson"}\NormalTok{, }\StringTok{"Score"}\NormalTok{,}
+                      \StringTok{"Agresti-Coull"}\NormalTok{, }\StringTok{"Plus4"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(approach, estimate, conf.low, conf.high)}
+
+\NormalTok{res }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r}
+\hline
+approach & estimate & conf.low & conf.high\\
+\hline
+Wald & 0.1 & -0.056 & 0.256\\
+\hline
+Clopper-Pearson & 0.1 & 0.005 & 0.394\\
+\hline
+Score & 0.1 & 0.023 & 0.348\\
+\hline
+Agresti-Coull & 0.1 & 0.006 & 0.364\\
+\hline
+Plus4 & 0.1 & 0.034 & 0.395\\
+\hline
+\end{tabular}
+
+Note that the Wald procedure doesn't force the confidence interval to appear in the (0, 1) range.
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-265-1.pdf}
+
+\textbf{None of these three approaches is always better than any of the others.} When we have a sample size below 100, or the sample proportion of success is either below 0.10 or above 0.90, caution is warranted, although in many cases, the various methods give similar responses.
+
+\hypertarget{comparing-proportions-with-two-independent-samples}{%
+\chapter{Comparing Proportions with Two Independent Samples}\label{comparing-proportions-with-two-independent-samples}}
+
+Often, when analyzing data from an independent samples design, we are interested in comparing the proportions of subjects that achieve some outcome, across two levels of an exposure, or treatment. In this circumstance, we will first summarize the available data in terms of a 2x2 cross-tabulation, and then apply a series of inferential methods for 2x2 tables to obtain point and interval estimates of interest.
+
+\hypertarget{a-first-example-ibuprofen-and-sepsis-trial}{%
+\section{A First Example: Ibuprofen and Sepsis Trial}\label{a-first-example-ibuprofen-and-sepsis-trial}}
+
+As we saw in a previous Chapter, we are interested in comparing the percentage of patients in each arm of the trial (Ibuprofen vs.~Placebo) that showed an improvement in their temperature (\texttt{temp\_drop} \textgreater{} 0). Our primary interest is in comparing the percentage of Ibuprofen patients whose temperature dropped to the percentage of Placebo patients whose temperature dropped.
+
+\begin{itemize}
+\tightlist
+\item
+  We can summarize the data behind the two proportions we are comparing in a contingency table with two rows which identify the exposure or treatment of interest, and two columns to represent the outcomes of interest.
+\item
+  In this case, we are comparing two groups of subjects based on treatment (\texttt{treat}): those who received Ibuprofen and those who received a placebo. The outcome of interest is whether the subject's temperature dropped (\texttt{temp\_drop} \textgreater{} 0), or not.
+\item
+  In the table, we place the frequency for each combination of a row and a column.
+\item
+  The rows need to be mutually exclusive and collectively exhaustive: each patient must either receive Ibuprofen or Placebo. Similarly, the columns must meet the same standard: every patient's temperature either drops or does not drop.
+\end{itemize}
+
+Here's the contingency table.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sepsis <-}\StringTok{ }\NormalTok{sepsis }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dropped =} \KeywordTok{ifelse}\NormalTok{(temp_drop }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"Drop"}\NormalTok{, }\StringTok{"No Drop"}\NormalTok{))}
+
+\NormalTok{sepsis }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tabyl}\NormalTok{(treat, dropped) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{adorn_totals}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{adorn_percentages}\NormalTok{(}\DataTypeTok{denom =} \StringTok{"row"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{adorn_pct_formatting}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{1}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{adorn_ns}\NormalTok{(}\DataTypeTok{position =} \StringTok{"front"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     treat        Drop     No Drop
+ Ibuprofen 107 (71.3%)  43 (28.7%)
+   Placebo  80 (53.3%)  70 (46.7%)
+     Total 187 (62.3%) 113 (37.7%)
+\end{verbatim}
+
+In our sample, we observe 71.3\% of the 150 Ibuprofen subjects with a positive \texttt{temp\_drop} as compared to 53.3\% of the 150 Placebo subjects. We want to compare these two probabilities (represented using proportions as 0.713 vs.~0.533) to estimate the size of the difference between the proportions with a point estimate and 90\% confidence interval.
+
+But there are other comparisons we could make, too. The tricky part is that we have multiple ways to describe the relationship between treatment and outcome. We might compare outcome ``risks'' directly using the difference in probabilities, or the ratio of the two probabilities, or we might convert the risks to odds, and compare the ratio of those odds. In any case, we'll get different point estimates and confidence intervals, all of which will help us make conclusions about the evidence available in this trial speaking to differences between Ibuprofen and Placebo.
+
+\hypertarget{relating-a-treatment-to-an-outcome}{%
+\section{Relating a Treatment to an Outcome}\label{relating-a-treatment-to-an-outcome}}
+
+The question of interest is whether the percentage of subjects whose temperature dropped is different (and probably larger) in the subjects who received Ibuprofen than in those who received the Placebo.
+
+\begin{longtable}[]{@{}rrrrr@{}}
+\toprule
+Treatment Arm & Dropped & Did Not Drop & Total & Proportion who dropped\tabularnewline
+\midrule
+\endhead
+Ibuprofen & 107 & 43 & 150 & 0.713\tabularnewline
+Placebo & 80 & 70 & 150 & 0.533\tabularnewline
+\bottomrule
+\end{longtable}
+
+In other words, what is the relationship between the treatment and the outcome?
+
+\hypertarget{definitions-of-probability-and-odds}{%
+\section{Definitions of Probability and Odds}\label{definitions-of-probability-and-odds}}
+
+\begin{itemize}
+\tightlist
+\item
+  Proportion = Probability = Risk of the trait = number with trait / total
+\item
+  Odds of having the trait = (number with the trait / number without the trait) to 1
+\end{itemize}
+
+If p is the proportion of subjects with a trait, then the \textbf{odds} of having the trait are \(\frac{p}{1-p}\) to 1.
+
+So, the probability of a good result (temperature drop) in this case is \(\frac{107}{150} = 0.713\) in the Ibuprofen group. The \textbf{odds} of a good result are thus \(\frac{0.713}{1 - 0.713} = 2.484\) to 1 in the Ibuprofen group.
+
+\begin{longtable}[]{@{}rrrrrr@{}}
+\toprule
+Treatment Arm & Dropped & Did Not Drop & Total & Pr(dropped) & Odds(dropped)\tabularnewline
+\midrule
+\endhead
+Ibuprofen & 107 & 43 & 150 & 0.713 & 2.484\tabularnewline
+Placebo & 80 & 70 & 150 & 0.533 & 1.141\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{defining-the-relative-risk}{%
+\section{Defining the Relative Risk}\label{defining-the-relative-risk}}
+
+Among the Ibuprofen subjects, the risk of a good outcome (drop in temperature) is 71.3\% or, stated as a proportion, 0.713. Among the Placebo subjects, the risk of a good outcome is 53.3\% or, stated as a proportion, 0.533.
+
+Our ``crude'' estimate of the \textbf{relative risk} of a good outcome for Ibuprofen subjects as compared to Placebo subjects, is the ratio of these two risks, or 0.713/0.533 = 1.338
+
+\begin{itemize}
+\tightlist
+\item
+  The fact that this relative risk is greater than 1 indicates that the probability of a good outcome is higher for Ibuprofen subjects than for Placebo subjects.
+\item
+  A relative risk of 1 would indicate that the probability of a good outcome is the same for Ibuprofen subjects and for Placebo subjects.
+\item
+  A relative risk less than 1 would indicate that the probability of a good outcome is lower for Ibuprofen subjects than for Placebo subjects.
+\end{itemize}
+
+\hypertarget{defining-the-risk-difference}{%
+\section{Defining the Risk Difference}\label{defining-the-risk-difference}}
+
+Our ``crude'' estimate of the \textbf{risk difference} of a good outcome for Ibuprofen subjects as compared to Placebo subjects, is 0.713 - 0.533 = 0.180 or 18.0 percentage points.
+
+\begin{itemize}
+\tightlist
+\item
+  The fact that this risk difference is greater than 0 indicates that the probability of a good outcome is higher for Ibuprofen subjects than for Placebo subjects.
+\item
+  A risk difference of 0 would indicate that the probability of a good outcome is the same for Ibuprofen subjects and for Placebo subjects.
+\item
+  A risk difference less than 0 would indicate that the probability of a good outcome is lower for Ibuprofen subjects than for Placebo subjects.
+\end{itemize}
+
+\hypertarget{defining-the-odds-ratio-or-the-cross-product-ratio}{%
+\section{Defining the Odds Ratio, or the Cross-Product Ratio}\label{defining-the-odds-ratio-or-the-cross-product-ratio}}
+
+Among the Ibuprofen subjects, the odds of a good outcome (temperature drop) are 2.484. Among the placebo subjects, the odds of a good outcome (temperature drop) are 1.141.
+
+So our ``crude'' estimate of the \textbf{odds ratio} of a good outcome for Ibuprofen subjects as compared to placebo subjects, is 2.484 / 1.141 = 2.18
+
+Another way to calculate this odds ratio is to calculate the \textbf{cross-product ratio}, which is equal to (a x d) / (b x c), for the 2 by 2 table with counts specified as shown:
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule
+A Generic Table & Good Outcome & Bad Outcome\tabularnewline
+\midrule
+\endhead
+Treatment Group 1 & a & b\tabularnewline
+Treatment Group 2 & c & d\tabularnewline
+\bottomrule
+\end{longtable}
+
+So, for our table, we have a = 107, b = 43, c = 80, and d = 70, so the cross-product ratio is \(\frac{107 x 70}{43 x 80} = \frac{7490}{3440} = 2.18\). As expected, this is the same as the ``crude'' odds ratio estimate.
+
+\begin{itemize}
+\tightlist
+\item
+  The fact that this odds ratio risk is greater than 1 indicates that the odds of a good outcome are higher for Ibuprofen subjects than for Placebo subjects.
+\item
+  An odds ratio of 1 would indicate that the odds of a good outcome are the same for Ibuprofen subjects and for Placebo subjects.
+\item
+  An odds ratio less than 1 would indicate that the odds of a good outcome are lower for Ibuprofen subjects than for Placebo subjects.
+\end{itemize}
+
+So, we have several different ways to compare the outcomes across the treatments. Are these differences and ratios large enough to rule out chance?
+
+\hypertarget{comparing-rates-in-a-2x2-table}{%
+\section{Comparing Rates in a 2x2 Table}\label{comparing-rates-in-a-2x2-table}}
+
+What is the relationship between the treatment (Ibuprofen vs.~Placebo) and the outcome (drop in temperature) in the following two-by-two table?
+
+\hypertarget{the-twobytwo-function-in-r}{%
+\section{\texorpdfstring{The \texttt{twobytwo} function in R}{The twobytwo function in R}}\label{the-twobytwo-function-in-r}}
+
+I built the \texttt{twobytwo} function in R (based on existing functions in the \texttt{Epi} library, which you need to have in your installed packages list in order for this to work) to do the work for this problem. All that is required is a single command, and a two-by-two table in standard epidemiological format (with the outcomes in the columns, and the treatments in the rows.)
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule
+Treatment Arm & Dropped & Did Not Drop\tabularnewline
+\midrule
+\endhead
+Ibuprofen & 107 & 43\tabularnewline
+Placebo & 80 & 70\tabularnewline
+\bottomrule
+\end{longtable}
+
+The command just requires you to read off the cells of the table, followed by the labels for the two treatments, then the two outcomes, then a specification of the names of the rows (exposures) and columns (outcomes) from the table, and a specification of the confidence level you desire. We'll use 90\% here.
+
+The resulting output follows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{twobytwo}\NormalTok{(}\DecValTok{107}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{70}\NormalTok{, }
+         \StringTok{"Ibuprofen"}\NormalTok{, }\StringTok{"Placebo"}\NormalTok{, }\StringTok{"Dropped"}\NormalTok{, }\StringTok{"No Drop"}\NormalTok{,}
+         \DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : Dropped 
+Comparing : Ibuprofen vs. Placebo 
+
+          Dropped No Drop    P(Dropped) 90% conf. interval
+Ibuprofen     107      43        0.7133    0.6490   0.7701
+Placebo        80      70        0.5333    0.4661   0.5993
+
+                                   90% conf. interval
+             Relative Risk: 1.3375    1.1492   1.5567
+         Sample Odds Ratio: 2.1773    1.4583   3.2509
+Conditional MLE Odds Ratio: 2.1716    1.4177   3.3437
+    Probability difference: 0.1800    0.0881   0.2677
+
+             Exact P-value: 0.0019 
+        Asymptotic P-value: 0.0014 
+------------------------------------------------------
+\end{verbatim}
+
+\hypertarget{standard-epidemiological-format}{%
+\subsection{Standard Epidemiological Format}\label{standard-epidemiological-format}}
+
+This table is in \textbf{standard epidemiological format}, which means that:
+
+\begin{itemize}
+\tightlist
+\item
+  The rows of the table describe the ``treatment'' (which we'll take here to be \texttt{treat}). The more interesting (sometimes also the more common) ``treatment'' is placed in the top row. That's Ibuprofen here.
+\item
+  The columns of the table describe the ``outcome'' (which we'll take here to be whether the subject's temperature dropped.) Typically, the more common ``outcome'' is placed to the left.
+\end{itemize}
+
+\hypertarget{outcome-probabilities-and-confidence-intervals-within-the-treatment-groups}{%
+\subsection{Outcome Probabilities and Confidence Intervals Within the Treatment Groups}\label{outcome-probabilities-and-confidence-intervals-within-the-treatment-groups}}
+
+The \texttt{twobytwo} output starts with estimates of the probability (risk) of a ``Dropped'' outcome among subjects who fall into the two treatment groups (Ibuprofen or Placebo), along with 90\% confidence intervals for each of these probabilities.
+
+\begin{verbatim}
+2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : Dropped 
+Comparing : Ibuprofen vs. Placebo 
+
+          Dropped No Drop    P(Dropped) 90% conf. interval
+Ibuprofen     107      43        0.7133    0.6490   0.7701
+Placebo        80      70        0.5333    0.4661   0.5993
+\end{verbatim}
+
+The conditional probability of a temperature drop given that the subject is in the Ibuprofen group, is symbolized as Pr(Dropped \textbar{} Ibuprofen) = 0.7133, and the 90\% confidence interval around that proportion is (0.6490, 0.7701).
+
+\begin{itemize}
+\tightlist
+\item
+  Note that these two confidence intervals fail to overlap, and so we expect to see a fairly large difference in the estimated probability of a temperature drop when we compare Ibuprofen to Placebo.
+\end{itemize}
+
+\hypertarget{relative-risk-odds-ratio-and-risk-difference-with-confidence-intervals}{%
+\subsection{Relative Risk, Odds Ratio and Risk Difference, with Confidence Intervals}\label{relative-risk-odds-ratio-and-risk-difference-with-confidence-intervals}}
+
+These elements are followed by estimates of the relative risk, odds ratio, and risk difference, each with associated 90\% confidence intervals.
+
+\begin{verbatim}
+                                   90% conf. interval
+             Relative Risk: 1.3375    1.1492   1.5567
+         Sample Odds Ratio: 2.1773    1.4583   3.2509
+Conditional MLE Odds Ratio: 2.1716    1.4177   3.3437
+    Probability difference: 0.1800    0.0881   0.2677
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The \textbf{relative risk}, or the ratio of P(Temperature Drop \textbar{} Ibuprofen) to P(Temperature Drop \textbar{} Placebo), is shown first. Note that the 90\% confidence interval is entirely greater than 1.
+\item
+  The \textbf{odds ratio} is presented using two different definitions (the sample odds ratio is the cross-product ratio we mentioned earlier). Note that the 90\% confidence interval using either approach is entirely greater than 1.
+\item
+  The \textbf{probability} (or risk) \textbf{difference} {[}P(Temperature Drop \textbar{} Ibuprofen) - P(Temperature Drop \textbar{} Placebo){]} is presented last. Note that the 90\% confidence interval is entirely greater than 0.
+\item
+  Note carefully that if there had been no difference between Ibuprofen and Placebo, the relative risk and odds ratios would be 1, but the probability difference would be zero.
+\end{itemize}
+
+\hypertarget{estimating-a-rate-more-accurately-use-x-2n-4-rather-than-xn}{%
+\section{Estimating a Rate More Accurately: Use (x + 2)/(n + 4) rather than x/n}\label{estimating-a-rate-more-accurately-use-x-2n-4-rather-than-xn}}
+
+Suppose you have some data involving n independent tries, with x successes. A natural estimate of the ``success rate'' in the data is x / n.~
+
+But, strangely enough, it turns out this isn't an entirely satisfying estimator. Alan Agresti provides substantial motivation for the (x + 2)/(n + 4) estimate as an alternative\footnote{This note comes largely from a May 15 2007 entry in Andrew Gelman's blog at http://andrewgelman.com/2007/05/15}. This is sometimes called a \emph{Bayesian augmentation}.
+
+\begin{itemize}
+\tightlist
+\item
+  The big problem with x / n is that it estimates p = 0 or p = 1 when x = 0 or x = n.~
+\item
+  It's also tricky to compute confidence intervals at these extremes, since the usual standard error for a proportion, \(\sqrt{n p (1-p)}\), gives zero, which isn't quite right.
+\item
+  (x + 2)/(n + 4) is much cleaner, especially when you build a confidence interval for the rate.
+\item
+  The only place where (x + 2)/(n + 4) will go wrong is if n is small and the true probability is very close to 0 or 1.
+\end{itemize}
+
+For example, if n = 10, and p is 1 in a million, then x will almost certainly be zero, and an estimate of 1/12 is much worse than the simple 0/10. However, how big a deal is this? If p might be 1 in a million, you're not going to estimate it with a n = 10 experiment\footnote{Andrew Gelman's example is "I'm not going to try ten 100-foot golf putts, miss all of them, and then estimate my probability of success as 1/12."}.
+
+Applying this method to our Ibuprofen and Sepsis Trial data, we would simply add two to each frequency in the main four cells in our 2x2 table.
+
+So instead of using
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{twobytwo}\NormalTok{(}\DecValTok{107}\NormalTok{, }\DecValTok{43}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{70}\NormalTok{, }
+         \StringTok{"Ibuprofen"}\NormalTok{, }\StringTok{"Placebo"}\NormalTok{, }\StringTok{"Dropped"}\NormalTok{, }\StringTok{"No Drop"}\NormalTok{,}
+         \DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+the Bayesian augmentation would encourage us to look at
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{twobytwo}\NormalTok{(}\DecValTok{109}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{82}\NormalTok{, }\DecValTok{72}\NormalTok{, }
+         \StringTok{"Ibuprofen"}\NormalTok{, }\StringTok{"Placebo"}\NormalTok{, }\StringTok{"Dropped"}\NormalTok{, }\StringTok{"No Drop"}\NormalTok{,}
+         \DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : Dropped 
+Comparing : Ibuprofen vs. Placebo 
+
+          Dropped No Drop    P(Dropped) 90% conf. interval
+Ibuprofen     109      45        0.7078    0.6441   0.7643
+Placebo        82      72        0.5325    0.4662   0.5977
+
+                                   90% conf. interval
+             Relative Risk: 1.3293    1.1434   1.5453
+         Sample Odds Ratio: 2.1268    1.4337   3.1550
+Conditional MLE Odds Ratio: 2.1215    1.3950   3.2421
+    Probability difference: 0.1753    0.0845   0.2622
+
+             Exact P-value: 0.0022 
+        Asymptotic P-value: 0.0016 
+------------------------------------------------------
+\end{verbatim}
+
+As you can see, the odds ratio and relative risk estimates are (a little) closer to 1, and the probability difference is also a little closer to 0. The Bayesian augmentation provides a slightly more conservative set of estimates of the impact of Ibuprofen as compared to Placebo.
+
+It is likely that the augmented version is a more accurate estimate here, but the two estimates will be comparable, generally, so long as either (a) the sample size in each exposure group is more than, say, 30 subjects, and/or (b) the sample probability of the outcome is between 10\% and 90\% in each exposure group.
+
+\hypertarget{a-second-example-ebola-virus-disease-study-again}{%
+\section{A Second Example: Ebola Virus Disease Study, again}\label{a-second-example-ebola-virus-disease-study-again}}
+
+For instance, recall the Ebola Virus Disease study from the \emph{New England Journal of Medicine} that we described in the previous Chapter. Suppose we want to compare the proportion of deaths among cases that had a definitive outcome who were hospitalized to the proportion of deaths among cases that had a definitive outcome who were not hospitalized.
+
+The article suggests that of the 1,737 cases with a definitive outcome, there were 1,153 hospitalized cases. Across those 1,153 hospitalized cases, 741 people (64.3\%) died, which means that across the remaining 584 non-hospitalized cases, 488 people (83.6\%) died.
+
+Here is the initial contingency table, using only the numbers from the previous paragraph.
+
+\begin{longtable}[]{@{}rrrr@{}}
+\toprule
+Initial Ebola Table & Deceased & Alive & Total\tabularnewline
+\midrule
+\endhead
+Hospitalized & 741 & -- & 1153\tabularnewline
+Not Hospitalized & 488 & -- & 584\tabularnewline
+Total & & & 1737\tabularnewline
+\bottomrule
+\end{longtable}
+
+Now, we can use arithmetic to complete the table, since the rows and the columns are each mutually exclusive and collectively exhaustive.
+
+\begin{longtable}[]{@{}rrrr@{}}
+\toprule
+Ebola 2x2 Table & Deceased & Alive & Total\tabularnewline
+\midrule
+\endhead
+Hospitalized & 741 & 412 & 1153\tabularnewline
+Not Hospitalized & 488 & 96 & 584\tabularnewline
+Total & 1229 & 508 & 1737\tabularnewline
+\bottomrule
+\end{longtable}
+
+We want to compare the fatality risk (probability of being in the deceased column) for the population of people in the hospitalized row to the population of people in the not hospitalized row.
+
+We can run these data through R, using the Bayesian augmentation (adding a death and a survival to the hospitalized and also to the not hospitalized groups.) We'll use a 95\% confidence level this time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{twobytwo}\NormalTok{(}\DecValTok{741}\OperatorTok{+}\DecValTok{2}\NormalTok{, }\DecValTok{412}\OperatorTok{+}\DecValTok{2}\NormalTok{, }\DecValTok{488}\OperatorTok{+}\DecValTok{2}\NormalTok{, }\DecValTok{96}\OperatorTok{+}\DecValTok{2}\NormalTok{, }
+         \StringTok{"Hospitalized"}\NormalTok{, }\StringTok{"Not Hospitalized"}\NormalTok{, }\StringTok{"Deceased"}\NormalTok{, }\StringTok{"Alive"}\NormalTok{,}
+         \DataTypeTok{conf.level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 by 2 table analysis: 
+------------------------------------------------------ 
+Outcome   : Deceased 
+Comparing : Hospitalized vs. Not Hospitalized 
+
+                 Deceased Alive    P(Deceased) 95% conf. interval
+Hospitalized          743   414         0.6422    0.6141   0.6693
+Not Hospitalized      490    98         0.8333    0.8010   0.8613
+
+                                    95% conf. interval
+             Relative Risk:  0.7706    0.7285   0.8151
+         Sample Odds Ratio:  0.3589    0.2801   0.4599
+Conditional MLE Odds Ratio:  0.3591    0.2772   0.4624
+    Probability difference: -0.1912   -0.2307  -0.1490
+
+             Exact P-value: 0.0000 
+        Asymptotic P-value: 0.0000 
+------------------------------------------------------
+\end{verbatim}
+
+I'll leave it as an exercise for you to interpret these results and draw some conclusions.
 
   \bibliography{book.bib,packages.bib}
 

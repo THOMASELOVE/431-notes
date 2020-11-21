@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9) (preloaded format=xelatex 2016.8.27)  1 OCT 2020 11:22
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9) (preloaded format=xelatex 2016.8.27)  21 NOV 2020 11:46
 entering extended mode
 **431-notes.tex
 (C:\Users\Thomas\Dropbox\2020-431\431-notes\431-notes.tex
@@ -1166,28 +1166,25 @@ File: eu1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3]
 LaTeX Font Info:    Font shape `EU1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `EU1/lmtt/b/n' tried instead on input line 90.
-[4] [5] [6] [7])
+[4] [5] [6] [7] [8])
 \tf@toc=\write4
-[8]
-File: figures/431_foot2.png Graphic file (type QTm)
-<use  "figures/431_foot2.png" > [9
+[9] [10
 
 ]
+File: figures/431_foot2.png Graphic file (type QTm)
+<use  "figures/431_foot2.png" > [11]
 Underfull \hbox (badness 2671) in paragraph at lines 223--224
 []\EU1/lmr/m/n/10 This description comes from []$[][][][] [] [] [] [][][][][][]
 [][][] [] [][][][][][][] [] [][][] [] [][][][][][] [][] [] [] [][][][]$[]
  []
 
-[10]
+[12]
 LaTeX Font Info:    Font shape `EU1/lmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `EU1/lmtt/b/n' tried instead on input line 254.
-
-Underfull \vbox (badness 3302) has occurred while \output is active []
-
-[11] [12]
+(Font)              Font shape `EU1/lmtt/b/n' tried instead on input line 256.
+[13] [14]
 Chapter 1.
 File: figures/data-science-venn20.png Graphic file (type QTm)
-<use  "figures/data-science-venn20.png" > [13
+<use  "figures/data-science-venn20.png" > [15
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 308--309
@@ -1199,11 +1196,11 @@ File: figures/data-science-cycle.png Graphic file (type QTm)
 <use  "figures/data-science-cycle.png" >
 Underfull \vbox (badness 1931) has occurred while \output is active []
 
-[14] [15] [16] [17
+[16] [17] [18] [19
 
-] [18]
+] [20]
 Chapter 2.
-[19
+[21
 
 ]
 Overfull \hbox (34.75pt too wide) in paragraph at lines 440--440
@@ -1211,10 +1208,10 @@ Overfull \hbox (34.75pt too wide) in paragraph at lines 440--440
 h_~ body_mass_g[] 
  []
 
-[20]
+[22]
 File: 431-notes_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type QTm
 )
-<use  "431-notes_files/figure-latex/unnamed-chunk-7-1.pdf" > [21]
+<use  "431-notes_files/figure-latex/unnamed-chunk-7-1.pdf" > [23]
 File: 431-notes_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type QTm
 )
 <use  "431-notes_files/figure-latex/unnamed-chunk-8-1.pdf" >
@@ -1223,20 +1220,20 @@ File: 431-notes_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type QTm
 <use  "431-notes_files/figure-latex/unnamed-chunk-9-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[22] [23]
+[24] [25]
 File: 431-notes_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-10-1.pdf" > [24]
+<use  "431-notes_files/figure-latex/unnamed-chunk-10-1.pdf" > [26]
 Chapter 3.
-[25
+[27
 
 ]
 File: 431-notes_files/figure-latex/nh_dat1_heightbyage1-fig-1.pdf Graphic file 
 (type QTm)
-<use  "431-notes_files/figure-latex/nh_dat1_heightbyage1-fig-1.pdf" > [26]
+<use  "431-notes_files/figure-latex/nh_dat1_heightbyage1-fig-1.pdf" > [28]
 LaTeX Font Info:    Font shape `EU1/lmtt/bx/n' in size <12> not available
 (Font)              Font shape `EU1/lmtt/b/n' tried instead on input line 698.
-[27] [28]
+[29] [30]
 File: 431-notes_files/figure-latex/nh_dat2_heightbyageandsex1-fig-1.pdf Graphic
  file (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat2_heightbyageandsex1-fig-1.pdf" >
@@ -1245,19 +1242,19 @@ File: 431-notes_files/figure-latex/nh_dat2_heightbyageandsex2-fig-1.pdf Graphic
 <use  "431-notes_files/figure-latex/nh_dat2_heightbyageandsex2-fig-1.pdf" >
 Underfull \vbox (badness 7468) has occurred while \output is active []
 
-[29]
+[31]
 File: 431-notes_files/figure-latex/nh_dat2_heightbyageandsex3-fig-1.pdf Graphic
  file (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat2_heightbyageandsex3-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[30]
+[32]
 File: 431-notes_files/figure-latex/nh_dat2_heightbyageandsex4-fig-1.pdf Graphic
  file (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat2_heightbyageandsex4-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[31] [32]
+[33] [34]
 Overfull \hbox (24.25pt too wide) in paragraph at lines 915--915
 []      \EU1/lmtt/m/n/10 ID Sex     Age Height Pulse   SBP SleepTrouble PhysAct
 ive MaritalStatus[] 
@@ -1268,13 +1265,13 @@ le (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_heighthistogram-fig-1.pdf" >
 Underfull \vbox (badness 2818) has occurred while \output is active []
 
-[33]
+[35]
 File: 431-notes_files/figure-latex/nh_dat3_heighthistogram2-fig-1.pdf Graphic f
 ile (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_heighthistogram2-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[34]
+[36]
 File: 431-notes_files/figure-latex/nh_dat3_histogramwithCWRUscheme-fig-1.pdf Gr
 aphic file (type QTm)
 
@@ -1282,64 +1279,64 @@ aphic file (type QTm)
 >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[35]
+[37]
 File: 431-notes_files/figure-latex/nh_dat3_heightbysex1-fig-1.pdf Graphic file 
 (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_heightbysex1-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[36]
+[38]
 File: 431-notes_files/figure-latex/nh_dat3_heightbysex2-fig-1.pdf Graphic file 
 (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_heightbysex2-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[37]
+[39]
 File: 431-notes_files/figure-latex/nh_dat3_heightbysexbox-fig-1.pdf Graphic fil
 e (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_heightbysexbox-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[38]
+[40]
 File: 431-notes_files/figure-latex/nh_dat3_heightbysexhist-fig-1.pdf Graphic fi
 le (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_heightbysexhist-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[39]
+[41]
 File: 431-notes_files/figure-latex/nh_dat3_heightbysexhist2-fig-1.pdf Graphic f
 ile (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_heightbysexhist2-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[40]
+[42]
 File: 431-notes_files/figure-latex/nh_dat3_pulse_histbin1-fig-1.pdf Graphic fil
 e (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_pulse_histbin1-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[41]
+[43]
 File: 431-notes_files/figure-latex/nh_dat3_pulse_histbin5-fig-1.pdf Graphic fil
 e (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_pulse_histbin5-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[42]
+[44]
 File: 431-notes_files/figure-latex/nh_dat3_pulse_by_activity_box-fig-1.pdf Grap
 hic file (type QTm)
 
 <use  "431-notes_files/figure-latex/nh_dat3_pulse_by_activity_box-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[43] [44]
+[45] [46]
 File: 431-notes_files/figure-latex/nh_dat3_pulse_by_sleep_histbin1-fig-1.pdf Gr
 aphic file (type QTm)
 
 <use  "431-notes_files/figure-latex/nh_dat3_pulse_by_sleep_histbin1-fig-1.pdf" 
-> [45]
+> [47]
 File: 431-notes_files/figure-latex/nh_dat3_pulsebyhealthgen1-fig-1.pdf Graphic 
 file (type QTm)
-<use  "431-notes_files/figure-latex/nh_dat3_pulsebyhealthgen1-fig-1.pdf" > [46]
+<use  "431-notes_files/figure-latex/nh_dat3_pulsebyhealthgen1-fig-1.pdf" > [48]
 File: 431-notes_files/figure-latex/nh_dat3_pulsevssbp-fig-1.pdf Graphic file (t
 ype QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_pulsevssbp-fig-1.pdf" >
@@ -1348,7 +1345,7 @@ c file (type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_sbpvspulsewithsleep-fig-1.pdf" >
 Underfull \vbox (badness 3989) has occurred while \output is active []
 
-[47]
+[49]
 File: 431-notes_files/figure-latex/nh_dat3_sbpvspulsewithsleepfacets-fig-1.pdf 
 Graphic file (type QTm)
 
@@ -1356,22 +1353,22 @@ Graphic file (type QTm)
 " >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[48] [49]
+[50] [51]
 File: 431-notes_files/figure-latex/HealthGengraph1-fig-1.pdf Graphic file (type
  QTm)
-<use  "431-notes_files/figure-latex/HealthGengraph1-fig-1.pdf" > [50]
+<use  "431-notes_files/figure-latex/HealthGengraph1-fig-1.pdf" > [52]
 File: 431-notes_files/figure-latex/HealthGengraph2-fig-1.pdf Graphic file (type
  QTm)
 <use  "431-notes_files/figure-latex/HealthGengraph2-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[51]
+[53]
 File: 431-notes_files/figure-latex/HealthGengraph3-fig-1.pdf Graphic file (type
  QTm)
 <use  "431-notes_files/figure-latex/HealthGengraph3-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[52] [53]
+[54] [55]
 Overfull \hbox (65.37012pt too wide) in paragraph at lines 1518--1527
 [][] 
  []
@@ -1381,7 +1378,7 @@ type QTm)
 <use  "431-notes_files/figure-latex/nh_dat3_sbpbyhealth-fig-1.pdf" >
 Underfull \vbox (badness 7064) has occurred while \output is active []
 
-[54] [55]
+[56] [57]
 File: 431-notes_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-17-1.pdf" >
@@ -1390,14 +1387,14 @@ m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-18-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[56] [57] [58
+[58] [59] [60
 
 ]
 Chapter 4.
 
 Underfull \vbox (badness 2269) has occurred while \output is active []
 
-[59]
+[61]
 Overfull \hbox (27.75pt too wide) in paragraph at lines 1690--1690
 []      \EU1/lmtt/m/n/10 ID Sex     Age Race  Education   BMI   SBP   DBP Pulse
  PhysActive Smoke100[] 
@@ -1409,7 +1406,7 @@ Overfull \hbox (20.75pt too wide) in paragraph at lines 1690--1690
  <fct>      <fct>[] 
  []
 
-[60]
+[62]
 Overfull \hbox (97.75pt too wide) in paragraph at lines 1733--1733
 [] \EU1/lmtt/m/n/10 $ ID           : int [1:500] 71531 68613 67064 63924 62840 
 68058 68936 71189 69936 70687 ...[] 
@@ -1469,7 +1466,7 @@ Overfull \hbox (1.5pt too wide) in paragraph at lines 1754--1754
 us <fct>,[] 
  []
 
-[61]
+[63]
 Overfull \hbox (27.75pt too wide) in paragraph at lines 1784--1784
 []\EU1/lmtt/m/n/10 $ ID            <int> 71531, 68613, 67064, 63924, 62840, 680
 58, 68936, 7118...[] 
@@ -1563,14 +1560,14 @@ Overfull \hbox (8.63211pt too wide) in paragraph at lines 1884--1885
  []\EU1/lmr/m/n/10 MaritalStatus|
  []
 
-[62]
+[64]
 Underfull \vbox (badness 1931) has occurred while \output is active []
 
-[63] [64] [65] [66]
+[65] [66] [67] [68]
 Chapter 5.
-[67
+[69
 
-] [68]
+] [70]
 Overfull \hbox (27.75pt too wide) in paragraph at lines 2198--2198
 []  \EU1/lmtt/m/n/10 [1] 21 21 21 21 21 21 21 21 22 22 22 22 22 22 22 22 22 22 
 22 22 23 23 23 23 23[] 
@@ -1666,7 +1663,7 @@ Overfull \hbox (31.25pt too wide) in paragraph at lines 2198--2198
 54 54 54 54 55 55 55[] 
  []
 
-[69]
+[71]
 Overfull \hbox (31.25pt too wide) in paragraph at lines 2198--2198
 []\EU1/lmtt/m/n/10 [401] 55 55 55 55 55 55 55 55 56 56 56 56 56 56 56 56 56 56 
 56 56 56 56 56 57 57[] 
@@ -1690,13 +1687,13 @@ Overfull \hbox (31.25pt too wide) in paragraph at lines 2198--2198
 64 64 64 64 64 64 64[] 
  []
 
-[70] [71] [72] [73] [74]
+[72] [73] [74] [75] [76]
 File: figures/Empirical_Rule.png Graphic file (type QTm)
-<use  "figures/Empirical_Rule.png" > [75]
+<use  "figures/Empirical_Rule.png" > [77]
 File: figures/modality.png Graphic file (type QTm)
-<use  "figures/modality.png" > [76]
+<use  "figures/modality.png" > [78]
 File: figures/negandposskew.png Graphic file (type QTm)
-<use  "figures/negandposskew.png" > [77]
+<use  "figures/negandposskew.png" > [79]
 Underfull \vbox (badness 10000) detected at line 2605
  []
 
@@ -1704,25 +1701,25 @@ Underfull \vbox (badness 10000) detected at line 2605
 Underfull \vbox (badness 10000) detected at line 2605
  []
 
-[78]
+[80]
 File: 431-notes_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-25-1.pdf" >
 Overfull \hbox (67.85342pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 5.5.  MORE DETAILED NUMERICAL SUMMARIES FOR QUANTITATIVE VARIA
-BLES \EU1/lmr/m/n/10 79
+BLES \EU1/lmr/m/n/10 81
  []
 
-[79] [80]
+[81] [82]
 Underfull \vbox (badness 5771) has occurred while \output is active []
 
 
 Overfull \hbox (67.85342pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 5.5.  MORE DETAILED NUMERICAL SUMMARIES FOR QUANTITATIVE VARIA
-BLES \EU1/lmr/m/n/10 81
+BLES \EU1/lmr/m/n/10 83
  []
 
-[81]
+[83]
 Overfull \hbox (75.0pt too wide) in paragraph at lines 2804--2804
 []\EU1/lmtt/m/n/10 ------------------------------------------------------------
 --------------------[] 
@@ -1755,7 +1752,7 @@ Overfull \hbox (75.0pt too wide) in paragraph at lines 2804--2804
 
 Underfull \vbox (badness 4660) has occurred while \output is active []
 
-[82]
+[84]
 Overfull \hbox (75.0pt too wide) in paragraph at lines 2804--2804
 []\EU1/lmtt/m/n/10 ------------------------------------------------------------
 --------------------[] 
@@ -1764,14 +1761,14 @@ Overfull \hbox (75.0pt too wide) in paragraph at lines 2804--2804
 
 Overfull \hbox (67.85342pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 5.5.  MORE DETAILED NUMERICAL SUMMARIES FOR QUANTITATIVE VARIA
-BLES \EU1/lmr/m/n/10 83
+BLES \EU1/lmr/m/n/10 85
  []
 
-[83] [84
+[85] [86
 
 ]
 Chapter 6.
-[85] [86] [87]
+[87] [88] [89]
 Overfull \hbox (185.25pt too wide) in paragraph at lines 3078--3078
 []\EU1/lmtt/m/n/10 nh_adults %>% select(Sex, Race, Education, PhysActive, Smoke
 100, SleepTrouble, HealthGen, MaritalStatus)[] 
@@ -1816,7 +1813,7 @@ Overfull \hbox (75.0pt too wide) in paragraph at lines 3078--3078
 
 Underfull \vbox (badness 1983) has occurred while \output is active []
 
-[88]
+[90]
 Overfull \hbox (75.0pt too wide) in paragraph at lines 3078--3078
 []\EU1/lmtt/m/n/10 ------------------------------------------------------------
 --------------------[] 
@@ -1846,13 +1843,13 @@ Overfull \hbox (8.5pt too wide) in paragraph at lines 3078--3078
 ed    Separated[] 
  []
 
-[89]
+[91]
 Overfull \hbox (75.0pt too wide) in paragraph at lines 3078--3078
 []\EU1/lmtt/m/n/10 ------------------------------------------------------------
 --------------------[] 
  []
 
-[90] [91]
+[92] [93]
 Overfull \hbox (139.72012pt too wide) in paragraph at lines 3207--3226
 [][] 
  []
@@ -1860,7 +1857,7 @@ Overfull \hbox (139.72012pt too wide) in paragraph at lines 3207--3226
 
 Underfull \vbox (badness 1708) has occurred while \output is active []
 
-[92] [93] [94] [95] [96]
+[94] [95] [96] [97] [98]
 Chapter 7.
 LaTeX Font Info:    Font shape `EU1/lmtt/bx/n' in size <24.88> not available
 (Font)              Font shape `EU1/lmtt/b/n' tried instead on input line 3503.
@@ -1868,7 +1865,7 @@ LaTeX Font Info:    Font shape `EU1/lmtt/bx/n' in size <24.88> not available
 
 Underfull \vbox (badness 6001) has occurred while \output is active []
 
-[97
+[99
 
 ]
 Overfull \hbox (50.26006pt too wide) in alignment at lines 3628--3632
@@ -1883,7 +1880,7 @@ Overfull \hbox (50.26006pt too wide) in alignment at lines 3632--3642
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[98]
+[100]
 Overfull \hbox (4.50105pt too wide) in paragraph at lines 3710--3711
  []\EU1/lmtt/m/n/10 computer_hours|
  []
@@ -1896,7 +1893,7 @@ Overfull \hbox (25.50105pt too wide) in paragraph at lines 3717--3718
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[99] [100]
+[101] [102]
 Overfull \hbox (31.25pt too wide) in paragraph at lines 3845--3845
 []    \EU1/lmtt/m/n/10 SEQN sex   age_child race_eth educ_child language sampli
 ng_wt income_pov[] 
@@ -1968,7 +1965,7 @@ Overfull \hbox (288.5pt too wide) in paragraph at lines 3902--3902
 gh School Graduate" "5_College Graduate" "3_High School Graduate" ...[] 
  []
 
-[101]
+[103]
 Overfull \hbox (54.0pt too wide) in paragraph at lines 3902--3902
 [] \EU1/lmtt/m/n/10 $ diet_yesterday      : chr [1:1518] "2_Usual" "2_Usual" "2
 _Usual" "2_Usual" ...[] 
@@ -2095,7 +2092,7 @@ Overfull \hbox (166.0pt too wide) in paragraph at lines 3902--3902
 te Sponsored" "Private" "State Sponsored" ...[] 
  []
 
-[102] [103] [104]
+[104] [105] [106]
 Overfull \hbox (15.5pt too wide) in paragraph at lines 4054--4054
 []\EU1/lmtt/m/n/10 2   2_White Non-Hispanic   3 6.00    9.0 12  15 9.137705 3.8
 04421 610       0[] 
@@ -2118,7 +2115,7 @@ m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-33-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[105]
+[107]
 Overfull \hbox (59.32014pt too wide) in paragraph at lines 4104--4117
 [][] 
  []
@@ -2134,7 +2131,7 @@ m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-35-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[106] [107] [108]
+[108] [109] [110]
 Overfull \hbox (29.87015pt too wide) in paragraph at lines 4238--4251
 [][] 
  []
@@ -2144,13 +2141,13 @@ m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-37-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[109]
+[111]
 File: 431-notes_files/figure-latex/unnamed-chunk-38-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-38-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[110] [111] [112]
+[112] [113] [114]
 File: 431-notes_files/figure-latex/nnyfs_energyhist-fig-1.pdf Graphic file (typ
 e QTm)
 <use  "431-notes_files/figure-latex/nnyfs_energyhist-fig-1.pdf" >
@@ -2159,7 +2156,7 @@ Underfull \hbox (badness 1558) in paragraph at lines 4434--4436
 $ is
  []
 
-[113]
+[115]
 File: 431-notes_files/figure-latex/nnyfs_energyhist2-fig-1.pdf Graphic file (ty
 pe QTm)
 <use  "431-notes_files/figure-latex/nnyfs_energyhist2-fig-1.pdf" >
@@ -2168,55 +2165,55 @@ pe QTm)
 <use  "431-notes_files/figure-latex/nnyfs_energyhist3-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[114]
+[116]
 File: 431-notes_files/figure-latex/unnamed-chunk-40-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-40-1.pdf" > [115]
+<use  "431-notes_files/figure-latex/unnamed-chunk-40-1.pdf" > [117]
 File: 431-notes_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-41-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[116]
+[118]
 File: 431-notes_files/figure-latex/nnyfs_bmidotplot-fig-1.pdf Graphic file (typ
 e QTm)
 <use  "431-notes_files/figure-latex/nnyfs_bmidotplot-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[117]
+[119]
 File: 431-notes_files/figure-latex/nnyfs_bmifreqpoly-fig-1.pdf Graphic file (ty
 pe QTm)
 <use  "431-notes_files/figure-latex/nnyfs_bmifreqpoly-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[118]
+[120]
 File: 431-notes_files/figure-latex/nnyfs_bmidensity-fig-1.pdf Graphic file (typ
 e QTm)
 <use  "431-notes_files/figure-latex/nnyfs_bmidensity-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[119] [120]
+[121] [122]
 File: 431-notes_files/figure-latex/nnyfs_boxplot2-fig-1.pdf Graphic file (type 
 QTm)
-<use  "431-notes_files/figure-latex/nnyfs_boxplot2-fig-1.pdf" > [121]
+<use  "431-notes_files/figure-latex/nnyfs_boxplot2-fig-1.pdf" > [123]
 File: 431-notes_files/figure-latex/nnyfs_boxplot3-fig-1.pdf Graphic file (type 
 QTm)
 <use  "431-notes_files/figure-latex/nnyfs_boxplot3-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[122]
+[124]
 File: 431-notes_files/figure-latex/nnyfs_boxplot4-fig-1.pdf Graphic file (type 
 QTm)
 <use  "431-notes_files/figure-latex/nnyfs_boxplot4-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[123]
+[125]
 File: 431-notes_files/figure-latex/nnyfs_boxplot5-fig-1.pdf Graphic file (type 
 QTm)
 <use  "431-notes_files/figure-latex/nnyfs_boxplot5-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[124]
+[126]
 Overfull \hbox (15.5pt too wide) in paragraph at lines 4697--4697
 []   \EU1/lmtt/m/n/10 vars    n    mean     sd median trimmed    mad min  max r
 ange skew kurtosis[] 
@@ -2228,7 +2225,7 @@ Overfull \hbox (26.0pt too wide) in paragraph at lines 4697--4697
 5008  0.8     1.13[] 
  []
 
-[125] [126] [127] [128]
+[127] [128] [129] [130]
 Overfull \hbox (75.0pt too wide) in paragraph at lines 4923--4923
 []\EU1/lmtt/m/n/10 ------------------------------------------------------------
 --------------------[] 
@@ -2258,76 +2255,76 @@ Overfull \hbox (75.0pt too wide) in paragraph at lines 4923--4923
 --------------------[] 
  []
 
-[129] [130]
+[131] [132]
 Chapter 8.
-[131
+[133
 
-] [132]
+] [134]
 File: 431-notes_files/figure-latex/nnyfs_energyhistvsNormal-fig-1.pdf Graphic f
 ile (type QTm)
 <use  "431-notes_files/figure-latex/nnyfs_energyhistvsNormal-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[133] [134]
+[135] [136]
 File: 431-notes_files/figure-latex/unnamed-chunk-42-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-42-1.pdf" >
 Overfull \hbox (57.56013pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 8.4.  DOES A NORMAL MODEL WORK WELL FOR THE \EU1/lmtt/m/sl/10 
-WAIST \EU1/lmr/m/sl/10 CIRCUMFERENCE? \EU1/lmr/m/n/10 135
+WAIST \EU1/lmr/m/sl/10 CIRCUMFERENCE? \EU1/lmr/m/n/10 137
  []
 
-[135]
+[137]
 File: 431-notes_files/figure-latex/unnamed-chunk-43-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-43-1.pdf" > [136]
+<use  "431-notes_files/figure-latex/unnamed-chunk-43-1.pdf" > [138]
 File: 431-notes_files/figure-latex/nnyfs_qqenergy-fig-1.pdf Graphic file (type 
 QTm)
-<use  "431-notes_files/figure-latex/nnyfs_qqenergy-fig-1.pdf" > [137] [138]
+<use  "431-notes_files/figure-latex/nnyfs_qqenergy-fig-1.pdf" > [139] [140]
 File: 431-notes_files/figure-latex/simnormal1plots-fig-1.pdf Graphic file (type
  QTm)
-<use  "431-notes_files/figure-latex/simnormal1plots-fig-1.pdf" > [139]
+<use  "431-notes_files/figure-latex/simnormal1plots-fig-1.pdf" > [141]
 File: 431-notes_files/figure-latex/sim2plot1-fig-1.pdf Graphic file (type QTm)
 <use  "431-notes_files/figure-latex/sim2plot1-fig-1.pdf" >
 Underfull \vbox (badness 1472) detected at line 5322
  []
 
-[140]
+[142]
 File: 431-notes_files/figure-latex/sim2hist-fig-1.pdf Graphic file (type QTm)
 <use  "431-notes_files/figure-latex/sim2hist-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[141] [142]
+[143] [144]
 File: 431-notes_files/figure-latex/sim3qqplots-fig-1.pdf Graphic file (type QTm
 )
 <use  "431-notes_files/figure-latex/sim3qqplots-fig-1.pdf" >
 Underfull \vbox (badness 1472) detected at line 5414
  []
 
-[143]
+[145]
 File: 431-notes_files/figure-latex/sim3hist-fig-1.pdf Graphic file (type QTm)
 <use  "431-notes_files/figure-latex/sim3hist-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[144]
+[146]
 File: 431-notes_files/figure-latex/sim3boxviolinplots-fig-1.pdf Graphic file (t
 ype QTm)
 <use  "431-notes_files/figure-latex/sim3boxviolinplots-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[145] [146]
+[147] [148]
 File: 431-notes_files/figure-latex/unnamed-chunk-45-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-45-1.pdf" >
 Overfull \hbox (21.66013pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 8.7.  CAN A NORMAL DISTRIBUTION FIT THE \EU1/lmtt/m/sl/10 NNYF
-S ENERGY \EU1/lmr/m/sl/10 DATA WELL? \EU1/lmr/m/n/10 147
+S ENERGY \EU1/lmr/m/sl/10 DATA WELL? \EU1/lmr/m/n/10 149
  []
 
-[147]
+[149]
 File: 431-notes_files/figure-latex/unnamed-chunk-46-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-46-1.pdf" > [148]
+<use  "431-notes_files/figure-latex/unnamed-chunk-46-1.pdf" > [150]
 File: 431-notes_files/figure-latex/unnamed-chunk-47-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-47-1.pdf" >
@@ -2336,26 +2333,26 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Overfull \hbox (21.66013pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 8.7.  CAN A NORMAL DISTRIBUTION FIT THE \EU1/lmtt/m/sl/10 NNYF
-S ENERGY \EU1/lmr/m/sl/10 DATA WELL? \EU1/lmr/m/n/10 149
+S ENERGY \EU1/lmr/m/sl/10 DATA WELL? \EU1/lmr/m/n/10 151
  []
 
-[149] [150]
+[151] [152]
 Chapter 9.
 
 Overfull \vbox (0.19891pt too high) has occurred while \output is active []
 
-[151
+[153
 
 ]
 Overfull \hbox (49.42563pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 152 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
+\EU1/lmr/m/n/10 154 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
 ALIZE” DISTRIBUTIONS
  []
 
-[152]
+[154]
 File: 431-notes_files/figure-latex/unnamed-chunk-49-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-49-1.pdf" > [153]
+<use  "431-notes_files/figure-latex/unnamed-chunk-49-1.pdf" > [155]
 File: 431-notes_files/figure-latex/unnamed-chunk-50-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-50-1.pdf" >
@@ -2363,32 +2360,32 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Overfull \hbox (49.42563pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 154 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
-ALIZE” DISTRIBUTIONS
- []
-
-[154] [155]
-File: 431-notes_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (type QT
-m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-51-1.pdf" >
-Overfull \hbox (49.42563pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 156 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
 ALIZE” DISTRIBUTIONS
  []
 
-[156]
-File: 431-notes_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (type QT
+[156] [157]
+File: 431-notes_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-52-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[157]
+<use  "431-notes_files/figure-latex/unnamed-chunk-51-1.pdf" >
 Overfull \hbox (49.42563pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 158 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
 ALIZE” DISTRIBUTIONS
  []
 
 [158]
+File: 431-notes_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (type QT
+m)
+<use  "431-notes_files/figure-latex/unnamed-chunk-52-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[159]
+Overfull \hbox (49.42563pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 160 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
+ALIZE” DISTRIBUTIONS
+ []
+
+[160]
 Underfull \vbox (badness 10000) detected at line 5922
  []
 
@@ -2399,25 +2396,13 @@ Underfull \vbox (badness 10000) detected at line 5922
 
 Overfull \hbox (25.75343pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 9.5.  WHAT IF WE CONSIDERED ALL 9 AVAILABLE TRANSFORMATIONS? \
-EU1/lmr/m/n/10 159
+EU1/lmr/m/n/10 161
  []
 
-[159]
+[161]
 File: 431-notes_files/figure-latex/unnamed-chunk-53-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-53-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (49.42563pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 160 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
-ALIZE” DISTRIBUTIONS
- []
-
-[160] [161]
-File: 431-notes_files/figure-latex/unnamed-chunk-55-1.pdf Graphic file (type QT
-m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-55-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2426,19 +2411,11 @@ Overfull \hbox (49.42563pt too wide) has occurred while \output is active
 ALIZE” DISTRIBUTIONS
  []
 
-[162]
-Underfull \vbox (badness 10000) detected at line 6022
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[163]
-File: 431-notes_files/figure-latex/unnamed-chunk-56-1.pdf Graphic file (type QT
+[162] [163]
+File: 431-notes_files/figure-latex/unnamed-chunk-55-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-56-1.pdf" >
-Underfull \vbox (badness 1472) detected at line 6066
- []
+<use  "431-notes_files/figure-latex/unnamed-chunk-55-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Overfull \hbox (49.42563pt too wide) has occurred while \output is active
@@ -2447,13 +2424,17 @@ ALIZE” DISTRIBUTIONS
  []
 
 [164]
-File: 431-notes_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (type QT
-m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-57-1.pdf" >
+Underfull \vbox (badness 10000) detected at line 6022
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [165]
-Overfull \vbox (1.56128pt too high) detected at line 6136
+File: 431-notes_files/figure-latex/unnamed-chunk-56-1.pdf Graphic file (type QT
+m)
+<use  "431-notes_files/figure-latex/unnamed-chunk-56-1.pdf" >
+Underfull \vbox (badness 1472) detected at line 6066
  []
 
 
@@ -2463,6 +2444,22 @@ ALIZE” DISTRIBUTIONS
  []
 
 [166]
+File: 431-notes_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (type QT
+m)
+<use  "431-notes_files/figure-latex/unnamed-chunk-57-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[167]
+Overfull \vbox (1.56128pt too high) detected at line 6136
+ []
+
+
+Overfull \hbox (49.42563pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 168 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
+ALIZE” DISTRIBUTIONS
+ []
+
+[168]
 File: 431-notes_files/figure-latex/unnamed-chunk-58-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-58-1.pdf" >
@@ -2471,16 +2468,16 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Overfull \hbox (25.75343pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 9.7.  WHAT IF WE CONSIDERED ALL 9 AVAILABLE TRANSFORMATIONS? \
-EU1/lmr/m/n/10 167
+EU1/lmr/m/n/10 169
  []
 
-[167]
+[169]
 Overfull \hbox (49.42563pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 168 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
+\EU1/lmr/m/n/10 170 \EU1/lmr/m/sl/10 CHAPTER 9.  USING TRANSFORMATIONS TO “NORM
 ALIZE” DISTRIBUTIONS
  []
 
-[168]
+[170]
 Chapter 10.
 
 Overfull \hbox (40.0pt too wide) in paragraph at lines 6173--6173
@@ -2492,30 +2489,30 @@ _mean protein_mean[]
 Overfull \vbox (0.62296pt too high) detected at line 6185
  []
 
-[169
+[171
 
 ]
 Underfull \vbox (badness 1831) detected at line 6241
  []
 
-[170]
+[172]
 File: 431-notes_files/figure-latex/unnamed-chunk-62-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-62-1.pdf" > [171]
+<use  "431-notes_files/figure-latex/unnamed-chunk-62-1.pdf" > [173]
 Overfull \hbox (39.04015pt too wide) in paragraph at lines 6315--6328
 [][] 
  []
 
-[172]
+[174]
 File: 431-notes_files/figure-latex/unnamed-chunk-66-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-66-1.pdf" >
 Overfull \hbox (54.70122pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 10.3.  BOXPLOTS TO RELATE AN OUTCOME TO A CATEGORICAL PREDICTO
-R \EU1/lmr/m/n/10 173
+R \EU1/lmr/m/n/10 175
  []
 
-[173]
+[175]
 Overfull \hbox (5.0pt too wide) in paragraph at lines 6366--6366
 []\EU1/lmtt/m/n/10 Warning: Removed 21 rows containing non-finite values (stat_
 boxplot).[] 
@@ -2529,7 +2526,7 @@ m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-68-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[174]
+[176]
 File: 431-notes_files/figure-latex/unnamed-chunk-69-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-69-1.pdf" >
@@ -2538,37 +2535,19 @@ Underfull \vbox (badness 1215) has occurred while \output is active []
 
 Overfull \hbox (54.70122pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 10.3.  BOXPLOTS TO RELATE AN OUTCOME TO A CATEGORICAL PREDICTO
-R \EU1/lmr/m/n/10 175
+R \EU1/lmr/m/n/10 177
  []
 
-[175]
+[177]
 File: 431-notes_files/figure-latex/unnamed-chunk-70-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-70-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[176]
+[178]
 File: 431-notes_files/figure-latex/unnamed-chunk-71-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-71-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (54.70122pt too wide) has occurred while \output is active
-\EU1/lmr/m/sl/10 10.3.  BOXPLOTS TO RELATE AN OUTCOME TO A CATEGORICAL PREDICTO
-R \EU1/lmr/m/n/10 177
- []
-
-[177]
-File: 431-notes_files/figure-latex/unnamed-chunk-72-1.pdf Graphic file (type QT
-m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-72-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[178]
-File: 431-notes_files/figure-latex/unnamed-chunk-73-1.pdf Graphic file (type QT
-m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-73-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2578,18 +2557,36 @@ R \EU1/lmr/m/n/10 179
  []
 
 [179]
+File: 431-notes_files/figure-latex/unnamed-chunk-72-1.pdf Graphic file (type QT
+m)
+<use  "431-notes_files/figure-latex/unnamed-chunk-72-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[180]
+File: 431-notes_files/figure-latex/unnamed-chunk-73-1.pdf Graphic file (type QT
+m)
+<use  "431-notes_files/figure-latex/unnamed-chunk-73-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (54.70122pt too wide) has occurred while \output is active
+\EU1/lmr/m/sl/10 10.3.  BOXPLOTS TO RELATE AN OUTCOME TO A CATEGORICAL PREDICTO
+R \EU1/lmr/m/n/10 181
+ []
+
+[181]
 File: 431-notes_files/figure-latex/unnamed-chunk-74-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-74-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[180]
+[182]
 File: 431-notes_files/figure-latex/unnamed-chunk-75-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-75-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[181]
+[183]
 Underfull \hbox (badness 1102) in paragraph at lines 6544--6544
 []\EU1/lmr/bx/n/14.4 Using Multiple Density Plots to Make
  []
@@ -2599,58 +2596,58 @@ m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-76-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[182]
+[184]
 File: 431-notes_files/figure-latex/unnamed-chunk-77-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-77-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[183]
+[185]
 File: 431-notes_files/figure-latex/unnamed-chunk-78-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-78-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[184]
+[186]
 File: 431-notes_files/figure-latex/unnamed-chunk-79-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-79-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[185]
+[187]
 File: 431-notes_files/figure-latex/unnamed-chunk-80-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-80-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[186]
+[188]
 File: 431-notes_files/figure-latex/unnamed-chunk-81-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-81-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[187] [188]
+[189] [190]
 Chapter 11.
 File: 431-notes_files/figure-latex/unnamed-chunk-83-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-83-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[189
+[191
 
-] [190]
+] [192]
 File: 431-notes_files/figure-latex/unnamed-chunk-84-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-84-1.pdf" > [191]
+<use  "431-notes_files/figure-latex/unnamed-chunk-84-1.pdf" > [193]
 File: 431-notes_files/figure-latex/unnamed-chunk-86-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-86-1.pdf" > [192]
+<use  "431-notes_files/figure-latex/unnamed-chunk-86-1.pdf" > [194]
 File: 431-notes_files/figure-latex/unnamed-chunk-87-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-87-1.pdf" >
 Underfull \vbox (badness 7256) has occurred while \output is active []
 
-[193] [194]
+[195] [196]
 Overfull \hbox (1.02011pt too wide) in paragraph at lines 6883--6892
 [][] 
  []
@@ -2658,19 +2655,19 @@ Overfull \hbox (1.02011pt too wide) in paragraph at lines 6883--6892
 
 Underfull \vbox (badness 3557) has occurred while \output is active []
 
-[195]
+[197]
 Underfull \vbox (badness 1009) has occurred while \output is active []
 
-[196]
+[198]
 File: 431-notes_files/figure-latex/unnamed-chunk-94-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-94-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[197]
+[199]
 File: 431-notes_files/figure-latex/unnamed-chunk-95-1.pdf Graphic file (type QT
 m)
-<use  "431-notes_files/figure-latex/unnamed-chunk-95-1.pdf" > [198]
+<use  "431-notes_files/figure-latex/unnamed-chunk-95-1.pdf" > [200]
 File: 431-notes_files/figure-latex/unnamed-chunk-96-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-96-1.pdf" >
@@ -2679,62 +2676,62 @@ m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-97-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[199]
+[201]
 File: 431-notes_files/figure-latex/unnamed-chunk-98-1.pdf Graphic file (type QT
 m)
 <use  "431-notes_files/figure-latex/unnamed-chunk-98-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[200]
+[202]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[201]
+[203]
 File: 431-notes_files/figure-latex/unnamed-chunk-100-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-100-1.pdf" > [202]
+<use  "431-notes_files/figure-latex/unnamed-chunk-100-1.pdf" > [204]
 File: 431-notes_files/figure-latex/unnamed-chunk-101-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-101-1.pdf" > [203]
+<use  "431-notes_files/figure-latex/unnamed-chunk-101-1.pdf" > [205]
 File: 431-notes_files/figure-latex/unnamed-chunk-104-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-104-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[204]
+[206]
 File: 431-notes_files/figure-latex/unnamed-chunk-105-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-105-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[205]
+[207]
 File: 431-notes_files/figure-latex/unnamed-chunk-106-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-106-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[206]
+[208]
 File: 431-notes_files/figure-latex/unnamed-chunk-107-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-107-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[207]
+[209]
 Underfull \vbox (badness 1406) has occurred while \output is active []
 
-[208] [209]
+[210] [211]
 File: 431-notes_files/figure-latex/spearex1-fig-1.pdf Graphic file (type QTm)
-<use  "431-notes_files/figure-latex/spearex1-fig-1.pdf" > [210]
+<use  "431-notes_files/figure-latex/spearex1-fig-1.pdf" > [212]
 File: 431-notes_files/figure-latex/spearex2-fig-1.pdf Graphic file (type QTm)
-<use  "431-notes_files/figure-latex/spearex2-fig-1.pdf" > [211]
+<use  "431-notes_files/figure-latex/spearex2-fig-1.pdf" > [213]
 File: 431-notes_files/figure-latex/spearex3-fig-1.pdf Graphic file (type QTm)
 <use  "431-notes_files/figure-latex/spearex3-fig-1.pdf" >
 File: 431-notes_files/figure-latex/spearex4-fig-1.pdf Graphic file (type QTm)
-<use  "431-notes_files/figure-latex/spearex4-fig-1.pdf" > [212] [213] [214
+<use  "431-notes_files/figure-latex/spearex4-fig-1.pdf" > [214] [215] [216
 
 ]
 Chapter 12.
 File: figures/crabanat.jpg Graphic file (type QTm)
-<use  "figures/crabanat.jpg" > [215] [216]
+<use  "figures/crabanat.jpg" > [217] [218]
 Overfull \hbox (15.5pt too wide) in paragraph at lines 7595--7595
 []         \EU1/lmtt/m/n/10 vars  n  mean    sd median trimmed   mad min  max r
 ange skew kurtosis[] 
@@ -2769,56 +2766,56 @@ Tm)
 <use  "431-notes_files/figure-latex/crabsscatter1-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[217]
+[219]
 File: 431-notes_files/figure-latex/crabsscatter2-fig-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/crabsscatter2-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[218]
+[220]
 File: 431-notes_files/figure-latex/crabsscatter4-fig-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/crabsscatter4-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[219]
+[221]
 File: 431-notes_files/figure-latex/crabsscatter5-fig-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/crabsscatter5-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[220]
+[222]
 File: 431-notes_files/figure-latex/crabsscatter6-fig-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/crabsscatter6-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[221]
+[223]
 File: 431-notes_files/figure-latex/crabsscatter7-fig-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/crabsscatter7-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[222]
+[224]
 File: 431-notes_files/figure-latex/crabsscatter8-fig-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/crabsscatter8-fig-1.pdf" > [223] [224]
+<use  "431-notes_files/figure-latex/crabsscatter8-fig-1.pdf" > [225] [226]
 File: 431-notes_files/figure-latex/crabs_loglog_model1-fig-1.pdf Graphic file (
 type QTm)
 <use  "431-notes_files/figure-latex/crabs_loglog_model1-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[225] [226] [227] [228]
+[227] [228] [229] [230]
 Overfull \hbox (6.75pt too wide) in paragraph at lines 8035--8035
 []   \EU1/lmtt/m/n/10 `log(force)` `log(height)` .fitted .std.resid   .hat .sig
 ma  .cooksd[] 
  []
 
-[229]
+[231]
 File: 431-notes_files/figure-latex/crabsmodelcompare-fig-1.pdf Graphic file (ty
 pe QTm)
-<use  "431-notes_files/figure-latex/crabsmodelcompare-fig-1.pdf" > [230] [231] 
-[232
+<use  "431-notes_files/figure-latex/crabsmodelcompare-fig-1.pdf" > [232] [233] 
+[234
 
 ]
 Chapter 13.
@@ -2900,19 +2897,19 @@ Overfull \hbox (41.75pt too wide) in paragraph at lines 8098--8098
 hr>, dibpat <chr>,[] 
  []
 
-[233]
+[235]
 Overfull \hbox (6.75pt too wide) in paragraph at lines 8098--8098
 []\EU1/lmtt/m/n/10 #   smoke <chr>, ncigs <dbl>, arcus <dbl>, chd69 <chr>, typc
 hd69 <dbl>,[] 
  []
 
-[234]
+[236]
 Overfull \hbox (22.93233pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 13.1.  THE WESTERN COLLABORATIVE GROUP STUDY (\EU1/lmtt/m/sl/1
-0 WCGS\EU1/lmr/m/sl/10 ) DATA SET \EU1/lmr/m/n/10 235
+0 WCGS\EU1/lmr/m/sl/10 ) DATA SET \EU1/lmr/m/n/10 237
  []
 
-[235] [236]
+[237] [238]
 Underfull \hbox (badness 2376) in paragraph at lines 8261--8262
 []\EU1/lmr/m/n/10 For a more detailed description, we might consider \EU1/lmtt/
 m/n/10 Hmisc::describe\EU1/lmr/m/n/10 ,
@@ -2923,13 +2920,13 @@ Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-116-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[237]
+[239]
 File: 431-notes_files/figure-latex/unnamed-chunk-117-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-117-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[238]
+[240]
 File: 431-notes_files/figure-latex/wcgs_qqplotsforsbpandlnsbpfromggplot-fig-1.p
 df Graphic file (type QTm)
 
@@ -2937,25 +2934,25 @@ df Graphic file (type QTm)
 pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[239]
+[241]
 File: 431-notes_files/figure-latex/unnamed-chunk-118-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-118-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[240]
+[242]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[241]
+[243]
 File: 431-notes_files/figure-latex/wcgssbpbyweightbox-fig-1.pdf Graphic file (t
 ype QTm)
-<use  "431-notes_files/figure-latex/wcgssbpbyweightbox-fig-1.pdf" > [242]
+<use  "431-notes_files/figure-latex/wcgssbpbyweightbox-fig-1.pdf" > [244]
 File: 431-notes_files/figure-latex/wcgssbpbyweightboxrevised-fig-1.pdf Graphic 
 file (type QTm)
 <use  "431-notes_files/figure-latex/wcgssbpbyweightboxrevised-fig-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[243]
+[245]
 File: 431-notes_files/figure-latex/wcgs_sbp_by_weight_f_ridgelineplot-1.pdf Gra
 phic file (type QTm)
 
@@ -2963,50 +2960,50 @@ phic file (type QTm)
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[244]
+[246]
 File: 431-notes_files/figure-latex/unnamed-chunk-121-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-121-1.pdf" >
 Underfull \vbox (badness 2426) has occurred while \output is active []
 
-[245] [246]
+[247] [248]
 File: 431-notes_files/figure-latex/unnamed-chunk-123-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-123-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[247] [248]
+[249] [250]
 Overfull \hbox (112.64235pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 13.9.  LINEAR MODEL FOR SBP-WEIGHT RELATIONSHIP: SUBJECTS WITH
- ARCUS SENILIS \EU1/lmr/m/n/10 249
+ ARCUS SENILIS \EU1/lmr/m/n/10 251
  []
 
-[249]
+[251]
 Overfull \hbox (5.0pt too wide) in paragraph at lines 8799--8799
 []\EU1/lmtt/m/n/10 lm(formula = sbp ~ weight * arcus, data = filter(wcgs, !is.n
 a(arcus)))[] 
  []
 
-[250] [251]
+[252] [253]
 File: 431-notes_files/figure-latex/unnamed-chunk-127-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-127-1.pdf" >
 File: 431-notes_files/figure-latex/unnamed-chunk-128-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-128-1.pdf" > [252]
+<use  "431-notes_files/figure-latex/unnamed-chunk-128-1.pdf" > [254]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[253]
+[255]
 File: 431-notes_files/figure-latex/unnamed-chunk-130-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-130-1.pdf" > [254]
+<use  "431-notes_files/figure-latex/unnamed-chunk-130-1.pdf" > [256]
 Chapter 14.
 
 Underfull \hbox (badness 10000) in paragraph at lines 8927--8927
 []\EU1/lmr/bx/n/14.4 “Linearize” The Association between
  []
 
-[255
+[257
 
 ]
 File: 431-notes_files/figure-latex/unnamed-chunk-131-1.pdf Graphic file (type Q
@@ -3016,29 +3013,15 @@ Underfull \vbox (badness 2894) has occurred while \output is active []
 
 
 Overfull \hbox (10.20673pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 256 \EU1/lmr/m/sl/10 CHAPTER 14.  RE-EXPRESSION, TUKEY’S LADDER
- & BOX-COX PLOT
- []
-
-[256]
-File: 431-notes_files/figure-latex/unnamed-chunk-132-1.pdf Graphic file (type Q
-Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-132-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[257]
-Overfull \hbox (10.20673pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 258 \EU1/lmr/m/sl/10 CHAPTER 14.  RE-EXPRESSION, TUKEY’S LADDER
  & BOX-COX PLOT
  []
 
 [258]
-File: 431-notes_files/figure-latex/unnamed-chunk-133-1.pdf Graphic file (type Q
+File: 431-notes_files/figure-latex/unnamed-chunk-132-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-133-1.pdf" >
-Underfull \hbox (badness 1953) in paragraph at lines 9061--9061
-[]\EU1/lmr/bx/n/14.4 Checking on a Transformation or Re-
- []
+<use  "431-notes_files/figure-latex/unnamed-chunk-132-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [259]
 Overfull \hbox (10.20673pt too wide) has occurred while \output is active
@@ -3047,28 +3030,42 @@ Overfull \hbox (10.20673pt too wide) has occurred while \output is active
  []
 
 [260]
-File: 431-notes_files/figure-latex/unnamed-chunk-136-1.pdf Graphic file (type Q
+File: 431-notes_files/figure-latex/unnamed-chunk-133-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-136-1.pdf" > [261]
+<use  "431-notes_files/figure-latex/unnamed-chunk-133-1.pdf" >
+Underfull \hbox (badness 1953) in paragraph at lines 9061--9061
+[]\EU1/lmr/bx/n/14.4 Checking on a Transformation or Re-
+ []
+
+[261]
 Overfull \hbox (10.20673pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 262 \EU1/lmr/m/sl/10 CHAPTER 14.  RE-EXPRESSION, TUKEY’S LADDER
  & BOX-COX PLOT
  []
 
-[262
+[262]
+File: 431-notes_files/figure-latex/unnamed-chunk-136-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-136-1.pdf" > [263]
+Overfull \hbox (10.20673pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 264 \EU1/lmr/m/sl/10 CHAPTER 14.  RE-EXPRESSION, TUKEY’S LADDER
+ & BOX-COX PLOT
+ []
+
+[264
 
 ]
 Chapter 15.
-[263]
+[265]
 File: 431-notes_files/figure-latex/scatterplot_matrix_hydrate_fig-1.pdf Graphic
  file (type QTm)
 <use  "431-notes_files/figure-latex/scatterplot_matrix_hydrate_fig-1.pdf" >
 Overfull \hbox (5.33452pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 264 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
+\EU1/lmr/m/n/10 266 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
  A SMALL STUDY
  []
 
-[264]
+[266]
 File: 431-notes_files/figure-latex/unnamed-chunk-137-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-137-1.pdf" >
@@ -3077,19 +3074,19 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Overfull \hbox (56.87012pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 15.2.  ARE THE RECOVERY SCORES WELL DESCRIBED BY A NORMAL MODE
-L? \EU1/lmr/m/n/10 265
+L? \EU1/lmr/m/n/10 267
  []
 
-[265]
+[267]
 Overfull \hbox (5.33452pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 266 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
+\EU1/lmr/m/n/10 268 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
  A SMALL STUDY
  []
 
-[266]
+[268]
 File: 431-notes_files/figure-latex/scatterplot_model_hydrate_1-1.pdf Graphic fi
 le (type QTm)
-<use  "431-notes_files/figure-latex/scatterplot_model_hydrate_1-1.pdf" > [267]
+<use  "431-notes_files/figure-latex/scatterplot_model_hydrate_1-1.pdf" > [269]
 Overfull \hbox (1.02011pt too wide) in paragraph at lines 9353--9362
 [][] 
  []
@@ -3098,58 +3095,43 @@ File: 431-notes_files/figure-latex/unnamed-chunk-140-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-140-1.pdf" >
 Overfull \hbox (5.33452pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 268 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
- A SMALL STUDY
- []
-
-[268]
-File: 431-notes_files/figure-latex/unnamed-chunk-141-1.pdf Graphic file (type Q
-Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-141-1.pdf" > [269]
-Overfull \hbox (5.33452pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 270 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
  A SMALL STUDY
  []
 
 [270]
+File: 431-notes_files/figure-latex/unnamed-chunk-141-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-141-1.pdf" > [271]
+Overfull \hbox (5.33452pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 272 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
+ A SMALL STUDY
+ []
+
+[272]
 Underfull \vbox (badness 1852) has occurred while \output is active []
 
-[271]
+[273]
 Overfull \hbox (1.02011pt too wide) in paragraph at lines 9613--9622
 [][] 
  []
 
 
 Overfull \hbox (5.33452pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 272 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
- A SMALL STUDY
- []
-
-[272] [273]
-Overfull \hbox (5.33452pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 274 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
  A SMALL STUDY
  []
 
-[274]
-Overfull \hbox (12.70013pt too wide) in paragraph at lines 9825--9832
-[][] 
- []
-
-[275]
+[274] [275]
 Overfull \hbox (5.33452pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 276 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
  A SMALL STUDY
  []
 
 [276]
-File: 431-notes_files/figure-latex/unnamed-chunk-146-1.pdf Graphic file (type Q
-Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-146-1.pdf" >
-File: 431-notes_files/figure-latex/unnamed-chunk-147-1.pdf Graphic file (type Q
-Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-147-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \hbox (12.70013pt too wide) in paragraph at lines 9825--9832
+[][] 
+ []
 
 [277]
 Overfull \hbox (5.33452pt too wide) has occurred while \output is active
@@ -3158,38 +3140,53 @@ Overfull \hbox (5.33452pt too wide) has occurred while \output is active
  []
 
 [278]
-Chapter 16.
-[279
+File: 431-notes_files/figure-latex/unnamed-chunk-146-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-146-1.pdf" >
+File: 431-notes_files/figure-latex/unnamed-chunk-147-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-147-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-] [280]
-Overfull \hbox (119.95453pt too wide) has occurred while \output is active
-\EU1/lmr/m/sl/10 16.5.  SUMMARIZING BIVARIATE ASSOCIATIONS: SCATTERPLOTS AND RE
-GRESSION LINES \EU1/lmr/m/n/10 281
+[279]
+Overfull \hbox (5.33452pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 280 \EU1/lmr/m/sl/10 CHAPTER 15.  DEHYDRATION RECOVERY IN KIDS:
+ A SMALL STUDY
  []
 
-[281] [282
+[280]
+Chapter 16.
+[281
+
+] [282]
+Overfull \hbox (119.95453pt too wide) has occurred while \output is active
+\EU1/lmr/m/sl/10 16.5.  SUMMARIZING BIVARIATE ASSOCIATIONS: SCATTERPLOTS AND RE
+GRESSION LINES \EU1/lmr/m/n/10 283
+ []
+
+[283] [284
 
 ]
 Chapter 17.
-[283] [284]
+[285] [286]
 Overfull \hbox (38.60234pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 17.5.  OUR GOAL: A CONFIDENCE INTERVAL FOR THE POPULATION MEAN
- \EU1/lmr/m/n/10 285
+ \EU1/lmr/m/n/10 287
  []
 
-[285]
+[287]
 File: 431-notes_files/figure-latex/unnamed-chunk-150-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-150-1.pdf" > [286]
+<use  "431-notes_files/figure-latex/unnamed-chunk-150-1.pdf" > [288]
 Overfull \hbox (5.0pt too wide) in paragraph at lines 10195--10195
 []   \EU1/lmtt/m/n/10 vars   n  mean sd median trimmed   mad min max range skew
  kurtosis   se[] 
  []
 
-[287] [288] [289]
+[289] [290] [291]
 File: 431-notes_files/figure-latex/unnamed-chunk-153-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-153-1.pdf" > [290] [291]
+<use  "431-notes_files/figure-latex/unnamed-chunk-153-1.pdf" > [292] [293]
 Overfull \hbox (1.02011pt too wide) in paragraph at lines 10406--10413
 [][] 
  []
@@ -3199,7 +3196,7 @@ Overfull \hbox (99.09013pt too wide) in paragraph at lines 10450--10457
 [][] 
  []
 
-[292]
+[294]
 Overfull \hbox (52.25pt too wide) in paragraph at lines 10525--10525
 []  \EU1/lmtt/m/n/10 estimate statistic p.value parameter conf.low conf.high me
 thod     alternative[] 
@@ -3208,10 +3205,10 @@ thod     alternative[]
 
 Overfull \hbox (44.34123pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 17.15.  WHAT IF WE WANT A 95% OR 99% CONFIDENCE INTERVAL INSTE
-AD? \EU1/lmr/m/n/10 293
+AD? \EU1/lmr/m/n/10 295
  []
 
-[293] [294]
+[295] [296]
 Overfull \hbox (2.92831pt too wide) in paragraph at lines 10638--10639
  []\EU1/lmr/m/n/10 Confidence| 
  []
@@ -3224,21 +3221,21 @@ Overfull \hbox (2.92831pt too wide) in paragraph at lines 10685--10686
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[295]
+[297]
 Underfull \hbox (badness 2671) in paragraph at lines 10771--10771
 []\EU1/lmr/bx/n/14.4 Bootstrap confidence interval for the
  []
 
-[296]
+[298]
 Underfull \vbox (badness 3679) has occurred while \output is active []
 
 
 Overfull \hbox (23.12453pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 17.21.  BOOTSTRAP CONFIDENCE INTERVAL FOR THE MEAN: PROCESS \E
-U1/lmr/m/n/10 297
+U1/lmr/m/n/10 299
  []
 
-[297] [298] [299] [300] [301] [302]
+[299] [300] [301] [302] [303] [304]
 Overfull \hbox (36.5pt too wide) in paragraph at lines 11128--11128
 []  \EU1/lmtt/m/n/10 estimate statistic  p.value conf.low conf.high method     
          alternative[] 
@@ -3250,20 +3247,20 @@ Overfull \hbox (20.75pt too wide) in paragraph at lines 11128--11128
 gned ra~ two.sided[] 
  []
 
-[303] [304
+[305] [306
 
 ]
 Chapter 18.
-[305]
+[307]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Overfull \hbox (34.49344pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 306 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
+\EU1/lmr/m/n/10 308 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
 MIZED CLINICAL TRIAL
  []
 
-[306]
+[308]
 Overfull \hbox (4.62001pt too wide) in paragraph at lines 11242--11242
 []\EU1/lmr/bx/n/12 Model-Based Comparisons and ANOVA/Regression 
  []
@@ -3271,13 +3268,13 @@ Overfull \hbox (4.62001pt too wide) in paragraph at lines 11242--11242
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[307]
+[309]
 Overfull \hbox (34.49344pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 308 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
+\EU1/lmr/m/n/10 310 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
 MIZED CLINICAL TRIAL
  []
 
-[308]
+[310]
 File: 431-notes_files/figure-latex/unnamed-chunk-175-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-175-1.pdf" >
@@ -3285,28 +3282,11 @@ File: 431-notes_files/figure-latex/sepsis_temp_drop_by_treat_histograms-1.pdf G
 raphic file (type QTm)
 
 <use  "431-notes_files/figure-latex/sepsis_temp_drop_by_treat_histograms-1.pdf"
- > [309]
+ > [311]
 File: 431-notes_files/figure-latex/unnamed-chunk-176-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-176-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (34.49344pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 310 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
-MIZED CLINICAL TRIAL
- []
-
-[310]
-File: 431-notes_files/figure-latex/unnamed-chunk-177-1.pdf Graphic file (type Q
-Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-177-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[311]
-Overfull \hbox (77.45012pt too wide) in paragraph at lines 11398--11407
-[][] 
- []
 
 
 Overfull \hbox (34.49344pt too wide) has occurred while \output is active
@@ -3315,14 +3295,14 @@ MIZED CLINICAL TRIAL
  []
 
 [312]
-Overfull \hbox (9.22011pt too wide) in paragraph at lines 11421--11430
-[][] 
- []
+File: 431-notes_files/figure-latex/unnamed-chunk-177-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-177-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [313]
-Overfull \hbox (43.5pt too wide) in paragraph at lines 11484--11484
-[]  \EU1/lmtt/m/n/10 estimate estimate1 estimate2 statistic p.value parameter c
-onf.low conf.high[] 
+Overfull \hbox (77.45012pt too wide) in paragraph at lines 11398--11407
+[][] 
  []
 
 
@@ -3332,12 +3312,12 @@ MIZED CLINICAL TRIAL
  []
 
 [314]
-Overfull \hbox (9.22011pt too wide) in paragraph at lines 11517--11526
+Overfull \hbox (9.22011pt too wide) in paragraph at lines 11421--11430
 [][] 
  []
 
 [315]
-Overfull \hbox (43.5pt too wide) in paragraph at lines 11615--11615
+Overfull \hbox (43.5pt too wide) in paragraph at lines 11484--11484
 []  \EU1/lmtt/m/n/10 estimate estimate1 estimate2 statistic p.value parameter c
 onf.low conf.high[] 
  []
@@ -3349,6 +3329,23 @@ MIZED CLINICAL TRIAL
  []
 
 [316]
+Overfull \hbox (9.22011pt too wide) in paragraph at lines 11517--11526
+[][] 
+ []
+
+[317]
+Overfull \hbox (43.5pt too wide) in paragraph at lines 11615--11615
+[]  \EU1/lmtt/m/n/10 estimate estimate1 estimate2 statistic p.value parameter c
+onf.low conf.high[] 
+ []
+
+
+Overfull \hbox (34.49344pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 318 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
+MIZED CLINICAL TRIAL
+ []
+
+[318]
 Overfull \hbox (36.5pt too wide) in paragraph at lines 11659--11659
 []  \EU1/lmtt/m/n/10 estimate statistic  p.value conf.low conf.high method     
          alternative[] 
@@ -3360,28 +3357,10 @@ Overfull \hbox (22.5pt too wide) in paragraph at lines 11659--11659
 nk sum ~ two.sided[] 
  []
 
-[317]
+[319]
 Underfull \hbox (badness 5203) in paragraph at lines 11720--11720
 []\EU1/lmr/bx/n/14.4 Summary: Specifying A Two-Sample
  []
-
-
-Overfull \hbox (34.49344pt too wide) has occurred while \output is active
-\EU1/lmr/m/n/10 318 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
-MIZED CLINICAL TRIAL
- []
-
-[318]
-File: 431-notes_files/figure-latex/unnamed-chunk-192-1.pdf Graphic file (type Q
-Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-192-1.pdf" >
-Underfull \vbox (badness 2119) has occurred while \output is active []
-
-[319]
-File: 431-notes_files/figure-latex/unnamed-chunk-193-1.pdf Graphic file (type Q
-Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-193-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Overfull \hbox (34.49344pt too wide) has occurred while \output is active
@@ -3390,61 +3369,79 @@ MIZED CLINICAL TRIAL
  []
 
 [320]
-Overfull \vbox (1.25577pt too high) detected at line 11828
- []
+File: 431-notes_files/figure-latex/unnamed-chunk-192-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-192-1.pdf" >
+Underfull \vbox (badness 2119) has occurred while \output is active []
 
 [321]
+File: 431-notes_files/figure-latex/unnamed-chunk-193-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-193-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 Overfull \hbox (34.49344pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 322 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
 MIZED CLINICAL TRIAL
  []
 
-[322] [323]
+[322]
+Overfull \vbox (1.25577pt too high) detected at line 11828
+ []
+
+[323]
 Overfull \hbox (34.49344pt too wide) has occurred while \output is active
 \EU1/lmr/m/n/10 324 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
 MIZED CLINICAL TRIAL
  []
 
-[324]
-Chapter 19.
-[325
+[324] [325]
+Overfull \hbox (34.49344pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 326 \EU1/lmr/m/sl/10 CHAPTER 18.  THE IBUPROFEN IN SEPSIS RANDO
+MIZED CLINICAL TRIAL
+ []
 
-] [326] [327] [328]
+[326]
+Chapter 19.
+[327
+
+] [328] [329] [330]
 File: 431-notes_files/figure-latex/unnamed-chunk-204-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-204-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[329]
+[331]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[330]
+[332]
 File: 431-notes_files/figure-latex/unnamed-chunk-206-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-206-1.pdf" > [331]
+<use  "431-notes_files/figure-latex/unnamed-chunk-206-1.pdf" > [333]
 Underfull \hbox (badness 3343) in paragraph at lines 12279--12279
 []\EU1/lmr/bx/n/14.4 Looking at Separate Samples: Using
  []
 
-[332]
+[334]
 File: 431-notes_files/figure-latex/unnamed-chunk-209-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-209-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[333]
+[335]
 File: 431-notes_files/figure-latex/unnamed-chunk-210-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-210-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[334]
+[336]
 Overfull \hbox (28.77235pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 19.5.  ESTIMATING THE DIFFERENCE IN MEANS WITH PAIRED SAMPLES 
-\EU1/lmr/m/n/10 335
+\EU1/lmr/m/n/10 337
  []
 
-[335]
+[337]
 Overfull \hbox (1.02011pt too wide) in paragraph at lines 12415--12422
 [][] 
  []
@@ -3472,7 +3469,7 @@ Overfull \hbox (14.49011pt too wide) in paragraph at lines 12465--12472
 [][] 
  []
 
-[336] [337] [338]
+[338] [339] [340]
 Overfull \hbox (99.09013pt too wide) in paragraph at lines 12566--12573
 [][] 
  []
@@ -3480,10 +3477,10 @@ Overfull \hbox (99.09013pt too wide) in paragraph at lines 12566--12573
 
 Overfull \hbox (14.24234pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 19.8.  T-BASED CI FOR POPULATION MEAN OF PAIRED DIFFERENCES \E
-U1/lmr/m/n/10 339
+U1/lmr/m/n/10 341
  []
 
-[339]
+[341]
 Overfull \hbox (99.09013pt too wide) in paragraph at lines 12620--12627
 [][] 
  []
@@ -3499,7 +3496,7 @@ Overfull \hbox (1.5pt too wide) in paragraph at lines 12690--12690
 ow conf.high[] 
  []
 
-[340]
+[342]
 Overfull \hbox (8.5pt too wide) in paragraph at lines 12711--12711
 []  \EU1/lmtt/m/n/10 term          estimate std.error statistic    p.value conf
 .low conf.high[] 
@@ -3508,15 +3505,15 @@ Overfull \hbox (8.5pt too wide) in paragraph at lines 12711--12711
 
 Overfull \hbox (25.29234pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 19.9.  BOOTSTRAP CI FOR MEAN DIFFERENCE USING PAIRED SAMPLES \
-EU1/lmr/m/n/10 341
+EU1/lmr/m/n/10 343
  []
 
-[341]
+[343]
 Underfull \hbox (badness 4634) in paragraph at lines 12789--12789
 []\EU1/lmr/bx/n/14.4 Wilcoxon Signed Rank-based CI for
  []
 
-[342]
+[344]
 Overfull \hbox (36.5pt too wide) in paragraph at lines 12827--12827
 []  \EU1/lmtt/m/n/10 estimate statistic  p.value conf.low conf.high method     
          alternative[] 
@@ -3528,7 +3525,7 @@ Overfull \hbox (13.75pt too wide) in paragraph at lines 12827--12827
 gned ra~ two.sided[] 
  []
 
-[343] [344]
+[345] [346]
 Overfull \hbox (10.25pt too wide) in paragraph at lines 12925--12925
 [] \EU1/lmtt/m/n/10 [1] 22  5 23 -6 18 25 13 47 15 16  6  1  2  7  0  4 -9 -3 3
 6 25  1 16 42 30 25[] 
@@ -3540,22 +3537,22 @@ Overfull \hbox (10.25pt too wide) in paragraph at lines 12959--12959
 qual to 0.5[] 
  []
 
-[345] [346] [347] [348]
+[347] [348] [349] [350]
 Overfull \hbox (44.33344pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 19.15.  A MORE COMPLETE DECISION SUPPORT TOOL: COMPARING MEANS
- \EU1/lmr/m/n/10 349
+ \EU1/lmr/m/n/10 351
  []
 
-[349] [350
+[351] [352
 
 ]
 Chapter 20.
-[351] [352]
+[353] [354]
 File: 431-notes_files/figure-latex/battery1-fig-1.pdf Graphic file (type QTm)
-<use  "431-notes_files/figure-latex/battery1-fig-1.pdf" > [353]
+<use  "431-notes_files/figure-latex/battery1-fig-1.pdf" > [355]
 File: 431-notes_files/figure-latex/histogram-battery-fig-1.pdf Graphic file (ty
 pe QTm)
-<use  "431-notes_files/figure-latex/histogram-battery-fig-1.pdf" > [354]
+<use  "431-notes_files/figure-latex/histogram-battery-fig-1.pdf" > [356]
 Overfull \hbox (13.75pt too wide) in paragraph at lines 13200--13200
 []\EU1/lmtt/m/n/10 1 brand name 169.5 175.3 187.35 197.075 205.5 186.8833 14.37
 4341 6       0[] 
@@ -3580,13 +3577,13 @@ Overfull \hbox (16.99007pt too wide) in alignment at lines 13232--13238
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[355] [356]
+[357] [358]
 Overfull \hbox (136.73013pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 20.2.  THE BREAKFAST STUDY: DOES OAT BRAN CEREAL LOWER SERUM L
-DL CHOLESTEROL? \EU1/lmr/m/n/10 357
+DL CHOLESTEROL? \EU1/lmr/m/n/10 359
  []
 
-[357]
+[359]
 File: 431-notes_files/figure-latex/unnamed-chunk-227-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-227-1.pdf" >
@@ -3594,7 +3591,7 @@ Underfull \hbox (badness 1072) in paragraph at lines 13365--13365
 []\EU1/lmr/bx/n/14.4 Power, Sample Size and the Breakfast
  []
 
-[358] [359]
+[360] [361]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 13414--13414
 []\EU1/lmtt/m/n/10 NOTE: n is number of *pairs*, sd is std.dev. of *differences
 * within pairs[] 
@@ -3606,7 +3603,7 @@ Overfull \hbox (22.5pt too wide) in paragraph at lines 13439--13439
 * within pairs[] 
  []
 
-[360] [361] [362
+[362] [363] [364
 
 ]
 Chapter 21.
@@ -3616,13 +3613,13 @@ Overfull \hbox (8.5pt too wide) in paragraph at lines 13525--13525
 come.detail[] 
  []
 
-[363]
+[365]
 Overfull \hbox (5.0pt too wide) in paragraph at lines 13525--13525
 []\EU1/lmtt/m/n/10 #   bmi.cat <chr>, arm.length <dbl>, arm.circ <dbl>, waist.c
 irc <dbl>,[] 
  []
 
-[364]
+[366]
 File: 431-notes_files/figure-latex/boxplot_nyfs2a-1.pdf Graphic file (type QTm)
 
 <use  "431-notes_files/figure-latex/boxplot_nyfs2a-1.pdf" >
@@ -3634,16 +3631,16 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Overfull \hbox (119.60123pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 21.1.  COMPARING GROSS MOTOR QUOTIENT SCORES BY INCOME LEVEL (
-3 CATEGORIES) \EU1/lmr/m/n/10 365
+3 CATEGORIES) \EU1/lmr/m/n/10 367
  []
 
-[365]
+[367]
 File: 431-notes_files/figure-latex/nyfs2a_ridgelineplot-1.pdf Graphic file (typ
 e QTm)
 <use  "431-notes_files/figure-latex/nyfs2a_ridgelineplot-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[366]
+[368]
 Underfull \hbox (badness 4108) in paragraph at lines 13639--13639
 []\EU1/lmr/bx/n/14.4 Alternative Procedures for Comparing
  []
@@ -3651,30 +3648,30 @@ Underfull \hbox (badness 4108) in paragraph at lines 13639--13639
 
 Overfull \hbox (64.31235pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 21.2.  ALTERNATIVE PROCEDURES FOR COMPARING MORE THAN TWO MEAN
-S \EU1/lmr/m/n/10 367
+S \EU1/lmr/m/n/10 369
  []
 
-[367] [368] [369]
+[369] [370] [371]
 Underfull \vbox (badness 1248) has occurred while \output is active []
 
-[370] [371] [372]
+[372] [373] [374]
 Overfull \hbox (0.95787pt too wide) in paragraph at lines 13942--13944
 []\EU1/lmr/m/n/10 The ANOVA F test is obtained by calculating MS(Factor) / MS(R
 esiduals).
  []
 
-[373]
+[375]
 Underfull \hbox (badness 1990) in paragraph at lines 13978--13978
 []\EU1/lmr/bx/n/14.4 The Regression Approach to Compare
  []
 
-[374]
+[376]
 Overfull \hbox (209.07906pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 21.7.  THE REGRESSION APPROACH TO COMPARE POPULATION MEANS BAS
-ED ON INDEPENDENT SAMPLES \EU1/lmr/m/n/10 375
+ED ON INDEPENDENT SAMPLES \EU1/lmr/m/n/10 377
  []
 
-[375] [376]
+[377] [378]
 Overfull \hbox (33.0pt too wide) in paragraph at lines 14209--14209
 []\EU1/lmtt/m/n/10 Middle (25 - 64K)-Low (below 25K)    -1.6639456 -6.649518 3.
 321627 0.7116745[] 
@@ -3692,7 +3689,7 @@ Overfull \hbox (34.75pt too wide) in paragraph at lines 14209--14209
 424396 0.9845073[] 
  []
 
-[377]
+[379]
 File: 431-notes_files/figure-latex/hsd_plot_nyfs2a-1.pdf Graphic file (type QTm
 )
 <use  "431-notes_files/figure-latex/hsd_plot_nyfs2a-1.pdf" >
@@ -3701,19 +3698,19 @@ Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-234-1.pdf" >
 Underfull \vbox (badness 1496) has occurred while \output is active []
 
-[378]
+[380]
 File: 431-notes_files/figure-latex/unnamed-chunk-235-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-235-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[379]
+[381]
 File: 431-notes_files/figure-latex/unnamed-chunk-236-1.pdf Graphic file (type Q
 Tm)
 <use  "431-notes_files/figure-latex/unnamed-chunk-236-1.pdf" >
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[380]
+[382]
 Overfull \hbox (26.0pt too wide) in paragraph at lines 14293--14293
 []\EU1/lmtt/m/n/10 1    Low (below 25K) 13.8 15.500  16.50 17.9 25.2 16.98163 2
 .194574 98       0[] 
@@ -3731,17 +3728,17 @@ Overfull \hbox (29.5pt too wide) in paragraph at lines 14293--14293
 .614395 92       0[] 
  []
 
-[381]
+[383]
 File: 431-notes_files/figure-latex/unnamed-chunk-239-1.pdf Graphic file (type Q
 Tm)
-<use  "431-notes_files/figure-latex/unnamed-chunk-239-1.pdf" > [382]
+<use  "431-notes_files/figure-latex/unnamed-chunk-239-1.pdf" > [384]
 Chapter 22.
-[383
+[385
 
-] [384]
+] [386]
 Underfull \vbox (badness 1178) has occurred while \output is active []
 
-[385]
+[387]
 Underfull \hbox (badness 1728) in paragraph at lines 14450--14451
 []\EU1/lmr/m/n/10 The ASA Statement on p-Values and Statistical Significance
  []
@@ -3751,7 +3748,7 @@ Underfull \hbox (badness 1521) in paragraph at lines 14466--14467
 []\EU1/lmr/m/n/10 The ASA Statement on P-Values and Statistical Significance
  []
 
-[386] [387]
+[388] [389]
 Overfull \hbox (12.44704pt too wide) in alignment at lines 14544--14548
  [] [] [] 
  []
@@ -3761,10 +3758,10 @@ Overfull \hbox (12.44704pt too wide) in alignment at lines 14548--14552
  [] [] [] 
  []
 
-[388] [389] [390] [391] [392] [393] [394]
+[390] [391] [392] [393] [394] [395] [396]
 Underfull \vbox (badness 1831) has occurred while \output is active []
 
-[395]
+[397]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 14944--14944
 []\EU1/lmtt/m/n/10 NOTE: n is number of *pairs*, sd is std.dev. of *differences
 * within pairs[] 
@@ -3773,13 +3770,13 @@ Overfull \hbox (22.5pt too wide) in paragraph at lines 14944--14944
 
 Underfull \vbox (badness 1087) has occurred while \output is active []
 
-[396]
+[398]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 14977--14977
 []\EU1/lmtt/m/n/10 NOTE: n is number of *pairs*, sd is std.dev. of *differences
 * within pairs[] 
  []
 
-[397]
+[399]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 15000--15000
 []\EU1/lmtt/m/n/10 NOTE: n is number of *pairs*, sd is std.dev. of *differences
 * within pairs[] 
@@ -3791,7 +3788,7 @@ Overfull \hbox (22.5pt too wide) in paragraph at lines 15028--15028
 * within pairs[] 
  []
 
-[398]
+[400]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 15066--15066
 []\EU1/lmtt/m/n/10 NOTE: n is number of *pairs*, sd is std.dev. of *differences
 * within pairs[] 
@@ -3803,47 +3800,214 @@ Overfull \hbox (22.5pt too wide) in paragraph at lines 15091--15091
 * within pairs[] 
  []
 
-[399]
+[401]
 Overfull \hbox (22.5pt too wide) in paragraph at lines 15117--15117
 []\EU1/lmtt/m/n/10 NOTE: n is number of *pairs*, sd is std.dev. of *differences
 * within pairs[] 
  []
 
-[400]
+[402]
 Underfull \hbox (badness 10000) in paragraph at lines 15156--15158
 
  []
 
-[401] [402] (C:\Users\Thomas\Dropbox\2020-431\431-notes\431-notes.bbl
+[403] [404]
 Overfull \hbox (82.93123pt too wide) has occurred while \output is active
 \EU1/lmr/m/sl/10 22.18.  POWER FOR INDEPENDENT SAMPLE T TESTS WITH UNBALANCED D
-ESIGNS \EU1/lmr/m/n/10 403
+ESIGNS \EU1/lmr/m/n/10 405
  []
 
-[403] [404
+[405] [406
 
-] [405])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 15290.
-[406]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 15290.
+]
+Chapter 23.
+[407]
+Overfull \hbox (1.02011pt too wide) in paragraph at lines 15350--15357
+[][] 
+ []
+
+[408] [409] [410]
+Overfull \hbox (10.25pt too wide) in paragraph at lines 15477--15477
+[]\EU1/lmtt/m/n/10 alternative hypothesis: true probability of success is not e
+qual to 0.5[] 
+ []
+
+[411]
+Overfull \hbox (10.25pt too wide) in paragraph at lines 15542--15542
+[]\EU1/lmtt/m/n/10 alternative hypothesis: true probability of success is not e
+qual to 0.5[] 
+ []
+
+[412]
+Overfull \hbox (10.25pt too wide) in paragraph at lines 15587--15587
+[]\EU1/lmtt/m/n/10 alternative hypothesis: true probability of success is not e
+qual to 0.5[] 
+ []
+
+[413]
+Overfull \hbox (10.25pt too wide) in paragraph at lines 15633--15633
+[]\EU1/lmtt/m/n/10 alternative hypothesis: true probability of success is not e
+qual to 0.5[] 
+ []
+
+
+Overfull \hbox (10.25pt too wide) in paragraph at lines 15676--15676
+[]\EU1/lmtt/m/n/10 alternative hypothesis: true probability of success is not e
+qual to 0.5[] 
+ []
+
+[414]
+Overfull \hbox (10.25pt too wide) in paragraph at lines 15723--15723
+[]\EU1/lmtt/m/n/10 alternative hypothesis: true probability of success is not e
+qual to 0.5[] 
+ []
+
+[415]
+Underfull \hbox (badness 1237) in paragraph at lines 15754--15756
+[]\EU1/lmr/m/n/10 The lower bound of a 100(1-$[]$)% confidence interval for the
+ pop-
+ []
+
+
+Underfull \hbox (badness 1436) in paragraph at lines 15756--15757
+[]\EU1/lmr/m/n/10 The upper bound of that same 100(1-$[]$)% confidence interval
+ for
+ []
+
+
+Overfull \hbox (5.15364pt too wide) in paragraph at lines 15780--15781
+[]\EU1/lmr/m/n/10 Our upper bound is $[][] [] [][][]$, or $[][][][][][] [] [][]
+[][][][][]$,
+ []
+
+[416] [417] [418]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (145.57013pt too wide) has occurred while \output is active
+\EU1/lmr/m/sl/10 23.3.  A SECOND EXAMPLE: EBOLA MORTALITY RATES THROUGH 9 MONTH
+S OF THE EPIDEMIC \EU1/lmr/m/n/10 419
+ []
+
+[419]
+File: 431-notes_files/figure-latex/unnamed-chunk-262-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-262-1.pdf" >
+Underfull \hbox (badness 1072) in paragraph at lines 15979--15979
+[]\EU1/lmr/bx/n/14.4 Can the Choice of Confidence Interval
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[420]
+File: 431-notes_files/figure-latex/unnamed-chunk-265-1.pdf Graphic file (type Q
+Tm)
+<use  "431-notes_files/figure-latex/unnamed-chunk-265-1.pdf" >
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (26.02232pt too wide) has occurred while \output is active
+\EU1/lmr/m/sl/10 23.4.  CAN THE CHOICE OF CONFIDENCE INTERVAL METHOD MATTER? \E
+U1/lmr/m/n/10 421
+ []
+
+[421] [422]
+Chapter 24.
+[423
+
+]
+Overfull \hbox (1.87009pt too wide) in alignment at lines 16082--16086
+ [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.87009pt too wide) in alignment at lines 16086--16090
+ [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (68.35454pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 424 \EU1/lmr/m/sl/10 CHAPTER 24.  COMPARING PROPORTIONS WITH TW
+O INDEPENDENT SAMPLES
+ []
+
+[424]
+Overfull \hbox (26.7201pt too wide) in alignment at lines 16109--16113
+ [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (26.7201pt too wide) in alignment at lines 16113--16117
+ [] [] [] [] [] [] 
+ []
+
+
+Underfull \vbox (badness 3557) has occurred while \output is active []
+
+[425]
+Overfull \hbox (68.35454pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 426 \EU1/lmr/m/sl/10 CHAPTER 24.  COMPARING PROPORTIONS WITH TW
+O INDEPENDENT SAMPLES
+ []
+
+[426] [427]
+Underfull \vbox (badness 1648) has occurred while \output is active []
+
+
+Overfull \hbox (68.35454pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 428 \EU1/lmr/m/sl/10 CHAPTER 24.  COMPARING PROPORTIONS WITH TW
+O INDEPENDENT SAMPLES
+ []
+
+[428]
+Overfull \hbox (104.15012pt too wide) has occurred while \output is active
+\EU1/lmr/m/sl/10 24.9.  ESTIMATING A RATE MORE ACCURATELY: USE (X + 2)/(N + 4) 
+RATHER THAN X/N \EU1/lmr/m/n/10 429
+ []
+
+[429]
+Overfull \hbox (68.35454pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 430 \EU1/lmr/m/sl/10 CHAPTER 24.  COMPARING PROPORTIONS WITH TW
+O INDEPENDENT SAMPLES
+ []
+
+[430]
+Overfull \hbox (2.78453pt too wide) has occurred while \output is active
+\EU1/lmr/m/sl/10 24.10.  A SECOND EXAMPLE: EBOLA VIRUS DISEASE STUDY, AGAIN \EU
+1/lmr/m/n/10 431
+ []
+
+[431] (C:\Users\Thomas\Dropbox\2020-431\431-notes\431-notes.bbl
+Overfull \hbox (68.35454pt too wide) has occurred while \output is active
+\EU1/lmr/m/n/10 432 \EU1/lmr/m/sl/10 CHAPTER 24.  COMPARING PROPORTIONS WITH TW
+O INDEPENDENT SAMPLES
+ []
+
+[432] [433
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 16437.
+[434]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 16437.
 (C:\Users\Thomas\Dropbox\2020-431\431-notes\431-notes.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 15290.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 15290.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 16437.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 16437.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 15290.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 16437.
  ) 
 Here is how much of TeX's memory you used:
- 30120 strings out of 428790
- 535860 string characters out of 3163802
- 695221 words of memory out of 3000000
- 32963 multiletter control sequences out of 15000+200000
+ 30180 strings out of 428790
+ 537642 string characters out of 3163802
+ 699475 words of memory out of 3000000
+ 33021 multiletter control sequences out of 15000+200000
  10089 words of font info for 81 fonts, out of 3000000 for 9000
  1096 hyphenation exceptions out of 8191
  58i,9n,103p,10404b,601s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on 431-notes.pdf (406 pages).
+Output written on 431-notes.pdf (434 pages).
 
 
 ! ** WARNING ** Failed to convert input string to UTF16...
@@ -3856,6 +4020,22 @@ Output written on 431-notes.pdf (406 pages).
 ! ** WARNING ** Failed to convert input string to UTF16...
 ! ** WARNING ** Failed to convert input string to UTF16...
 ! libpng warning: Interlace handling should be turned on when using png_read_image
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
+! ** WARNING ** Failed to convert input string to UTF16...
 ! ** WARNING ** Failed to convert input string to UTF16...
 ! ** WARNING ** Failed to convert input string to UTF16...
 ! ** WARNING ** Failed to convert input string to UTF16...

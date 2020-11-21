@@ -83,6 +83,8 @@ library(NHANES)
 library(palmerpenguins)
 library(patchwork)
 library(rms)
+library(mosaic)
+library(Epi)
 library(tidymodels) # note: tidymodels includes the broom package
 library(tidyverse) # note: tidyverse includes the dplyr and ggplot2 packages
 
@@ -106,12 +108,10 @@ Some packages need to be installed on the user's system, but do not need to be l
 ```
 boot
 car
-Epi
 GGally
 gt
 psych
 modelsummary
-mosaic
 naniar
 visdat
 ```
