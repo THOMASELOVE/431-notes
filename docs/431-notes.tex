@@ -120,7 +120,7 @@
 
 \title{Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431}
 \author{Thomas E. Love}
-\date{2020-11-21}
+\date{2020-11-22}
 
 \begin{document}
 \maketitle
@@ -9184,8 +9184,8 @@ What we're looking for in such a plot is the absence of a curve, among other thi
 
 As compared to the original residual plot, the square root version, is a modest improvement in this regard. It does look a bit less curved, and a bit more like a random cluster of points, so that's nice.
 
-\hypertarget{dehydration-recovery-in-kids-a-small-study}{%
-\chapter{Dehydration Recovery in Kids: A Small Study}\label{dehydration-recovery-in-kids-a-small-study}}
+\hypertarget{Hydrate-Study}{%
+\chapter{Dehydration Recovery in Kids: A Small Study}\label{Hydrate-Study}}
 
 The \texttt{hydrate} data describe the degree of recovery that takes place 90 minutes following treatment of moderate to severe dehydration, for 36 children diagnosed at a hospital's main pediatric clinic.
 
@@ -17633,6 +17633,665 @@ NOTE: n is number in *each* group
 \end{verbatim}
 
 The minimum sample size we'll need is 140 subjects in each approach (A and B), so that's a total sample size of 280, to achieve 90\% or higher power for the specified test while still using independent samples.
+
+\hypertarget{missing-data-mechanisms-and-simple-imputation}{%
+\chapter{Missing Data Mechanisms and Simple Imputation}\label{missing-data-mechanisms-and-simple-imputation}}
+
+Almost all serious statistical analyses have to deal with missing data. Data values that are missing are indicated in R, and to R, by the symbol \texttt{NA}.
+
+\hypertarget{adding-two-new-packages}{%
+\section{Adding Two New Packages}\label{adding-two-new-packages}}
+
+We'll use the \texttt{naniar} and \texttt{simputation} packages in this work.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(naniar)}
+\KeywordTok{library}\NormalTok{(simputation)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{a-toy-example}{%
+\section{A Toy Example}\label{a-toy-example}}
+
+In the following tiny data set called \texttt{sbp\_example}, we have four variables for a set of 15 subjects. In addition to a subject id, we have:
+
+\begin{itemize}
+\tightlist
+\item
+  the treatment this subject received (A, B or C are the treatments),
+\item
+  an indicator (1 = yes, 0 = no) of whether the subject has diabetes,
+\item
+  the subject's systolic blood pressure at baseline
+\item
+  the subject's systolic blood pressure after the application of the treatment
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# create some temporary variables}
+\NormalTok{subject <-}\StringTok{ }\DecValTok{101}\OperatorTok{:}\DecValTok{115}
+\NormalTok{x1 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{)}
+\NormalTok{x2 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\OtherTok{NA}\NormalTok{)}
+\NormalTok{x3 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{120}\NormalTok{, }\DecValTok{145}\NormalTok{, }\DecValTok{150}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{155}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{135}\NormalTok{, }\OtherTok{NA}\NormalTok{, }\DecValTok{115}\NormalTok{, }\DecValTok{170}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{145}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{135}\NormalTok{)}
+\NormalTok{x4 <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{105}\NormalTok{, }\DecValTok{135}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{120}\NormalTok{, }\DecValTok{135}\NormalTok{, }\DecValTok{115}\NormalTok{, }\DecValTok{160}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{130}\NormalTok{, }\DecValTok{155}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{140}\NormalTok{, }\DecValTok{150}\NormalTok{, }\DecValTok{135}\NormalTok{, }\DecValTok{120}\NormalTok{)}
+
+\NormalTok{sbp_example <-}\StringTok{ }
+\StringTok{  }\KeywordTok{tibble}\NormalTok{(subject, }\DataTypeTok{treat =} \KeywordTok{factor}\NormalTok{(x1), }\DataTypeTok{diabetes =}\NormalTok{ x2, }
+         \DataTypeTok{sbp.before =}\NormalTok{ x3, }\DataTypeTok{sbp.after =}\NormalTok{ x4) }
+
+\KeywordTok{rm}\NormalTok{(subject, x1, x2, x3, x4) }\CommentTok{# just cleaning up}
+
+\NormalTok{sbp_example}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 15 x 5
+   subject treat diabetes sbp.before sbp.after
+     <int> <fct>    <dbl>      <dbl>     <dbl>
+ 1     101 A            1        120       105
+ 2     102 B            0        145       135
+ 3     103 C            0        150       150
+ 4     104 A            1         NA       120
+ 5     105 C           NA        155       135
+ 6     106 A            1         NA       115
+ 7     107 A            0        135       160
+ 8     108 <NA>         1         NA       150
+ 9     109 B           NA        115       130
+10     110 C            1        170       155
+11     111 A            0        150       140
+12     112 B            0        145       140
+13     113 C            1        140       150
+14     114 A            1        160       135
+15     115 B           NA        135       120
+\end{verbatim}
+
+\hypertarget{identifying-missingness-with-naniar-functions}{%
+\section{\texorpdfstring{Identifying missingness with \texttt{naniar} functions}{Identifying missingness with naniar functions}}\label{identifying-missingness-with-naniar-functions}}
+
+The \texttt{naniar} package has many useful functions.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  How many missing values do we have, overall?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{n_miss}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 7
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  How many variables have missing values, overall?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{n_var_miss}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Which variables contain missing values?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{miss_var_which}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "treat"      "diabetes"   "sbp.before"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  How many missing values do we have in each variable?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{miss_var_summary}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 5 x 3
+  variable   n_miss pct_miss
+  <chr>       <int>    <dbl>
+1 diabetes        3    20   
+2 sbp.before      3    20   
+3 treat           1     6.67
+4 subject         0     0   
+5 sbp.after       0     0   
+\end{verbatim}
+
+We are missing one \texttt{treat}, 3 \texttt{diabetes} and 3 \texttt{sbp.before} values.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Can we plot missingness, by variable?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{gg_miss_var}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-288-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  How many of the cases (rows) have missing values?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{n_case_miss}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 6
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  How many cases have complete data, with no missing values?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{n_case_complete}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 9
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Can we tabulate missingness by case?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{miss_case_table}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 3
+  n_miss_in_case n_cases pct_cases
+           <int>   <int>     <dbl>
+1              0       9     60   
+2              1       5     33.3 
+3              2       1      6.67
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Which cases have missing values?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{miss_case_summary}\NormalTok{(sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 15 x 3
+    case n_miss pct_miss
+   <int>  <int>    <dbl>
+ 1     8      2       40
+ 2     4      1       20
+ 3     5      1       20
+ 4     6      1       20
+ 5     9      1       20
+ 6    15      1       20
+ 7     1      0        0
+ 8     2      0        0
+ 9     3      0        0
+10     7      0        0
+11    10      0        0
+12    11      0        0
+13    12      0        0
+14    13      0        0
+15    14      0        0
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  How can we identify the subjects with missing data?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sbp_example }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{complete.cases}\NormalTok{(.))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 6 x 5
+  subject treat diabetes sbp.before sbp.after
+    <int> <fct>    <dbl>      <dbl>     <dbl>
+1     104 A            1         NA       120
+2     105 C           NA        155       135
+3     106 A            1         NA       115
+4     108 <NA>         1         NA       150
+5     109 B           NA        115       130
+6     115 B           NA        135       120
+\end{verbatim}
+
+We have nine subjects with complete data, three subjects with missing \texttt{diabetes} (only), two subjects with missing \texttt{sbp.before} (only), and 1 subject who is missing both \texttt{treat} and \texttt{sbp.before}.
+
+\hypertarget{missing-data-mechanisms}{%
+\section{Missing-data mechanisms}\label{missing-data-mechanisms}}
+
+My source for this description of mechanisms is Chapter 25 of \citet{Gelman-Hill}, and that chapter is \href{http://www.stat.columbia.edu/~gelman/arm/missing.pdf}{available at this link}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{MCAR = Missingness completely at random}. A variable is missing completely at random if the probability of missingness is the same for all units, for example, if for each subject, we decide whether to collect the \texttt{diabetes} status by rolling a die and refusing to answer if a ``6'' shows up. If data are missing completely at random, then throwing out cases with missing data does not bias your inferences.
+\item
+  \textbf{Missingness that depends only on observed predictors}. A more general assumption, called \textbf{missing at random} or \textbf{MAR}, is that the probability a variable is missing depends only on available information. Here, we would have to be willing to assume that the probability of nonresponse to \texttt{diabetes} depends only on the other, fully recorded variables in the data. It is often reasonable to model this process as a logistic regression, where the outcome variable equals 1 for observed cases and 0 for missing. When an outcome variable is missing at random, it is acceptable to exclude the missing cases (that is, to treat them as NA), as long as the regression controls for all the variables that affect the probability of missingness.
+\item
+  \textbf{Missingness that depends on unobserved predictors}. Missingness is no longer ``at random'' if it depends on information that has not been recorded and this information also predicts the missing values. If a particular treatment causes discomfort, a patient is more likely to drop out of the study. This missingness is not at random (unless ``discomfort'' is measured and observed for all patients). If missingness is not at random, it must be explicitly modeled, or else you must accept some bias in your inferences.
+\item
+  \textbf{Missingness that depends on the missing value itself.} Finally, a particularly difficult situation arises when the probability of missingness depends on the (potentially missing) variable itself. For example, suppose that people with higher earnings are less likely to reveal them.
+\end{enumerate}
+
+Essentially, situations 3 and 4 are referred to collectively as \textbf{non-random missingness}, and cause more trouble for us than 1 and 2.
+
+\hypertarget{options-for-dealing-with-missingness}{%
+\section{Options for Dealing with Missingness}\label{options-for-dealing-with-missingness}}
+
+There are several available methods for dealing with missing data that are MCAR or MAR, but they basically boil down to:
+
+\begin{itemize}
+\tightlist
+\item
+  Complete Case (or Available Case) analyses
+\item
+  Single Imputation
+\item
+  Multiple Imputation
+\end{itemize}
+
+\hypertarget{complete-case-and-available-case-analyses}{%
+\section{Complete Case (and Available Case) analyses}\label{complete-case-and-available-case-analyses}}
+
+In \textbf{Complete Case} analyses, rows containing NA values are omitted from the data before analyses commence. This is the default approach for many statistical software packages, and may introduce unpredictable bias and fail to include some useful, often hard-won information.
+
+\begin{itemize}
+\tightlist
+\item
+  A complete case analysis can be appropriate when the number of missing observations is not large, and the missing pattern is either MCAR (missing completely at random) or MAR (missing at random.)
+\item
+  Two problems arise with complete-case analysis:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    If the units with missing values differ systematically from the completely observed cases, this could bias the complete-case analysis.
+  \item
+    If many variables are included in a model, there may be very few complete cases, so that most of the data would be discarded for the sake of a straightforward analysis.
+  \end{enumerate}
+\item
+  A related approach is \emph{available-case} analysis where different aspects of a problem are studied with different subsets of the data, perhaps identified on the basis of what is missing in them.
+\end{itemize}
+
+\hypertarget{single-imputation}{%
+\section{Single Imputation}\label{single-imputation}}
+
+In \textbf{single imputation} analyses, NA values are estimated/replaced \emph{one time} with \emph{one particular data value} for the purpose of obtaining more complete samples, at the expense of creating some potential bias in the eventual conclusions or obtaining slightly \emph{less} accurate estimates than would be available if there were no missing values in the data.
+
+\begin{itemize}
+\tightlist
+\item
+  A single imputation can be just a replacement with the mean or median (for a quantity) or the mode (for a categorical variable.) However, such an approach, though easy to understand, underestimates variance and ignores the relationship of missing values to other variables.
+\item
+  Single imputation can also be done using a variety of models to try to capture information about the NA values that are available in other variables within the data set.
+\item
+  The \texttt{simputation} package can help us execute single imputations using a wide variety of techniques, within the pipe approach used by the \texttt{tidyverse}. Another approach I have used in the past is the \texttt{mice} package, which can also perform single imputations.
+\end{itemize}
+
+\hypertarget{multiple-imputation}{%
+\section{Multiple Imputation}\label{multiple-imputation}}
+
+\textbf{Multiple imputation}, where NA values are repeatedly estimated/replaced with multiple data values, for the purpose of obtaining mode complete samples \emph{and} capturing details of the variation inherent in the fact that the data have missingness, so as to obtain \emph{more} accurate estimates than are possible with single imputation.
+
+\begin{itemize}
+\tightlist
+\item
+  We'll postpone further discussion of multiple imputation to 432.
+\end{itemize}
+
+\hypertarget{building-a-complete-case-analysis}{%
+\section{Building a Complete Case Analysis}\label{building-a-complete-case-analysis}}
+
+We can drop all of the missing values from a data set with \texttt{drop\_na} or with \texttt{na.omit} or by filtering for \texttt{complete.cases}. Any of these approaches produces the same result - a new data set with 9 rows (after dropping the six subjects with any NA values) and 5 columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cc}\FloatTok{.1}\NormalTok{ <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(sbp_example)}
+\NormalTok{cc}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\NormalTok{sbp_example }\OperatorTok{%>%}\StringTok{ }\NormalTok{drop_na}
+\NormalTok{cc}\FloatTok{.3}\NormalTok{ <-}\StringTok{ }\NormalTok{sbp_example }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(}\KeywordTok{complete.cases}\NormalTok{(.))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{single-imputation-with-the-mean-or-mode}{%
+\section{Single Imputation with the Mean or Mode}\label{single-imputation-with-the-mean-or-mode}}
+
+The most straightforward approach to single imputation is to impute a single summary of the variable, such as the mean, median or mode.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mosaic}\OperatorTok{::}\KeywordTok{favstats}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{sbp.before, }\DataTypeTok{data =}\NormalTok{ sbp_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ min  Q1 median     Q3 max     mean       sd  n missing
+ 115 135    145 151.25 170 143.3333 15.71527 12       3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sbp_example }\OperatorTok{%>%}\StringTok{ }\KeywordTok{tabyl}\NormalTok{(diabetes, treat) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{adorn_totals}\NormalTok{(}\DataTypeTok{where =} \KeywordTok{c}\NormalTok{(}\StringTok{"row"}\NormalTok{, }\StringTok{"col"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ diabetes A B C NA_ Total
+        0 2 2 1   0     5
+        1 4 0 2   1     7
+     <NA> 0 2 1   0     3
+    Total 6 4 4   1    15
+\end{verbatim}
+
+Here, suppose we decide to impute
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{sbp.before} with the mean (143.3) among non-missing values,
+\item
+  \texttt{diabetes} with its more common value, 1, and
+\item
+  \texttt{treat} with its more common value, or mode (A)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{si}\FloatTok{.1}\NormalTok{ <-}\StringTok{ }\NormalTok{sbp_example }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{replace_na}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{sbp.before =} \FloatTok{143.33}\NormalTok{,}
+                    \DataTypeTok{diabetes =} \DecValTok{1}\NormalTok{,}
+                    \DataTypeTok{treat =} \StringTok{"A"}\NormalTok{))}
+\NormalTok{si}\FloatTok{.1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 15 x 5
+   subject treat diabetes sbp.before sbp.after
+     <int> <fct>    <dbl>      <dbl>     <dbl>
+ 1     101 A            1       120        105
+ 2     102 B            0       145        135
+ 3     103 C            0       150        150
+ 4     104 A            1       143.       120
+ 5     105 C            1       155        135
+ 6     106 A            1       143.       115
+ 7     107 A            0       135        160
+ 8     108 A            1       143.       150
+ 9     109 B            1       115        130
+10     110 C            1       170        155
+11     111 A            0       150        140
+12     112 B            0       145        140
+13     113 C            1       140        150
+14     114 A            1       160        135
+15     115 B            1       135        120
+\end{verbatim}
+
+\hypertarget{doing-single-imputation-with-simputation}{%
+\section{\texorpdfstring{Doing Single Imputation with \texttt{simputation}}{Doing Single Imputation with simputation}}\label{doing-single-imputation-with-simputation}}
+
+Single imputation is a potentially appropriate method when missingness can be assumed to be either completely at random (MCAR) or dependent only on observed predictors (MAR). We'll use the \texttt{simputation} package to accomplish it.
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{simputation} vignette is available at \url{https://cran.r-project.org/web/packages/simputation/vignettes/intro.html}
+\item
+  The \texttt{simputation} reference manual is available at \url{https://cran.r-project.org/web/packages/simputation/simputation.pdf}
+\end{itemize}
+
+\hypertarget{using-a-model-to-impute-sbp.before-and-diabetes}{%
+\subsection{\texorpdfstring{Using a model to impute \texttt{sbp.before} and \texttt{diabetes}}{Using a model to impute sbp.before and diabetes}}\label{using-a-model-to-impute-sbp.before-and-diabetes}}
+
+Suppose we wanted to use:
+
+\begin{itemize}
+\tightlist
+\item
+  a robust linear model to predict \texttt{sbp.before} missing values, on the basis of \texttt{sbp.after} and \texttt{diabetes} status, and
+\item
+  a predictive mean matching approach (which, unlike the robust linear model, will ensure that only values of \texttt{diabetes} that we've seen before will be imputed) to predict \texttt{diabetes} status, on the basis of \texttt{sbp.after}, and
+\item
+  a decision tree approach to predict \texttt{treat} status, using all other variables in the data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{50001}\NormalTok{)}
+
+\NormalTok{imp}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\NormalTok{sbp_example }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{impute_rlm}\NormalTok{(sbp.before }\OperatorTok{~}\StringTok{ }\NormalTok{sbp.after }\OperatorTok{+}\StringTok{ }\NormalTok{diabetes) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{impute_pmm}\NormalTok{(diabetes }\OperatorTok{~}\StringTok{ }\NormalTok{sbp.after) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{impute_cart}\NormalTok{(treat }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+
+\NormalTok{imp}\FloatTok{.2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 15 x 5
+   subject treat diabetes sbp.before sbp.after
+ *   <int> <fct>    <dbl>      <dbl>     <dbl>
+ 1     101 A            1       120        105
+ 2     102 B            0       145        135
+ 3     103 C            0       150        150
+ 4     104 A            1       139.       120
+ 5     105 C            1       155        135
+ 6     106 A            1       136.       115
+ 7     107 A            0       135        160
+ 8     108 A            1       155.       150
+ 9     109 B            1       115        130
+10     110 C            1       170        155
+11     111 A            0       150        140
+12     112 B            0       145        140
+13     113 C            1       140        150
+14     114 A            1       160        135
+15     115 B            1       135        120
+\end{verbatim}
+
+Details on the many available methods in \texttt{simputation} are provided \href{https://cran.r-project.org/web/packages/simputation/simputation.pdf}{in its manual}. These include:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{impute\_cart} uses a Classification and Regression Tree approach for numerical or categorical data. There is also an \texttt{impute\_rf} command which uses Random Forests for imputation.
+\item
+  \texttt{impute\_pmm} is one of several ``hot deck'' options for imputation, this one is predictive mean matching, which can be used with numeric data (only). Missing values are first imputed using a predictive model. Next, these predictions are replaced with the observed values which are nearest to the prediction. Other imputation options in this group include random hot deck, sequential hot deck and k-nearest neighbor imputation.
+\item
+  \texttt{impute\_rlm} is one of several regression imputation methods, including linear models, robust linear models (which use what is called M-estimation to impute numerical variables) and lasso/elastic net/ridge regression models.
+\end{itemize}
+
+The \texttt{simputation} package can also do EM-based multivariate imputation, and multivariate random forest imputation, and several other approaches.
+
+\hypertarget{part-part-c.-building-models}{%
+\part*{Part C. Building Models}\label{part-part-c.-building-models}}
+\addcontentsline{toc}{part}{Part C. Building Models}
+
+\hypertarget{multiple-regression-introduction}{%
+\chapter{Multiple Regression: Introduction}\label{multiple-regression-introduction}}
+
+In Chapter \ref{Hydrate-Study} in working with a study of dehydration recovery in children, we discussed many of the fundamental ideas of multiple regression. There, we provided code and insight into the scatterplot and the scatterplot matrix, fit linear models and plotted the coefficients, analyzed summary output from \texttt{summary}, \texttt{tidy} and \texttt{glance} as well as the ANOVA table, and plotted residuals vs.~fitted values.
+
+In the remaining chapters, we will build on that foundation in three additional examples.
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{wcgs} data from the Western Collaborative Group Study, which we described and studied back in Chapter \ref{WCGS-Study}.
+\item
+  The \texttt{emp\_bmi} data from a study published in \emph{BMJ Open} of a nationally representative sample of over 7000 participants in the Korean Longitudinal Study of Aging.
+\item
+  The \texttt{gala} data, which describe features of the 30 Galapagos Islands.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wcgs <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"data/wcgs.csv"}\NormalTok{) }
+\NormalTok{emp_bmi <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"data/emp_bmi.csv"}\NormalTok{) }
+\NormalTok{gala <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"data/gala.csv"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{add-some-packages}{%
+\section{Add Some Packages}\label{add-some-packages}}
+
+Here, we'll add the \texttt{naniar}, \texttt{simputation} and \texttt{car} packages to those we've loaded at the start of the notes, and, as always, finish up with the \texttt{tidymodels} and \texttt{tidyverse} packages.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(naniar)}
+\KeywordTok{library}\NormalTok{(simputation)}
+\KeywordTok{library}\NormalTok{(car)}
+\KeywordTok{library}\NormalTok{(tidymodels)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{reminders-of-a-few-key-concepts}{%
+\section{Reminders of a few Key Concepts}\label{reminders-of-a-few-key-concepts}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Scatterplots} We have often accompanied our scatterplots with regression lines estimated by the method of least squares, and by loess smooths which permit local polynomial functions to display curved relationships, and occasionally presented in the form of a scatterplot matrix to enable simultaneous comparisons of multiple two-way associations.
+\item
+  \textbf{Measures of Correlation/Association} By far the most commonly used is the Pearson correlation, which is a unitless (scale-free) measure of bivariate linear association for the variables X and Y, symbolized by r, and ranging from -1 to +1. The Pearson correlation is a function of the slope of the least squares regression line, divided by the product of the standard deviations of X and Y. We have also mentioned the \emph{Spearman} rank correlation coefficient, which is obtained by using the usual formula for a Pearson correlation, but on the ranks (1 = minimum, n = maximum, with average ranks are applied to the ties) of the X and Y values. This approach (running a correlation of the orderings of the data) substantially reduces the effect of outliers. The result still ranges from -1 to +1, with 0 indicating no linear association.
+\item
+  \textbf{Fitting Linear Models} We have fit several styles of linear model to date, including both \emph{simple} regressions, where our outcome Y is modeled as a linear function of a single predictor X, and \emph{multiple} regression models, where more than one predictor is used. Functions from the \texttt{broom} package can be used to yield several crucial results, in addition to those we can obtain with a \texttt{summary} of the model. These include:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  (from \texttt{tidy}) the estimated coefficients (intercept and slope(s)) of the fitted model, and
+\item
+  (from \texttt{glance}) the \(R^2\) or coefficient of determination, which specifies the proportion of variation in our outcome accounted for by the linear model, and various other summaries of the model's quality of fit
+\item
+  (from \texttt{augment}) fitted values, residuals and other summaries related to individual points used to fit the model, or individual predictions made by the model, which will be helpful for assessing predictive accuracy and for developing diagnostic tools for assessing the assumptions of multiple regression.
+\end{itemize}
+
+\hypertarget{what-is-important-in-431}{%
+\section{What is important in 431?}\label{what-is-important-in-431}}
+
+In 431, my primary goal is to immerse you in several cases, which will demonstrate good statistical practice in the analysis of data using multiple regression models. Often, we will leave gaps for 432, but the principal goal is to get you to the point where you can do a solid (if not quite complete) analysis of data for the modeling part (Study 2) of Project B.
+
+Key topics regarding multiple regression we cover in 431 include:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Describing the multivariate relationship
+  - Scatterplots and smoothing
+  - Correlation coefficients, Correlation matrices
+\item
+  Transformations and Re-expression
+  - The need for transformation
+  - Using a Box-Cox method to help identify effective transformation choices
+  - Measuring and addressing collinearity
+\item
+  Testing the significance of a multiple regression model
+  - T tests for individual predictors as last predictor in
+  - Global F tests based on ANOVA to assess overall predictive significance
+  - Incremental and Sequential testing of groups of predictors
+\item
+  Interpreting the predictive value of a model
+  - \(R^2\) and Adjusted \(R^2\), along with AIC and BIC
+  - Residual standard deviation and RMSE
+\item
+  Checking model assumptions
+  - Residual Analysis including studentized residuals, and the major plots
+  - Identifying points with high Leverage
+  - Assessing Influence numerically and graphically
+\item
+  Model Selection
+  - The importance of parsimony
+  - Stepwise regression
+\item
+  Assessing Predictive Accuracy through Cross-Validation
+  - Summaries of predictive error
+  - Plotting predictions across multiple models
+\item
+  Summarizing the Key Findings of the Model, briefly and accurately
+  - Making the distinction between causal findings and associations
+  - The importance of logic, theory and empirical evidence. (LTE)
+\end{enumerate}
 
   \bibliography{book.bib,packages.bib}
 

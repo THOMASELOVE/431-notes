@@ -1,4 +1,4 @@
-# Dehydration Recovery in Kids: A Small Study
+# Dehydration Recovery in Kids: A Small Study {#Hydrate-Study}
 
 The `hydrate` data describe the degree of recovery that takes place 90 minutes following treatment of moderate to severe dehydration, for 36 children diagnosed at a hospital's main pediatric clinic. 
 

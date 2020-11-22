@@ -389,7 +389,7 @@ The Spearman and Pearson correlations are not especially different in this case.
 
 The next few plots describe relationships where we anticipate the Pearson and Spearman correlations might differ in their conclusions. 
 
-```{r spearman examples}
+```{r spearman_examples}
 spear1 <- read_csv("data/spear1.csv")
 spear2 <- read_csv("data/spear2.csv")
 spear3 <- read_csv("data/spear3.csv")
