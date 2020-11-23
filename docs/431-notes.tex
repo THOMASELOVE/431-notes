@@ -120,7 +120,7 @@
 
 \title{Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431}
 \author{Thomas E. Love}
-\date{2020-11-22}
+\date{2020-11-23}
 
 \begin{document}
 \maketitle
@@ -17651,8 +17651,8 @@ We'll use the \texttt{naniar} and \texttt{simputation} packages in this work.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{a-toy-example}{%
-\section{A Toy Example}\label{a-toy-example}}
+\hypertarget{simulated-example-with-15-subjects}{%
+\section{Simulated Example with 15 subjects}\label{simulated-example-with-15-subjects}}
 
 In the following tiny data set called \texttt{sbp\_example}, we have four variables for a set of 15 subjects. In addition to a subject id, we have:
 
@@ -18211,13 +18211,15 @@ In the remaining chapters, we will build on that foundation in three additional 
 \hypertarget{add-some-packages}{%
 \section{Add Some Packages}\label{add-some-packages}}
 
-Here, we'll add the \texttt{naniar}, \texttt{simputation} and \texttt{car} packages to those we've loaded at the start of the notes, and, as always, finish up with the \texttt{tidymodels} and \texttt{tidyverse} packages.
+Here, we'll add several packages to those we've loaded at the start of the notes, and, as always, finish up with the \texttt{tidymodels} and \texttt{tidyverse} packages.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(naniar)}
 \KeywordTok{library}\NormalTok{(simputation)}
 \KeywordTok{library}\NormalTok{(car)}
+\KeywordTok{library}\NormalTok{(GGally)}
+\KeywordTok{library}\NormalTok{(ggrepel)}
 \KeywordTok{library}\NormalTok{(tidymodels)}
 \KeywordTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
@@ -18292,6 +18294,1433 @@ Key topics regarding multiple regression we cover in 431 include:
   - Making the distinction between causal findings and associations
   - The importance of logic, theory and empirical evidence. (LTE)
 \end{enumerate}
+
+\hypertarget{regression-diagnostics}{%
+\chapter{Regression Diagnostics}\label{regression-diagnostics}}
+
+Some of this discussion comes from \citet{BockVD}.
+
+Multiple linear regression (also called ordinary least squares, or OLS) has four main assumptions that are derived from its model.
+
+For a simple regression, the model underlying the regression line is \(E(Y) = \beta_0 + \beta_1 x\)
+
+\begin{itemize}
+\tightlist
+\item
+  where E(Y) = the expectation (mean) of the outcome Y,
+\item
+  \(\beta_0\) is the intercept, and
+\item
+  \(\beta_1\) is the slope
+\end{itemize}
+
+Now, if we have a multiple regression with three predictors \(x_1, x_2\) and \(x_3\), then the model becomes \(E(Y) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3\).
+
+Alternatively, we can write the model to relate individual y's to the x's by adding an individual error term: \(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \epsilon\)
+
+Of course, the multiple regression model is not limited to three predictors. We will often use \emph{k} to represent the number of coefficients (slopes plus intercept) in the model, and will also use \emph{p} to represent the number of predictors (usually \emph{p} = \emph{k} - 1).
+
+\hypertarget{building-an-example-500-subjects-from-wcgs}{%
+\section{Building an Example: 500 subjects from WCGS}\label{building-an-example-500-subjects-from-wcgs}}
+
+To fix ideas, suppose we return to the Western Collaborative Group Study (WCGS) data we studied back in Chapter \ref{WCGS-Study}, which described 3154 men ages 39-59 who were free of heart disease and were employees of one of 10 California companies in 1960-1961.
+
+We are going to select a random sample of 500 of those men, with complete data on our outcome of interest, which is total cholesterol in mg/dl (\texttt{chol}) and on our three predictors of interest, which are systolic blood pressure in mm Hg (\texttt{sbp}), body mass index (\texttt{bmi}) and behavioral pattern (\texttt{behpat}), which is a four-category variable with levels A1, A2, B3 and B4.
+
+\begin{itemize}
+\tightlist
+\item
+  Individuals exhibiting a Type A behavior pattern show evidence of being competitive and self-critical without feeling joy in their efforts or accomplishments, and are more likely to have high work involvement, important life imbalance, and high blood pressure.
+\item
+  Individuals exhibiting a Type B behavior pattern show evidence of being more reflective, more relaxed, less competitive and less anxious then Type A individuals.
+\item
+  There is substantial evidence to discredit the Type A Behavior Pattern theory in some areas, and some scholars definitely argue that Type A behavior is not a good predictor of coronary heart disease.
+\end{itemize}
+
+Below we create this sample of 500 subjects with complete data on our outcome and each of our three predictors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{12345}\NormalTok{)}
+
+\NormalTok{wcgs_}\DecValTok{500}\NormalTok{ <-}\StringTok{ }\NormalTok{wcgs }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, sbp, bmi, dibpat, chol) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(}\KeywordTok{complete.cases}\NormalTok{(.)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{slice_sample}\NormalTok{(}\DataTypeTok{n =} \DecValTok{500}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Next, we'll look at a scatterplot matrix, placing our outcome last, as usual.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# requires library(GGally)}
+
+\KeywordTok{ggpairs}\NormalTok{(wcgs_}\DecValTok{500} \OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(sbp, bmi, dibpat, chol),}
+        \DataTypeTok{lower =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{combo =} \KeywordTok{wrap}\NormalTok{(}\StringTok{"facethist"}\NormalTok{, }\DataTypeTok{binwidth =} \FloatTok{0.5}\NormalTok{)), }
+        \DataTypeTok{title =} \StringTok{"Scatterplot Matrix for 500 WCGS subjects"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/spm_wcgs_500-1.pdf}
+
+Next, we create our planned linear model, and evaluate the coefficients and fit quality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{chol_m1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(chol }\OperatorTok{~}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }\DataTypeTok{data =}\NormalTok{ wcgs_}\DecValTok{500}\NormalTok{)}
+
+\KeywordTok{summary}\NormalTok{(chol_m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = chol ~ sbp + bmi + dibpat, data = wcgs_500)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-113.133  -25.689   -1.932   24.036  186.390 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  214.5185    19.8825  10.789  < 2e-16 ***
+sbp            0.2361     0.1125   2.099  0.03634 *  
+bmi           -0.5894     0.7290  -0.808  0.41921    
+dibpatType B -11.0408     3.5643  -3.098  0.00206 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 39.66 on 496 degrees of freedom
+Multiple R-squared:  0.02954,	Adjusted R-squared:  0.02367 
+F-statistic: 5.033 on 3 and 496 DF,  p-value: 0.001915
+\end{verbatim}
+
+As usual, we'll use \texttt{tidy} and \texttt{glance} from the \texttt{broom} package (part of \texttt{tidymodels}) to evaluate the coefficients in more detail, and summarize the quality of fit for our model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(chol_m1, }\DataTypeTok{conf.int =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(term, estimate, std.error, conf.low, conf.high, p.value) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r|r}
+\hline
+term & estimate & std.error & conf.low & conf.high & p.value\\
+\hline
+(Intercept) & 214.519 & 19.883 & 181.753 & 247.284 & 0.000\\
+\hline
+sbp & 0.236 & 0.112 & 0.051 & 0.421 & 0.036\\
+\hline
+bmi & -0.589 & 0.729 & -1.791 & 0.612 & 0.419\\
+\hline
+dibpatType B & -11.041 & 3.564 & -16.915 & -5.167 & 0.002\\
+\hline
+\end{tabular}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glance}\NormalTok{(chol_m1) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(r.squared, adj.r.squared, sigma, AIC, BIC, nobs) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r|r}
+\hline
+r.squared & adj.r.squared & sigma & AIC & BIC & nobs\\
+\hline
+0.03 & 0.024 & 39.7 & 5105.3 & 5126.4 & 500\\
+\hline
+\end{tabular}
+
+This isn't a terrific model, accounting for only 3\% (according to \(R^2\)) of the variation in our outcome, although some of the individual predictors show effects that meet our usual standards for ``detectable'' results. Our goal, though, is to use this model as an example for studying residual diagnostics to search for possible violations of regression assumptions.
+
+To assess regression assumptions, we'll have to look at residuals and fits for each of the individual points, which we can obtain use the \texttt{augment} function from the \texttt{broom} package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(chol_m1, }\DataTypeTok{data =}\NormalTok{ wcgs_}\DecValTok{500}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This augments the original data with several summaries of the quality of fit for our individual rows in the \texttt{wcgs\_500} data. Here are the first few values for some of the elements of \texttt{augment}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(id}\OperatorTok{:}\NormalTok{.resid)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|l|r|r|r}
+\hline
+id & sbp & bmi & dibpat & chol & .fitted & .resid\\
+\hline
+10155 & 120 & 18.162 & Type B & 294 & 221.104 & 72.896\\
+\hline
+3495 & 140 & 24.807 & Type A & 301 & 232.950 & 68.050\\
+\hline
+12634 & 124 & 21.616 & Type A & 196 & 231.054 & -35.054\\
+\hline
+21354 & 114 & 25.381 & Type A & 176 & 226.474 & -50.474\\
+\hline
+3085 & 190 & 22.349 & Type A & 241 & 246.203 & -5.203\\
+\hline
+3589 & 140 & 23.054 & Type B & 268 & 222.943 & 45.057\\
+\hline
+\end{tabular}
+
+This includes the original data, plus the model's predicted value for \texttt{chol}, stored in \texttt{.fitted} and the residual (actual \texttt{chol} - \texttt{.fitted}) stored in \texttt{.resid}. Here are the other elements of the \texttt{augment} result.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(id, .std.resid}\OperatorTok{:}\NormalTok{.cooksd)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r|r}
+\hline
+id & .std.resid & .hat & .sigma & .cooksd\\
+\hline
+10155 & 1.854 & 0.017 & 39.563 & 0.015\\
+\hline
+3495 & 1.720 & 0.005 & 39.583 & 0.003\\
+\hline
+12634 & -0.887 & 0.007 & 39.670 & 0.001\\
+\hline
+21354 & -1.277 & 0.007 & 39.636 & 0.003\\
+\hline
+3085 & -0.134 & 0.038 & 39.700 & 0.000\\
+\hline
+3589 & 1.140 & 0.007 & 39.649 & 0.002\\
+\hline
+\end{tabular}
+
+Here, we see:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.std.resid} the standardized residual, which is a measure of how poorly fit the point is, scaled to have standard deviation 1 (the raw residuals, as well as these, already have mean 0)
+\item
+  \texttt{.hat}, the hat matrix value, which is a measurement of the \textbf{leverage} this point has on the model. Leverage is, essentially, a measure of how unusual the point is in terms of the predictors.
+\item
+  \texttt{.sigma}, the value of the residual standard error \texttt{.sigma} that would emerge if this point was deleted from the \texttt{chol\_m1} model, and
+\item
+  \texttt{.cooksd}, Cook's distance, or Cook's d, which measures the \textbf{influence} of this point on the model. A highly influential point (one with \texttt{.cooksd} greater than 0.5, for instance) would be a point that, if removed from the \texttt{chol\_m1} model, would substantially change the fit of the model or the coefficient estimates.
+\end{itemize}
+
+\hypertarget{the-four-key-regression-assumptions}{%
+\section{The Four Key Regression Assumptions}\label{the-four-key-regression-assumptions}}
+
+The assumptions and conditions for a multiple regression model are nearly the same as those for simple regression. The key assumptions that must be checked in a multiple regression model are:
+
+\begin{itemize}
+\tightlist
+\item
+  Linearity Assumption
+\item
+  Independence Assumption
+\item
+  Equal Variance (Constant Variance / Homoscedasticity) Assumption
+\item
+  Normality Assumption
+\end{itemize}
+
+Happily, R is well suited to provide us with multiple diagnostic tools to generate plots and other summaries that will let us look more closely at each of these assumptions.
+
+\hypertarget{the-linearity-assumption}{%
+\section{The Linearity Assumption}\label{the-linearity-assumption}}
+
+We are fitting a linear model.
+
+\begin{itemize}
+\tightlist
+\item
+  By \emph{linear}, we mean that each predictor value, x, appears simply multiplied by its coefficient and added to the model.
+\item
+  No x appears in an exponent or some other more complicated function.
+\item
+  If the regression model is true, then the outcome \emph{y} is linearly related to each of the \emph{x}'s.
+\end{itemize}
+
+Unfortunately, assuming the model is true is not sufficient to prove that the linear model fits, so we check what \citet{BockVD} call the ``Straight Enough Condition''
+
+\hypertarget{initial-scatterplots-for-the-straight-enough-condition}{%
+\subsection{Initial Scatterplots for the ``Straight Enough'' Condition}\label{initial-scatterplots-for-the-straight-enough-condition}}
+
+\begin{itemize}
+\tightlist
+\item
+  Scatterplots of y against each of the predictors are reasonably straight.
+\item
+  The scatterplots need not show a strong (or any!) slope; we just check that there isn't a bend or other nonlinearity.
+\item
+  Any substantial curve is indicative of a potential problem.
+\item
+  Modest bends are not usually worthy of serious attention.
+\end{itemize}
+
+For example, in the \texttt{wcgs\_500} data, here are the relevant scatterplots for the quantitative predictors (in practice, I would simply look at the scatterplot matrix shown earlier) as well as a boxplot with violin for the categorical predictor (\texttt{dibpat}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(wcgs_}\DecValTok{500}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ sbp, }\DataTypeTok{y =}\NormalTok{ chol)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{col =} \StringTok{"tomato"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x)}
+
+\NormalTok{p2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(wcgs_}\DecValTok{500}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ bmi, }\DataTypeTok{y =}\NormalTok{ chol)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{col =} \StringTok{"tomato"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x)}
+
+\NormalTok{p3 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(wcgs_}\DecValTok{500}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ dibpat, }\DataTypeTok{y =}\NormalTok{ chol)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_violin}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ dibpat)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \OtherTok{FALSE}\NormalTok{)}
+
+\NormalTok{(p1 }\OperatorTok{+}\StringTok{ }\NormalTok{p2) }\OperatorTok{/}\StringTok{ }\NormalTok{p3 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{plot_layout}\NormalTok{(}\DataTypeTok{heights =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{plot_annotation}\NormalTok{(}\DataTypeTok{title =} \StringTok{"WCGS_500 Cholesterol vs. Predictors"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/chol_model_wcgs_500_1-1.pdf}
+
+Here, I've simply placed \texttt{recov.score} on the vertical (Y) axis, plotted against each of the predictors, in turn. I've added a straight line (OLS) fit {[}in tomato red{]} and a loess smooth {[}in blue{]} to each plot to guide your assessment of the ``straight enough'' condition. Note the use here of \texttt{span\ =\ 2} in the \texttt{loess} smooths to produce lines that are less wiggly than they would be using the default \texttt{span\ =\ 0.75}.
+
+\begin{itemize}
+\tightlist
+\item
+  Each of these is ``straight enough'' for our purposes, in initially fitting the data.
+\item
+  If one of these was not, we might consider a transformation of the relevant predictor, or, if all were problematic, we might transform the outcome Y.
+\end{itemize}
+
+\hypertarget{residuals-vs.-predicted-values-to-check-for-non-linearity}{%
+\subsection{Residuals vs.~Predicted Values to Check for Non-Linearity}\label{residuals-vs.-predicted-values-to-check-for-non-linearity}}
+
+The residuals should appear to have no pattern (no curve, for instance) with respect to the predicted (fitted) values. It is a very good idea to plot the residuals against the fitted values to check for patterns, especially bends or other indications of non-linearity. For a multiple regression, the fitted values are a combination of the x's given by the regression equation, so they combine the effects of the x's in a way that makes sense for our particular regression model. That makes them a good choice to plot against. We'll check for other things in this plot, as well.
+
+When you ask R to plot the result of a linear model, it will produce up to five separate plots: the first of which is a plot of \textbf{residuals vs.~fitted values}.
+
+\hypertarget{using-plotmodel-which-1}{%
+\subsubsection{\texorpdfstring{Using \texttt{plot(model,\ which\ =\ 1)}}{Using plot(model, which = 1)}}\label{using-plotmodel-which-1}}
+
+To obtain this plot for the model including \texttt{sbp}, \texttt{bmi} and \texttt{dibpat} to predict \texttt{chol} we have two options. The simpler approach uses the following code to indicate plot 1 using the \texttt{which} command within the \texttt{plot} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(chol_m1, }\DataTypeTok{which=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/diag_wcgs_500_plot1-1} \end{center}
+
+A smooth is again added (in red) to help you identify serious non-linearity. In this case, I would conclude that there were no serious problems with linearity in these data.
+
+The plot also, by default, identifies the three values\footnote{If you wanted to identify more or fewer points, you could, i.e. `plot(modelname, which=1, id.n = 2)`} with the largest (in absolute value) residuals.
+
+\begin{itemize}
+\tightlist
+\item
+  Here, these are rows 29, 113 and 158, each of which has a positive residual (i.e.~they represent under-predictions by the model.) To identify these points in the data, use the \texttt{slice} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{slice}\NormalTok{(wcgs_}\DecValTok{500}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\DecValTok{29}\NormalTok{, }\DecValTok{113}\NormalTok{, }\DecValTok{158}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 5
+     id   sbp   bmi dibpat  chol
+  <dbl> <dbl> <dbl> <chr>  <dbl>
+1  3604   124  29.4 Type A   346
+2  2280   120  25.9 Type A   414
+3 10360   140  23.4 Type B   349
+\end{verbatim}
+
+These turn out to be the observations with \texttt{id} = 3604, 2280 and 10360, respectively.
+
+\hypertarget{using-ggplot2-to-plot-residuals-vs.-predicted-values}{%
+\subsubsection{\texorpdfstring{Using \texttt{ggplot2} to plot Residuals vs.~Predicted Values}{Using ggplot2 to plot Residuals vs.~Predicted Values}}\label{using-ggplot2-to-plot-residuals-vs.-predicted-values}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# requires library(ggrepel)}
+
+\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =}\NormalTok{ .resid)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{0}\NormalTok{, }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Residuals vs. Fitted Values from chol_m1"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"5 largest |residuals| highlighted in red."}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Fitted Total Cholesterol"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Residual"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{aspect.ratio =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-307-1.pdf}
+
+\hypertarget{residuals-vs.-predictors-to-further-check-for-non-linearity}{%
+\subsection{Residuals vs.~Predictors To Further Check for Non-Linearity}\label{residuals-vs.-predictors-to-further-check-for-non-linearity}}
+
+If we do see evidence of non-linearity in the plot of residuals against fitted values, I usually then proceed to look at residual plots against each of the individual predictors, in turn, to try to identify the specific predictor (or predictors) where we may need to use a transformation.
+
+The appeal of such plots (as compared to the initial scatterplots we looked at of the outcome against each predictor) is that they eliminate the distraction of the linear fit, and let us look more closely at the non-linear part of the relationship between the outcome and each quantitative predictor. We might also look at a boxplot of the relationship between the outcome and a categorical predictor, although this is primarily for the purpose of assessing the potential for non-constant variance, rather than non-linearity.
+
+Although I don't think you need them here, here are these plots for the residuals from our \texttt{chol\_m1} model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ sbp, }\DataTypeTok{y =}\NormalTok{ chol)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{col =} \StringTok{"tomato"}\NormalTok{)}
+\NormalTok{p2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ bmi, }\DataTypeTok{y =}\NormalTok{ chol)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{col =} \StringTok{"tomato"}\NormalTok{)}
+\NormalTok{p3 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ dibpat, }\DataTypeTok{y =}\NormalTok{ chol)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_violin}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ dibpat)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \OtherTok{FALSE}\NormalTok{)}
+
+\NormalTok{(p1 }\OperatorTok{+}\StringTok{ }\NormalTok{p2) }\OperatorTok{/}\StringTok{ }\NormalTok{p3 }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{plot_layout}\NormalTok{(}\DataTypeTok{heights =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{plot_annotation}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Residuals vs. Predictors in chol_m1 model"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-308-1.pdf}
+
+Again, I see no particularly problematic issues with the assumption of linearity in either of the scatterplots here.
+
+\hypertarget{the-independence-assumption}{%
+\section{The Independence Assumption}\label{the-independence-assumption}}
+
+The errors in the true underlying regression model must be mutually independent, but there is no way to be sure that the independence assumption is true. Fortunately, although there can be many predictor variables, there is only one outcome variable and only one set of errors. The independence assumption concerns the errors, so we check the residuals.
+
+\textbf{Randomization condition.} The data should arise from a random sample, or from a randomized experiment.
+
+\begin{itemize}
+\tightlist
+\item
+  The residuals should appear to be randomly scattered and show no patterns, trends or clumps when plotted against the predicted values.
+\item
+  In the special case when an x-variable is related to time, make sure that the residuals do not have a pattern when plotted against time.
+\end{itemize}
+
+\hypertarget{residuals-vs.-fitted-values-to-check-for-dependence}{%
+\subsection{Residuals vs.~Fitted Values to Check for Dependence}\label{residuals-vs.-fitted-values-to-check-for-dependence}}
+
+The \texttt{wcgs\_500} men were not related in any way to each other except that they were drawn from the same 10 employers, and the data are cross-sectional here, so we can be pretty sure that their measurements are independent. The residuals vs.~fitted values plots we've already seen show no clear trend, cycle or pattern which concerns us.
+
+\hypertarget{the-constant-variance-assumption}{%
+\section{The Constant Variance Assumption}\label{the-constant-variance-assumption}}
+
+The variability of our outcome, y, should be about the same for all values of every predictor x. Of course, we can't check every combination of x values, so we look at scatterplots and check to see if the plot shows a ``fan'' shape - in essence, the \textbf{Does the plot thicken? Condition.}
+
+\begin{itemize}
+\tightlist
+\item
+  Scatterplots of residuals against each x or against the predicted values, offer a visual check.
+\item
+  Be alert for a ``fan'' or a ``funnel'' shape showing growing/shrinking variability in one part of the plot.
+\end{itemize}
+
+Reviewing the same plots we have previously seen, I can find no evidence of substantial ``plot thickening'' in either the plot of residuals vs.~fitted values or in any of the plots of the residuals against each predictor separately.
+
+\hypertarget{the-scale-location-plot-to-check-for-non-constant-variance}{%
+\subsection{The Scale-Location Plot to Check for Non-Constant Variance}\label{the-scale-location-plot-to-check-for-non-constant-variance}}
+
+R does provide an additional plot to help assess this issue as linear model diagnostic plot 3. This one looks at the square root of the standardized residual plotted against the fitted values. You want the loess smooth in this plot to be flat, rather than sloped.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(chol_m1, }\DataTypeTok{which=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/p30-1} \end{center}
+
+We can replicate this plot using \texttt{ggplot2} as follows. With a \texttt{loess} smooth with \texttt{span\ =\ 2}, there's no suggestion of a meaningful trend up or down in this plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)), }\DataTypeTok{n =} \DecValTok{3}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)), }\DataTypeTok{n =} \DecValTok{3}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Scale-Location Plot for chol_m1 model"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"3 largest |Standardized Residual| in red."}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Fitted Value of Total Cholesterol"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Square Root of |Standardized Residual|"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{aspect.ratio =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-309-1.pdf}
+
+\hypertarget{what-does-trouble-look-like}{%
+\subsection{What does trouble look like?}\label{what-does-trouble-look-like}}
+
+It's helpful to see how this works in practice. Here are three sets of plots for two settings, where the left plots in each pair show simulated data that are homoscedastic (variance is constant across the levels of the predictor) and the right plots show data that are heteroscedastic (variance is not constant across predictor levels.) \emph{Source}: This example is modified from \url{http://goo.gl/weMI0U} {[}from stats.stackexchange.com{]}
+
+Here, I'll create a tibble containing fake data on a predictor (x) and two outcomes (y1 or y2). The relationship between \texttt{y1} and \texttt{x} is meant to show no problems with the assumption of homoscedasticity. The relationship between \texttt{y2} and \texttt{x}, on the other hand, should show severe problems with this assumption.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+
+\NormalTok{N  =}\StringTok{ }\DecValTok{250}    \CommentTok{## original n = 500}
+\NormalTok{b0 =}\StringTok{ }\DecValTok{3}
+\NormalTok{b1 =}\StringTok{ }\FloatTok{0.4}
+
+\NormalTok{s2 =}\StringTok{ }\DecValTok{5}
+\NormalTok{g1 =}\StringTok{ }\FloatTok{1.5}     \CommentTok{## original g1 = 1.5}
+\NormalTok{g2 =}\StringTok{ }\FloatTok{0.02}    \CommentTok{## original g2 = 0.015}
+
+\NormalTok{x        =}\StringTok{ }\KeywordTok{runif}\NormalTok{(N, }\DataTypeTok{min=}\DecValTok{0}\NormalTok{, }\DataTypeTok{max=}\DecValTok{100}\NormalTok{)}
+\NormalTok{y1   =}\StringTok{ }\NormalTok{b0 }\OperatorTok{+}\StringTok{ }\NormalTok{b1}\OperatorTok{*}\NormalTok{x }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(N, }\DataTypeTok{mean=}\DecValTok{0}\NormalTok{, }\DataTypeTok{sd=}\KeywordTok{sqrt}\NormalTok{(s2            ))}
+\NormalTok{y2 =}\StringTok{ }\NormalTok{b0 }\OperatorTok{+}\StringTok{ }\NormalTok{b1}\OperatorTok{*}\NormalTok{x }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(N, }\DataTypeTok{mean=}\DecValTok{0}\NormalTok{, }\DataTypeTok{sd=}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{exp}\NormalTok{(g1 }\OperatorTok{+}\StringTok{ }\NormalTok{g2}\OperatorTok{*}\NormalTok{x)))}
+
+\NormalTok{fake_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{id =} \DecValTok{1}\OperatorTok{:}\DecValTok{250}\NormalTok{, x, y1, y2)}
+\end{Highlighting}
+\end{Shaded}
+
+First, we'll fit our two models, and obtain augmented values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fake_m1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y1 }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{data =}\NormalTok{ fake_}\DecValTok{1}\NormalTok{) }\CommentTok{# no problems}
+\NormalTok{fake_m2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(y2 }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{data =}\NormalTok{ fake_}\DecValTok{1}\NormalTok{) }\CommentTok{# non-constant variance}
+
+\NormalTok{aug_fake1 <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(fake_m1, }\DataTypeTok{data =}\NormalTok{ fake_}\DecValTok{1}\NormalTok{)}
+\NormalTok{aug_fake2 <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(fake_m2, }\DataTypeTok{data =}\NormalTok{ fake_}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now, let's look at the plots, developed first using \texttt{ggplot2}.
+
+First, here are the two scatterplots, for our \texttt{fake\_1} model with constant variance on the left, and our \texttt{fake\_2} model with non-constant variance on the right.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(fake_}\DecValTok{1}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y1)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{se =}\NormalTok{ F, }\DataTypeTok{col =} \StringTok{"tomato"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Constant Variance (fake_m1)"}\NormalTok{,}
+         \DataTypeTok{subtitle =} \StringTok{"Scatterplot of y1 vs. x"}\NormalTok{)}
+
+\NormalTok{p1b <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(fake_}\DecValTok{1}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y2)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{se =}\NormalTok{ F, }\DataTypeTok{col =} \StringTok{"tomato"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Non-Constant Variance (fake_m2)"}\NormalTok{,}
+         \DataTypeTok{subtitle =} \StringTok{"Scatterplot of y2 vs. x"}\NormalTok{)}
+
+\NormalTok{p1a }\OperatorTok{+}\StringTok{ }\NormalTok{p1b }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-311-1.pdf}
+
+Second, here are the two plots of residuals vs.~fitted values, for our \texttt{fake\_1} model with constant variance on the left, and our \texttt{fake\_2} model with non-constant variance on the right.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p2a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_fake1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =}\NormalTok{ .resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                   }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+               \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                        }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+                    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{0}\NormalTok{, }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Constant Variance (fake_m1)"}\NormalTok{,}
+         \DataTypeTok{subtitle =} \StringTok{"Residuals vs. Fitted Values"}\NormalTok{,}
+         \DataTypeTok{caption =} \StringTok{"5 largest |residuals| highlighted in red."}\NormalTok{,}
+         \DataTypeTok{x =} \StringTok{"Fitted Value of y1"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Residual"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{aspect.ratio =} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{p2b <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_fake2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =}\NormalTok{ .resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake2 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                   }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+               \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake2 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                        }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+                    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{0}\NormalTok{, }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Non-Constant Variance (fake_m2)"}\NormalTok{,}
+         \DataTypeTok{subtitle =} \StringTok{"Residuals vs. Fitted Values"}\NormalTok{,}
+         \DataTypeTok{caption =} \StringTok{"5 largest |residuals| highlighted in red."}\NormalTok{,}
+         \DataTypeTok{x =} \StringTok{"Fitted Value of y1"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Residual"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{aspect.ratio =} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{p2a }\OperatorTok{+}\StringTok{ }\NormalTok{p2b }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-312-1.pdf}
+
+Finally, here is the scale-location plot for each scenario.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p3a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_fake1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)), }\DataTypeTok{n =} \DecValTok{3}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)), }\DataTypeTok{n =} \DecValTok{3}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Constant Variance (fake_m1)"}\NormalTok{,}
+       \DataTypeTok{subtitle =} \StringTok{"Scale-Location Plot"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"3 largest |Standardized Residual| in red."}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Fitted Value"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Square Root of |Standardized Residual|"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{aspect.ratio =} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{p3b <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_fake2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake2 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)), }\DataTypeTok{n =} \DecValTok{3}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_fake2 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)), }\DataTypeTok{n =} \DecValTok{3}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Non-Constant Variance (fake_m2)"}\NormalTok{,}
+       \DataTypeTok{subtitle =} \StringTok{"Scale-Location Plot"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"3 largest |Standardized Residual| in red."}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Fitted Value"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Square Root of |Standardized Residual|"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{aspect.ratio =} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{p3a }\OperatorTok{+}\StringTok{ }\NormalTok{p3b}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-313-1.pdf}
+
+Note the funnel shape for the upper two heteroscedastic (non-constant variance) plots, and the upward sloping loess line in the last one.
+
+Here are the relevant plots for the same scenario using base R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(y1 }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{data =}\NormalTok{ fake_}\DecValTok{1}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Constant Variance"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(y2 }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{data =}\NormalTok{ fake_}\DecValTok{1}\NormalTok{, }\DataTypeTok{main=}\StringTok{"Non-Constant Variance"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(fake_m1, }\DataTypeTok{which=}\DecValTok{1}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(fake_m2, }\DataTypeTok{which=}\DecValTok{1}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(fake_m1, }\DataTypeTok{which=}\DecValTok{3}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(fake_m2, }\DataTypeTok{which=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-314-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{the-normality-assumption}{%
+\section{The Normality Assumption}\label{the-normality-assumption}}
+
+If the plot is straight enough, the data are independent, and the plots don't thicken, you can now move on to the final assumption, that of Normality.
+
+We assume that the errors around the idealized regression model at any specified values of the x-variables follow a Normal model. We need this assumption so that we can use a Student's t-model for inference. As with other times when we've used Student's t, we'll settle for the residuals satisfying the \textbf{Nearly Normal condition}. To assess this, we simply look at a histogram or Normal probability plot of the residuals. Note that the Normality Assumption also becomes less important as the sample size grows.
+
+\hypertarget{outlier-diagnostics-points-with-unusual-residuals}{%
+\section{Outlier Diagnostics: Points with Unusual Residuals}\label{outlier-diagnostics-points-with-unusual-residuals}}
+
+A multiple regression model will always have a point which displays the most unusual residual (that is, the residual furthest from zero in either a positive or negative direction.) As part of our assessment of the normality assumption, we will often try to decide whether the residuals follow a Normal distribution by creating a Q-Q plot of standardized residuals.
+
+\hypertarget{standardized-residuals}{%
+\subsection{Standardized Residuals}\label{standardized-residuals}}
+
+Standardized residuals are scaled to have mean zero and a constant standard deviation of 1, as a result of dividing the original (raw) residuals by an estimate of the standard deviation that uses all of the data in the data set.
+
+The \texttt{augment} function, when applied to a linear regression model, will generate the standardized residuals and store them in the \texttt{.std.resid} column.
+
+If multiple regression assumptions hold, then the standardized residuals (in addition to following a Normal distribution in general) will also have mean zero and standard deviation 1, with approximately 95\% of values between -2 and +2, and approximately 99.74\% of values between -3 and +3.
+
+A natural check, therefore, will be to identify the most extreme/unusual standardized residual in our data set, and see whether its value is within the general bounds implied by the Empirical Rule associated with the Normal distribution. If, for instance, we see a standardized residual below -3 or above +3, this is likely to be a very poorly fit point (we would expect to see a point like this about 2.6 times for every 1,000 observations.)
+
+A very poorly fitting point, especially if it also has high influence on the model (a concept we'll discuss shortly), may be sufficiently different from the rest of the points in the data set to merit its removal before modeling. If we did remove such a point, we'd have to have a good reason for this exclusion, and include that explanation in our report.
+
+R's general plot set for a linear model includes (as plot 2) a Normal Q-Q plot of the standardized residuals from the model.
+
+\hypertarget{checking-the-normality-assumption-with-a-plot}{%
+\subsection{Checking the Normality Assumption with a Plot}\label{checking-the-normality-assumption-with-a-plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(chol_m1, }\DataTypeTok{which=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-315-1} \end{center}
+
+or we can use the \texttt{ggplot2} version:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_qq}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_qq_line}\NormalTok{(}\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Normal Q-Q plot"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Standardized Residual from chol_m1"}\NormalTok{, }
+       \DataTypeTok{x =} \StringTok{"Standard Normal Quantiles"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{aspect.ratio =} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{p2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ .std.resid, }\DataTypeTok{x =} \StringTok{""}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_violin}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"dodgerblue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Box and Violin Plot"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Standardized Residual from chol_m1"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"mod_1"}\NormalTok{)}
+
+\NormalTok{p1 }\OperatorTok{+}\StringTok{ }\NormalTok{p2 }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{plot_layout}\NormalTok{(}\DataTypeTok{widths =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{plot_annotation}\NormalTok{(}
+    \DataTypeTok{title =} \StringTok{"Normality of Standardized Residuals from mod_1"}\NormalTok{,}
+    \DataTypeTok{caption =} \KeywordTok{paste0}\NormalTok{(}\StringTok{"n = "}\NormalTok{, }
+                     \KeywordTok{nrow}\NormalTok{(aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(.std.resid)),}
+                     \StringTok{" residual values are plotted here."}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-316-1.pdf}
+
+The Q-Q plot of standardized residuals shows one point (in row 113, according to the plot) that is far away from our expectations under the Normal model. Let's look at that point a little more closely.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{slice}\NormalTok{(}\DecValTok{113}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(id}\OperatorTok{:}\NormalTok{.std.resid) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|l|r|r|r|r}
+\hline
+id & sbp & bmi & dibpat & chol & .fitted & .resid & .std.resid\\
+\hline
+2280 & 120 & 25.86 & Type A & 414 & 227.61 & 186.39 & 4.71\\
+\hline
+\end{tabular}
+
+The standardized residual here is 4.71. That seems excessively large, in a sample of 250 observations.
+
+\hypertarget{assessing-standardized-residuals-with-an-outlier-test}{%
+\subsection{Assessing Standardized Residuals with an Outlier Test}\label{assessing-standardized-residuals-with-an-outlier-test}}
+
+Is a standardized residual of 4.71 particularly unusual in a sample of 250 such standardized residuals, given that we are trying to assume that these are well modeled by a Normal distribution, supposedly with mean 0 and standard deviation 1?
+
+Yes. The \texttt{car} library has a test called \texttt{outlierTest} which can be applied to a linear model to see if the most unusual studentized residual in absolute value is a surprise given the sample size (the studentized residual is very similar to the standardized residual - it simply uses a different estimate for the standard deviation for every point, in each case excluding the point it is currently studying)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# requires library(car)}
+
+\KeywordTok{outlierTest}\NormalTok{(chol_m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    rstudent unadjusted p-value Bonferroni p
+113 4.816993         1.9404e-06   0.00097019
+\end{verbatim}
+
+Our conclusion from the Bonferroni p value here is that there's evidence to support the belief that we could have a serious problem with Normality, in that a studentized residual of 4.82 is out of the range we might reasonably expect to see given a Normal distribution of errors and 250 observations.
+
+Which value is that? It's the subject with \texttt{id} = 2280.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{slice}\NormalTok{(}\DecValTok{113}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id}\OperatorTok{:}\NormalTok{.std.resid) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|l|r|r|r|r}
+\hline
+id & sbp & bmi & dibpat & chol & .fitted & .resid & .std.resid\\
+\hline
+2280 & 120 & 25.86 & Type A & 414 & 227.61 & 186.39 & 4.71\\
+\hline
+\end{tabular}
+
+In terms of solutions, we could consider dropping the point, but this would leave us with the vexing problem of how, exactly, to justify that choice. One question we might ask is whether dropping that point (row 113, or \texttt{id} = 2280) from our \texttt{chol\_m1} model have a big impact?
+
+\hypertarget{outlier-diagnostics-identifying-points-with-unusually-high-leverage}{%
+\section{Outlier Diagnostics: Identifying Points with Unusually High Leverage}\label{outlier-diagnostics-identifying-points-with-unusually-high-leverage}}
+
+An observation can be an outlier not just in terms of having an unusual residual, but also in terms of having an unusual combination of predictor values. Such an observation is described as having high leverage in a data set.
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{augment} function stores the leverage for each point in the \texttt{.hat} variable.
+\item
+  The average leverage value is equal to k/n, where n is the number of observations included in the regression model, and k is the number of coefficients (slopes + intercept).
+\item
+  Any point with a leverage value greater than 3 times the average leverage of a point in the data set is one that should be investigated closely.
+\end{itemize}
+
+For instance, in the \texttt{wcgs\_500} data, we have 500 observations, so the average leverage will be 4/500 = 0.008 and a high leverage point would have leverage \(\geq\) 12/500 or .024. We can check this out directly, with a sorted list of leverage values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(id}\OperatorTok{:}\NormalTok{chol, .hat) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{filter}\NormalTok{(.hat }\OperatorTok{>}\StringTok{ }\FloatTok{0.024}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(.hat))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 12 x 6
+      id   sbp   bmi dibpat  chol   .hat
+   <dbl> <dbl> <dbl> <chr>  <dbl>  <dbl>
+ 1 19078   230  24.4 Type B   254 0.0884
+ 2 10214   170  37.7 Type B   153 0.0600
+ 3 22025   210  26.5 Type B   187 0.0548
+ 4 10075   150  35.3 Type B   224 0.0401
+ 5 16031   200  28.1 Type A   256 0.0392
+ 6 11432   196  27.3 Type B   178 0.0384
+ 7  3085   190  22.3 Type A   241 0.0383
+ 8 13389   120  33.0 Type A   232 0.0303
+ 9 12976   106  15.7 Type B   207 0.0287
+10  3182   120  32.3 Type A   218 0.0262
+11 19099   104  30.5 Type A   234 0.0252
+12  3235   184  26.6 Type A   274 0.0248
+\end{verbatim}
+
+Twelve of our 500 subjects meet the standard for large leverage values (\texttt{.hat} values exceeding three times the average \texttt{.hat} value) but none of these are the outlier (\texttt{id} = 2280) we identified as having an especially poor fit (large standardized residual.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(id }\OperatorTok{==}\StringTok{ }\DecValTok{2280}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, .std.resid, .hat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+     id .std.resid    .hat
+  <dbl>      <dbl>   <dbl>
+1  2280       4.71 0.00555
+\end{verbatim}
+
+Another way to understand the impact of leverage is to look at a plot of residuals vs.~leverage, which is diagnostic plot 5 for a linear model. Here's the base R version for our \texttt{chol\_m1} model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(chol_m1, }\DataTypeTok{which=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-322-1} \end{center}
+
+Here is the \texttt{ggplot2} version.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .hat, }\DataTypeTok{y =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{3}\OperatorTok{*}\KeywordTok{mean}\NormalTok{(.hat)), }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Residuals vs. Leverage"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Leverage"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Standardized Residual"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-323-1.pdf}
+
+We see that the most highly leveraged points are shown furthest to the right in this plot (in fact, I've inserted a dotted vertical line at the cutpoint of \texttt{3*mean(.hat)}), but our problematic standardized residual has a very typical leverage value (at the top left of this plot.)
+
+Let's look at our highest leveraged point (\texttt{id} = 19078 from our list above) and remember that this just means that this point is unusual in terms of its predictor values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(id }\OperatorTok{==}\StringTok{ }\DecValTok{19078}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, sbp, bmi, dibpat, .hat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 5
+     id   sbp   bmi dibpat   .hat
+  <dbl> <dbl> <dbl> <chr>   <dbl>
+1 19078   230  24.4 Type B 0.0884
+\end{verbatim}
+
+Compare these findings to what we see in the \texttt{wcgs\_500} data overall. Let's focus on the quantitative variables involved in our model, \texttt{sbp} and \texttt{bmi}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# requires library(mosaic)}
+
+\KeywordTok{df_stats}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{bmi, }\DataTypeTok{data =}\NormalTok{ wcgs_}\DecValTok{500}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  response      min        Q1   median       Q3       max      mean        sd
+1      sbp 100.0000 120.00000 126.0000 140.0000 230.00000 129.39800 16.548453
+2      bmi  15.6605  23.03123  24.5412  26.1554  37.65281  24.65342  2.546486
+    n missing
+1 500       0
+2 500       0
+\end{verbatim}
+
+Note that our highly leveraged point has the largest \texttt{sbp} of all 500 subjects, although a rather typical \texttt{bmi}.
+
+If you're wondering about the rest of our \texttt{chol\_m1} model, there are only two possible values of \texttt{dibpat} and so a point cannot really be an outlier on that variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wcgs_}\DecValTok{500} \OperatorTok{%>%}\StringTok{ }\KeywordTok{tabyl}\NormalTok{(dibpat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ dibpat   n percent
+ Type A 259   0.518
+ Type B 241   0.482
+\end{verbatim}
+
+Remember that 12 of the points in our \texttt{chol\_m1} model showed up with leverage values more than three times higher than the mean leverage.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{filter}\NormalTok{(.hat }\OperatorTok{>}\StringTok{ }\DecValTok{3} \OperatorTok{*}\StringTok{ }\KeywordTok{mean}\NormalTok{(.hat)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{nrow}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 12
+\end{verbatim}
+
+So, let's look at a plot of the two quantitative predictors in our data to see which 12 points show up as those with ``high'' leverage.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(aug_chol1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ sbp, }\DataTypeTok{y =}\NormalTok{ bmi)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{col =} \StringTok{"gray50"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                   }\KeywordTok{slice_max}\NormalTok{(.hat, }\DataTypeTok{n =} \DecValTok{12}\NormalTok{),}
+               \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Systolic BP"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Body Mass Index"}\NormalTok{,}
+         \DataTypeTok{title =} \StringTok{"Where are the highly leveraged points in our model?"}\NormalTok{,}
+         \DataTypeTok{subtitle =} \StringTok{"wcgs_500 data, model chol_1, 12 highest leverage points shown in red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/p36b-1.pdf}
+
+The points with high leverage (large values of \texttt{.hat}) are simply those with an unusual combination of the two quantitative predictors.
+
+\hypertarget{outlier-diagnostics-identifying-points-with-high-influence-on-the-model}{%
+\section{Outlier Diagnostics: Identifying Points with High Influence on the Model}\label{outlier-diagnostics-identifying-points-with-high-influence-on-the-model}}
+
+A point in a regression model has high \textbf{influence} if the inclusion (or exclusion) of that point will have substantial impact on the model, in terms of the estimated coefficients, and the summaries of fit. The measure I routinely use to describe the level of influence a point has on the model is called \textbf{Cook's distance}.
+
+As a general rule, a Cook's distance greater than 1 indicates a point likely to have substantial influence on the model, while a point in the 0.5 to 1.0 range is only occasionally worthy of investigation. Observations with Cook's distance below 0.5 are unlikely to influence the model in any substantial way.
+
+\hypertarget{assessing-the-value-of-cooks-distance}{%
+\subsection{Assessing the Value of Cook's Distance}\label{assessing-the-value-of-cooks-distance}}
+
+You can obtain information on Cook's distance in several ways in R.
+
+\begin{itemize}
+\tightlist
+\item
+  My favorite is model diagnostic plot 5 (the residuals vs.~leverage plot) which we've seen before and which I repeat below. This plot uses red contours to indicate the value of Cook's distance.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This is possible because influence, as measured by Cook's distance, is a function of both the observation's standardized residual and its leverage.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(chol_m1, }\DataTypeTok{which=}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-327-1} \end{center}
+
+No points in this plot indicate substantial influence on our model. To do so, they'd have to be outside the Cook's distance contour shown at the top right of this plot (there is a similar arc at the bottom right, but it's too far away from the data to show up in the plot.)
+
+\hypertarget{index-plot-of-cooks-distance}{%
+\subsection{Index Plot of Cook's Distance}\label{index-plot-of-cooks-distance}}
+
+Model Diagnostic Plot 4 for a linear model is an index plot of Cook's distance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(chol_m1, }\DataTypeTok{which=}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/cooks2-1} \end{center}
+
+Or, if you like, run the \texttt{ggplot2} version:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1_ex <-}\StringTok{ }\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{obsnum =} \DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(.cooksd)))}
+
+\KeywordTok{ggplot}\NormalTok{(aug_chol1_ex, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ obsnum, }\DataTypeTok{y =}\NormalTok{ .cooksd)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_segment}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ obsnum, }\DataTypeTok{xend =}\NormalTok{ obsnum, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{, }\DataTypeTok{yend =}\NormalTok{ .cooksd)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_chol1_ex }\OperatorTok{%>%}\StringTok{ }
+\StringTok{               }\KeywordTok{slice_max}\NormalTok{(.cooksd, }\DataTypeTok{n =} \DecValTok{3}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Row Number"}\NormalTok{,}
+         \DataTypeTok{y =} \StringTok{"Cook's Distance"}\NormalTok{,}
+         \DataTypeTok{title =} \StringTok{"Cook's distance Index plot for chol_m1"}\NormalTok{,}
+         \DataTypeTok{subtitle =} \StringTok{"Subjects with the 3 largest Cook's d values are identified."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-328-1.pdf}
+
+It is clear from this plot that the largest Cook's distance (somewhere between 0.05 and 0.06) is for the observation in subject 10214 (or row 131 of the data set, depending on which version you build. All of the Cook's distance values are stored in the \texttt{.cooksd} variable in our augmented results. Let's look at the six largest Cook's distance values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(id, .std.resid, .hat, .cooksd) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(.cooksd)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|r}
+\hline
+id & .std.resid & .hat & .cooksd\\
+\hline
+10214 & -1.779 & 0.060 & 0.051\\
+\hline
+2280 & 4.713 & 0.006 & 0.031\\
+\hline
+3604 & 3.033 & 0.012 & 0.029\\
+\hline
+22025 & -1.308 & 0.055 & 0.025\\
+\hline
+11432 & -1.432 & 0.038 & 0.020\\
+\hline
+12392 & -2.661 & 0.010 & 0.017\\
+\hline
+\end{tabular}
+
+Remember that we'd need a Cook's distance value to be at least 0.50 for us to worry about it in a serious way. Here, the largest we see (0.05 for \texttt{id} = 10214) is still far away from that standard.
+
+What is the story on point 10214? Why is it unusual?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_chol1 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(id }\OperatorTok{==}\StringTok{ }\DecValTok{10214}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id}\OperatorTok{:}\NormalTok{.fitted, .std.resid, .hat, .cooksd) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{dig =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|r|l|r|r|r|r|r}
+\hline
+id & sbp & bmi & dibpat & chol & .fitted & .std.resid & .hat & .cooksd\\
+\hline
+10214 & 170 & 37.65 & Type B & 153 & 221.42 & -1.78 & 0.06 & 0.05\\
+\hline
+\end{tabular}
+
+This turns out to be the subject with the largest BMI in the data, hence some leverage, and a somewhat large (-1.78) but not enormous standardized residual. Hence the combination suggests some influence on the model.
+
+\hypertarget{running-a-regression-model-while-excluding-a-point}{%
+\section{Running a Regression Model While Excluding A Point}\label{running-a-regression-model-while-excluding-a-point}}
+
+Suppose that we wanted to remove the point with the most influence over the model. We could fit a model to the data without \texttt{id} = 10214 to see the impact of this change. Let's try it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{lm}\NormalTok{(chol }\OperatorTok{~}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }\DataTypeTok{data =}\NormalTok{ wcgs_}\DecValTok{500} \OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(id }\OperatorTok{!=}\StringTok{ }\DecValTok{10214}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = chol ~ sbp + bmi + dibpat, data = wcgs_500 %>% filter(id != 
+    10214))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-113.062  -25.453   -2.469   23.954  186.200 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  206.3207    20.3647  10.131  < 2e-16 ***
+sbp            0.2464     0.1124   2.192  0.02883 *  
+bmi           -0.3127     0.7438  -0.420  0.67433    
+dibpatType B -10.6424     3.5635  -2.986  0.00296 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 39.57 on 495 degrees of freedom
+Multiple R-squared:  0.02943,	Adjusted R-squared:  0.02355 
+F-statistic: 5.003 on 3 and 495 DF,  p-value: 0.001996
+\end{verbatim}
+
+Compare these results to those obtained with the full data set, shown below.
+
+\begin{itemize}
+\tightlist
+\item
+  How is the model affected by removing subject 10214?
+\item
+  What is the impact on the slopes?
+\item
+  On the summary measures? Residuals?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{lm}\NormalTok{(chol }\OperatorTok{~}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }\DataTypeTok{data =}\NormalTok{ wcgs_}\DecValTok{500}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = chol ~ sbp + bmi + dibpat, data = wcgs_500)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-113.133  -25.689   -1.932   24.036  186.390 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  214.5185    19.8825  10.789  < 2e-16 ***
+sbp            0.2361     0.1125   2.099  0.03634 *  
+bmi           -0.5894     0.7290  -0.808  0.41921    
+dibpatType B -11.0408     3.5643  -3.098  0.00206 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 39.66 on 496 degrees of freedom
+Multiple R-squared:  0.02954,	Adjusted R-squared:  0.02367 
+F-statistic: 5.033 on 3 and 496 DF,  p-value: 0.001915
+\end{verbatim}
+
+While it is true that we can sometimes improve the performance of the model in some ways by removing this point, there's no good reason to do so. We can't just remove a point from the data set without a good reason (and, to be clear, ``I ran my model and it doesn't fit this point well'' is NOT a good reason). Good reasons would include:
+
+\begin{itemize}
+\tightlist
+\item
+  This observation was included in the sample in error, for instance, because the subject was not eligible.
+\item
+  An error was made in transcribing the value of this observation to the final data set.
+\item
+  And, sometimes, even ``This observation is part of a meaningful subgroup of patients that I had always intended to model separately\ldots{}'' assuming that's true.
+\end{itemize}
+
+\hypertarget{summarizing-regression-diagnostics-for-431}{%
+\section{Summarizing Regression Diagnostics for 431}\label{summarizing-regression-diagnostics-for-431}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Check the ``straight enough'' condition with scatterplots of the y variable (outcome) against each x-variable (predictor), usually via the top row of a scatterplot matrix.
+\item
+  If the data are straight enough (that is, if it looks like the regression model is plausible), fit a regression model, to obtain residuals and influence measures.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If not, consider using the Box-Cox approach to identify a possible transformation for the outcome variable, and then recheck the straight enough condition.
+  \end{itemize}
+\end{enumerate}
+
+\textbf{The \texttt{plot} function for a fitted linear model builds five diagnostic plots.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  {[}\textbf{Plot 1}{]} A scatterplot of the residuals against the fitted values.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This plot should look patternless. Check in particular for any bend (which would suggest that the data weren't all that straight after all) and for any thickening, which would indicate non-constant variance.
+  \item
+    If the data are measured over time, check especially for evidence of patterns that might suggest they are not independent. For example, plot the residuals against time to look for patterns.
+  \item
+    These values are stored as \texttt{.resid} and \texttt{.fitted} by the \texttt{augment()} function applied to a linear model.
+  \end{itemize}
+\item
+  {[}\textbf{Plot 3}{]} A scale-location plot of the square root of the standardized residuals against the fitted values to look for a non-flat loess smooth, which indicates non-constant variance. Standardized residuals are obtained via \texttt{augment} and stored in the \texttt{.std.resid} variable.
+\item
+  {[}\textbf{Plot 2}{]} If the plots above look OK, then consider a Normal Q-Q plot of the standardized residuals to check the nearly Normal condition.
+\item
+  {[}\textbf{Plot 5}{]} The final plot we often look at is the plot of residuals vs.~leverage, with influence contours. Sometimes, we'll also look at {[}\textbf{Plot 4}{]} the index plot of the Cook's distance for each observation in the data set.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    To look for points with substantial \textbf{leverage} on the model by virtue of having unusual values of the predictors - look for points whose leverage is at least 3 times as large as the average leverage value.
+    - The average leverage is always k/n, where k is the number of coefficients fit by the model (including the slopes and intercept), and n is the number of observations in the model.
+    - To obtain the leverage values, use the \texttt{augment()} function which stores them in \texttt{.hat}.
+  \item
+    To look for points with substantial \textbf{influence} on the model, that is, removing them from the model would change it substantially, consider the Cook's distance, plotted in contours in Plot 5, or in an index plot in Plot 4.
+    - Any Cook's d \textgreater{} 1 will likely have a substantial impact on the model.
+    - Even points with Cook's d \textgreater{} 0.5 may merit further investigation.
+    - Find the Cook's distances using the \texttt{augment()} function, which stores them in \texttt{.cooksd}.
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{violated-assumptions-problematic-residual-plots}{%
+\section{Violated Assumptions: Problematic Residual Plots?}\label{violated-assumptions-problematic-residual-plots}}
+
+So what do serious assumption violations look like, and what can we do about them?
+
+\hypertarget{problems-with-linearity}{%
+\section{Problems with Linearity}\label{problems-with-linearity}}
+
+Here is a simulated example that shows a clear problem with non-linearity.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4311}\NormalTok{); x1 <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{100}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{15}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4312}\NormalTok{); x2 <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{100}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{10}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4313}\NormalTok{); e1 <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{100}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{0}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{15}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\DecValTok{15} \OperatorTok{+}\StringTok{ }\NormalTok{x1 }\OperatorTok{+}\StringTok{ }\NormalTok{x2}\OperatorTok{^}\DecValTok{2} \OperatorTok{+}\StringTok{ }\NormalTok{e1}
+\NormalTok{viol1 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{outcome =}\NormalTok{ y, }\DataTypeTok{pred1 =}\NormalTok{ x1, }\DataTypeTok{pred2 =}\NormalTok{ x2) }\OperatorTok{%>%}\StringTok{ }\NormalTok{tbl_df}
+\NormalTok{model}\FloatTok{.1}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(outcome }\OperatorTok{~}\StringTok{ }\NormalTok{pred1 }\OperatorTok{+}\StringTok{ }\NormalTok{pred2, }\DataTypeTok{data =}\NormalTok{ viol1)}
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.1}\NormalTok{, }\DataTypeTok{which =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/violsim 1-1.pdf}
+
+In light of this, I would be looking for a potential transformation of outcome. Does the Box-Cox plot make any useful suggestions?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxCox}\NormalTok{(model}\FloatTok{.1}\NormalTok{); }\KeywordTok{powerTransform}\NormalTok{(model}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/boxCox_1_violsim1-1.pdf}
+
+\begin{verbatim}
+Estimated transformation parameter 
+       Y1 
+0.4414775 
+\end{verbatim}
+
+Note that if the outcome was negative, we would have to add some constant value to every outcome in order to get every outcome value to be positive, and Box-Cox to run. This suggests fitting a new model, using the square root of the outcome.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(outcome) }\OperatorTok{~}\StringTok{ }\NormalTok{pred1 }\OperatorTok{+}\StringTok{ }\NormalTok{pred2, }\DataTypeTok{data =}\NormalTok{ viol1)}
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.2}\NormalTok{, }\DataTypeTok{which =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/violsim_2-1.pdf}
+
+This is meaningfully better in terms of curve, but now looks a bit fan-shaped, indicating a potential problem with heteroscedasticity. Let's look at the scale-location plot for this model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.2}\NormalTok{, }\DataTypeTok{which =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/violsim_2b-1.pdf}
+
+This definitely looks like there's a trend down in this plot. So the square root transformation, by itself, probably hasn't resolved assumptions sufficiently well. We'll have to be very careful about our interpretation of the model.
+
+\hypertarget{problems-with-non-normality-an-influential-point}{%
+\section{Problems with Non-Normality: An Influential Point}\label{problems-with-non-normality-an-influential-point}}
+
+With 100 observations, a single value with a standardized residual above 3 is very surprising. In our initial model.1 here, we have a standardized residual value as large as 6, so we clearly have a problem with that outlier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.1}\NormalTok{, }\DataTypeTok{which =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/violsim_2c-1.pdf}
+
+Should we, perhaps, remove point 72, and try again? Only if we have a reason beyond ``it was poorly fit'' to drop that point. Is point 72 highly leveraged or influential?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.1}\NormalTok{, }\DataTypeTok{which =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/violsim_5-1.pdf}
+
+What if we drop this point (72) and fit our linear model again. Does this resolve our difficulty with the assumption of linearity?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model.}\FloatTok{1.}\NormalTok{no72 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(outcome }\OperatorTok{~}\StringTok{ }\NormalTok{pred1 }\OperatorTok{+}\StringTok{ }\NormalTok{pred2, }\DataTypeTok{data =}\NormalTok{ viol1[}\OperatorTok{-}\DecValTok{72}\NormalTok{,])}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.1}\NormalTok{, }\DataTypeTok{which =} \DecValTok{1}\NormalTok{, }\DataTypeTok{caption =} \StringTok{"With Point 72"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(model.}\FloatTok{1.}\NormalTok{no72, }\DataTypeTok{which =} \DecValTok{1}\NormalTok{, }\DataTypeTok{caption =} \StringTok{"Without Point 72"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol_fit_without_72-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+No, it doesn't. But what if we combine our outcome transformation with dropping point 72?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model.}\FloatTok{2.}\NormalTok{no72 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(outcome) }\OperatorTok{~}\StringTok{ }\NormalTok{pred1 }\OperatorTok{+}\StringTok{ }\NormalTok{pred2, }\DataTypeTok{data =}\NormalTok{ viol1[}\OperatorTok{-}\DecValTok{72}\NormalTok{,])}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(model.}\FloatTok{2.}\NormalTok{no72, }\DataTypeTok{which =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol_fit_without_72_1and3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Nope. That still doesn't alleviate the problem of heteroscedasticity very well. At least, we no longer have any especially influential points, nor do we have substantial non-Normality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(model.}\FloatTok{2.}\NormalTok{no72, }\DataTypeTok{which =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol_fit_without_72_2and5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+At this point, I would be considering potential transformations of the predictors, quite possibly fitting some sort of polynomial term or cubic spline term in the predictors, but I'll leave that for discussion in 432.
+
+\hypertarget{problems-with-non-normality-skew}{%
+\section{Problems with Non-Normality: Skew}\label{problems-with-non-normality-skew}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4314}\NormalTok{); x1 <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{100}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{15}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4315}\NormalTok{); x2 <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{100}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{10}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{5}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4316}\NormalTok{); e2 <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DataTypeTok{n =} \DecValTok{100}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{3}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{5}\NormalTok{)}
+\NormalTok{y2 <-}\StringTok{ }\DecValTok{50} \OperatorTok{+}\StringTok{ }\NormalTok{x1 }\OperatorTok{+}\StringTok{ }\NormalTok{x2 }\OperatorTok{+}\StringTok{ }\NormalTok{e2}\OperatorTok{^}\DecValTok{2}
+\NormalTok{viol2 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{outcome =}\NormalTok{ y2, }\DataTypeTok{pred1 =}\NormalTok{ x1, }\DataTypeTok{pred2 =}\NormalTok{ x2) }\OperatorTok{%>%}\StringTok{ }\NormalTok{tbl_df}
+\NormalTok{model}\FloatTok{.3}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(outcome }\OperatorTok{~}\StringTok{ }\NormalTok{pred1 }\OperatorTok{+}\StringTok{ }\NormalTok{pred2, }\DataTypeTok{data =}\NormalTok{ viol2)}
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.3}\NormalTok{, }\DataTypeTok{which =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol2sim-1.pdf}
+
+Skewed residuals often show up in strange patterns in the plot of residuals vs.~fitted values, too, as in this case.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.3}\NormalTok{, }\DataTypeTok{which =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol2sim_model3plot1-1.pdf}
+
+Clearly, we have some larger residuals on the positive side, but not on the negative side. Would an outcome transformation be suggested by Box-Cox?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxCox}\NormalTok{(model}\FloatTok{.3}\NormalTok{); }\KeywordTok{powerTransform}\NormalTok{(model}\FloatTok{.3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol2sim_model3plotboxcox-1.pdf}
+
+\begin{verbatim}
+Estimated transformation parameter 
+       Y1 
+-1.438747 
+\end{verbatim}
+
+The suggested transformation looks like the inverse of our outcome.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model}\FloatTok{.4}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DecValTok{1}\OperatorTok{/}\NormalTok{outcome }\OperatorTok{~}\StringTok{ }\NormalTok{pred1 }\OperatorTok{+}\StringTok{ }\NormalTok{pred2, }\DataTypeTok{data =}\NormalTok{ viol2)}
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.4}\NormalTok{, }\DataTypeTok{which =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol2sim_model4plot2-1.pdf}
+
+OK. That's something of an improvement. How about the other residual plots with this transformation?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model}\FloatTok{.4}\NormalTok{, }\DataTypeTok{which =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/viol2sim_model4plot1-1.pdf}
+
+The impact of the skew is reduced, at least. I might well be satisfied enough with this, in practice.
 
   \bibliography{book.bib,packages.bib}
 

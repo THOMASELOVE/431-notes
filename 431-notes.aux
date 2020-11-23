@@ -1329,8 +1329,8 @@
 \newlabel{missing-data-mechanisms-and-simple-imputation}{{28}{463}{Missing Data Mechanisms and Simple Imputation}{chapter.28}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {28.1}Adding Two New Packages}{463}{section.28.1}}
 \newlabel{adding-two-new-packages}{{28.1}{463}{Adding Two New Packages}{section.28.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.2}A Toy Example}{463}{section.28.2}}
-\newlabel{a-toy-example}{{28.2}{463}{A Toy Example}{section.28.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.2}Simulated Example with 15 subjects}{463}{section.28.2}}
+\newlabel{simulated-example-with-15-subjects}{{28.2}{463}{Simulated Example with 15 subjects}{section.28.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {28.3}Identifying missingness with \texttt  {naniar} functions}{464}{section.28.3}}
 \newlabel{identifying-missingness-with-naniar-functions}{{28.3}{464}{\texorpdfstring {Identifying missingness with \texttt {naniar} functions}{Identifying missingness with naniar functions}}{section.28.3}{}}
 \citation{Gelman-Hill}
@@ -1362,9 +1362,71 @@
 \newlabel{add-some-packages}{{29.1}{475}{Add Some Packages}{section.29.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {29.2}Reminders of a few Key Concepts}{476}{section.29.2}}
 \newlabel{reminders-of-a-few-key-concepts}{{29.2}{476}{Reminders of a few Key Concepts}{section.29.2}{}}
-\bibdata{book.bib,packages.bib}
 \@writefile{toc}{\contentsline {section}{\numberline {29.3}What is important in 431?}{477}{section.29.3}}
 \newlabel{what-is-important-in-431}{{29.3}{477}{What is important in 431?}{section.29.3}{}}
+\citation{BockVD}
+\@writefile{toc}{\contentsline {chapter}{\numberline {30}Regression Diagnostics}{479}{chapter.30}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{regression-diagnostics}{{30}{479}{Regression Diagnostics}{chapter.30}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.1}Building an Example: 500 subjects from WCGS}{479}{section.30.1}}
+\newlabel{building-an-example-500-subjects-from-wcgs}{{30.1}{479}{Building an Example: 500 subjects from WCGS}{section.30.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.2}The Four Key Regression Assumptions}{483}{section.30.2}}
+\newlabel{the-four-key-regression-assumptions}{{30.2}{483}{The Four Key Regression Assumptions}{section.30.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.3}The Linearity Assumption}{483}{section.30.3}}
+\newlabel{the-linearity-assumption}{{30.3}{483}{The Linearity Assumption}{section.30.3}{}}
+\citation{BockVD}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.3.1}Initial Scatterplots for the ``Straight Enough'' Condition}{484}{subsection.30.3.1}}
+\newlabel{initial-scatterplots-for-the-straight-enough-condition}{{30.3.1}{484}{Initial Scatterplots for the ``Straight Enough'' Condition}{subsection.30.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.3.2}Residuals vs.\nobreakspace {}Predicted Values to Check for Non-Linearity}{485}{subsection.30.3.2}}
+\newlabel{residuals-vs.-predicted-values-to-check-for-non-linearity}{{30.3.2}{485}{Residuals vs.~Predicted Values to Check for Non-Linearity}{subsection.30.3.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {30.3.2.1}Using \texttt  {plot(model,\ which\ =\ 1)}}{486}{subsubsection.30.3.2.1}}
+\newlabel{using-plotmodel-which-1}{{30.3.2.1}{486}{\texorpdfstring {Using \texttt {plot(model,\ which\ =\ 1)}}{Using plot(model, which = 1)}}{subsubsection.30.3.2.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {30.3.2.2}Using \texttt  {ggplot2} to plot Residuals vs.\nobreakspace {}Predicted Values}{487}{subsubsection.30.3.2.2}}
+\newlabel{using-ggplot2-to-plot-residuals-vs.-predicted-values}{{30.3.2.2}{487}{\texorpdfstring {Using \texttt {ggplot2} to plot Residuals vs.~Predicted Values}{Using ggplot2 to plot Residuals vs.~Predicted Values}}{subsubsection.30.3.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.3.3}Residuals vs.\nobreakspace {}Predictors To Further Check for Non-Linearity}{488}{subsection.30.3.3}}
+\newlabel{residuals-vs.-predictors-to-further-check-for-non-linearity}{{30.3.3}{488}{Residuals vs.~Predictors To Further Check for Non-Linearity}{subsection.30.3.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.4}The Independence Assumption}{489}{section.30.4}}
+\newlabel{the-independence-assumption}{{30.4}{489}{The Independence Assumption}{section.30.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.4.1}Residuals vs.\nobreakspace {}Fitted Values to Check for Dependence}{490}{subsection.30.4.1}}
+\newlabel{residuals-vs.-fitted-values-to-check-for-dependence}{{30.4.1}{490}{Residuals vs.~Fitted Values to Check for Dependence}{subsection.30.4.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.5}The Constant Variance Assumption}{490}{section.30.5}}
+\newlabel{the-constant-variance-assumption}{{30.5}{490}{The Constant Variance Assumption}{section.30.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.1}The Scale-Location Plot to Check for Non-Constant Variance}{490}{subsection.30.5.1}}
+\newlabel{the-scale-location-plot-to-check-for-non-constant-variance}{{30.5.1}{490}{The Scale-Location Plot to Check for Non-Constant Variance}{subsection.30.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.2}What does trouble look like?}{492}{subsection.30.5.2}}
+\newlabel{what-does-trouble-look-like}{{30.5.2}{492}{What does trouble look like?}{subsection.30.5.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.6}The Normality Assumption}{499}{section.30.6}}
+\newlabel{the-normality-assumption}{{30.6}{499}{The Normality Assumption}{section.30.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.7}Outlier Diagnostics: Points with Unusual Residuals}{499}{section.30.7}}
+\newlabel{outlier-diagnostics-points-with-unusual-residuals}{{30.7}{499}{Outlier Diagnostics: Points with Unusual Residuals}{section.30.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.7.1}Standardized Residuals}{499}{subsection.30.7.1}}
+\newlabel{standardized-residuals}{{30.7.1}{499}{Standardized Residuals}{subsection.30.7.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.7.2}Checking the Normality Assumption with a Plot}{500}{subsection.30.7.2}}
+\newlabel{checking-the-normality-assumption-with-a-plot}{{30.7.2}{500}{Checking the Normality Assumption with a Plot}{subsection.30.7.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.7.3}Assessing Standardized Residuals with an Outlier Test}{502}{subsection.30.7.3}}
+\newlabel{assessing-standardized-residuals-with-an-outlier-test}{{30.7.3}{502}{Assessing Standardized Residuals with an Outlier Test}{subsection.30.7.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.8}Outlier Diagnostics: Identifying Points with Unusually High Leverage}{503}{section.30.8}}
+\newlabel{outlier-diagnostics-identifying-points-with-unusually-high-leverage}{{30.8}{503}{Outlier Diagnostics: Identifying Points with Unusually High Leverage}{section.30.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.9}Outlier Diagnostics: Identifying Points with High Influence on the Model}{507}{section.30.9}}
+\newlabel{outlier-diagnostics-identifying-points-with-high-influence-on-the-model}{{30.9}{507}{Outlier Diagnostics: Identifying Points with High Influence on the Model}{section.30.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.9.1}Assessing the Value of Cook's Distance}{507}{subsection.30.9.1}}
+\newlabel{assessing-the-value-of-cooks-distance}{{30.9.1}{507}{Assessing the Value of Cook's Distance}{subsection.30.9.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.9.2}Index Plot of Cook's Distance}{508}{subsection.30.9.2}}
+\newlabel{index-plot-of-cooks-distance}{{30.9.2}{508}{Index Plot of Cook's Distance}{subsection.30.9.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.10}Running a Regression Model While Excluding A Point}{511}{section.30.10}}
+\newlabel{running-a-regression-model-while-excluding-a-point}{{30.10}{511}{Running a Regression Model While Excluding A Point}{section.30.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.11}Summarizing Regression Diagnostics for 431}{512}{section.30.11}}
+\newlabel{summarizing-regression-diagnostics-for-431}{{30.11}{512}{Summarizing Regression Diagnostics for 431}{section.30.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.12}Violated Assumptions: Problematic Residual Plots?}{514}{section.30.12}}
+\newlabel{violated-assumptions-problematic-residual-plots}{{30.12}{514}{Violated Assumptions: Problematic Residual Plots?}{section.30.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.13}Problems with Linearity}{514}{section.30.13}}
+\newlabel{problems-with-linearity}{{30.13}{514}{Problems with Linearity}{section.30.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.14}Problems with Non-Normality: An Influential Point}{517}{section.30.14}}
+\newlabel{problems-with-non-normality-an-influential-point}{{30.14}{517}{Problems with Non-Normality: An Influential Point}{section.30.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.15}Problems with Non-Normality: Skew}{521}{section.30.15}}
+\newlabel{problems-with-non-normality-skew}{{30.15}{521}{Problems with Non-Normality: Skew}{section.30.15}{}}
+\bibdata{book.bib,packages.bib}
 \bibcite{BaumerKaplanHorton}{{1}{2017}{{Baumer et~al.}}{{}}}
 \bibcite{Bernard1997}{{2}{1997}{{Bernard et~al.}}{{}}}
 \bibcite{BockVD}{{3}{2004}{{Bock et~al.}}{{}}}

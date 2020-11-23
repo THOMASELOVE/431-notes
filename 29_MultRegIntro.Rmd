@@ -18,12 +18,14 @@ gala <- read_csv("data/gala.csv")
 
 ## Add Some Packages
 
-Here, we'll add the `naniar`, `simputation` and `car` packages to those we've loaded at the start of the notes, and, as always, finish up with the `tidymodels` and `tidyverse` packages.
+Here, we'll add several packages to those we've loaded at the start of the notes, and, as always, finish up with the `tidymodels` and `tidyverse` packages.
 
 ```{r, message = FALSE}
 library(naniar)
 library(simputation)
 library(car)
+library(GGally)
+library(ggrepel)
 library(tidymodels)
 library(tidyverse)
 ```
