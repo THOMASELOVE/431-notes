@@ -844,14 +844,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The rows need to be mutually exclusive and collectively exhaustive: each patient must either receive Ibuprofen or Placebo. Similarly, the columns must meet the same standard: every patient’s temperature either drops or does not drop.</li>
 </ul>
 <p>Here’s the contingency table.</p>
-<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="comparing-proportions-with-two-independent-samples.html#cb825-1"></a>sepsis &lt;-<span class="st"> </span>sepsis <span class="op">%&gt;%</span></span>
-<span id="cb825-2"><a href="comparing-proportions-with-two-independent-samples.html#cb825-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">dropped =</span> <span class="kw">ifelse</span>(temp_drop <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Drop&quot;</span>, <span class="st">&quot;No Drop&quot;</span>))</span>
-<span id="cb825-3"><a href="comparing-proportions-with-two-independent-samples.html#cb825-3"></a></span>
-<span id="cb825-4"><a href="comparing-proportions-with-two-independent-samples.html#cb825-4"></a>sepsis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(treat, dropped) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb825-5"><a href="comparing-proportions-with-two-independent-samples.html#cb825-5"></a><span class="st">    </span><span class="kw">adorn_totals</span>() <span class="op">%&gt;%</span></span>
-<span id="cb825-6"><a href="comparing-proportions-with-two-independent-samples.html#cb825-6"></a><span class="st">    </span><span class="kw">adorn_percentages</span>(<span class="dt">denom =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb825-7"><a href="comparing-proportions-with-two-independent-samples.html#cb825-7"></a><span class="st">    </span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb825-8"><a href="comparing-proportions-with-two-independent-samples.html#cb825-8"></a><span class="st">    </span><span class="kw">adorn_ns</span>(<span class="dt">position =</span> <span class="st">&quot;front&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="comparing-proportions-with-two-independent-samples.html#cb826-1"></a>sepsis &lt;-<span class="st"> </span>sepsis <span class="op">%&gt;%</span></span>
+<span id="cb826-2"><a href="comparing-proportions-with-two-independent-samples.html#cb826-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">dropped =</span> <span class="kw">ifelse</span>(temp_drop <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Drop&quot;</span>, <span class="st">&quot;No Drop&quot;</span>))</span>
+<span id="cb826-3"><a href="comparing-proportions-with-two-independent-samples.html#cb826-3"></a></span>
+<span id="cb826-4"><a href="comparing-proportions-with-two-independent-samples.html#cb826-4"></a>sepsis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(treat, dropped) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb826-5"><a href="comparing-proportions-with-two-independent-samples.html#cb826-5"></a><span class="st">    </span><span class="kw">adorn_totals</span>() <span class="op">%&gt;%</span></span>
+<span id="cb826-6"><a href="comparing-proportions-with-two-independent-samples.html#cb826-6"></a><span class="st">    </span><span class="kw">adorn_percentages</span>(<span class="dt">denom =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb826-7"><a href="comparing-proportions-with-two-independent-samples.html#cb826-7"></a><span class="st">    </span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb826-8"><a href="comparing-proportions-with-two-independent-samples.html#cb826-8"></a><span class="st">    </span><span class="kw">adorn_ns</span>(<span class="dt">position =</span> <span class="st">&quot;front&quot;</span>)</span></code></pre></div>
 <pre><code>     treat        Drop     No Drop
  Ibuprofen 107 (71.3%)  43 (28.7%)
    Placebo  80 (53.3%)  70 (46.7%)
@@ -1013,9 +1013,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>The command just requires you to read off the cells of the table, followed by the labels for the two treatments, then the two outcomes, then a specification of the names of the rows (exposures) and columns (outcomes) from the table, and a specification of the confidence level you desire. We’ll use 90% here.</p>
 <p>The resulting output follows.</p>
-<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="comparing-proportions-with-two-independent-samples.html#cb827-1"></a><span class="kw">twobytwo</span>(<span class="dv">107</span>, <span class="dv">43</span>, <span class="dv">80</span>, <span class="dv">70</span>, </span>
-<span id="cb827-2"><a href="comparing-proportions-with-two-independent-samples.html#cb827-2"></a>         <span class="st">&quot;Ibuprofen&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Dropped&quot;</span>, <span class="st">&quot;No Drop&quot;</span>,</span>
-<span id="cb827-3"><a href="comparing-proportions-with-two-independent-samples.html#cb827-3"></a>         <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="comparing-proportions-with-two-independent-samples.html#cb828-1"></a><span class="kw">twobytwo</span>(<span class="dv">107</span>, <span class="dv">43</span>, <span class="dv">80</span>, <span class="dv">70</span>, </span>
+<span id="cb828-2"><a href="comparing-proportions-with-two-independent-samples.html#cb828-2"></a>         <span class="st">&quot;Ibuprofen&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Dropped&quot;</span>, <span class="st">&quot;No Drop&quot;</span>,</span>
+<span id="cb828-3"><a href="comparing-proportions-with-two-independent-samples.html#cb828-3"></a>         <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
 ------------------------------------------------------ 
 Outcome   : Dropped 
@@ -1087,13 +1087,13 @@ Conditional MLE Odds Ratio: 2.1716    1.4177   3.3437
 <p>For example, if n = 10, and p is 1 in a million, then x will almost certainly be zero, and an estimate of 1/12 is much worse than the simple 0/10. However, how big a deal is this? If p might be 1 in a million, you’re not going to estimate it with a n = 10 experiment.</p>
 <p>Applying this method to our Ibuprofen and Sepsis Trial data, we would simply add two to each frequency in the main four cells in our 2x2 table.</p>
 <p>So instead of using</p>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="comparing-proportions-with-two-independent-samples.html#cb831-1"></a><span class="kw">twobytwo</span>(<span class="dv">107</span>, <span class="dv">43</span>, <span class="dv">80</span>, <span class="dv">70</span>, </span>
-<span id="cb831-2"><a href="comparing-proportions-with-two-independent-samples.html#cb831-2"></a>         <span class="st">&quot;Ibuprofen&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Dropped&quot;</span>, <span class="st">&quot;No Drop&quot;</span>,</span>
-<span id="cb831-3"><a href="comparing-proportions-with-two-independent-samples.html#cb831-3"></a>         <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
-<p>the Bayesian augmentation would encourage us to look at</p>
-<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="comparing-proportions-with-two-independent-samples.html#cb832-1"></a><span class="kw">twobytwo</span>(<span class="dv">109</span>, <span class="dv">45</span>, <span class="dv">82</span>, <span class="dv">72</span>, </span>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="comparing-proportions-with-two-independent-samples.html#cb832-1"></a><span class="kw">twobytwo</span>(<span class="dv">107</span>, <span class="dv">43</span>, <span class="dv">80</span>, <span class="dv">70</span>, </span>
 <span id="cb832-2"><a href="comparing-proportions-with-two-independent-samples.html#cb832-2"></a>         <span class="st">&quot;Ibuprofen&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Dropped&quot;</span>, <span class="st">&quot;No Drop&quot;</span>,</span>
 <span id="cb832-3"><a href="comparing-proportions-with-two-independent-samples.html#cb832-3"></a>         <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<p>the Bayesian augmentation would encourage us to look at</p>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="comparing-proportions-with-two-independent-samples.html#cb833-1"></a><span class="kw">twobytwo</span>(<span class="dv">109</span>, <span class="dv">45</span>, <span class="dv">82</span>, <span class="dv">72</span>, </span>
+<span id="cb833-2"><a href="comparing-proportions-with-two-independent-samples.html#cb833-2"></a>         <span class="st">&quot;Ibuprofen&quot;</span>, <span class="st">&quot;Placebo&quot;</span>, <span class="st">&quot;Dropped&quot;</span>, <span class="st">&quot;No Drop&quot;</span>,</span>
+<span id="cb833-3"><a href="comparing-proportions-with-two-independent-samples.html#cb833-3"></a>         <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
 ------------------------------------------------------ 
 Outcome   : Dropped 
@@ -1183,9 +1183,9 @@ Conditional MLE Odds Ratio: 2.1215    1.3950   3.2421
 </table>
 <p>We want to compare the fatality risk (probability of being in the deceased column) for the population of people in the hospitalized row to the population of people in the not hospitalized row.</p>
 <p>We can run these data through R, using the Bayesian augmentation (adding a death and a survival to the hospitalized and also to the not hospitalized groups.) We’ll use a 95% confidence level this time.</p>
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="comparing-proportions-with-two-independent-samples.html#cb834-1"></a><span class="kw">twobytwo</span>(<span class="dv">741</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">412</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">488</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">96</span><span class="op">+</span><span class="dv">2</span>, </span>
-<span id="cb834-2"><a href="comparing-proportions-with-two-independent-samples.html#cb834-2"></a>         <span class="st">&quot;Hospitalized&quot;</span>, <span class="st">&quot;Not Hospitalized&quot;</span>, <span class="st">&quot;Deceased&quot;</span>, <span class="st">&quot;Alive&quot;</span>,</span>
-<span id="cb834-3"><a href="comparing-proportions-with-two-independent-samples.html#cb834-3"></a>         <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="comparing-proportions-with-two-independent-samples.html#cb835-1"></a><span class="kw">twobytwo</span>(<span class="dv">741</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">412</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">488</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">96</span><span class="op">+</span><span class="dv">2</span>, </span>
+<span id="cb835-2"><a href="comparing-proportions-with-two-independent-samples.html#cb835-2"></a>         <span class="st">&quot;Hospitalized&quot;</span>, <span class="st">&quot;Not Hospitalized&quot;</span>, <span class="st">&quot;Deceased&quot;</span>, <span class="st">&quot;Alive&quot;</span>,</span>
+<span id="cb835-3"><a href="comparing-proportions-with-two-independent-samples.html#cb835-3"></a>         <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
 ------------------------------------------------------ 
 Outcome   : Deceased 

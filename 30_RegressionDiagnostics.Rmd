@@ -126,7 +126,7 @@ Unfortunately, assuming the model is true is not sufficient to prove that the li
 
 For example, in the `wcgs_500` data, here are the relevant scatterplots for the quantitative predictors (in practice, I would simply look at the scatterplot matrix shown earlier) as well as a boxplot with violin for the categorical predictor (`dibpat`). 
 
-```{r chol_model_wcgs_500_1}
+```{r}
 p1 <- ggplot(wcgs_500, aes(x = sbp, y = chol)) +
     geom_point() +
     geom_smooth(method = "loess", se = FALSE, span = 2, formula = y ~ x) +
@@ -162,7 +162,7 @@ When you ask R to plot the result of a linear model, it will produce up to five 
 
 To obtain this plot for the model including `sbp`, `bmi` and `dibpat` to predict `chol` we have two options. The simpler approach uses the following code to indicate plot 1 using the `which` command within the `plot` function.
 
-```{r diag_wcgs_500_plot1, fig.height=5, fig.width=5, fig.align="center"}
+```{r, fig.height=5, fig.width=5, fig.align="center"}
 plot(chol_m1, which=1)
 ```
 
@@ -253,7 +253,7 @@ Reviewing the same plots we have previously seen, I can find no evidence of subs
 
 R does provide an additional plot to help assess this issue as linear model diagnostic plot 3. This one looks at the square root of the standardized residual plotted against the fitted values. You want the loess smooth in this plot to be flat, rather than sloped.
 
-```{r p30, fig.height=4, fig.width=5, fig.align="center"}
+```{r, fig.height=4, fig.width=5, fig.align="center"}
 plot(chol_m1, which=3)
 ```
 
@@ -560,7 +560,7 @@ We see that the most highly leveraged points are shown furthest to the right in 
 
 Let's look at our highest leveraged point (`id` = 19078 from our list above) and remember that this just means that this point is unusual in terms of its predictor values.
 
-```{r p36a}
+```{r}
 aug_chol1 %>% filter(id == 19078) %>%
     select(id, sbp, bmi, dibpat, .hat)
 ```
@@ -590,7 +590,7 @@ aug_chol1 %>%
 
 So, let's look at a plot of the two quantitative predictors in our data to see which 12 points show up as those with "high" leverage.
 
-```{r p36b}
+```{r}
 ggplot(aug_chol1, aes(x = sbp, y = bmi)) +
     geom_point(col = "gray50") + 
     geom_point(data = aug_chol1 %>% 
@@ -627,7 +627,7 @@ No points in this plot indicate substantial influence on our model. To do so, th
 
 Model Diagnostic Plot 4 for a linear model is an index plot of Cook's distance.
 
-```{r cooks2, fig.height=5, fig.width=5, fig.align="center"}
+```{r, fig.height=5, fig.width=5, fig.align="center"}
 plot(chol_m1, which=4)
 ```
 
@@ -785,7 +785,7 @@ par(mfrow=c(1,1))
 
 No, it doesn't. But what if we combine our outcome transformation with dropping point 72?
 
-```{r viol_fit_without_72_1and3}
+```{r}
 model.2.no72 <- lm(sqrt(outcome) ~ pred1 + pred2, data = viol1[-72,])
 par(mfrow=c(1,2))
 plot(model.2.no72, which = c(1,3))
@@ -794,7 +794,7 @@ par(mfrow=c(1,1))
 
 Nope. That still doesn't alleviate the problem of heteroscedasticity very well. At least, we no longer have any especially influential points, nor do we have substantial non-Normality.
 
-```{r viol_fit_without_72_2and5}
+```{r}
 par(mfrow=c(1,2))
 plot(model.2.no72, which = c(2,5))
 par(mfrow=c(1,1))
@@ -804,7 +804,7 @@ At this point, I would be considering potential transformations of the predictor
 
 ## Problems with Non-Normality: Skew
 
-```{r viol2sim}
+```{r}
 set.seed(4314); x1 <- rnorm(n = 100, mean = 15, sd = 5)
 set.seed(4315); x2 <- rnorm(n = 100, mean = 10, sd = 5)
 set.seed(4316); e2 <- rnorm(n = 100, mean = 3, sd = 5)
@@ -816,26 +816,26 @@ plot(model.3, which = 2)
 
 Skewed residuals often show up in strange patterns in the plot of residuals vs. fitted values, too, as in this case.
 
-```{r viol2sim_model3plot1}
+```{r}
 plot(model.3, which = 1)
 ```
 
 Clearly, we have some larger residuals on the positive side, but not on the negative side. Would an outcome transformation be suggested by Box-Cox?
 
-```{r viol2sim_model3plotboxcox}
+```{r}
 boxCox(model.3); powerTransform(model.3)
 ```
 
 The suggested transformation looks like the inverse of our outcome. 
 
-```{r viol2sim_model4plot2}
+```{r}
 model.4 <- lm(1/outcome ~ pred1 + pred2, data = viol2)
 plot(model.4, which = 2)
 ```
 
 OK. That's something of an improvement. How about the other residual plots with this transformation?
 
-```{r viol2sim_model4plot1}
+```{r}
 plot(model.4, which = 1)
 ```
 

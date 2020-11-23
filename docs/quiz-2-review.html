@@ -878,7 +878,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">27.5</span> Answer Sketch for Review Items</h2>
 <div id="answer-1" class="section level3">
 <h3><span class="header-section-number">27.5.1</span> Answer 1</h3>
-<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb886-1"><a href="quiz-2-review.html#cb886-1"></a>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">65</span>, <span class="dt">n =</span> <span class="dv">85</span>, <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="quiz-2-review.html#cb887-1"></a>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">65</span>, <span class="dt">n =</span> <span class="dv">85</span>, <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>)</span></code></pre></div>
 <pre><code>
 	Exact binomial test (Agresti-Coull CI)
 
@@ -894,7 +894,7 @@ probability of success
 </div>
 <div id="answer-2" class="section level3">
 <h3><span class="header-section-number">27.5.2</span> Answer 2</h3>
-<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb888-1"><a href="quiz-2-review.html#cb888-1"></a>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">45</span>, <span class="dt">n =</span> <span class="dv">70</span>, <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="quiz-2-review.html#cb889-1"></a>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">45</span>, <span class="dt">n =</span> <span class="dv">70</span>, <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>)</span></code></pre></div>
 <pre><code>
 	Exact binomial test (Agresti-Coull CI)
 
@@ -914,7 +914,7 @@ probability of success
 </div>
 <div id="answer-4" class="section level3">
 <h3><span class="header-section-number">27.5.4</span> Answer 4</h3>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="quiz-2-review.html#cb890-1"></a><span class="kw">twobytwo</span>(<span class="dv">65</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">20</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">45</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">25</span><span class="op">+</span><span class="dv">2</span>, <span class="st">&quot;Med. A&quot;</span>, <span class="st">&quot;Med. B&quot;</span>, <span class="st">&quot;Relief&quot;</span>, <span class="st">&quot;No Relief&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="quiz-2-review.html#cb891-1"></a><span class="kw">twobytwo</span>(<span class="dv">65</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">20</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">45</span><span class="op">+</span><span class="dv">2</span>, <span class="dv">25</span><span class="op">+</span><span class="dv">2</span>, <span class="st">&quot;Med. A&quot;</span>, <span class="st">&quot;Med. B&quot;</span>, <span class="st">&quot;Relief&quot;</span>, <span class="st">&quot;No Relief&quot;</span>)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
 ------------------------------------------------------ 
 Outcome   : Relief 
@@ -965,37 +965,37 @@ Conditional MLE Odds Ratio: 1.7435    0.8434   3.6398
 <div id="answer-11" class="section level3">
 <h3><span class="header-section-number">27.5.11</span> Answer 11</h3>
 <p>We need a plot of the 15 paired differences, for example a boxplot, or a normal Q-Q plot.</p>
-<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="quiz-2-review.html#cb892-1"></a>darwin &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/darwin.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">clean_names</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="quiz-2-review.html#cb893-1"></a>darwin &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/darwin.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">clean_names</span>()</span></code></pre></div>
 <pre><code>Parsed with column specification:
 cols(
   pair = col_double(),
   `cross-fertilized` = col_double(),
   `self-fertilized` = col_double()
 )</code></pre>
-<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="quiz-2-review.html#cb894-1"></a>darwin &lt;-<span class="st"> </span>darwin <span class="op">%&gt;%</span></span>
-<span id="cb894-2"><a href="quiz-2-review.html#cb894-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">diffs =</span> cross_fertilized <span class="op">-</span><span class="st"> </span>self_fertilized)</span>
-<span id="cb894-3"><a href="quiz-2-review.html#cb894-3"></a></span>
-<span id="cb894-4"><a href="quiz-2-review.html#cb894-4"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(darwin, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> diffs)) <span class="op">+</span></span>
-<span id="cb894-5"><a href="quiz-2-review.html#cb894-5"></a><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
-<span id="cb894-6"><a href="quiz-2-review.html#cb894-6"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">fill =</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="dt">outlier.color =</span> <span class="st">&quot;forestgreen&quot;</span>) <span class="op">+</span></span>
-<span id="cb894-7"><a href="quiz-2-review.html#cb894-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Boxplot&quot;</span>,</span>
-<span id="cb894-8"><a href="quiz-2-review.html#cb894-8"></a>       <span class="dt">y =</span> <span class="st">&quot;Difference in Seedling Height (inches)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb894-9"><a href="quiz-2-review.html#cb894-9"></a></span>
-<span id="cb894-10"><a href="quiz-2-review.html#cb894-10"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(darwin, <span class="kw">aes</span>(<span class="dt">sample =</span> diffs)) <span class="op">+</span></span>
-<span id="cb894-11"><a href="quiz-2-review.html#cb894-11"></a><span class="st">  </span><span class="kw">geom_qq</span>(<span class="dt">col =</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb894-12"><a href="quiz-2-review.html#cb894-12"></a><span class="st">  </span><span class="kw">geom_qq_line</span>() <span class="op">+</span></span>
-<span id="cb894-13"><a href="quiz-2-review.html#cb894-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Normal Q-Q&quot;</span>,</span>
-<span id="cb894-14"><a href="quiz-2-review.html#cb894-14"></a>       <span class="dt">y =</span> <span class="st">&quot;Difference in Seedling Height (inches)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb894-15"><a href="quiz-2-review.html#cb894-15"></a></span>
-<span id="cb894-16"><a href="quiz-2-review.html#cb894-16"></a>p1 <span class="op">+</span><span class="st"> </span>p2 <span class="op">+</span></span>
-<span id="cb894-17"><a href="quiz-2-review.html#cb894-17"></a><span class="st">  </span><span class="kw">plot_annotation</span>(<span class="dt">title =</span> <span class="st">&quot;Cross-Self Fertilized Difference in Seedling Height&quot;</span>,</span>
-<span id="cb894-18"><a href="quiz-2-review.html#cb894-18"></a>                  <span class="dt">subtitle =</span> <span class="st">&quot;in inches for 15 pairs of seedlings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="quiz-2-review.html#cb895-1"></a>darwin &lt;-<span class="st"> </span>darwin <span class="op">%&gt;%</span></span>
+<span id="cb895-2"><a href="quiz-2-review.html#cb895-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">diffs =</span> cross_fertilized <span class="op">-</span><span class="st"> </span>self_fertilized)</span>
+<span id="cb895-3"><a href="quiz-2-review.html#cb895-3"></a></span>
+<span id="cb895-4"><a href="quiz-2-review.html#cb895-4"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(darwin, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> diffs)) <span class="op">+</span></span>
+<span id="cb895-5"><a href="quiz-2-review.html#cb895-5"></a><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
+<span id="cb895-6"><a href="quiz-2-review.html#cb895-6"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">fill =</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="dt">outlier.color =</span> <span class="st">&quot;forestgreen&quot;</span>) <span class="op">+</span></span>
+<span id="cb895-7"><a href="quiz-2-review.html#cb895-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Boxplot&quot;</span>,</span>
+<span id="cb895-8"><a href="quiz-2-review.html#cb895-8"></a>       <span class="dt">y =</span> <span class="st">&quot;Difference in Seedling Height (inches)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb895-9"><a href="quiz-2-review.html#cb895-9"></a></span>
+<span id="cb895-10"><a href="quiz-2-review.html#cb895-10"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(darwin, <span class="kw">aes</span>(<span class="dt">sample =</span> diffs)) <span class="op">+</span></span>
+<span id="cb895-11"><a href="quiz-2-review.html#cb895-11"></a><span class="st">  </span><span class="kw">geom_qq</span>(<span class="dt">col =</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb895-12"><a href="quiz-2-review.html#cb895-12"></a><span class="st">  </span><span class="kw">geom_qq_line</span>() <span class="op">+</span></span>
+<span id="cb895-13"><a href="quiz-2-review.html#cb895-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Normal Q-Q&quot;</span>,</span>
+<span id="cb895-14"><a href="quiz-2-review.html#cb895-14"></a>       <span class="dt">y =</span> <span class="st">&quot;Difference in Seedling Height (inches)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb895-15"><a href="quiz-2-review.html#cb895-15"></a></span>
+<span id="cb895-16"><a href="quiz-2-review.html#cb895-16"></a>p1 <span class="op">+</span><span class="st"> </span>p2 <span class="op">+</span></span>
+<span id="cb895-17"><a href="quiz-2-review.html#cb895-17"></a><span class="st">  </span><span class="kw">plot_annotation</span>(<span class="dt">title =</span> <span class="st">&quot;Cross-Self Fertilized Difference in Seedling Height&quot;</span>,</span>
+<span id="cb895-18"><a href="quiz-2-review.html#cb895-18"></a>                  <span class="dt">subtitle =</span> <span class="st">&quot;in inches for 15 pairs of seedlings&quot;</span>)</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/a11-1.png" width="672" /></p>
 <p>It appears that we have two low outliers out of the 15 paired differences. Assuming normality seems inappropriate here. I would probably use a Wilcoxon approach instead.</p>
 </div>
 <div id="answer-12" class="section level3">
 <h3><span class="header-section-number">27.5.12</span> Answer 12</h3>
-<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="quiz-2-review.html#cb895-1"></a><span class="kw">wilcox.test</span>(darwin<span class="op">$</span>diffs, <span class="dt">conf.int=</span><span class="ot">TRUE</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="quiz-2-review.html#cb896-1"></a><span class="kw">wilcox.test</span>(darwin<span class="op">$</span>diffs, <span class="dt">conf.int=</span><span class="ot">TRUE</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>
 	Wilcoxon signed rank exact test
 
@@ -1011,14 +1011,14 @@ sample estimates:
 </div>
 <div id="answer-13" class="section level3">
 <h3><span class="header-section-number">27.5.13</span> Answer 13</h3>
-<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="quiz-2-review.html#cb897-1"></a><span class="kw">set.seed</span>(<span class="dv">4310</span>); Hmisc<span class="op">::</span><span class="kw">smean.cl.boot</span>(darwin<span class="op">$</span>diffs)</span></code></pre></div>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb898-1"><a href="quiz-2-review.html#cb898-1"></a><span class="kw">set.seed</span>(<span class="dv">4310</span>); Hmisc<span class="op">::</span><span class="kw">smean.cl.boot</span>(darwin<span class="op">$</span>diffs)</span></code></pre></div>
 <pre><code>    Mean    Lower    Upper 
 2.616667 0.316250 4.758958 </code></pre>
 <p>This confidence interval is a bit narrower than the interval in item 12, and also shifted a bit closer to zero. We are 95% confident that the population mean cross-self difference is between 0.3 and 4.8 inches.</p>
 </div>
 <div id="answer-14" class="section level3">
 <h3><span class="header-section-number">27.5.14</span> Answer 14</h3>
-<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="quiz-2-review.html#cb899-1"></a><span class="kw">power.t.test</span>(<span class="dt">n =</span> <span class="dv">120</span>, <span class="dt">delta =</span> <span class="fl">3.5</span>, <span class="dt">sd =</span> <span class="dv">9</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="quiz-2-review.html#cb900-1"></a><span class="kw">power.t.test</span>(<span class="dt">n =</span> <span class="dv">120</span>, <span class="dt">delta =</span> <span class="fl">3.5</span>, <span class="dt">sd =</span> <span class="dv">9</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>
      Two-sample t test power calculation 
 
@@ -1034,7 +1034,7 @@ NOTE: n is number in *each* group</code></pre>
 </div>
 <div id="answer-15" class="section level3">
 <h3><span class="header-section-number">27.5.15</span> Answer 15</h3>
-<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb901-1"><a href="quiz-2-review.html#cb901-1"></a><span class="kw">power.t.test</span>(<span class="dt">power=</span><span class="fl">0.9</span>, <span class="dt">delta =</span> <span class="fl">3.5</span>, <span class="dt">sd =</span> <span class="dv">9</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb902-1"><a href="quiz-2-review.html#cb902-1"></a><span class="kw">power.t.test</span>(<span class="dt">power=</span><span class="fl">0.9</span>, <span class="dt">delta =</span> <span class="fl">3.5</span>, <span class="dt">sd =</span> <span class="dv">9</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>
      Two-sample t test power calculation 
 

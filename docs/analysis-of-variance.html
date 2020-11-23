@@ -834,7 +834,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="analysis-of-variance" class="section level1">
 <h1><span class="header-section-number">Chapter 21</span> Analysis of Variance</h1>
 <p>Recall the National Youth Fitness Survey, which we explored a small piece of in some detail earlier in these notes. We’ll look at a different part of the same survey here - specifically the 280 children whose data are captured in the <code>nyfs2</code> file.</p>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="analysis-of-variance.html#cb684-1"></a>nyfs2 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/nyfs2.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="analysis-of-variance.html#cb685-1"></a>nyfs2 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/nyfs2.csv&quot;</span>)</span></code></pre></div>
 <pre><code>Parsed with column specification:
 cols(
   .default = col_double(),
@@ -845,7 +845,7 @@ cols(
   bmi.cat = col_character()
 )</code></pre>
 <pre><code>See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="analysis-of-variance.html#cb687-1"></a>nyfs2</span></code></pre></div>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="analysis-of-variance.html#cb688-1"></a>nyfs2</span></code></pre></div>
 <pre><code># A tibble: 280 x 21
    subject.id sex   age.exam race.eth english income.cat3 income.detail
         &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        
@@ -866,13 +866,13 @@ cols(
 #   subscap.skinfold &lt;dbl&gt;, GMQ &lt;dbl&gt;</code></pre>
 <div id="comparing-gross-motor-quotient-scores-by-income-level-3-categories" class="section level2">
 <h2><span class="header-section-number">21.1</span> Comparing Gross Motor Quotient Scores by Income Level (3 Categories)</h2>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="analysis-of-variance.html#cb689-1"></a>nyfs2a &lt;-<span class="st"> </span>nyfs2 <span class="op">%&gt;%</span></span>
-<span id="cb689-2"><a href="analysis-of-variance.html#cb689-2"></a><span class="st">    </span><span class="kw">select</span>(subject.id, income.cat3, GMQ) <span class="op">%&gt;%</span></span>
-<span id="cb689-3"><a href="analysis-of-variance.html#cb689-3"></a><span class="st">    </span><span class="kw">arrange</span>(subject.id)</span></code></pre></div>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="analysis-of-variance.html#cb690-1"></a>nyfs2a &lt;-<span class="st"> </span>nyfs2 <span class="op">%&gt;%</span></span>
+<span id="cb690-2"><a href="analysis-of-variance.html#cb690-2"></a><span class="st">    </span><span class="kw">select</span>(subject.id, income.cat3, GMQ) <span class="op">%&gt;%</span></span>
+<span id="cb690-3"><a href="analysis-of-variance.html#cb690-3"></a><span class="st">    </span><span class="kw">arrange</span>(subject.id)</span></code></pre></div>
 <p>In this first analysis, we’ll compare the population mean on the Gross Motor Quotient evaluation of these kids across three groups defined by income level. Higher values of this GMQ measure indicate improved levels of gross motor development, both in terms of locomotor and object control. See <a href="https://wwwn.cdc.gov/Nchs/Nnyfs/Y_GMX.htm" class="uri">https://wwwn.cdc.gov/Nchs/Nnyfs/Y_GMX.htm</a> for more details.</p>
-<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="analysis-of-variance.html#cb690-1"></a>nyfs2a <span class="op">%&gt;%</span></span>
-<span id="cb690-2"><a href="analysis-of-variance.html#cb690-2"></a><span class="st">    </span><span class="kw">group_by</span>(income.cat3) <span class="op">%&gt;%</span></span>
-<span id="cb690-3"><a href="analysis-of-variance.html#cb690-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="kw">mean</span>(GMQ), <span class="kw">median</span>(GMQ))</span></code></pre></div>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="analysis-of-variance.html#cb691-1"></a>nyfs2a <span class="op">%&gt;%</span></span>
+<span id="cb691-2"><a href="analysis-of-variance.html#cb691-2"></a><span class="st">    </span><span class="kw">group_by</span>(income.cat3) <span class="op">%&gt;%</span></span>
+<span id="cb691-3"><a href="analysis-of-variance.html#cb691-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="kw">mean</span>(GMQ), <span class="kw">median</span>(GMQ))</span></code></pre></div>
 <pre><code>`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code># A tibble: 3 x 4
   income.cat3            n `mean(GMQ)` `median(GMQ)`
@@ -881,36 +881,36 @@ cols(
 2 Low (below 25K)       98        97.0            97
 3 Middle (25 - 64K)     90        95.4            94</code></pre>
 <p>Uh, oh. We should rearrange those income categories to match a natural order from low to high.</p>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="analysis-of-variance.html#cb693-1"></a>nyfs2a<span class="op">$</span>income.cat3 &lt;-<span class="st"> </span></span>
-<span id="cb693-2"><a href="analysis-of-variance.html#cb693-2"></a><span class="st">    </span>forcats<span class="op">::</span><span class="kw">fct_relevel</span>(nyfs2a<span class="op">$</span>income.cat3,</span>
-<span id="cb693-3"><a href="analysis-of-variance.html#cb693-3"></a>                         <span class="st">&quot;Low (below 25K)&quot;</span>,</span>
-<span id="cb693-4"><a href="analysis-of-variance.html#cb693-4"></a>                         <span class="st">&quot;Middle (25 - 64K)&quot;</span>,</span>
-<span id="cb693-5"><a href="analysis-of-variance.html#cb693-5"></a>                         <span class="st">&quot;High (65K or more)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="analysis-of-variance.html#cb694-1"></a>nyfs2a<span class="op">$</span>income.cat3 &lt;-<span class="st"> </span></span>
+<span id="cb694-2"><a href="analysis-of-variance.html#cb694-2"></a><span class="st">    </span>forcats<span class="op">::</span><span class="kw">fct_relevel</span>(nyfs2a<span class="op">$</span>income.cat3,</span>
+<span id="cb694-3"><a href="analysis-of-variance.html#cb694-3"></a>                         <span class="st">&quot;Low (below 25K)&quot;</span>,</span>
+<span id="cb694-4"><a href="analysis-of-variance.html#cb694-4"></a>                         <span class="st">&quot;Middle (25 - 64K)&quot;</span>,</span>
+<span id="cb694-5"><a href="analysis-of-variance.html#cb694-5"></a>                         <span class="st">&quot;High (65K or more)&quot;</span>)</span></code></pre></div>
 <p>When working with three independent samples, I use graphs analogous to those we built for two independent samples.</p>
-<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="analysis-of-variance.html#cb694-1"></a><span class="kw">ggplot</span>(nyfs2a, <span class="kw">aes</span>(<span class="dt">x =</span> income.cat3, <span class="dt">y =</span> GMQ, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
-<span id="cb694-2"><a href="analysis-of-variance.html#cb694-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> income.cat3), <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.25</span>) <span class="op">+</span></span>
-<span id="cb694-3"><a href="analysis-of-variance.html#cb694-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">notch =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.75</span>) <span class="op">+</span></span>
-<span id="cb694-4"><a href="analysis-of-variance.html#cb694-4"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
-<span id="cb694-5"><a href="analysis-of-variance.html#cb694-5"></a><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb694-6"><a href="analysis-of-variance.html#cb694-6"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb694-7"><a href="analysis-of-variance.html#cb694-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;GMQ Scores for 280 Children in NNYFS&quot;</span>,</span>
-<span id="cb694-8"><a href="analysis-of-variance.html#cb694-8"></a>       <span class="dt">y =</span> <span class="st">&quot;GMQ Score, in points&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Income Category&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="analysis-of-variance.html#cb695-1"></a><span class="kw">ggplot</span>(nyfs2a, <span class="kw">aes</span>(<span class="dt">x =</span> income.cat3, <span class="dt">y =</span> GMQ, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
+<span id="cb695-2"><a href="analysis-of-variance.html#cb695-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> income.cat3), <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.25</span>) <span class="op">+</span></span>
+<span id="cb695-3"><a href="analysis-of-variance.html#cb695-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">notch =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.75</span>) <span class="op">+</span></span>
+<span id="cb695-4"><a href="analysis-of-variance.html#cb695-4"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb695-5"><a href="analysis-of-variance.html#cb695-5"></a><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb695-6"><a href="analysis-of-variance.html#cb695-6"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb695-7"><a href="analysis-of-variance.html#cb695-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;GMQ Scores for 280 Children in NNYFS&quot;</span>,</span>
+<span id="cb695-8"><a href="analysis-of-variance.html#cb695-8"></a>       <span class="dt">y =</span> <span class="st">&quot;GMQ Score, in points&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Income Category&quot;</span>)</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/boxplot_nyfs2a-1.png" width="672" /></p>
 <p>In addition to this comparison boxplot, we might consider faceted plots, like these histograms.</p>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="analysis-of-variance.html#cb695-1"></a><span class="kw">ggplot</span>(nyfs2a, <span class="kw">aes</span>(<span class="dt">x =</span> GMQ, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
-<span id="cb695-2"><a href="analysis-of-variance.html#cb695-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">15</span>, <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
-<span id="cb695-3"><a href="analysis-of-variance.html#cb695-3"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb695-4"><a href="analysis-of-variance.html#cb695-4"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>income.cat3)</span></code></pre></div>
+<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="analysis-of-variance.html#cb696-1"></a><span class="kw">ggplot</span>(nyfs2a, <span class="kw">aes</span>(<span class="dt">x =</span> GMQ, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
+<span id="cb696-2"><a href="analysis-of-variance.html#cb696-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">15</span>, <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
+<span id="cb696-3"><a href="analysis-of-variance.html#cb696-3"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb696-4"><a href="analysis-of-variance.html#cb696-4"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>income.cat3)</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/histograms_nyfs2a-1.png" width="672" /></p>
 <p>Or, if we want to ignore the (modest) sample size differences, we might consider density functions, perhaps through a ridgeline plot.</p>
-<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="analysis-of-variance.html#cb696-1"></a><span class="kw">ggplot</span>(nyfs2a, <span class="kw">aes</span>(<span class="dt">x =</span> GMQ, <span class="dt">y =</span> income.cat3, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
-<span id="cb696-2"><a href="analysis-of-variance.html#cb696-2"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
-<span id="cb696-3"><a href="analysis-of-variance.html#cb696-3"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb696-4"><a href="analysis-of-variance.html#cb696-4"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;GMQ Score (in points) by Income Group&quot;</span>,</span>
-<span id="cb696-5"><a href="analysis-of-variance.html#cb696-5"></a>         <span class="dt">x =</span> <span class="st">&quot;GMQ Score&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span></span>
-<span id="cb696-6"><a href="analysis-of-variance.html#cb696-6"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">theme_ridges</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="analysis-of-variance.html#cb697-1"></a><span class="kw">ggplot</span>(nyfs2a, <span class="kw">aes</span>(<span class="dt">x =</span> GMQ, <span class="dt">y =</span> income.cat3, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
+<span id="cb697-2"><a href="analysis-of-variance.html#cb697-2"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
+<span id="cb697-3"><a href="analysis-of-variance.html#cb697-3"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb697-4"><a href="analysis-of-variance.html#cb697-4"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;GMQ Score (in points) by Income Group&quot;</span>,</span>
+<span id="cb697-5"><a href="analysis-of-variance.html#cb697-5"></a>         <span class="dt">x =</span> <span class="st">&quot;GMQ Score&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span></span>
+<span id="cb697-6"><a href="analysis-of-variance.html#cb697-6"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">theme_ridges</span>()</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/nyfs2a_ridgelineplot-1.png" width="672" /></p>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="analysis-of-variance.html#cb697-1"></a><span class="kw">by</span>(nyfs2a<span class="op">$</span>GMQ, nyfs2a<span class="op">$</span>income.cat3, mosaic<span class="op">::</span>favstats)</span></code></pre></div>
+<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="analysis-of-variance.html#cb698-1"></a><span class="kw">by</span>(nyfs2a<span class="op">$</span>GMQ, nyfs2a<span class="op">$</span>income.cat3, mosaic<span class="op">::</span>favstats)</span></code></pre></div>
 <pre><code>nyfs2a$income.cat3: Low (below 25K)
  min Q1 median  Q3 max     mean       sd  n missing
   55 91     97 106 130 97.03061 14.79444 98       0
@@ -935,7 +935,7 @@ nyfs2a$income.cat3: High (65K or more)
 <li>H0: All three means are the same vs.</li>
 <li>HA: At least one of the population means is different than the others.</li>
 </ul>
-<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="analysis-of-variance.html#cb699-1"></a><span class="kw">oneway.test</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)</span></code></pre></div>
+<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="analysis-of-variance.html#cb700-1"></a><span class="kw">oneway.test</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)</span></code></pre></div>
 <pre><code>
 	One-way analysis of means (not assuming equal variances)
 
@@ -949,7 +949,7 @@ F = 0.3416, num df = 2.00, denom df = 184.41, p-value = 0.7111</code></pre>
 <p>It is also possible to extend the Wilcoxon-Mann-Whitney two-sample test into an analogous one-factor analysis called the <strong>Kruskal-Wallis test</strong> for comparing population measures of location based on independent samples from more than two groups.</p>
 <p>If we want to compare the centers of the distributions of population GMQ score across our three income groups without assuming Normality, we can use <code>kruskal.test</code>.</p>
 <p>The hypotheses being tested here are still as before, but for a measure of location other than the population mean</p>
-<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="analysis-of-variance.html#cb701-1"></a><span class="kw">kruskal.test</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)</span></code></pre></div>
+<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="analysis-of-variance.html#cb702-1"></a><span class="kw">kruskal.test</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)</span></code></pre></div>
 <pre><code>
 	Kruskal-Wallis rank sum test
 
@@ -971,7 +971,7 @@ Kruskal-Wallis chi-squared = 2.3202, df = 2, p-value = 0.3135</code></pre>
 <div id="the-oneway.test-approach" class="section level3">
 <h3><span class="header-section-number">21.3.1</span> The <code>oneway.test</code> approach</h3>
 <p>R will produce some elements of a one-factor ANOVA using the <code>oneway.test</code> command:</p>
-<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="analysis-of-variance.html#cb703-1"></a><span class="kw">oneway.test</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a, <span class="dt">var.equal=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="analysis-of-variance.html#cb704-1"></a><span class="kw">oneway.test</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a, <span class="dt">var.equal=</span><span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>
 	One-way analysis of means
 
@@ -982,7 +982,7 @@ F = 0.34687, num df = 2, denom df = 277, p-value = 0.7072</code></pre>
 <div id="using-the-aov-approach-and-the-summary-function" class="section level3">
 <h3><span class="header-section-number">21.3.2</span> Using the <code>aov</code> approach and the <code>summary</code> function</h3>
 <p>Here’s one possible ANOVA table, which doesn’t require directly fitting a linear model.</p>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="analysis-of-variance.html#cb705-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="analysis-of-variance.html#cb706-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)
 income.cat3   2    146   72.85   0.347  0.707
 Residuals   277  58174  210.01               </code></pre>
@@ -990,7 +990,7 @@ Residuals   277  58174  210.01               </code></pre>
 <div id="using-the-anova-function-after-fitting-a-linear-model" class="section level3">
 <h3><span class="header-section-number">21.3.3</span> Using the <code>anova</code> function after fitting a linear model</h3>
 <p>An equivalent way to get identical results in a slightly different format runs the linear model behind the ANOVA approach directly.</p>
-<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="analysis-of-variance.html#cb707-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="analysis-of-variance.html#cb708-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: GMQ
@@ -1024,7 +1024,7 @@ Residuals   277  58174 210.014               </code></pre>
 </div>
 <div id="the-degrees-of-freedom" class="section level3">
 <h3><span class="header-section-number">21.4.3</span> The Degrees of Freedom</h3>
-<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="analysis-of-variance.html#cb709-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="analysis-of-variance.html#cb710-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: GMQ
@@ -1039,7 +1039,7 @@ Residuals   277  58174 210.014               </code></pre>
 </div>
 <div id="the-sums-of-squares" class="section level3">
 <h3><span class="header-section-number">21.4.4</span> The Sums of Squares</h3>
-<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="analysis-of-variance.html#cb711-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="analysis-of-variance.html#cb712-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: GMQ
@@ -1061,7 +1061,7 @@ Residuals   277  58174 210.014               </code></pre>
 </div>
 <div id="the-mean-square" class="section level3">
 <h3><span class="header-section-number">21.4.5</span> The Mean Square</h3>
-<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="analysis-of-variance.html#cb713-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="analysis-of-variance.html#cb714-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: GMQ
@@ -1079,7 +1079,7 @@ Residuals   277  58174 210.014               </code></pre>
 </div>
 <div id="the-f-test-statistic-and-p-value" class="section level3">
 <h3><span class="header-section-number">21.4.6</span> The F Test Statistic and <em>p</em> Value</h3>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="analysis-of-variance.html#cb715-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="analysis-of-variance.html#cb716-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: GMQ
@@ -1114,7 +1114,7 @@ Residuals   277  58174 210.014               </code></pre>
 <div id="the-regression-approach-to-compare-population-means-based-on-independent-samples" class="section level2">
 <h2><span class="header-section-number">21.7</span> The Regression Approach to Compare Population Means based on Independent Samples</h2>
 <p>This approach is equivalent to the ANOVA approach, and thus also (when there are just two samples to compare) to the pooled-variance t test. We run a linear regression model to predict the outcome (here, <code>GMQ</code>) on the basis of the categorical factor with three levels (here, <code>income.cat3</code>)</p>
-<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="analysis-of-variance.html#cb717-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data=</span>nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="analysis-of-variance.html#cb718-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data=</span>nyfs2a))</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = GMQ ~ income.cat3, data = nyfs2a)
@@ -1143,9 +1143,9 @@ F-statistic: 0.3469 on 2 and 277 DF,  p-value: 0.7072</code></pre>
 <li>the point estimate (sample mean difference) for the difference in population mean GMQ level between the “High” and “Low” income subjects is -1.30 (in words, the High income kids have lower GMQ scores than the Low income kids by 1.30 points on average.)</li>
 </ul>
 <p>Of course, we knew all of this already from a summary of the sample means.</p>
-<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="analysis-of-variance.html#cb719-1"></a>nyfs2a <span class="op">%&gt;%</span></span>
-<span id="cb719-2"><a href="analysis-of-variance.html#cb719-2"></a><span class="st">    </span><span class="kw">group_by</span>(income.cat3) <span class="op">%&gt;%</span></span>
-<span id="cb719-3"><a href="analysis-of-variance.html#cb719-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="kw">mean</span>(GMQ))</span></code></pre></div>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="analysis-of-variance.html#cb720-1"></a>nyfs2a <span class="op">%&gt;%</span></span>
+<span id="cb720-2"><a href="analysis-of-variance.html#cb720-2"></a><span class="st">    </span><span class="kw">group_by</span>(income.cat3) <span class="op">%&gt;%</span></span>
+<span id="cb720-3"><a href="analysis-of-variance.html#cb720-3"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="kw">mean</span>(GMQ))</span></code></pre></div>
 <pre><code>`summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code># A tibble: 3 x 3
   income.cat3            n `mean(GMQ)`
@@ -1162,7 +1162,7 @@ F-statistic: 0.3469 on 2 and 277 DF,  p-value: 0.7072</code></pre>
 <div id="the-full-anova-table" class="section level3">
 <h3><span class="header-section-number">21.7.2</span> The Full ANOVA Table</h3>
 <p>To see the full ANOVA table corresponding to any linear regression model, we run…</p>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="analysis-of-variance.html#cb722-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data=</span>nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="analysis-of-variance.html#cb723-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data=</span>nyfs2a))</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: GMQ
@@ -1184,7 +1184,7 @@ Residuals   277  58174 210.014               </code></pre>
 </div>
 <div id="equivalent-approach-to-get-anova-results" class="section level2">
 <h2><span class="header-section-number">21.8</span> Equivalent approach to get ANOVA Results</h2>
-<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="analysis-of-variance.html#cb724-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="analysis-of-variance.html#cb725-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)
 income.cat3   2    146   72.85   0.347  0.707
 Residuals   277  58174  210.01               </code></pre>
@@ -1216,7 +1216,7 @@ Residuals   277  58174  210.01               </code></pre>
 <li>This is a conservative (worst case) approach.</li>
 </ul>
 <p>Goal: Simultaneous comparisons of White vs AA, AA vs Other and White vs Other</p>
-<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="analysis-of-variance.html#cb726-1"></a><span class="kw">pairwise.t.test</span>(nyfs2a<span class="op">$</span>GMQ, nyfs2a<span class="op">$</span>income.cat3, <span class="dt">p.adjust=</span><span class="st">&quot;bonferroni&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="analysis-of-variance.html#cb727-1"></a><span class="kw">pairwise.t.test</span>(nyfs2a<span class="op">$</span>GMQ, nyfs2a<span class="op">$</span>income.cat3, <span class="dt">p.adjust=</span><span class="st">&quot;bonferroni&quot;</span>)</span></code></pre></div>
 <pre><code>
 	Pairwise comparisons using t tests with pooled SD 
 
@@ -1232,7 +1232,7 @@ P value adjustment method: bonferroni </code></pre>
 <div id="pairwise-comparisons-using-tukeys-hsd-method" class="section level3">
 <h3><span class="header-section-number">21.9.2</span> Pairwise Comparisons using Tukey’s HSD Method</h3>
 <p>Goal: Simultaneous (less conservative) confidence intervals and <em>p</em> values for our three pairwise comparisons (High vs. Low, High vs. Middle, Middle vs. Low)</p>
-<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="analysis-of-variance.html#cb728-1"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="analysis-of-variance.html#cb729-1"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a))</span></code></pre></div>
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
 
@@ -1246,50 +1246,50 @@ High (65K or more)-Middle (25 - 64K)  0.3615942 -4.701208 5.424396 0.9845073</co
 </div>
 <div id="plotting-the-tukey-hsd-results" class="section level3">
 <h3><span class="header-section-number">21.9.3</span> Plotting the Tukey HSD results</h3>
-<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="analysis-of-variance.html#cb730-1"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)))</span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="analysis-of-variance.html#cb731-1"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)))</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/hsd_plot_nyfs2a-1.png" width="672" /></p>
 <p>Note that the default positioning of the y axis in the plot of Tukey HSD results can be problematic. If we have longer names, in particular, for the levels of our factor, R will leave out some of the labels. We can alleviate that problem either by using the <code>fct_recode</code> function in the <code>forcats</code> package to rename the factor levels, or we can use the following code to reconfigure the margins of the plot.</p>
-<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="analysis-of-variance.html#cb731-1"></a>mar.default &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span> <span class="co"># save default plotting margins</span></span>
-<span id="cb731-2"><a href="analysis-of-variance.html#cb731-2"></a></span>
-<span id="cb731-3"><a href="analysis-of-variance.html#cb731-3"></a><span class="kw">par</span>(<span class="dt">mar =</span> mar.default <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">0</span>, <span class="dv">0</span>)) </span>
-<span id="cb731-4"><a href="analysis-of-variance.html#cb731-4"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)), <span class="dt">las =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-239-1.png" width="672" /></p>
-<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="analysis-of-variance.html#cb732-1"></a><span class="kw">par</span>(<span class="dt">mar =</span> mar.default) <span class="co"># return to normal plotting margins</span></span></code></pre></div>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="analysis-of-variance.html#cb732-1"></a>mar.default &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span> <span class="co"># save default plotting margins</span></span>
+<span id="cb732-2"><a href="analysis-of-variance.html#cb732-2"></a></span>
+<span id="cb732-3"><a href="analysis-of-variance.html#cb732-3"></a><span class="kw">par</span>(<span class="dt">mar =</span> mar.default <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="dv">0</span>, <span class="dv">0</span>)) </span>
+<span id="cb732-4"><a href="analysis-of-variance.html#cb732-4"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(GMQ <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2a)), <span class="dt">las =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-247-1.png" width="672" /></p>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="analysis-of-variance.html#cb733-1"></a><span class="kw">par</span>(<span class="dt">mar =</span> mar.default) <span class="co"># return to normal plotting margins</span></span></code></pre></div>
 </div>
 </div>
 <div id="what-if-we-consider-another-outcome-bmi" class="section level2">
 <h2><span class="header-section-number">21.10</span> What if we consider another outcome, BMI?</h2>
 <p>We’ll look at the full data set in <code>nyfs2</code> now, so we can look at BMI as a function of income.</p>
-<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="analysis-of-variance.html#cb733-1"></a>nyfs2<span class="op">$</span>income.cat3 &lt;-<span class="st"> </span></span>
-<span id="cb733-2"><a href="analysis-of-variance.html#cb733-2"></a><span class="st">    </span>forcats<span class="op">::</span><span class="kw">fct_relevel</span>(nyfs2<span class="op">$</span>income.cat3,</span>
-<span id="cb733-3"><a href="analysis-of-variance.html#cb733-3"></a>                         <span class="st">&quot;Low (below 25K)&quot;</span>,</span>
-<span id="cb733-4"><a href="analysis-of-variance.html#cb733-4"></a>                         <span class="st">&quot;Middle (25 - 64K)&quot;</span>,</span>
-<span id="cb733-5"><a href="analysis-of-variance.html#cb733-5"></a>                         <span class="st">&quot;High (65K or more)&quot;</span>)</span>
-<span id="cb733-6"><a href="analysis-of-variance.html#cb733-6"></a></span>
-<span id="cb733-7"><a href="analysis-of-variance.html#cb733-7"></a><span class="kw">ggplot</span>(nyfs2, <span class="kw">aes</span>(<span class="dt">x =</span> bmi, <span class="dt">y =</span> income.cat3, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
-<span id="cb733-8"><a href="analysis-of-variance.html#cb733-8"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
-<span id="cb733-9"><a href="analysis-of-variance.html#cb733-9"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb733-10"><a href="analysis-of-variance.html#cb733-10"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Body-Mass Index by Income Group&quot;</span>,</span>
-<span id="cb733-11"><a href="analysis-of-variance.html#cb733-11"></a>         <span class="dt">x =</span> <span class="st">&quot;Body-Mass Index&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span></span>
-<span id="cb733-12"><a href="analysis-of-variance.html#cb733-12"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">theme_ridges</span>()</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-240-1.png" width="672" /></p>
-<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="analysis-of-variance.html#cb734-1"></a><span class="kw">ggplot</span>(nyfs2, <span class="kw">aes</span>(<span class="dt">x =</span> income.cat3, <span class="dt">y =</span> bmi, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
-<span id="cb734-2"><a href="analysis-of-variance.html#cb734-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> income.cat3), <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.25</span>) <span class="op">+</span></span>
-<span id="cb734-3"><a href="analysis-of-variance.html#cb734-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">notch =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.75</span>) <span class="op">+</span></span>
-<span id="cb734-4"><a href="analysis-of-variance.html#cb734-4"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
-<span id="cb734-5"><a href="analysis-of-variance.html#cb734-5"></a><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb734-6"><a href="analysis-of-variance.html#cb734-6"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb734-7"><a href="analysis-of-variance.html#cb734-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;BMI for 280 Children in NNYFS&quot;</span>,</span>
-<span id="cb734-8"><a href="analysis-of-variance.html#cb734-8"></a>       <span class="dt">y =</span> <span class="st">&quot;Body-Mass Index&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Income Category&quot;</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-241-1.png" width="672" /></p>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="analysis-of-variance.html#cb734-1"></a>nyfs2<span class="op">$</span>income.cat3 &lt;-<span class="st"> </span></span>
+<span id="cb734-2"><a href="analysis-of-variance.html#cb734-2"></a><span class="st">    </span>forcats<span class="op">::</span><span class="kw">fct_relevel</span>(nyfs2<span class="op">$</span>income.cat3,</span>
+<span id="cb734-3"><a href="analysis-of-variance.html#cb734-3"></a>                         <span class="st">&quot;Low (below 25K)&quot;</span>,</span>
+<span id="cb734-4"><a href="analysis-of-variance.html#cb734-4"></a>                         <span class="st">&quot;Middle (25 - 64K)&quot;</span>,</span>
+<span id="cb734-5"><a href="analysis-of-variance.html#cb734-5"></a>                         <span class="st">&quot;High (65K or more)&quot;</span>)</span>
+<span id="cb734-6"><a href="analysis-of-variance.html#cb734-6"></a></span>
+<span id="cb734-7"><a href="analysis-of-variance.html#cb734-7"></a><span class="kw">ggplot</span>(nyfs2, <span class="kw">aes</span>(<span class="dt">x =</span> bmi, <span class="dt">y =</span> income.cat3, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
+<span id="cb734-8"><a href="analysis-of-variance.html#cb734-8"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
+<span id="cb734-9"><a href="analysis-of-variance.html#cb734-9"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb734-10"><a href="analysis-of-variance.html#cb734-10"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Body-Mass Index by Income Group&quot;</span>,</span>
+<span id="cb734-11"><a href="analysis-of-variance.html#cb734-11"></a>         <span class="dt">x =</span> <span class="st">&quot;Body-Mass Index&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span></span>
+<span id="cb734-12"><a href="analysis-of-variance.html#cb734-12"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">theme_ridges</span>()</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="analysis-of-variance.html#cb735-1"></a><span class="kw">ggplot</span>(nyfs2, <span class="kw">aes</span>(<span class="dt">x =</span> income.cat3, <span class="dt">y =</span> bmi, <span class="dt">fill =</span> income.cat3)) <span class="op">+</span></span>
+<span id="cb735-2"><a href="analysis-of-variance.html#cb735-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> income.cat3), <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.25</span>) <span class="op">+</span></span>
+<span id="cb735-3"><a href="analysis-of-variance.html#cb735-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">notch =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.75</span>) <span class="op">+</span></span>
+<span id="cb735-4"><a href="analysis-of-variance.html#cb735-4"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb735-5"><a href="analysis-of-variance.html#cb735-5"></a><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb735-6"><a href="analysis-of-variance.html#cb735-6"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb735-7"><a href="analysis-of-variance.html#cb735-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;BMI for 280 Children in NNYFS&quot;</span>,</span>
+<span id="cb735-8"><a href="analysis-of-variance.html#cb735-8"></a>       <span class="dt">y =</span> <span class="st">&quot;Body-Mass Index&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Income Category&quot;</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-249-1.png" width="672" /></p>
 <p>Here are the descriptive numerical summaries:</p>
-<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="analysis-of-variance.html#cb735-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(bmi <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2)</span></code></pre></div>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="analysis-of-variance.html#cb736-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(bmi <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2)</span></code></pre></div>
 <pre><code>         income.cat3  min     Q1 median   Q3  max     mean       sd  n missing
 1    Low (below 25K) 13.8 15.500  16.50 17.9 25.2 16.98163 2.194574 98       0
 2  Middle (25 - 64K) 13.7 15.225  16.05 16.9 24.1 16.37111 1.898920 90       0
 3 High (65K or more) 13.8 15.300  15.85 17.2 21.8 16.27065 1.614395 92       0</code></pre>
 <p>Here is the ANOVA table.</p>
-<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="analysis-of-variance.html#cb737-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(bmi <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2))</span></code></pre></div>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="analysis-of-variance.html#cb738-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(bmi <span class="op">~</span><span class="st"> </span>income.cat3, <span class="dt">data =</span> nyfs2))</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: bmi
@@ -1299,18 +1299,18 @@ Residuals   277 1025.26  3.7013
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Let’s consider the Tukey HSD results. First, we’ll create a factor with shorter labels.</p>
-<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="analysis-of-variance.html#cb739-1"></a>nyfs2<span class="op">$</span>inc.new &lt;-<span class="st"> </span></span>
-<span id="cb739-2"><a href="analysis-of-variance.html#cb739-2"></a><span class="st">    </span>forcats<span class="op">::</span><span class="kw">fct_recode</span>(nyfs2<span class="op">$</span>income.cat3,</span>
-<span id="cb739-3"><a href="analysis-of-variance.html#cb739-3"></a>                        <span class="st">&quot;Low&quot;</span> =<span class="st"> &quot;Low (below 25K)&quot;</span>,</span>
-<span id="cb739-4"><a href="analysis-of-variance.html#cb739-4"></a>                        <span class="st">&quot;Middle&quot;</span> =<span class="st"> &quot;Middle (25 - 64K)&quot;</span>,</span>
-<span id="cb739-5"><a href="analysis-of-variance.html#cb739-5"></a>                        <span class="st">&quot;High&quot;</span> =<span class="st"> &quot;High (65K or more)&quot;</span>)</span>
-<span id="cb739-6"><a href="analysis-of-variance.html#cb739-6"></a></span>
-<span id="cb739-7"><a href="analysis-of-variance.html#cb739-7"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(bmi <span class="op">~</span><span class="st"> </span>inc.new, <span class="dt">data =</span> nyfs2),</span>
-<span id="cb739-8"><a href="analysis-of-variance.html#cb739-8"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>))</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-244-1.png" width="672" /></p>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="analysis-of-variance.html#cb740-1"></a>nyfs2<span class="op">$</span>inc.new &lt;-<span class="st"> </span></span>
+<span id="cb740-2"><a href="analysis-of-variance.html#cb740-2"></a><span class="st">    </span>forcats<span class="op">::</span><span class="kw">fct_recode</span>(nyfs2<span class="op">$</span>income.cat3,</span>
+<span id="cb740-3"><a href="analysis-of-variance.html#cb740-3"></a>                        <span class="st">&quot;Low&quot;</span> =<span class="st"> &quot;Low (below 25K)&quot;</span>,</span>
+<span id="cb740-4"><a href="analysis-of-variance.html#cb740-4"></a>                        <span class="st">&quot;Middle&quot;</span> =<span class="st"> &quot;Middle (25 - 64K)&quot;</span>,</span>
+<span id="cb740-5"><a href="analysis-of-variance.html#cb740-5"></a>                        <span class="st">&quot;High&quot;</span> =<span class="st"> &quot;High (65K or more)&quot;</span>)</span>
+<span id="cb740-6"><a href="analysis-of-variance.html#cb740-6"></a></span>
+<span id="cb740-7"><a href="analysis-of-variance.html#cb740-7"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(bmi <span class="op">~</span><span class="st"> </span>inc.new, <span class="dt">data =</span> nyfs2),</span>
+<span id="cb740-8"><a href="analysis-of-variance.html#cb740-8"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>))</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-252-1.png" width="672" /></p>
 <p>It appears that there is a detectable difference between the <code>bmi</code> means of the “Low” group and both the “High” and “Middle” group at the 90% confidence level, but no detectable difference between “Middle” and “High.” Details of those confidence intervals for those pairwise comparisons follow.</p>
-<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="analysis-of-variance.html#cb740-1"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(bmi <span class="op">~</span><span class="st"> </span>inc.new, <span class="dt">data =</span> nyfs2),</span>
-<span id="cb740-2"><a href="analysis-of-variance.html#cb740-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="analysis-of-variance.html#cb741-1"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(bmi <span class="op">~</span><span class="st"> </span>inc.new, <span class="dt">data =</span> nyfs2),</span>
+<span id="cb741-2"><a href="analysis-of-variance.html#cb741-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>  Tukey multiple comparisons of means
     90% family-wise confidence level
 

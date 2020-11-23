@@ -8287,7 +8287,7 @@ Consider the question of whether the distribution of the systolic blood pressure
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-121-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-122-1.pdf}
 
 Since the data contain both \texttt{sbp} and \texttt{lnsbp} (its natural logarithm), let's compare them. Note that in preparing the graph, we'll need to change the location for the text annotation.
 
@@ -8311,7 +8311,7 @@ Since the data contain both \texttt{sbp} and \texttt{lnsbp} (its natural logarit
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-122-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 We can also look at Normal Q-Q plots, for instance\ldots{}
 
@@ -8334,7 +8334,7 @@ We can also look at Normal Q-Q plots, for instance\ldots{}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/wcgs_qqplotsforsbpandlnsbpfromggplot-fig-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-124-1.pdf}
 
 There's at best a small improvement from \texttt{sbp} to \texttt{lnsbp} in terms of approximation by a Normal distribution.
 
@@ -8357,7 +8357,7 @@ It looks like there's an outlier (or a series of them) in the SBP data.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-123-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-125-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8398,7 +8398,7 @@ The data are collected into four groups based on the subject's weight (in pounds
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/wcgssbpbyweightbox-fig-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-127-1.pdf}
 
 \hypertarget{re-leveling-a-factor}{%
 \section{Re-Leveling a Factor}\label{re-leveling-a-factor}}
@@ -8456,7 +8456,7 @@ For more on the \texttt{forcats} package, check out \citet{R4DS}, especially the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/wcgssbpbyweightboxrevised-fig-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 We might see some details well with a \textbf{ridgeline plot}, too.
 
@@ -8478,7 +8478,7 @@ We might see some details well with a \textbf{ridgeline plot}, too.
 Picking joint bandwidth of 3.74
 \end{verbatim}
 
-\includegraphics{431-notes_files/figure-latex/wcgs_sbp_by_weight_f_ridgelineplot-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-130-1.pdf}
 
 As the plots suggest, patients in the heavier groups generally had higher systolic blood pressures.
 
@@ -8512,7 +8512,7 @@ Let's build a scatter plot of SBP (Outcome) by Weight (Predictor), rather than b
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-132-1.pdf}
 
 \begin{itemize}
 \tightlist
@@ -8588,7 +8588,7 @@ Let's build a version of the \texttt{wcgs} data that eliminates all missing data
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-128-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-135-1.pdf}
 
 \hypertarget{linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis}{%
 \section{Linear Model for SBP-Weight Relationship: subjects without Arcus Senilis}\label{linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis}}
@@ -8853,6 +8853,12 @@ And thus, the predictions for a 200 pound subject are:
   101.9 + 0.16 x 200 = 134.4 mm Hg with Arcus Senilis.
 \end{itemize}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(model.noarcus, model.witharcus)}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{scatterplots-with-facets-across-a-categorical-variable}{%
 \section{Scatterplots with Facets Across a Categorical Variable}\label{scatterplots-with-facets-across-a-categorical-variable}}
 
@@ -8871,7 +8877,7 @@ We can use facets in \texttt{ggplot2} to show scatterplots across the levels of 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-132-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-140-1.pdf}
 
 \hypertarget{scatterplot-and-correlation-matrices}{%
 \section{Scatterplot and Correlation Matrices}\label{scatterplot-and-correlation-matrices}}
@@ -8884,7 +8890,7 @@ A \textbf{scatterplot matrix} can be very helpful in understanding relationships
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-133-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-141-1.pdf}
 
 \hypertarget{displaying-a-correlation-matrix}{%
 \subsection{Displaying a Correlation Matrix}\label{displaying-a-correlation-matrix}}
@@ -8920,7 +8926,7 @@ The \texttt{ggpairs} function provides a density plot on each diagonal, Pearson 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-135-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-143-1.pdf}
 
 \hypertarget{re-expression-tukeys-ladder-box-cox-plot}{%
 \chapter{Re-Expression, Tukey's Ladder \& Box-Cox Plot}\label{re-expression-tukeys-ladder-box-cox-plot}}
@@ -8995,7 +9001,7 @@ The \textbf{Box-Cox plot}, from the \texttt{boxCox} function in the \texttt{car}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-136-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-144-1} \end{center}
 
 Having simulated data that produces a curved scatterplot, I will now use the Box-Cox plot to lead my choice of an appropriate power transformation for Y in order to ``linearize'' the association of Y and X.
 
@@ -9006,7 +9012,7 @@ Having simulated data that produces a curved scatterplot, I will now use the Box
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-137-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-145-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9055,7 +9061,7 @@ If we use \(\lambda\) = 0.5, on Tukey's ladder of power transformations, it sugg
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-138-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-146-1.pdf}
 
 By eye, I think the square root plot better matches the linear fit.
 
@@ -9178,7 +9184,7 @@ We can fit the regression models, obtain plots of residuals against fitted value
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-141-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-149-1.pdf}
 
 What we're looking for in such a plot is the absence of a curve, among other things, we want to see ``fuzzy football'' shapes.
 
@@ -9277,7 +9283,7 @@ Next, we'll do a more thorough graphical summary of our outcome, recovery score.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-142-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-150-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9381,7 +9387,7 @@ The \texttt{tidy} method makes it easy to construct coefficient plots using \tex
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-145-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-153-1.pdf}
 
 Another option would be to use \texttt{geom\_errorbarh} in this setting, perhaps with a different color scheme\ldots{}
 
@@ -9398,7 +9404,7 @@ Another option would be to use \texttt{geom\_errorbarh} in this setting, perhaps
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-146-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-154-1.pdf}
 
 \hypertarget{the-summary-output}{%
 \section{The Summary Output}\label{the-summary-output}}
@@ -9905,7 +9911,7 @@ To save the residuals and predicted (fitted) values from this simple regression 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-151-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-159-1.pdf}
 
 We can also obtain a plot of residuals vs.~fitted values for \texttt{m1} using the following code from base R.
 
@@ -9915,7 +9921,7 @@ We can also obtain a plot of residuals vs.~fitted values for \texttt{m1} using t
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-152-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-160-1.pdf}
 
 We hope in this plot to see a generally random scatter of points, perhaps looking like a ``fuzzy football''. Since we only have seven possible \texttt{dose} values, we obtain only seven distinct predicted values, which explains the seven vertical lines in the plot. Here, the smooth red line indicates a gentle curve, but no evidence of a strong curve, or any other regular pattern in this residual plot.
 
@@ -10146,7 +10152,7 @@ for the \texttt{zinc} results from the \texttt{serzinc} tibble.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-155-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-163-1.pdf}
 
 These results include some of the more useful plots and numerical summaries when assessing shape, center and spread. The \texttt{zinc} data in the \texttt{serzinc} data frame appear to be slightly right skewed, with five outlier values on the high end of the scale, in particular.
 
@@ -10333,7 +10339,7 @@ Student's t distribution looks a lot like a Normal distribution, when the sample
   t distributions with smaller degrees of freedom (say, with df \textless{} 30, in particular) are still symmetric, but are more outlier-prone than a Normal distribution
 \end{itemize}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-158-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-166-1.pdf}
 
 \hypertarget{building-the-ci-in-r}{%
 \section{Building the CI in R}\label{building-the-ci-in-r}}
@@ -11320,7 +11326,7 @@ Consider the following boxplot with violin of the \texttt{temp\_drop} data withi
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-180-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-188-1.pdf}
 
 Next, we'll consider faceted histograms of the data.
 
@@ -11352,7 +11358,7 @@ Here's a pair of Normal Q-Q plots. It's not hard to use a Normal model to approx
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-181-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-189-1.pdf}
 
 We'll could perhaps also look at a ridgeline plot.
 
@@ -11371,7 +11377,7 @@ We'll could perhaps also look at a ridgeline plot.
 Picking joint bandwidth of 0.182
 \end{verbatim}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-182-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-190-1.pdf}
 
 The center of the ibuprofen distribution is shifted a bit towards the more positive (greater improvement) direction, it seems, than is the distribution for the placebo patients. This conclusion matches what we see in some key numerical summaries, within the treatment groups.
 
@@ -11788,7 +11794,7 @@ To address question 9, we'll need to look at the data in each sample, as we did 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-197-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-205-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11800,7 +11806,7 @@ To address question 9, we'll need to look at the data in each sample, as we did 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-198-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-206-1.pdf}
 
 From these plots we conclude that the data in the Ibuprofen sample follow a reasonably Normal distribution, but this isn't quite as true for the Placebo sample. It's hard to know whether the apparent Placebo group outliers will affect whether the Normal distribution assumption is reasonable, so we can see if the confidence intervals change much when we \emph{don't} assume Normality (for instance, comparing the bootstrap to the t-based approaches), as a way of understanding whether a Normal model has a large impact on our conclusions.
 
@@ -12213,7 +12219,7 @@ To begin, we focus on \texttt{lead\_diff} for our exploratory work, which is the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-209-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-217-1.pdf}
 
 Note that in all of this work, I plotted the paired differences. One obvious way to tell if you have paired samples is that you can pair every single subject from one exposure group to a unique subject in the other exposure group. Everyone has to be paired, so the sample sizes will always be the same in the two groups.
 
@@ -12266,7 +12272,7 @@ Here, the data are paired by the study through matching on neighborhood, age and
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-211-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-219-1.pdf}
 
 Each point here represents a \textbf{pair} of observations, one from a control child, and one from the matched exposed child. If there is a strong linear relationship (usually with a positive slope, thus positive correlation) between the paired outcomes, then the pairing will be more helpful in terms of improving statistical power of the estimates we build than if there is a weak relationship.
 
@@ -12362,7 +12368,7 @@ First, we'll look at a boxplot, showing all of the data.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-214-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-222-1.pdf}
 
 We'll also look at a ridgeline plot, because Dr.~Love likes them, even though they're really more useful when we're comparing more than two samples.
 
@@ -12380,7 +12386,7 @@ We'll also look at a ridgeline plot, because Dr.~Love likes them, even though th
 Picking joint bandwidth of 4.01
 \end{verbatim}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-215-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-223-1.pdf}
 
 Both the center and the spread of the distribution are substantially larger in the exposed group than in the controls. Of course, numerical summaries show these patterns, too.
 
@@ -13340,7 +13346,7 @@ The sample Pearson correlation coefficient is very strong and positive at 0.92, 
 
 We summarize the distribution of the paired differences (cornflakes - oatbran) below.
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-232-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-240-1.pdf}
 
 The Normal distribution doesn't look too ridiculous in this case for the paired (cornflakes-oatbran) differences. Suppose we assume Normality and run the paired t test.
 
@@ -14235,7 +14241,7 @@ Note that the default positioning of the y axis in the plot of Tukey HSD results
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-239-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-247-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14265,7 +14271,7 @@ We'll look at the full data set in \texttt{nyfs2} now, so we can look at BMI as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-240-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-248-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14280,7 +14286,7 @@ We'll look at the full data set in \texttt{nyfs2} now, so we can look at BMI as 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-241-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-249-1.pdf}
 
 Here are the descriptive numerical summaries:
 
@@ -14331,7 +14337,7 @@ Let's consider the Tukey HSD results. First, we'll create a factor with shorter 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-244-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-252-1.pdf}
 
 It appears that there is a detectable difference between the \texttt{bmi} means of the ``Low'' group and both the ``High'' and ``Middle'' group at the 90\% confidence level, but no detectable difference between ``Middle'' and ``High.'' Details of those confidence intervals for those pairwise comparisons follow.
 
@@ -15962,7 +15968,7 @@ This is way more precision than we can really justify, but I just want you to se
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-267-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-275-1.pdf}
 
 So in this case, it really doesn't matter which one you choose. With a smaller sample, we may not come to the same conclusion about the relative merits of these different approaches.
 
@@ -16027,7 +16033,7 @@ Plus4 & 0.1 & 0.034 & 0.395\\
 
 Note that the Wald procedure doesn't force the confidence interval to appear in the (0, 1) range.
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-270-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-278-1.pdf}
 
 \textbf{None of these three approaches is always better than any of the others.} When we have a sample size below 100, or the sample proportion of success is either below 0.10 or above 0.90, caution is warranted, although in many cases, the various methods give similar responses.
 
@@ -17807,7 +17813,7 @@ We are missing one \texttt{treat}, 3 \texttt{diabetes} and 3 \texttt{sbp.before}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-288-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-296-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -18589,7 +18595,7 @@ For example, in the \texttt{wcgs\_500} data, here are the relevant scatterplots 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/chol_model_wcgs_500_1-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-314-1.pdf}
 
 Here, I've simply placed \texttt{recov.score} on the vertical (Y) axis, plotted against each of the predictors, in turn. I've added a straight line (OLS) fit {[}in tomato red{]} and a loess smooth {[}in blue{]} to each plot to guide your assessment of the ``straight enough'' condition. Note the use here of \texttt{span\ =\ 2} in the \texttt{loess} smooths to produce lines that are less wiggly than they would be using the default \texttt{span\ =\ 0.75}.
 
@@ -18619,7 +18625,7 @@ To obtain this plot for the model including \texttt{sbp}, \texttt{bmi} and \text
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/diag_wcgs_500_plot1-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-315-1} \end{center}
 
 A smooth is again added (in red) to help you identify serious non-linearity. In this case, I would conclude that there were no serious problems with linearity in these data.
 
@@ -18672,7 +18678,7 @@ These turn out to be the observations with \texttt{id} = 3604, 2280 and 10360, r
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-307-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-317-1.pdf}
 
 \hypertarget{residuals-vs.-predictors-to-further-check-for-non-linearity}{%
 \subsection{Residuals vs.~Predictors To Further Check for Non-Linearity}\label{residuals-vs.-predictors-to-further-check-for-non-linearity}}
@@ -18703,7 +18709,7 @@ Although I don't think you need them here, here are these plots for the residual
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-308-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-318-1.pdf}
 
 Again, I see no particularly problematic issues with the assumption of linearity in either of the scatterplots here.
 
@@ -18753,7 +18759,7 @@ R does provide an additional plot to help assess this issue as linear model diag
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/p30-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-319-1} \end{center}
 
 We can replicate this plot using \texttt{ggplot2} as follows. With a \texttt{loess} smooth with \texttt{span\ =\ 2}, there's no suggestion of a meaningful trend up or down in this plot.
 
@@ -18776,7 +18782,7 @@ We can replicate this plot using \texttt{ggplot2} as follows. With a \texttt{loe
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-309-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-320-1.pdf}
 
 \hypertarget{what-does-trouble-look-like}{%
 \subsection{What does trouble look like?}\label{what-does-trouble-look-like}}
@@ -18841,7 +18847,7 @@ First, here are the two scatterplots, for our \texttt{fake\_1} model with consta
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-311-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-322-1.pdf}
 
 Second, here are the two plots of residuals vs.~fitted values, for our \texttt{fake\_1} model with constant variance on the left, and our \texttt{fake\_2} model with non-constant variance on the right.
 
@@ -18883,7 +18889,7 @@ Second, here are the two plots of residuals vs.~fitted values, for our \texttt{f
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-312-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-323-1.pdf}
 
 Finally, here is the scale-location plot for each scenario.
 
@@ -18925,7 +18931,7 @@ Finally, here is the scale-location plot for each scenario.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-313-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-324-1.pdf}
 
 Note the funnel shape for the upper two heteroscedastic (non-constant variance) plots, and the upward sloping loess line in the last one.
 
@@ -18943,7 +18949,7 @@ Here are the relevant plots for the same scenario using base R.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-314-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-325-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -18987,7 +18993,7 @@ R's general plot set for a linear model includes (as plot 2) a Normal Q-Q plot o
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-315-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-326-1} \end{center}
 
 or we can use the \texttt{ggplot2} version:
 
@@ -19018,7 +19024,7 @@ or we can use the \texttt{ggplot2} version:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-316-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-327-1.pdf}
 
 The Q-Q plot of standardized residuals shows one point (in row 113, according to the plot) that is far away from our expectations under the Normal model. Let's look at that point a little more closely.
 
@@ -19147,7 +19153,7 @@ Another way to understand the impact of leverage is to look at a plot of residua
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-322-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-333-1} \end{center}
 
 Here is the \texttt{ggplot2} version.
 
@@ -19166,7 +19172,7 @@ Here is the \texttt{ggplot2} version.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-323-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-334-1.pdf}
 
 We see that the most highly leveraged points are shown furthest to the right in this plot (in fact, I've inserted a dotted vertical line at the cutpoint of \texttt{3*mean(.hat)}), but our problematic standardized residual has a very typical leverage value (at the top left of this plot.)
 
@@ -19249,7 +19255,7 @@ So, let's look at a plot of the two quantitative predictors in our data to see w
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/p36b-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-339-1.pdf}
 
 The points with high leverage (large values of \texttt{.hat}) are simply those with an unusual combination of the two quantitative predictors.
 
@@ -19283,7 +19289,7 @@ You can obtain information on Cook's distance in several ways in R.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-327-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-340-1} \end{center}
 
 No points in this plot indicate substantial influence on our model. To do so, they'd have to be outside the Cook's distance contour shown at the top right of this plot (there is a similar arc at the bottom right, but it's too far away from the data to show up in the plot.)
 
@@ -19298,7 +19304,7 @@ Model Diagnostic Plot 4 for a linear model is an index plot of Cook's distance.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{431-notes_files/figure-latex/cooks2-1} \end{center}
+\begin{center}\includegraphics{431-notes_files/figure-latex/unnamed-chunk-341-1} \end{center}
 
 Or, if you like, run the \texttt{ggplot2} version:
 
@@ -19320,7 +19326,7 @@ Or, if you like, run the \texttt{ggplot2} version:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/unnamed-chunk-328-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-342-1.pdf}
 
 It is clear from this plot that the largest Cook's distance (somewhere between 0.05 and 0.06) is for the observation in subject 10214 (or row 131 of the data set, depending on which version you build. All of the Cook's distance values are stored in the \texttt{.cooksd} variable in our augmented results. Let's look at the six largest Cook's distance values.
 
@@ -19629,7 +19635,7 @@ No, it doesn't. But what if we combine our outcome transformation with dropping 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/viol_fit_without_72_1and3-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-347-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -19646,7 +19652,7 @@ Nope. That still doesn't alleviate the problem of heteroscedasticity very well. 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/viol_fit_without_72_2and5-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-348-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -19671,7 +19677,7 @@ At this point, I would be considering potential transformations of the predictor
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/viol2sim-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-349-1.pdf}
 
 Skewed residuals often show up in strange patterns in the plot of residuals vs.~fitted values, too, as in this case.
 
@@ -19681,7 +19687,7 @@ Skewed residuals often show up in strange patterns in the plot of residuals vs.~
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/viol2sim_model3plot1-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-350-1.pdf}
 
 Clearly, we have some larger residuals on the positive side, but not on the negative side. Would an outcome transformation be suggested by Box-Cox?
 
@@ -19691,7 +19697,7 @@ Clearly, we have some larger residuals on the positive side, but not on the nega
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/viol2sim_model3plotboxcox-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-351-1.pdf}
 
 \begin{verbatim}
 Estimated transformation parameter 
@@ -19708,7 +19714,7 @@ The suggested transformation looks like the inverse of our outcome.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/viol2sim_model4plot2-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-352-1.pdf}
 
 OK. That's something of an improvement. How about the other residual plots with this transformation?
 
@@ -19718,7 +19724,7 @@ OK. That's something of an improvement. How about the other residual plots with 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{431-notes_files/figure-latex/viol2sim_model4plot1-1.pdf}
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-353-1.pdf}
 
 The impact of the skew is reduced, at least. I might well be satisfied enough with this, in practice.
 

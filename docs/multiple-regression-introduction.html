@@ -840,19 +840,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The <code>emp_bmi</code> data from a study published in <em>BMJ Open</em> of a nationally representative sample of over 7000 participants in the Korean Longitudinal Study of Aging.</li>
 <li>The <code>gala</code> data, which describe features of the 30 Galapagos Islands.</li>
 </ul>
-<div class="sourceCode" id="cb934"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb934-1"><a href="multiple-regression-introduction.html#cb934-1"></a>wcgs &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/wcgs.csv&quot;</span>) </span>
-<span id="cb934-2"><a href="multiple-regression-introduction.html#cb934-2"></a>emp_bmi &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/emp_bmi.csv&quot;</span>) </span>
-<span id="cb934-3"><a href="multiple-regression-introduction.html#cb934-3"></a>gala &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/gala.csv&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb935"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb935-1"><a href="multiple-regression-introduction.html#cb935-1"></a>wcgs &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/wcgs.csv&quot;</span>) </span>
+<span id="cb935-2"><a href="multiple-regression-introduction.html#cb935-2"></a>emp_bmi &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/emp_bmi.csv&quot;</span>) </span>
+<span id="cb935-3"><a href="multiple-regression-introduction.html#cb935-3"></a>gala &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/gala.csv&quot;</span>) </span></code></pre></div>
 <div id="add-some-packages" class="section level2">
 <h2><span class="header-section-number">29.1</span> Add Some Packages</h2>
 <p>Here, we’ll add several packages to those we’ve loaded at the start of the notes, and, as always, finish up with the <code>tidymodels</code> and <code>tidyverse</code> packages.</p>
-<div class="sourceCode" id="cb935"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb935-1"><a href="multiple-regression-introduction.html#cb935-1"></a><span class="kw">library</span>(naniar)</span>
-<span id="cb935-2"><a href="multiple-regression-introduction.html#cb935-2"></a><span class="kw">library</span>(simputation)</span>
-<span id="cb935-3"><a href="multiple-regression-introduction.html#cb935-3"></a><span class="kw">library</span>(car)</span>
-<span id="cb935-4"><a href="multiple-regression-introduction.html#cb935-4"></a><span class="kw">library</span>(GGally)</span>
-<span id="cb935-5"><a href="multiple-regression-introduction.html#cb935-5"></a><span class="kw">library</span>(ggrepel)</span>
-<span id="cb935-6"><a href="multiple-regression-introduction.html#cb935-6"></a><span class="kw">library</span>(tidymodels)</span>
-<span id="cb935-7"><a href="multiple-regression-introduction.html#cb935-7"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb936"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb936-1"><a href="multiple-regression-introduction.html#cb936-1"></a><span class="kw">library</span>(naniar)</span>
+<span id="cb936-2"><a href="multiple-regression-introduction.html#cb936-2"></a><span class="kw">library</span>(simputation)</span>
+<span id="cb936-3"><a href="multiple-regression-introduction.html#cb936-3"></a><span class="kw">library</span>(car)</span>
+<span id="cb936-4"><a href="multiple-regression-introduction.html#cb936-4"></a><span class="kw">library</span>(GGally)</span>
+<span id="cb936-5"><a href="multiple-regression-introduction.html#cb936-5"></a><span class="kw">library</span>(ggrepel)</span>
+<span id="cb936-6"><a href="multiple-regression-introduction.html#cb936-6"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb936-7"><a href="multiple-regression-introduction.html#cb936-7"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 </div>
 <div id="reminders-of-a-few-key-concepts" class="section level2">
 <h2><span class="header-section-number">29.2</span> Reminders of a few Key Concepts</h2>

@@ -837,8 +837,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="adding-two-new-packages" class="section level2">
 <h2><span class="header-section-number">28.1</span> Adding Two New Packages</h2>
 <p>We’ll use the <code>naniar</code> and <code>simputation</code> packages in this work.</p>
-<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb903-1"></a><span class="kw">library</span>(naniar)</span>
-<span id="cb903-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb903-2"></a><span class="kw">library</span>(simputation)</span></code></pre></div>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-1"></a><span class="kw">library</span>(naniar)</span>
+<span id="cb904-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-2"></a><span class="kw">library</span>(simputation)</span></code></pre></div>
 </div>
 <div id="simulated-example-with-15-subjects" class="section level2">
 <h2><span class="header-section-number">28.2</span> Simulated Example with 15 subjects</h2>
@@ -849,20 +849,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>the subject’s systolic blood pressure at baseline</li>
 <li>the subject’s systolic blood pressure after the application of the treatment</li>
 </ul>
-<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-1"></a><span class="co"># create some temporary variables</span></span>
-<span id="cb904-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-2"></a>subject &lt;-<span class="st"> </span><span class="dv">101</span><span class="op">:</span><span class="dv">115</span></span>
-<span id="cb904-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-3"></a>x1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</span>
-<span id="cb904-4"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-4"></a>x2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="ot">NA</span>)</span>
-<span id="cb904-5"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-5"></a>x3 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">120</span>, <span class="dv">145</span>, <span class="dv">150</span>, <span class="ot">NA</span>, <span class="dv">155</span>, <span class="ot">NA</span>, <span class="dv">135</span>, <span class="ot">NA</span>, <span class="dv">115</span>, <span class="dv">170</span>, <span class="dv">150</span>, <span class="dv">145</span>, <span class="dv">140</span>, <span class="dv">160</span>, <span class="dv">135</span>)</span>
-<span id="cb904-6"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-6"></a>x4 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">105</span>, <span class="dv">135</span>, <span class="dv">150</span>, <span class="dv">120</span>, <span class="dv">135</span>, <span class="dv">115</span>, <span class="dv">160</span>, <span class="dv">150</span>, <span class="dv">130</span>, <span class="dv">155</span>, <span class="dv">140</span>, <span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">135</span>, <span class="dv">120</span>)</span>
-<span id="cb904-7"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-7"></a></span>
-<span id="cb904-8"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-8"></a>sbp_example &lt;-<span class="st"> </span></span>
-<span id="cb904-9"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-9"></a><span class="st">  </span><span class="kw">tibble</span>(subject, <span class="dt">treat =</span> <span class="kw">factor</span>(x1), <span class="dt">diabetes =</span> x2, </span>
-<span id="cb904-10"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-10"></a>         <span class="dt">sbp.before =</span> x3, <span class="dt">sbp.after =</span> x4) </span>
-<span id="cb904-11"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-11"></a></span>
-<span id="cb904-12"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-12"></a><span class="kw">rm</span>(subject, x1, x2, x3, x4) <span class="co"># just cleaning up</span></span>
-<span id="cb904-13"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-13"></a></span>
-<span id="cb904-14"><a href="missing-data-mechanisms-and-simple-imputation.html#cb904-14"></a>sbp_example</span></code></pre></div>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-1"></a><span class="co"># create some temporary variables</span></span>
+<span id="cb905-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-2"></a>subject &lt;-<span class="st"> </span><span class="dv">101</span><span class="op">:</span><span class="dv">115</span></span>
+<span id="cb905-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-3"></a>x1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>)</span>
+<span id="cb905-4"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-4"></a>x2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="ot">NA</span>)</span>
+<span id="cb905-5"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-5"></a>x3 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">120</span>, <span class="dv">145</span>, <span class="dv">150</span>, <span class="ot">NA</span>, <span class="dv">155</span>, <span class="ot">NA</span>, <span class="dv">135</span>, <span class="ot">NA</span>, <span class="dv">115</span>, <span class="dv">170</span>, <span class="dv">150</span>, <span class="dv">145</span>, <span class="dv">140</span>, <span class="dv">160</span>, <span class="dv">135</span>)</span>
+<span id="cb905-6"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-6"></a>x4 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">105</span>, <span class="dv">135</span>, <span class="dv">150</span>, <span class="dv">120</span>, <span class="dv">135</span>, <span class="dv">115</span>, <span class="dv">160</span>, <span class="dv">150</span>, <span class="dv">130</span>, <span class="dv">155</span>, <span class="dv">140</span>, <span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">135</span>, <span class="dv">120</span>)</span>
+<span id="cb905-7"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-7"></a></span>
+<span id="cb905-8"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-8"></a>sbp_example &lt;-<span class="st"> </span></span>
+<span id="cb905-9"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-9"></a><span class="st">  </span><span class="kw">tibble</span>(subject, <span class="dt">treat =</span> <span class="kw">factor</span>(x1), <span class="dt">diabetes =</span> x2, </span>
+<span id="cb905-10"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-10"></a>         <span class="dt">sbp.before =</span> x3, <span class="dt">sbp.after =</span> x4) </span>
+<span id="cb905-11"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-11"></a></span>
+<span id="cb905-12"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-12"></a><span class="kw">rm</span>(subject, x1, x2, x3, x4) <span class="co"># just cleaning up</span></span>
+<span id="cb905-13"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-13"></a></span>
+<span id="cb905-14"><a href="missing-data-mechanisms-and-simple-imputation.html#cb905-14"></a>sbp_example</span></code></pre></div>
 <pre><code># A tibble: 15 x 5
    subject treat diabetes sbp.before sbp.after
      &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -888,22 +888,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>How many missing values do we have, overall?</li>
 </ol>
-<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb906-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb906-1"></a><span class="kw">n_miss</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb907-1"></a><span class="kw">n_miss</span>(sbp_example)</span></code></pre></div>
 <pre><code>[1] 7</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>How many variables have missing values, overall?</li>
 </ol>
-<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb908-1"></a><span class="kw">n_var_miss</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb909-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb909-1"></a><span class="kw">n_var_miss</span>(sbp_example)</span></code></pre></div>
 <pre><code>[1] 3</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Which variables contain missing values?</li>
 </ol>
-<div class="sourceCode" id="cb910"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb910-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb910-1"></a><span class="kw">miss_var_which</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb911-1"></a><span class="kw">miss_var_which</span>(sbp_example)</span></code></pre></div>
 <pre><code>[1] &quot;treat&quot;      &quot;diabetes&quot;   &quot;sbp.before&quot;</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>How many missing values do we have in each variable?</li>
 </ol>
-<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb912-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb912-1"></a><span class="kw">miss_var_summary</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb913-1"></a><span class="kw">miss_var_summary</span>(sbp_example)</span></code></pre></div>
 <pre><code># A tibble: 5 x 3
   variable   n_miss pct_miss
   &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt;
@@ -916,22 +916,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="5" style="list-style-type: decimal">
 <li>Can we plot missingness, by variable?</li>
 </ol>
-<div class="sourceCode" id="cb914"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb914-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb914-1"></a><span class="kw">gg_miss_var</span>(sbp_example)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-288-1.png" width="672" /></p>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb915-1"></a><span class="kw">gg_miss_var</span>(sbp_example)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-296-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>How many of the cases (rows) have missing values?</li>
 </ol>
-<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb915-1"></a><span class="kw">n_case_miss</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb916-1"></a><span class="kw">n_case_miss</span>(sbp_example)</span></code></pre></div>
 <pre><code>[1] 6</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>How many cases have complete data, with no missing values?</li>
 </ol>
-<div class="sourceCode" id="cb917"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb917-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb917-1"></a><span class="kw">n_case_complete</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb918-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb918-1"></a><span class="kw">n_case_complete</span>(sbp_example)</span></code></pre></div>
 <pre><code>[1] 9</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Can we tabulate missingness by case?</li>
 </ol>
-<div class="sourceCode" id="cb919"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb919-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb919-1"></a><span class="kw">miss_case_table</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb920-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb920-1"></a><span class="kw">miss_case_table</span>(sbp_example)</span></code></pre></div>
 <pre><code># A tibble: 3 x 3
   n_miss_in_case n_cases pct_cases
            &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;
@@ -941,7 +941,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="9" style="list-style-type: decimal">
 <li>Which cases have missing values?</li>
 </ol>
-<div class="sourceCode" id="cb921"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb921-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb921-1"></a><span class="kw">miss_case_summary</span>(sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb922-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb922-1"></a><span class="kw">miss_case_summary</span>(sbp_example)</span></code></pre></div>
 <pre><code># A tibble: 15 x 3
     case n_miss pct_miss
    &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
@@ -963,7 +963,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="10" style="list-style-type: decimal">
 <li>How can we identify the subjects with missing data?</li>
 </ol>
-<div class="sourceCode" id="cb923"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb923-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb923-1"></a>sbp_example <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">complete.cases</span>(.))</span></code></pre></div>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb924-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb924-1"></a>sbp_example <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">complete.cases</span>(.))</span></code></pre></div>
 <pre><code># A tibble: 6 x 5
   subject treat diabetes sbp.before sbp.after
     &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -1027,18 +1027,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="building-a-complete-case-analysis" class="section level2">
 <h2><span class="header-section-number">28.9</span> Building a Complete Case Analysis</h2>
 <p>We can drop all of the missing values from a data set with <code>drop_na</code> or with <code>na.omit</code> or by filtering for <code>complete.cases</code>. Any of these approaches produces the same result - a new data set with 9 rows (after dropping the six subjects with any NA values) and 5 columns.</p>
-<div class="sourceCode" id="cb925"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb925-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb925-1"></a>cc<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">na.omit</span>(sbp_example)</span>
-<span id="cb925-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb925-2"></a>cc<span class="fl">.2</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span><span class="st"> </span>drop_na</span>
-<span id="cb925-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb925-3"></a>cc<span class="fl">.3</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.))</span></code></pre></div>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb926-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb926-1"></a>cc<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">na.omit</span>(sbp_example)</span>
+<span id="cb926-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb926-2"></a>cc<span class="fl">.2</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span><span class="st"> </span>drop_na</span>
+<span id="cb926-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb926-3"></a>cc<span class="fl">.3</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">complete.cases</span>(.))</span></code></pre></div>
 </div>
 <div id="single-imputation-with-the-mean-or-mode" class="section level2">
 <h2><span class="header-section-number">28.10</span> Single Imputation with the Mean or Mode</h2>
 <p>The most straightforward approach to single imputation is to impute a single summary of the variable, such as the mean, median or mode.</p>
-<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb926-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb926-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(<span class="op">~</span><span class="st"> </span>sbp.before, <span class="dt">data =</span> sbp_example)</span></code></pre></div>
+<div class="sourceCode" id="cb927"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb927-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb927-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(<span class="op">~</span><span class="st"> </span>sbp.before, <span class="dt">data =</span> sbp_example)</span></code></pre></div>
 <pre><code> min  Q1 median     Q3 max     mean       sd  n missing
  115 135    145 151.25 170 143.3333 15.71527 12       3</code></pre>
-<div class="sourceCode" id="cb928"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb928-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb928-1"></a>sbp_example <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(diabetes, treat) <span class="op">%&gt;%</span></span>
-<span id="cb928-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb928-2"></a><span class="st">  </span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb929"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb929-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb929-1"></a>sbp_example <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(diabetes, treat) <span class="op">%&gt;%</span></span>
+<span id="cb929-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb929-2"></a><span class="st">  </span><span class="kw">adorn_totals</span>(<span class="dt">where =</span> <span class="kw">c</span>(<span class="st">&quot;row&quot;</span>, <span class="st">&quot;col&quot;</span>))</span></code></pre></div>
 <pre><code> diabetes A B C NA_ Total
         0 2 2 1   0     5
         1 4 0 2   1     7
@@ -1050,11 +1050,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>diabetes</code> with its more common value, 1, and</li>
 <li><code>treat</code> with its more common value, or mode (A)</li>
 </ul>
-<div class="sourceCode" id="cb930"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb930-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb930-1"></a>si<span class="fl">.1</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span></span>
-<span id="cb930-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb930-2"></a><span class="st">    </span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">sbp.before =</span> <span class="fl">143.33</span>,</span>
-<span id="cb930-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb930-3"></a>                    <span class="dt">diabetes =</span> <span class="dv">1</span>,</span>
-<span id="cb930-4"><a href="missing-data-mechanisms-and-simple-imputation.html#cb930-4"></a>                    <span class="dt">treat =</span> <span class="st">&quot;A&quot;</span>))</span>
-<span id="cb930-5"><a href="missing-data-mechanisms-and-simple-imputation.html#cb930-5"></a>si<span class="fl">.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb931"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb931-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb931-1"></a>si<span class="fl">.1</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span></span>
+<span id="cb931-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb931-2"></a><span class="st">    </span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">sbp.before =</span> <span class="fl">143.33</span>,</span>
+<span id="cb931-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb931-3"></a>                    <span class="dt">diabetes =</span> <span class="dv">1</span>,</span>
+<span id="cb931-4"><a href="missing-data-mechanisms-and-simple-imputation.html#cb931-4"></a>                    <span class="dt">treat =</span> <span class="st">&quot;A&quot;</span>))</span>
+<span id="cb931-5"><a href="missing-data-mechanisms-and-simple-imputation.html#cb931-5"></a>si<span class="fl">.1</span></span></code></pre></div>
 <pre><code># A tibble: 15 x 5
    subject treat diabetes sbp.before sbp.after
      &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -1089,14 +1089,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>a predictive mean matching approach (which, unlike the robust linear model, will ensure that only values of <code>diabetes</code> that we’ve seen before will be imputed) to predict <code>diabetes</code> status, on the basis of <code>sbp.after</code>, and</li>
 <li>a decision tree approach to predict <code>treat</code> status, using all other variables in the data</li>
 </ul>
-<div class="sourceCode" id="cb932"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb932-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-1"></a><span class="kw">set.seed</span>(<span class="dv">50001</span>)</span>
-<span id="cb932-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-2"></a></span>
-<span id="cb932-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-3"></a>imp<span class="fl">.2</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span></span>
-<span id="cb932-4"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-4"></a><span class="st">    </span><span class="kw">impute_rlm</span>(sbp.before <span class="op">~</span><span class="st"> </span>sbp.after <span class="op">+</span><span class="st"> </span>diabetes) <span class="op">%&gt;%</span></span>
-<span id="cb932-5"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-5"></a><span class="st">    </span><span class="kw">impute_pmm</span>(diabetes <span class="op">~</span><span class="st"> </span>sbp.after) <span class="op">%&gt;%</span></span>
-<span id="cb932-6"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-6"></a><span class="st">    </span><span class="kw">impute_cart</span>(treat <span class="op">~</span><span class="st"> </span>.)</span>
-<span id="cb932-7"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-7"></a></span>
-<span id="cb932-8"><a href="missing-data-mechanisms-and-simple-imputation.html#cb932-8"></a>imp<span class="fl">.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb933"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb933-1"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-1"></a><span class="kw">set.seed</span>(<span class="dv">50001</span>)</span>
+<span id="cb933-2"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-2"></a></span>
+<span id="cb933-3"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-3"></a>imp<span class="fl">.2</span> &lt;-<span class="st"> </span>sbp_example <span class="op">%&gt;%</span></span>
+<span id="cb933-4"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-4"></a><span class="st">    </span><span class="kw">impute_rlm</span>(sbp.before <span class="op">~</span><span class="st"> </span>sbp.after <span class="op">+</span><span class="st"> </span>diabetes) <span class="op">%&gt;%</span></span>
+<span id="cb933-5"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-5"></a><span class="st">    </span><span class="kw">impute_pmm</span>(diabetes <span class="op">~</span><span class="st"> </span>sbp.after) <span class="op">%&gt;%</span></span>
+<span id="cb933-6"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-6"></a><span class="st">    </span><span class="kw">impute_cart</span>(treat <span class="op">~</span><span class="st"> </span>.)</span>
+<span id="cb933-7"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-7"></a></span>
+<span id="cb933-8"><a href="missing-data-mechanisms-and-simple-imputation.html#cb933-8"></a>imp<span class="fl">.2</span></span></code></pre></div>
 <pre><code># A tibble: 15 x 5
    subject treat diabetes sbp.before sbp.after
  *   &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;

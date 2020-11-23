@@ -836,9 +836,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tuberculosis-prevalence-among-iv-drug-users" class="section level2">
 <h2><span class="header-section-number">26.1</span> Tuberculosis Prevalence Among IV Drug Users</h2>
 <p>Consider a study to investigate factors affecting tuberculosis prevalence among intravenous drug users. The original data source is Graham NMH et al. (1992) Prevalence of Tuberculin Positivity and Skin Test Anergy in HIV-1-Seropositive and Seronegative Intravenous Drug Users. <em>JAMA</em>, 267, 369-373. Among 97 individuals who admit to sharing needles, 24 (24.7%) had a positive tuberculin skin test result; among 161 drug users who deny sharing needles, 28 (17.4%) had a positive test result. To start, we’ll test the null hypothesis that the proportions of intravenous drug users who have a positive tuberculin skin test result are identical for those who share needles and those who do not.</p>
-<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="power-and-proportions.html#cb871-1"></a><span class="kw">twobytwo</span>(<span class="dv">24</span>, <span class="dv">73</span>, <span class="dv">28</span>, <span class="dv">133</span>, </span>
-<span id="cb871-2"><a href="power-and-proportions.html#cb871-2"></a>         <span class="st">&quot;Sharing Needles&quot;</span>, <span class="st">&quot;Not Sharing&quot;</span>, </span>
-<span id="cb871-3"><a href="power-and-proportions.html#cb871-3"></a>         <span class="st">&quot;TB test+&quot;</span>, <span class="st">&quot;TB test-&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="power-and-proportions.html#cb872-1"></a><span class="kw">twobytwo</span>(<span class="dv">24</span>, <span class="dv">73</span>, <span class="dv">28</span>, <span class="dv">133</span>, </span>
+<span id="cb872-2"><a href="power-and-proportions.html#cb872-2"></a>         <span class="st">&quot;Sharing Needles&quot;</span>, <span class="st">&quot;Not Sharing&quot;</span>, </span>
+<span id="cb872-3"><a href="power-and-proportions.html#cb872-3"></a>         <span class="st">&quot;TB test+&quot;</span>, <span class="st">&quot;TB test-&quot;</span>)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
 ------------------------------------------------------ 
 Outcome   : TB test+ 
@@ -866,7 +866,7 @@ Conditional MLE Odds Ratio: 1.5588    0.8014   3.0191
 <div id="using-power.prop.test-for-balanced-designs" class="section level2">
 <h2><span class="header-section-number">26.3</span> Using <code>power.prop.test</code> for Balanced Designs</h2>
 <p>Our constraints are that we want to find the sample size for a two-sample comparison of proportions using a balanced design, we will use <span class="math inline">\(\alpha\)</span> = .05, and power = .90, and that we estimate that the non-sharers will have a .174 proportion of positive tests, and we will try to detect a difference between this group and the needle sharers, who we estimate will have a proportion of .247, using a two-sided hypothesis test.</p>
-<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="power-and-proportions.html#cb873-1"></a><span class="kw">power.prop.test</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2  =</span> <span class="fl">.247</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="power-and-proportions.html#cb874-1"></a><span class="kw">power.prop.test</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2  =</span> <span class="fl">.247</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">power =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>
      Two-sample comparison of proportions power calculation 
 
@@ -896,8 +896,8 @@ NOTE: n is number in *each* group</code></pre>
 <div id="a-revised-scenario" class="section level2">
 <h2><span class="header-section-number">26.5</span> A Revised Scenario</h2>
 <p>Suppose we can get exactly 800 subjects in total (400 sharing and 400 non-sharing). How much power would we have to detect a difference in the proportion of positive skin test results between the two groups that was identical to the data presented above or larger, using a one-sided test, with <span class="math inline">\(\alpha\)</span> = .10?</p>
-<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="power-and-proportions.html#cb875-1"></a><span class="kw">power.prop.test</span>(<span class="dt">n=</span><span class="dv">400</span>, <span class="dt">p1=</span>.<span class="dv">174</span>, <span class="dt">p2=</span>.<span class="dv">247</span>, <span class="dt">sig.level =</span> <span class="fl">0.10</span>,</span>
-<span id="cb875-2"><a href="power-and-proportions.html#cb875-2"></a>                <span class="dt">alternative=</span><span class="st">&quot;one.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="power-and-proportions.html#cb876-1"></a><span class="kw">power.prop.test</span>(<span class="dt">n=</span><span class="dv">400</span>, <span class="dt">p1=</span>.<span class="dv">174</span>, <span class="dt">p2=</span>.<span class="dv">247</span>, <span class="dt">sig.level =</span> <span class="fl">0.10</span>,</span>
+<span id="cb876-2"><a href="power-and-proportions.html#cb876-2"></a>                <span class="dt">alternative=</span><span class="st">&quot;one.sided&quot;</span>)</span></code></pre></div>
 <pre><code>
      Two-sample comparison of proportions power calculation 
 
@@ -926,16 +926,16 @@ NOTE: n is number in *each* group</code></pre>
 <h3><span class="header-section-number">26.6.1</span> Calculating the Effect Size <code>h</code></h3>
 <p>To calculate the effect size for a given set of proportions, just use <code>ES.h(p1, p2)</code> which is available in the <code>pwr</code> library.</p>
 <p>For instance, in our comparison, we have the following effect size.</p>
-<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="power-and-proportions.html#cb877-1"></a>pwr<span class="op">::</span><span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="power-and-proportions.html#cb878-1"></a>pwr<span class="op">::</span><span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>)</span></code></pre></div>
 <pre><code>[1] -0.1796783</code></pre>
 </div>
 </div>
 <div id="using-pwr.2p2n.test-in-r" class="section level2">
 <h2><span class="header-section-number">26.7</span> Using <code>pwr.2p2n.test</code> in R</h2>
 <p>Suppose we can have 700 samples in group 1 (the not sharing group) but only half that many in group 2 (the group of users who share needles). How much power would we have to detect this same difference (<span class="math inline">\(p_1\)</span> = .174, <span class="math inline">\(p_2\)</span> = .247) with a 5% significance level in a two-sided test?</p>
-<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="power-and-proportions.html#cb879-1"></a>pwr<span class="op">::</span><span class="kw">pwr.2p2n.test</span>(<span class="dt">h =</span> pwr<span class="op">::</span><span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>), </span>
-<span id="cb879-2"><a href="power-and-proportions.html#cb879-2"></a>              <span class="dt">n1 =</span> <span class="dv">700</span>, <span class="dt">n2 =</span> <span class="dv">350</span>,</span>
-<span id="cb879-3"><a href="power-and-proportions.html#cb879-3"></a>              <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="power-and-proportions.html#cb880-1"></a>pwr<span class="op">::</span><span class="kw">pwr.2p2n.test</span>(<span class="dt">h =</span> pwr<span class="op">::</span><span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>), </span>
+<span id="cb880-2"><a href="power-and-proportions.html#cb880-2"></a>              <span class="dt">n1 =</span> <span class="dv">700</span>, <span class="dt">n2 =</span> <span class="dv">350</span>,</span>
+<span id="cb880-3"><a href="power-and-proportions.html#cb880-3"></a>              <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>
      difference of proportion power calculation for binomial distribution (arcsine transformation) 
 
@@ -954,8 +954,8 @@ NOTE: different sample sizes</code></pre>
 <div id="comparison-to-balanced-design" class="section level3">
 <h3><span class="header-section-number">26.7.1</span> Comparison to Balanced Design</h3>
 <p>How does this compare to the results with a balanced design using only 1000 drug users in total, so that we have 500 patients in each group?</p>
-<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="power-and-proportions.html#cb882-1"></a>pwr<span class="op">::</span><span class="kw">pwr.2p2n.test</span>(<span class="dt">h =</span> pwr<span class="op">::</span><span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>), </span>
-<span id="cb882-2"><a href="power-and-proportions.html#cb882-2"></a>                   <span class="dt">n1 =</span> <span class="dv">500</span>, <span class="dt">n2 =</span> <span class="dv">500</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="power-and-proportions.html#cb883-1"></a>pwr<span class="op">::</span><span class="kw">pwr.2p2n.test</span>(<span class="dt">h =</span> pwr<span class="op">::</span><span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>), </span>
+<span id="cb883-2"><a href="power-and-proportions.html#cb883-2"></a>                   <span class="dt">n1 =</span> <span class="dv">500</span>, <span class="dt">n2 =</span> <span class="dv">500</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>
      difference of proportion power calculation for binomial distribution (arcsine transformation) 
 
@@ -968,8 +968,8 @@ NOTE: different sample sizes</code></pre>
 
 NOTE: different sample sizes</code></pre>
 <p>or we could instead have used…</p>
-<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="power-and-proportions.html#cb884-1"></a><span class="kw">power.prop.test</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>, </span>
-<span id="cb884-2"><a href="power-and-proportions.html#cb884-2"></a>                <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">n =</span> <span class="dv">500</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="power-and-proportions.html#cb885-1"></a><span class="kw">power.prop.test</span>(<span class="dt">p1 =</span> <span class="fl">.174</span>, <span class="dt">p2 =</span> <span class="fl">.247</span>, </span>
+<span id="cb885-2"><a href="power-and-proportions.html#cb885-2"></a>                <span class="dt">sig.level =</span> <span class="fl">0.05</span>, <span class="dt">n =</span> <span class="dv">500</span>)</span></code></pre></div>
 <pre><code>
      Two-sample comparison of proportions power calculation 
 

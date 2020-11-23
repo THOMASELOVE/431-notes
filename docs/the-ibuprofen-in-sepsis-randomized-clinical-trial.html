@@ -839,7 +839,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>In this study, patients meeting specific criteria (including elevated temperature) for a diagnosis of sepsis were recruited if they fulfilled an additional set of study criteria in the intensive care unit at one of seven participating centers.</p>
 <p>The full trial involved 455 patients, of which our sample includes 300. 150 of our patients were randomly assigned to the Ibuprofen group and 150 to the Placebo group<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>. I picked the <code>sepsis</code> sample we will work with excluding patients with missing values for our outcome of interest, and then selected a random sample of 150 Ibuprofen and 150 Placebo patients from the rest of the group, and converted the temperatures and changes from Fahrenheit to Celsius. The data are gathered in the <code>sepsis</code> data file.</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb559-1"></a>sepsis &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/sepsis.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb560-1"></a>sepsis &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/sepsis.csv&quot;</span>)</span></code></pre></div>
 <p>For the moment, we focus on two variables:</p>
 <ul>
 <li><strong>treat</strong>, which specifies the treatment group (intravenous Ibuprofen or intravenous Placebo), which was assigned via randomization to each patient, and</li>
@@ -853,11 +853,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>temp_0</em> = baseline temperature, degrees Celsius.</li>
 </ul>
 <p>but for the moment, we won’t worry about those.</p>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb560-1"></a>sepsis &lt;-<span class="st"> </span>sepsis <span class="op">%&gt;%</span></span>
-<span id="cb560-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb560-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">treat =</span> <span class="kw">factor</span>(treat),</span>
-<span id="cb560-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb560-3"></a>           <span class="dt">race =</span> <span class="kw">factor</span>(race))</span>
-<span id="cb560-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb560-4"></a></span>
-<span id="cb560-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb560-5"></a><span class="kw">summary</span>(sepsis)</span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb561-1"></a>sepsis &lt;-<span class="st"> </span>sepsis <span class="op">%&gt;%</span></span>
+<span id="cb561-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb561-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">treat =</span> <span class="kw">factor</span>(treat),</span>
+<span id="cb561-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb561-3"></a>           <span class="dt">race =</span> <span class="kw">factor</span>(race))</span>
+<span id="cb561-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb561-4"></a></span>
+<span id="cb561-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb561-5"></a><span class="kw">summary</span>(sepsis)</span></code></pre></div>
 <pre><code>      id                  treat           race         apache    
  Length:300         Ibuprofen:150   AfricanA: 80   Min.   : 0.0  
  Class :character   Placebo  :150   Other   : 23   1st Qu.:10.0  
@@ -926,45 +926,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="exploratory-data-analysis" class="section level2">
 <h2><span class="header-section-number">18.3</span> Exploratory Data Analysis</h2>
 <p>Consider the following boxplot with violin of the <code>temp_drop</code> data within each <code>treat</code> group.</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> treat, <span class="dt">y =</span> temp_drop, <span class="dt">fill =</span> treat)) <span class="op">+</span></span>
-<span id="cb562-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-2"></a><span class="st">    </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
-<span id="cb562-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-3"></a><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
-<span id="cb562-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-4"></a><span class="st">    </span><span class="kw">scale_fill_viridis_d</span>() <span class="op">+</span></span>
-<span id="cb562-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-5"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb562-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Boxplot of Temperature Drop in Sepsis Patients&quot;</span>,</span>
-<span id="cb562-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-7"></a>         <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Drop in Temperature (degrees C)&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb562-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-8"></a><span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb562-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb562-9"></a><span class="st">    </span><span class="kw">theme_bw</span>()</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> treat, <span class="dt">y =</span> temp_drop, <span class="dt">fill =</span> treat)) <span class="op">+</span></span>
+<span id="cb563-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-2"></a><span class="st">    </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
+<span id="cb563-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-3"></a><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
+<span id="cb563-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-4"></a><span class="st">    </span><span class="kw">scale_fill_viridis_d</span>() <span class="op">+</span></span>
+<span id="cb563-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-5"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb563-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Boxplot of Temperature Drop in Sepsis Patients&quot;</span>,</span>
+<span id="cb563-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-7"></a>         <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Drop in Temperature (degrees C)&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb563-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-8"></a><span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb563-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-9"></a><span class="st">    </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
 <p>Next, we’ll consider faceted histograms of the data.</p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> temp_drop, <span class="dt">fill =</span> treat, <span class="dt">color =</span> treat)) <span class="op">+</span></span>
-<span id="cb563-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-2"></a><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span></span>
-<span id="cb563-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-3"></a><span class="st">    </span><span class="kw">scale_fill_viridis_d</span>() <span class="op">+</span></span>
-<span id="cb563-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-4"></a><span class="st">    </span><span class="kw">scale_color_viridis_d</span>(<span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></span>
-<span id="cb563-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-5"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb563-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histograms of Temperature Drop in Sepsis Patients&quot;</span>,</span>
-<span id="cb563-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-7"></a>         <span class="dt">x =</span> <span class="st">&quot;Drop in Temperature (degrees Celsius&quot;</span>) <span class="op">+</span></span>
-<span id="cb563-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-8"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
-<span id="cb563-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb563-9"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>treat)</span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> temp_drop, <span class="dt">fill =</span> treat, <span class="dt">color =</span> treat)) <span class="op">+</span></span>
+<span id="cb564-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-2"></a><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span></span>
+<span id="cb564-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-3"></a><span class="st">    </span><span class="kw">scale_fill_viridis_d</span>() <span class="op">+</span></span>
+<span id="cb564-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-4"></a><span class="st">    </span><span class="kw">scale_color_viridis_d</span>(<span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></span>
+<span id="cb564-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-5"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb564-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histograms of Temperature Drop in Sepsis Patients&quot;</span>,</span>
+<span id="cb564-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-7"></a>         <span class="dt">x =</span> <span class="st">&quot;Drop in Temperature (degrees Celsius&quot;</span>) <span class="op">+</span></span>
+<span id="cb564-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-8"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb564-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-9"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>treat)</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/sepsis_temp_drop_by_treat_histograms-1.png" width="672" /></p>
 <p>Here’s a pair of Normal Q-Q plots. It’s not hard to use a Normal model to approximate the Ibuprofen data, but such a model is probably not a good choice for the Placebo results.</p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">sample =</span> temp_drop)) <span class="op">+</span></span>
-<span id="cb564-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-2"></a><span class="st">    </span><span class="kw">geom_qq</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_qq_line</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
-<span id="cb564-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-3"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
-<span id="cb564-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-4"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>treat) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb564-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb564-5"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Temperature Drop Values (in degrees C)&quot;</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">sample =</span> temp_drop)) <span class="op">+</span></span>
+<span id="cb565-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-2"></a><span class="st">    </span><span class="kw">geom_qq</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_qq_line</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb565-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-3"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb565-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-4"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>treat) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb565-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-5"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Temperature Drop Values (in degrees C)&quot;</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
 <p>We’ll could perhaps also look at a ridgeline plot.</p>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> temp_drop, <span class="dt">y =</span> treat, <span class="dt">fill =</span> treat)) <span class="op">+</span></span>
-<span id="cb565-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-2"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
-<span id="cb565-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-3"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb565-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-4"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Temperature Drop in Sepsis Patients&quot;</span>,</span>
-<span id="cb565-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-5"></a>         <span class="dt">x =</span> <span class="st">&quot;Drop in Temperature (degrees Celsius)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span></span>
-<span id="cb565-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb565-6"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">theme_ridges</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb566-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> temp_drop, <span class="dt">y =</span> treat, <span class="dt">fill =</span> treat)) <span class="op">+</span></span>
+<span id="cb566-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb566-2"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="fl">0.9</span>) <span class="op">+</span></span>
+<span id="cb566-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb566-3"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb566-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb566-4"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Temperature Drop in Sepsis Patients&quot;</span>,</span>
+<span id="cb566-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb566-5"></a>         <span class="dt">x =</span> <span class="st">&quot;Drop in Temperature (degrees Celsius)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span></span>
+<span id="cb566-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb566-6"></a><span class="st">    </span>ggridges<span class="op">::</span><span class="kw">theme_ridges</span>()</span></code></pre></div>
 <pre><code>Picking joint bandwidth of 0.182</code></pre>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
 <p>The center of the ibuprofen distribution is shifted a bit towards the more positive (greater improvement) direction, it seems, than is the distribution for the placebo patients. This conclusion matches what we see in some key numerical summaries, within the treatment groups.</p>
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb567-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb568-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span></code></pre></div>
 <pre><code>      treat  min     Q1 median  Q3 max      mean        sd   n missing
 1 Ibuprofen -1.5  0.000    0.5 0.9 3.1 0.4640000 0.6877919 150       0
 2   Placebo -2.7 -0.175    0.1 0.4 1.9 0.1526667 0.5709637 150       0</code></pre>
@@ -972,10 +972,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="estimating-the-difference-in-population-means" class="section level2">
 <h2><span class="header-section-number">18.4</span> Estimating the Difference in Population Means</h2>
 <p>Next, we will build a point estimate and 90% confidence interval for the difference between the mean <code>temp_drop</code> if treated with Ibuprofen and the mean <code>temp_drop</code> if treated with Placebo. We’ll use a regression model with a single predictor (the <code>treat</code> group) to do this.</p>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb569-1"></a>model_sep &lt;-<span class="st"> </span><span class="kw">lm</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat <span class="op">==</span><span class="st"> &quot;Ibuprofen&quot;</span>, <span class="dt">data =</span> sepsis)</span>
-<span id="cb569-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb569-2"></a></span>
-<span id="cb569-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb569-3"></a><span class="kw">tidy</span>(model_sep, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></span>
-<span id="cb569-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb569-4"></a><span class="st">    </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-1"></a>model_sep &lt;-<span class="st"> </span><span class="kw">lm</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat <span class="op">==</span><span class="st"> &quot;Ibuprofen&quot;</span>, <span class="dt">data =</span> sepsis)</span>
+<span id="cb570-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-2"></a></span>
+<span id="cb570-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-3"></a><span class="kw">tidy</span>(model_sep, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></span>
+<span id="cb570-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-4"></a><span class="st">    </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1011,10 +1011,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>The point estimate for the “Ibuprofen - Placebo” difference in population means is 0.311 degrees C, and the 90% confidence interval is (0.191, 0.432) degrees C.</p>
 <p>We could also have run the model like this:</p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-1"></a>model_sep2 &lt;-<span class="st"> </span><span class="kw">lm</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span>
-<span id="cb570-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-2"></a></span>
-<span id="cb570-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-3"></a><span class="kw">tidy</span>(model_sep2, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></span>
-<span id="cb570-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb570-4"></a><span class="st">    </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-1"></a>model_sep2 &lt;-<span class="st"> </span><span class="kw">lm</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span>
+<span id="cb571-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-2"></a></span>
+<span id="cb571-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-3"></a><span class="kw">tidy</span>(model_sep2, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></span>
+<span id="cb571-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-4"></a><span class="st">    </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1056,10 +1056,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="the-pooled-t-procedure" class="section level3">
 <h3><span class="header-section-number">18.5.1</span> The Pooled t procedure</h3>
 <p>The most commonly used t-procedure for building a confidence interval assumes not only that each of the two populations being compared follows a Normal distribution, but also that they have the same population variance. This is the pooled t-test, and it is what people usually mean when they describe a two-sample t test.</p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-1"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
-<span id="cb571-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
-<span id="cb571-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb571-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb571-4"></a>                  <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb572-1"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
+<span id="cb572-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb572-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
+<span id="cb572-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb572-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb572-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb572-4"></a>                  <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>
 	Two Sample t-test
 
@@ -1072,11 +1072,11 @@ sample estimates:
 mean in group Ibuprofen   mean in group Placebo 
               0.4640000               0.1526667 </code></pre>
 <p>Or, we can use <code>tidy</code> on this object:</p>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb573-1"></a>tt1 &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
-<span id="cb573-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb573-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
-<span id="cb573-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb573-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb573-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb573-4"></a>                  <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb573-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb573-5"></a><span class="kw">tidy</span>(tt1)</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb574-1"></a>tt1 &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
+<span id="cb574-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb574-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
+<span id="cb574-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb574-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb574-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb574-4"></a>                  <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb574-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb574-5"></a><span class="kw">tidy</span>(tt1)</span></code></pre></div>
 <pre><code># A tibble: 1 x 10
   estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -1086,9 +1086,9 @@ mean in group Ibuprofen   mean in group Placebo
 <div id="using-linear-regression-to-obtain-a-pooled-t-confidence-interval" class="section level3">
 <h3><span class="header-section-number">18.5.2</span> Using linear regression to obtain a pooled t confidence interval</h3>
 <p>As we’ve seen, and will demonstrate again below, a linear regression model, using the same outcome and predictor (group) as the pooled t procedure, produces the same confidence interval, again, under the assumption that the two populations we are comparing follow a Normal distribution with the same (population) variance.</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb575-1"></a>model1 &lt;-<span class="st"> </span><span class="kw">lm</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span>
-<span id="cb575-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb575-2"></a></span>
-<span id="cb575-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb575-3"></a><span class="kw">tidy</span>(model1, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb576-1"></a>model1 &lt;-<span class="st"> </span><span class="kw">lm</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span>
+<span id="cb576-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb576-2"></a></span>
+<span id="cb576-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb576-3"></a><span class="kw">tidy</span>(model1, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code># A tibble: 2 x 7
   term         estimate std.error statistic  p.value conf.low conf.high
   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -1096,7 +1096,7 @@ mean in group Ibuprofen   mean in group Placebo
 2 treatPlacebo   -0.311    0.0730     -4.27 2.68e- 5   -0.432    -0.191</code></pre>
 <p>We see that our point estimate from the linear regression model is that the difference in <code>temp_drop</code> is -0.3113333, where Ibuprofen subjects have higher <code>temp_drop</code> values than do Placebo subjects, and that the 90% confidence interval for this difference ranges from -0.43176 to -0.1909066.</p>
 <p>We can obtain a t-based confidence interval for each of the parameter estimates in a linear model directly using <code>tidy</code> from the <code>broom</code> package. Linear models usually summarize only the estimate and standard error. Remember that a reasonable approximation in large samples to a 95% confidence interval for a regression estimate (slope or intercept) can be obtained from estimate plus or minus two times the standard error.</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb577-1"></a><span class="kw">tidy</span>(model1, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb578-1"></a><span class="kw">tidy</span>(model1, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1132,7 +1132,7 @@ mean in group Ibuprofen   mean in group Placebo
 </table>
 <p>So, in the case of the <code>treatPlacebo</code> estimate, we can obtain an approximate 95% confidence interval with (-0.457, -0.165). Compare this to the 95% confidence interval available from the model directly, shown in the tidied output above, or with the <code>confint</code> command below, and you’ll see only a small difference.</p>
 <p>Note that we can also use <code>summary</code> and <code>confint</code> to build our estimates.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb578-1"></a><span class="kw">summary</span>(model1)</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb579-1"></a><span class="kw">summary</span>(model1)</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = temp_drop ~ treat, data = sepsis)
@@ -1151,7 +1151,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 0.6321 on 298 degrees of freedom
 Multiple R-squared:  0.05755,	Adjusted R-squared:  0.05438 
 F-statistic:  18.2 on 1 and 298 DF,  p-value: 2.68e-05</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb580-1"></a><span class="kw">confint</span>(model1, <span class="dt">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb581-1"></a><span class="kw">confint</span>(model1, <span class="dt">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>                  2.5 %     97.5 %
 (Intercept)   0.3624351  0.5655649
 treatPlacebo -0.4549679 -0.1676988</code></pre>
@@ -1159,9 +1159,9 @@ treatPlacebo -0.4549679 -0.1676988</code></pre>
 <div id="the-welch-t-procedure" class="section level3">
 <h3><span class="header-section-number">18.5.3</span> The Welch t procedure</h3>
 <p>The default confidence interval based on the t test for independent samples in R uses something called the Welch test, in which the two populations being compared are not assumed to have the same variance. Each population is assumed to follow a Normal distribution.</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb582-1"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
-<span id="cb582-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb582-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
-<span id="cb582-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb582-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb583-1"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
+<span id="cb583-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb583-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb583-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb583-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 <pre><code>
 	Welch Two Sample t-test
 
@@ -1174,11 +1174,11 @@ sample estimates:
 mean in group Ibuprofen   mean in group Placebo 
               0.4640000               0.1526667 </code></pre>
 <p>Tidying works in this situation, too.</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb584-1"></a>tt0 &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
-<span id="cb584-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb584-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
-<span id="cb584-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb584-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>)</span>
-<span id="cb584-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb584-4"></a></span>
-<span id="cb584-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb584-5"></a><span class="kw">tidy</span>(tt0)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb585-1"></a>tt0 &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
+<span id="cb585-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb585-2"></a>                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb585-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb585-3"></a>                  <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>)</span>
+<span id="cb585-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb585-4"></a></span>
+<span id="cb585-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb585-5"></a><span class="kw">tidy</span>(tt0)</span></code></pre></div>
 <pre><code># A tibble: 1 x 10
   estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -1190,11 +1190,11 @@ mean in group Ibuprofen   mean in group Placebo
 <div id="wilcoxon-mann-whitney-rank-sum-ci" class="section level2">
 <h2><span class="header-section-number">18.6</span> Wilcoxon-Mann-Whitney “Rank Sum” CI</h2>
 <p>As in the one-sample case, a rank-based alternative attributed to Wilcoxon (and sometimes to Mann and Whitney) provides a two-sample comparison of the pseudomedians in the two <code>treat</code> groups in terms of <code>temp_drop</code>. This is called a <strong>rank sum</strong> test, rather than the Wilcoxon <strong>signed rank</strong> test that is used for inference about a single sample. Here’s the resulting 90% confidence interval for the difference in pseudomedians.</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb586-1"></a>wt &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">wilcox.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
-<span id="cb586-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb586-2"></a>                       <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
-<span id="cb586-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb586-3"></a>                       <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>) </span>
-<span id="cb586-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb586-4"></a></span>
-<span id="cb586-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb586-5"></a>wt</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb587-1"></a>wt &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">wilcox.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
+<span id="cb587-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb587-2"></a>                       <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
+<span id="cb587-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb587-3"></a>                       <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>) </span>
+<span id="cb587-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb587-4"></a></span>
+<span id="cb587-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb587-5"></a>wt</span></code></pre></div>
 <pre><code>
 	Wilcoxon rank sum test with continuity correction
 
@@ -1206,7 +1206,7 @@ alternative hypothesis: true location shift is not equal to 0
 sample estimates:
 difference in location 
              0.3000368 </code></pre>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb588-1"></a><span class="kw">tidy</span>(wt)</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb589-1"></a><span class="kw">tidy</span>(wt)</span></code></pre></div>
 <pre><code># A tibble: 1 x 7
   estimate statistic  p.value conf.low conf.high method              alternative
      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;      
@@ -1215,29 +1215,29 @@ difference in location
 <div id="bootstrapping-a-more-robust-approach" class="section level2">
 <h2><span class="header-section-number">18.7</span> Bootstrapping: A More Robust Approach</h2>
 <p>Within a script called <code>Love-boost.R</code>, I have provided the following R code to create a function called <code>bootdif</code>.</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-1"></a>bootdif &lt;-</span>
-<span id="cb590-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-2"></a><span class="st">  </span><span class="cf">function</span>(y, g, <span class="dt">conf.level=</span><span class="fl">0.95</span>, <span class="dt">B.reps =</span> <span class="dv">2000</span>) {</span>
-<span id="cb590-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-3"></a>    lowq =<span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>conf.level)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb590-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-4"></a>    g &lt;-<span class="st"> </span><span class="kw">as.factor</span>(g)</span>
-<span id="cb590-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-5"></a>    a &lt;-<span class="st"> </span><span class="kw">attr</span>(Hmisc<span class="op">::</span><span class="kw">smean.cl.boot</span>(y[g<span class="op">==</span><span class="kw">levels</span>(g)[<span class="dv">1</span>]], <span class="dt">B=</span>B.reps, <span class="dt">reps=</span><span class="ot">TRUE</span>),<span class="st">&#39;reps&#39;</span>)</span>
-<span id="cb590-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-6"></a>    b &lt;-<span class="st"> </span><span class="kw">attr</span>(Hmisc<span class="op">::</span><span class="kw">smean.cl.boot</span>(y[g<span class="op">==</span><span class="kw">levels</span>(g)[<span class="dv">2</span>]], <span class="dt">B=</span>B.reps, <span class="dt">reps=</span><span class="ot">TRUE</span>),<span class="st">&#39;reps&#39;</span>)</span>
-<span id="cb590-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-7"></a>    meandif &lt;-<span class="st"> </span><span class="kw">diff</span>(<span class="kw">tapply</span>(y, g, mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</span>
-<span id="cb590-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-8"></a>    a.b &lt;-<span class="st"> </span><span class="kw">quantile</span>(b<span class="op">-</span>a, <span class="kw">c</span>(lowq,<span class="dv">1</span><span class="op">-</span>lowq))</span>
-<span id="cb590-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-9"></a>    res &lt;-<span class="st"> </span><span class="kw">c</span>(meandif, a.b)</span>
-<span id="cb590-10"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-10"></a>    <span class="kw">names</span>(res) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Mean Difference&#39;</span>,lowq, <span class="dv">1</span><span class="op">-</span>lowq)</span>
-<span id="cb590-11"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-11"></a>    res</span>
-<span id="cb590-12"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb590-12"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-1"></a>bootdif &lt;-</span>
+<span id="cb591-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-2"></a><span class="st">  </span><span class="cf">function</span>(y, g, <span class="dt">conf.level=</span><span class="fl">0.95</span>, <span class="dt">B.reps =</span> <span class="dv">2000</span>) {</span>
+<span id="cb591-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-3"></a>    lowq =<span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>conf.level)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb591-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-4"></a>    g &lt;-<span class="st"> </span><span class="kw">as.factor</span>(g)</span>
+<span id="cb591-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-5"></a>    a &lt;-<span class="st"> </span><span class="kw">attr</span>(Hmisc<span class="op">::</span><span class="kw">smean.cl.boot</span>(y[g<span class="op">==</span><span class="kw">levels</span>(g)[<span class="dv">1</span>]], <span class="dt">B=</span>B.reps, <span class="dt">reps=</span><span class="ot">TRUE</span>),<span class="st">&#39;reps&#39;</span>)</span>
+<span id="cb591-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-6"></a>    b &lt;-<span class="st"> </span><span class="kw">attr</span>(Hmisc<span class="op">::</span><span class="kw">smean.cl.boot</span>(y[g<span class="op">==</span><span class="kw">levels</span>(g)[<span class="dv">2</span>]], <span class="dt">B=</span>B.reps, <span class="dt">reps=</span><span class="ot">TRUE</span>),<span class="st">&#39;reps&#39;</span>)</span>
+<span id="cb591-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-7"></a>    meandif &lt;-<span class="st"> </span><span class="kw">diff</span>(<span class="kw">tapply</span>(y, g, mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</span>
+<span id="cb591-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-8"></a>    a.b &lt;-<span class="st"> </span><span class="kw">quantile</span>(b<span class="op">-</span>a, <span class="kw">c</span>(lowq,<span class="dv">1</span><span class="op">-</span>lowq))</span>
+<span id="cb591-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-9"></a>    res &lt;-<span class="st"> </span><span class="kw">c</span>(meandif, a.b)</span>
+<span id="cb591-10"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-10"></a>    <span class="kw">names</span>(res) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Mean Difference&#39;</span>,lowq, <span class="dv">1</span><span class="op">-</span>lowq)</span>
+<span id="cb591-11"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-11"></a>    res</span>
+<span id="cb591-12"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-12"></a>  }</span></code></pre></div>
 <p>Running this code will place a new function called <code>bootdif</code> in your environment, which will help us calculate an appropriate confidence interval using a bootstrap procedure. The <code>bootdif</code> function contained in the <code>Love-boost.R</code> script is a slightly edited version of the function at <a href="http://biostat.mc.vanderbilt.edu/wiki/Main/BootstrapMeansSoftware" class="uri">http://biostat.mc.vanderbilt.edu/wiki/Main/BootstrapMeansSoftware</a>.</p>
 <div id="bootstrap-ci-for-the-sepsis-study" class="section level3">
 <h3><span class="header-section-number">18.7.1</span> Bootstrap CI for the Sepsis study</h3>
 <p>Note that this approach uses a comma to separate the outcome variable (here, <code>temp_drop</code>) from the variable identifying the exposure groups (here, <code>treat</code>).</p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-1"></a><span class="kw">set.seed</span>(<span class="dv">431212</span>)</span>
-<span id="cb591-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-2"></a></span>
-<span id="cb591-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb591-3"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">bootdif</span>(temp_drop, treat, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb592-1"></a><span class="kw">set.seed</span>(<span class="dv">431212</span>)</span>
+<span id="cb592-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb592-2"></a></span>
+<span id="cb592-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb592-3"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">bootdif</span>(temp_drop, treat, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>Mean Difference            0.05            0.95 
      -0.3113333      -0.4313667      -0.1833000 </code></pre>
 <p>This approach calculates a 90% confidence interval for the difference in means between the two treatment groups. Note that the sign is in the opposite direction from what we’ve seen in our previous work. We can tell from the mean difference (and the summarized means from the data in each group) that this approach is finding a confidence interval using a bootstrap procedure for the Placebo - Ibuprofen difference, specifically (-0.431, -0.183).</p>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb593-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb594-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span></code></pre></div>
 <pre><code>      treat  min     Q1 median  Q3 max      mean        sd   n missing
 1 Ibuprofen -1.5  0.000    0.5 0.9 3.1 0.4640000 0.6877919 150       0
 2   Placebo -2.7 -0.175    0.1 0.4 1.9 0.1526667 0.5709637 150       0</code></pre>
@@ -1271,67 +1271,67 @@ difference in location
 </ol>
 <p>Questions 7 and 8 don’t apply, because these are independent samples of data, rather than paired samples.</p>
 <p>To address question 9, we’ll need to look at the data in each sample, as we did previously to allow us to assess the Normality of the distributions of (separately) the <code>temp_drop</code> results in the Ibuprofen and Placebo groups. We’ll repeat those below.</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> treat, <span class="dt">y =</span> temp_drop, <span class="dt">fill =</span> treat)) <span class="op">+</span></span>
-<span id="cb595-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-2"></a><span class="st">    </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
-<span id="cb595-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-3"></a><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
-<span id="cb595-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-4"></a><span class="st">    </span><span class="kw">scale_fill_viridis_d</span>() <span class="op">+</span></span>
-<span id="cb595-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-5"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb595-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Boxplot of Temperature Drop in Sepsis Patients&quot;</span>,</span>
-<span id="cb595-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-7"></a>         <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Drop in Temperature (degrees C)&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb595-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-8"></a><span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb595-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb595-9"></a><span class="st">    </span><span class="kw">theme_bw</span>()</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">sample =</span> temp_drop)) <span class="op">+</span></span>
-<span id="cb596-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-2"></a><span class="st">    </span><span class="kw">geom_qq</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_qq_line</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
-<span id="cb596-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-3"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
-<span id="cb596-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-4"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>treat) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb596-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-5"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Temperature Drop Values (in degrees C)&quot;</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">x =</span> treat, <span class="dt">y =</span> temp_drop, <span class="dt">fill =</span> treat)) <span class="op">+</span></span>
+<span id="cb596-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-2"></a><span class="st">    </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
+<span id="cb596-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-3"></a><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">width =</span> <span class="fl">0.3</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
+<span id="cb596-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-4"></a><span class="st">    </span><span class="kw">scale_fill_viridis_d</span>() <span class="op">+</span></span>
+<span id="cb596-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-5"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb596-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-6"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Boxplot of Temperature Drop in Sepsis Patients&quot;</span>,</span>
+<span id="cb596-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-7"></a>         <span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Drop in Temperature (degrees C)&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb596-8"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-8"></a><span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb596-9"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb596-9"></a><span class="st">    </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-205-1.png" width="672" /></p>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb597-1"></a><span class="kw">ggplot</span>(sepsis, <span class="kw">aes</span>(<span class="dt">sample =</span> temp_drop)) <span class="op">+</span></span>
+<span id="cb597-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb597-2"></a><span class="st">    </span><span class="kw">geom_qq</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_qq_line</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb597-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb597-3"></a><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb597-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb597-4"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>treat) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb597-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb597-5"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;Temperature Drop Values (in degrees C)&quot;</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-206-1.png" width="672" /></p>
 <p>From these plots we conclude that the data in the Ibuprofen sample follow a reasonably Normal distribution, but this isn’t quite as true for the Placebo sample. It’s hard to know whether the apparent Placebo group outliers will affect whether the Normal distribution assumption is reasonable, so we can see if the confidence intervals change much when we <em>don’t</em> assume Normality (for instance, comparing the bootstrap to the t-based approaches), as a way of understanding whether a Normal model has a large impact on our conclusions.</p>
 <div id="sepsis-estimation-results" class="section level3">
 <h3><span class="header-section-number">18.9.1</span> Sepsis Estimation Results</h3>
 <p>Here’s a set of confidence interval estimates (we’ll use 90% confidence here) using the methods discussed in this Chapter.</p>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb597-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb598-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> sepsis)</span></code></pre></div>
 <pre><code>      treat  min     Q1 median  Q3 max      mean        sd   n missing
 1 Ibuprofen -1.5  0.000    0.5 0.9 3.1 0.4640000 0.6877919 150       0
 2   Placebo -2.7 -0.175    0.1 0.4 1.9 0.1526667 0.5709637 150       0</code></pre>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb599-1"></a>s_pooled_t_test &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, </span>
-<span id="cb599-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb599-2"></a>                           <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
-<span id="cb599-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb599-3"></a>                           <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>, </span>
-<span id="cb599-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb599-4"></a>                           <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb599-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb599-5"></a></span>
-<span id="cb599-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb599-6"></a><span class="kw">tidy</span>(s_pooled_t_test) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb599-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb599-7"></a><span class="st">    </span><span class="kw">select</span>(conf.low, conf.high)</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb600-1"></a>s_pooled_t_test &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, </span>
+<span id="cb600-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb600-2"></a>                           <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
+<span id="cb600-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb600-3"></a>                           <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>, </span>
+<span id="cb600-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb600-4"></a>                           <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb600-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb600-5"></a></span>
+<span id="cb600-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb600-6"></a><span class="kw">tidy</span>(s_pooled_t_test) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb600-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb600-7"></a><span class="st">    </span><span class="kw">select</span>(conf.low, conf.high)</span></code></pre></div>
 <pre><code># A tibble: 1 x 2
   conf.low conf.high
      &lt;dbl&gt;     &lt;dbl&gt;
 1    0.191     0.432</code></pre>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb601-1"></a>s_welch_t_test &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, </span>
-<span id="cb601-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb601-2"></a>                           <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
-<span id="cb601-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb601-3"></a>                           <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>, </span>
-<span id="cb601-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb601-4"></a>                           <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb601-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb601-5"></a></span>
-<span id="cb601-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb601-6"></a><span class="kw">tidy</span>(s_welch_t_test) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb601-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb601-7"></a><span class="st">    </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb602-1"></a>s_welch_t_test &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">t.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat, </span>
+<span id="cb602-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb602-2"></a>                           <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
+<span id="cb602-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb602-3"></a>                           <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>, </span>
+<span id="cb602-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb602-4"></a>                           <span class="dt">var.equal =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb602-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb602-5"></a></span>
+<span id="cb602-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb602-6"></a><span class="kw">tidy</span>(s_welch_t_test) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb602-7"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb602-7"></a><span class="st">    </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span></code></pre></div>
 <pre><code># A tibble: 1 x 3
   estimate conf.low conf.high
      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 1    0.311    0.191     0.432</code></pre>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb603-1"></a>s_wilcoxon_test &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">wilcox.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
-<span id="cb603-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb603-2"></a>                       <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
-<span id="cb603-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb603-3"></a>                       <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>) </span>
-<span id="cb603-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb603-4"></a></span>
-<span id="cb603-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb603-5"></a><span class="kw">tidy</span>(s_wilcoxon_test) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb603-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb603-6"></a><span class="st">    </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb604-1"></a>s_wilcoxon_test &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">wilcox.test</span>(temp_drop <span class="op">~</span><span class="st"> </span>treat,</span>
+<span id="cb604-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb604-2"></a>                       <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
+<span id="cb604-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb604-3"></a>                       <span class="dt">alt =</span> <span class="st">&quot;two.sided&quot;</span>) </span>
+<span id="cb604-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb604-4"></a></span>
+<span id="cb604-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb604-5"></a><span class="kw">tidy</span>(s_wilcoxon_test) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb604-6"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb604-6"></a><span class="st">    </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span></code></pre></div>
 <pre><code># A tibble: 1 x 3
   estimate conf.low conf.high
      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 1    0.300    0.200     0.400</code></pre>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb605-1"></a><span class="kw">set.seed</span>(<span class="dv">431212</span>)</span>
-<span id="cb605-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb605-2"></a>s_bootstrap &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">bootdif</span>(temp_drop, treat, </span>
-<span id="cb605-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb605-3"></a>                                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span>
-<span id="cb605-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb605-4"></a></span>
-<span id="cb605-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb605-5"></a>s_bootstrap</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb606-1"></a><span class="kw">set.seed</span>(<span class="dv">431212</span>)</span>
+<span id="cb606-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb606-2"></a>s_bootstrap &lt;-<span class="st"> </span>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">bootdif</span>(temp_drop, treat, </span>
+<span id="cb606-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb606-3"></a>                                  <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb606-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb606-4"></a></span>
+<span id="cb606-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb606-5"></a>s_bootstrap</span></code></pre></div>
 <pre><code>Mean Difference            0.05            0.95 
      -0.3113333      -0.4313667      -0.1833000 </code></pre>
 <table>
@@ -1376,19 +1376,19 @@ difference in location
 <div id="categorizing-the-outcome-and-comparing-rates" class="section level2">
 <h2><span class="header-section-number">18.10</span> Categorizing the Outcome and Comparing Rates</h2>
 <p>Suppose we were interested in comparing the percentage of patients in each arm of the trial (Ibuprofen vs. Placebo) that showed an improvement in their temperature (<code>temp_drop</code> &gt; 0). To build the cross-tabulation of interest, we could create a new variable, called <code>dropped</code> which indicates whether the subject’s temperature dropped, and then use <code>tabyl</code>.</p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb607-1"></a>sepsis &lt;-<span class="st"> </span>sepsis <span class="op">%&gt;%</span></span>
-<span id="cb607-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb607-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">dropped =</span> <span class="kw">ifelse</span>(temp_drop <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Drop&quot;</span>, <span class="st">&quot;No Drop&quot;</span>))</span>
-<span id="cb607-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb607-3"></a></span>
-<span id="cb607-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb607-4"></a>sepsis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(treat, dropped)</span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb608-1"></a>sepsis &lt;-<span class="st"> </span>sepsis <span class="op">%&gt;%</span></span>
+<span id="cb608-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb608-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">dropped =</span> <span class="kw">ifelse</span>(temp_drop <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Drop&quot;</span>, <span class="st">&quot;No Drop&quot;</span>))</span>
+<span id="cb608-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb608-3"></a></span>
+<span id="cb608-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb608-4"></a>sepsis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(treat, dropped)</span></code></pre></div>
 <pre><code>     treat Drop No Drop
  Ibuprofen  107      43
    Placebo   80      70</code></pre>
 <p>Our primary interest is in comparing the percentage of Ibuprofen patients whose temperature dropped to the percentage of Placebo patients whose temperature dropped.</p>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb609-1"></a>sepsis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(treat, dropped) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb609-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb609-2"></a><span class="st">    </span><span class="kw">adorn_totals</span>() <span class="op">%&gt;%</span></span>
-<span id="cb609-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb609-3"></a><span class="st">    </span><span class="kw">adorn_percentages</span>(<span class="dt">denom =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb609-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb609-4"></a><span class="st">    </span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb609-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb609-5"></a><span class="st">    </span><span class="kw">adorn_ns</span>(<span class="dt">position =</span> <span class="st">&quot;front&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb610-1"></a>sepsis <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(treat, dropped) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb610-2"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb610-2"></a><span class="st">    </span><span class="kw">adorn_totals</span>() <span class="op">%&gt;%</span></span>
+<span id="cb610-3"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb610-3"></a><span class="st">    </span><span class="kw">adorn_percentages</span>(<span class="dt">denom =</span> <span class="st">&quot;row&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb610-4"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb610-4"></a><span class="st">    </span><span class="kw">adorn_pct_formatting</span>(<span class="dt">digits =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb610-5"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb610-5"></a><span class="st">    </span><span class="kw">adorn_ns</span>(<span class="dt">position =</span> <span class="st">&quot;front&quot;</span>)</span></code></pre></div>
 <pre><code>     treat        Drop     No Drop
  Ibuprofen 107 (71.3%)  43 (28.7%)
    Placebo  80 (53.3%)  70 (46.7%)
@@ -1398,7 +1398,7 @@ difference in location
 <h2><span class="header-section-number">18.11</span> Estimating the Difference in Proportions</h2>
 <p>In our sample, 71.3% of the Ibuprofen subjects, and 53.3% of the Placebo subjects, experienced a drop in temperature. So our <em>point estimate</em> of the difference in percentages would be 18.0 percentage points, but we will usually set this instead in terms of proportions, so that the difference is 0.180.</p>
 <p>Now, we’ll find a confidence interval for that difference, which we can do in several ways, including the <code>twoby2</code> function in the <code>Epi</code> package.</p>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb611-1"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">table</span>(treat, dropped) <span class="op">%&gt;%</span><span class="st"> </span>Epi<span class="op">::</span><span class="kw">twoby2</span>(<span class="dt">alpha =</span> <span class="fl">0.10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="the-ibuprofen-in-sepsis-randomized-clinical-trial.html#cb612-1"></a>sepsis <span class="op">%$%</span><span class="st"> </span><span class="kw">table</span>(treat, dropped) <span class="op">%&gt;%</span><span class="st"> </span>Epi<span class="op">::</span><span class="kw">twoby2</span>(<span class="dt">alpha =</span> <span class="fl">0.10</span>)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
 ------------------------------------------------------ 
 Outcome   : Drop 

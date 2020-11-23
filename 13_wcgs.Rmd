@@ -53,7 +53,7 @@ Name    | Stored As  | Type         | Details (units, levels, etc.)
 
 ### Quick Summary
 
-```{r summary_wcgs_simple}
+```{r}
 summary(wcgs)
 ```
 
@@ -103,7 +103,7 @@ ggplot(wcgs, aes(x = lnsbp)) +
 
 We can also look at Normal Q-Q plots, for instance...
 
-```{r wcgs_qqplotsforsbpandlnsbpfromggplot-fig}
+```{r}
 p1 <- ggplot(wcgs, aes(sample = sbp)) +
     geom_qq(color = "orchid") + 
     geom_qq_line(color = "red") +
@@ -153,7 +153,7 @@ Recall that the Empirical Rule suggests that if a variable follows a Normal dist
 
 The data are collected into four groups based on the subject's weight (in pounds).
 
-```{r wcgssbpbyweightbox-fig}
+```{r}
 ggplot(wcgs, aes(x = wghtcat, y = sbp)) +
     geom_violin() +
     geom_boxplot(aes(fill = wghtcat), width = 0.3, notch = TRUE) +
@@ -167,7 +167,7 @@ ggplot(wcgs, aes(x = wghtcat, y = sbp)) +
 
 Well, that's not so good. We really want those weight categories (the *levels*) to be ordered more sensibly. 
 
-```{r levels of wghtcat}
+```{r}
 wcgs %>% tabyl(wghtcat)
 ```
 
@@ -186,7 +186,7 @@ For more on the `forcats` package, check out @R4DS, especially the Section on Fa
 
 ### SBP by Weight Category
 
-```{r wcgssbpbyweightboxrevised-fig}
+```{r}
 ggplot(wcgs, aes(x = weight_f, y = sbp, fill = weight_f)) +
     geom_boxplot(notch = TRUE) +
     scale_fill_viridis_d() +
@@ -197,7 +197,7 @@ ggplot(wcgs, aes(x = weight_f, y = sbp, fill = weight_f)) +
 
 We might see some details well with a **ridgeline plot**, too.
 
-```{r wcgs_sbp_by_weight_f_ridgelineplot}
+```{r}
 wcgs %>%
     ggplot(aes(x = sbp, y = weight_f, fill = weight_f, height = ..density..)) +
     ggridges::geom_density_ridges(scale = 2) +
@@ -249,7 +249,7 @@ wcgs %>% tabyl(arcus)
 
 We have `r sum(is.na(wcgs$arcus))` missing values, so we probably want to do something about that before plotting the data, and we may also want to create a factor variable with more meaningful labels than 1 (which means yes, arcus senilis is present) and 0 (which means no, it isn't.)
 
-```{r wcgs_factor_create_arcus_f}
+```{r}
 wcgs <- wcgs %>%
     mutate(arcus_f = fct_recode(factor(arcus),
                                 "Arcus senilis" = "1",
@@ -352,7 +352,7 @@ And thus, the predictions for a 200 pound subject are:
 
 - `r round(coef(model.witharcus)[1],1)` + `r round(coef(model.witharcus)[2],2)` x 200 = `r round(coef(model.witharcus)[1] + coef(model.witharcus)[2]*200,1)` mm Hg with Arcus Senilis.
 
-```{r clean up after wcgs, echo = FALSE}
+```{r}
 rm(model.noarcus, model.witharcus)
 ```
 

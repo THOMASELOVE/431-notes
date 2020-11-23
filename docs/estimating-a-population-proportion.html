@@ -837,21 +837,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a-first-example-serum-zinc-in-the-normal-range" class="section level2">
 <h2><span class="header-section-number">23.1</span> A First Example: Serum Zinc in the “Normal” Range?</h2>
 <p>Recall that in the serum zinc study, we have 462 teenage male subjects, of whom 395 (or 85.5%) fell in the “normal range” of 66 to 110 micrograms per deciliter.</p>
-<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="estimating-a-population-proportion.html#cb780-1"></a>serzinc &lt;-<span class="st"> </span>serzinc <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb780-2"><a href="estimating-a-population-proportion.html#cb780-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">in_range =</span> <span class="kw">ifelse</span>(zinc <span class="op">&gt;=</span><span class="st"> </span><span class="dv">66</span> <span class="op">&amp;</span><span class="st"> </span>zinc <span class="op">&lt;=</span><span class="st"> </span><span class="dv">110</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb780-3"><a href="estimating-a-population-proportion.html#cb780-3"></a></span>
-<span id="cb780-4"><a href="estimating-a-population-proportion.html#cb780-4"></a>serzinc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(in_range) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb780-5"><a href="estimating-a-population-proportion.html#cb780-5"></a><span class="st">  </span><span class="kw">adorn_totals</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">adorn_pct_formatting</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="estimating-a-population-proportion.html#cb781-1"></a>serzinc &lt;-<span class="st"> </span>serzinc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb781-2"><a href="estimating-a-population-proportion.html#cb781-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">in_range =</span> <span class="kw">ifelse</span>(zinc <span class="op">&gt;=</span><span class="st"> </span><span class="dv">66</span> <span class="op">&amp;</span><span class="st"> </span>zinc <span class="op">&lt;=</span><span class="st"> </span><span class="dv">110</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb781-3"><a href="estimating-a-population-proportion.html#cb781-3"></a></span>
+<span id="cb781-4"><a href="estimating-a-population-proportion.html#cb781-4"></a>serzinc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(in_range) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb781-5"><a href="estimating-a-population-proportion.html#cb781-5"></a><span class="st">  </span><span class="kw">adorn_totals</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">adorn_pct_formatting</span>()</span></code></pre></div>
 <pre><code> in_range   n percent
         0  67   14.5%
         1 395   85.5%
     Total 462  100.0%</code></pre>
 <p>Previously, we estimated a confidence interval for the <em>mean</em> of the population zinc levels. Now, we want to estimate a confidence interval for the <em>proportion</em> of the population whose serum zinc levels are in the range of 66 to 110. We want to build both a point estimate for the population proportion, and a confidence interval for the population proportion.</p>
 <p>Now, let’s identify a 95% confidence interval for the proportion of the population whose zinc levels are within the “normal” range. We have seen that 395 / 462 subjects (or a proportion of 0.855) fall in the “normal range” in our sample. For now, that will also be our <em>point estimate</em> of the proportion in the “normal range” across the entire population of teenagers like those in our sample.</p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="estimating-a-population-proportion.html#cb782-1"></a>serzinc &lt;-<span class="st"> </span>serzinc <span class="op">%&gt;%</span></span>
-<span id="cb782-2"><a href="estimating-a-population-proportion.html#cb782-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">in_range =</span> <span class="kw">ifelse</span>(zinc <span class="op">&gt;</span><span class="st"> </span><span class="dv">65</span> <span class="op">&amp;</span><span class="st"> </span>zinc <span class="op">&lt;</span><span class="st"> </span><span class="dv">111</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb782-3"><a href="estimating-a-population-proportion.html#cb782-3"></a></span>
-<span id="cb782-4"><a href="estimating-a-population-proportion.html#cb782-4"></a>serzinc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(in_range)</span></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="estimating-a-population-proportion.html#cb783-1"></a>serzinc &lt;-<span class="st"> </span>serzinc <span class="op">%&gt;%</span></span>
+<span id="cb783-2"><a href="estimating-a-population-proportion.html#cb783-2"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">in_range =</span> <span class="kw">ifelse</span>(zinc <span class="op">&gt;</span><span class="st"> </span><span class="dv">65</span> <span class="op">&amp;</span><span class="st"> </span>zinc <span class="op">&lt;</span><span class="st"> </span><span class="dv">111</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb783-3"><a href="estimating-a-population-proportion.html#cb783-3"></a></span>
+<span id="cb783-4"><a href="estimating-a-population-proportion.html#cb783-4"></a>serzinc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tabyl</span>(in_range)</span></code></pre></div>
 <pre><code> in_range   n   percent
         0  67 0.1450216
         1 395 0.8549784</code></pre>
@@ -859,10 +859,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="using-an-intercept-only-regression-again" class="section level3">
 <h3><span class="header-section-number">23.1.1</span> Using an Intercept-Only Regression Again?</h3>
 <p>We might consider taking the same approach as we did with the population mean earlier:</p>
-<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="estimating-a-population-proportion.html#cb784-1"></a>model_zincprop &lt;-<span class="st"> </span><span class="kw">lm</span>(in_range <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> serzinc)</span>
-<span id="cb784-2"><a href="estimating-a-population-proportion.html#cb784-2"></a></span>
-<span id="cb784-3"><a href="estimating-a-population-proportion.html#cb784-3"></a><span class="kw">tidy</span>(model_zincprop, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb784-4"><a href="estimating-a-population-proportion.html#cb784-4"></a><span class="st">    </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="estimating-a-population-proportion.html#cb785-1"></a>model_zincprop &lt;-<span class="st"> </span><span class="kw">lm</span>(in_range <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> serzinc)</span>
+<span id="cb785-2"><a href="estimating-a-population-proportion.html#cb785-2"></a></span>
+<span id="cb785-3"><a href="estimating-a-population-proportion.html#cb785-3"></a><span class="kw">tidy</span>(model_zincprop, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb785-4"><a href="estimating-a-population-proportion.html#cb785-4"></a><span class="st">    </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -909,7 +909,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>For the serum zinc data, we have np = (462)(0.855) = 395 and n(1-p) = 462(1 - 0.855) = 67, so this should be ok.</p></li>
 <li><p>For <span class="math inline">\(\alpha\)</span> = 0.05, we have <span class="math inline">\(Z_{\alpha/2}\)</span> = 1.96, approximately.</p></li>
 </ul>
-<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="estimating-a-population-proportion.html#cb785-1"></a><span class="kw">qnorm</span>(<span class="fl">0.025</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="estimating-a-population-proportion.html#cb786-1"></a><span class="kw">qnorm</span>(<span class="fl">0.025</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] 1.959964</code></pre>
 <ul>
 <li>Thus, for the serum zinc estimate, this confidence interval would be:</li>
@@ -965,10 +965,10 @@ p \pm Z_{\alpha/2} \sqrt{\frac{p(1-p)}{n}} =
 <h3><span class="header-section-number">23.2.1</span> The Wald test approach</h3>
 <p>The Wald approach can be used to establish a very similar confidence interval to the one we calculated above, based on something called the Wald test.</p>
 <p>Here, we specify the <code>x</code> and <code>n</code> values. <code>n</code> is the total number of observations, and <code>x</code> is the number where the event of interest (in this case, serum zinc levels in the normal range) occurs. So <code>x</code> = 395 and <code>n</code> = 462.</p>
-<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="estimating-a-population-proportion.html#cb788-1"></a>m_wald &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
-<span id="cb788-2"><a href="estimating-a-population-proportion.html#cb788-2"></a>                     <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb788-3"><a href="estimating-a-population-proportion.html#cb788-3"></a>                     <span class="dt">ci.method =</span> <span class="st">&quot;Wald&quot;</span>)</span>
-<span id="cb788-4"><a href="estimating-a-population-proportion.html#cb788-4"></a>m_wald</span></code></pre></div>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="estimating-a-population-proportion.html#cb789-1"></a>m_wald &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
+<span id="cb789-2"><a href="estimating-a-population-proportion.html#cb789-2"></a>                     <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb789-3"><a href="estimating-a-population-proportion.html#cb789-3"></a>                     <span class="dt">ci.method =</span> <span class="st">&quot;Wald&quot;</span>)</span>
+<span id="cb789-4"><a href="estimating-a-population-proportion.html#cb789-4"></a>m_wald</span></code></pre></div>
 <pre><code>
 	Exact binomial test (Wald CI)
 
@@ -982,9 +982,9 @@ probability of success
              0.8549784 </code></pre>
 <p>The Wald confidence interval is always symmetric around our point estimate, and can dip below 0 or above 1.</p>
 <p>When I fit intervals using the approaches in <code>mosaic::binom_test()</code> I will usually tidy them.</p>
-<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="estimating-a-population-proportion.html#cb790-1"></a><span class="kw">tidy</span>(m_wald) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb790-2"><a href="estimating-a-population-proportion.html#cb790-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
-<span id="cb790-3"><a href="estimating-a-population-proportion.html#cb790-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="estimating-a-population-proportion.html#cb791-1"></a><span class="kw">tidy</span>(m_wald) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb791-2"><a href="estimating-a-population-proportion.html#cb791-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
+<span id="cb791-3"><a href="estimating-a-population-proportion.html#cb791-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1006,8 +1006,8 @@ probability of success
 </tbody>
 </table>
 <p>The other elements of the tidied result are shown below.</p>
-<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="estimating-a-population-proportion.html#cb791-1"></a><span class="kw">tidy</span>(m_wald) <span class="op">%&gt;%</span></span>
-<span id="cb791-2"><a href="estimating-a-population-proportion.html#cb791-2"></a><span class="st">  </span><span class="kw">select</span>(method, alternative, p.value)</span></code></pre></div>
+<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="estimating-a-population-proportion.html#cb792-1"></a><span class="kw">tidy</span>(m_wald) <span class="op">%&gt;%</span></span>
+<span id="cb792-2"><a href="estimating-a-population-proportion.html#cb792-2"></a><span class="st">  </span><span class="kw">select</span>(method, alternative, p.value)</span></code></pre></div>
 <pre><code># A tibble: 1 x 3
   method                        alternative  p.value
   &lt;chr&gt;                         &lt;chr&gt;          &lt;dbl&gt;
@@ -1016,11 +1016,11 @@ probability of success
 <div id="the-clopper-pearson-approach" class="section level3">
 <h3><span class="header-section-number">23.2.2</span> The Clopper-Pearson approach</h3>
 <p>The <code>binom.test</code> command can be used to establish an “exact” confidence interval. This uses the method of Clopper and Pearson from 1934, and is exact in the sense that it guarantees, for instance, that the confidence level associated with the interval is at least as large as the nominal level of 95%, but not that the interval isn’t wider than perhaps it needs to be.</p>
-<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="estimating-a-population-proportion.html#cb793-1"></a>m_clopper &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
-<span id="cb793-2"><a href="estimating-a-population-proportion.html#cb793-2"></a>                                <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb793-3"><a href="estimating-a-population-proportion.html#cb793-3"></a>                                <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>)</span>
-<span id="cb793-4"><a href="estimating-a-population-proportion.html#cb793-4"></a></span>
-<span id="cb793-5"><a href="estimating-a-population-proportion.html#cb793-5"></a>m_clopper</span></code></pre></div>
+<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="estimating-a-population-proportion.html#cb794-1"></a>m_clopper &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
+<span id="cb794-2"><a href="estimating-a-population-proportion.html#cb794-2"></a>                                <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb794-3"><a href="estimating-a-population-proportion.html#cb794-3"></a>                                <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>)</span>
+<span id="cb794-4"><a href="estimating-a-population-proportion.html#cb794-4"></a></span>
+<span id="cb794-5"><a href="estimating-a-population-proportion.html#cb794-5"></a>m_clopper</span></code></pre></div>
 <pre><code>
 
 
@@ -1033,9 +1033,9 @@ sample estimates:
 probability of success 
              0.8549784 </code></pre>
 <p>Clopper-Pearson is used by <code>stats::binom.test()</code> in R as well. Again, it guarantees coverage at least as large as the nominal coverage rate, but may produce wider intervals than the other methods we’ll see. The 95% confidence interval by this method is (0.820, 0.886), which is in the same general range as our previous estimates.</p>
-<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="estimating-a-population-proportion.html#cb795-1"></a><span class="kw">tidy</span>(m_clopper) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb795-2"><a href="estimating-a-population-proportion.html#cb795-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
-<span id="cb795-3"><a href="estimating-a-population-proportion.html#cb795-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="estimating-a-population-proportion.html#cb796-1"></a><span class="kw">tidy</span>(m_clopper) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb796-2"><a href="estimating-a-population-proportion.html#cb796-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
+<span id="cb796-3"><a href="estimating-a-population-proportion.html#cb796-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1059,11 +1059,11 @@ probability of success
 </div>
 <div id="the-score-approach" class="section level3">
 <h3><span class="header-section-number">23.2.3</span> The Score approach</h3>
-<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="estimating-a-population-proportion.html#cb796-1"></a>m_score &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
-<span id="cb796-2"><a href="estimating-a-population-proportion.html#cb796-2"></a>                              <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb796-3"><a href="estimating-a-population-proportion.html#cb796-3"></a>                              <span class="dt">ci.method =</span> <span class="st">&quot;Score&quot;</span>)</span>
-<span id="cb796-4"><a href="estimating-a-population-proportion.html#cb796-4"></a></span>
-<span id="cb796-5"><a href="estimating-a-population-proportion.html#cb796-5"></a>m_score</span></code></pre></div>
+<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="estimating-a-population-proportion.html#cb797-1"></a>m_score &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
+<span id="cb797-2"><a href="estimating-a-population-proportion.html#cb797-2"></a>                              <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb797-3"><a href="estimating-a-population-proportion.html#cb797-3"></a>                              <span class="dt">ci.method =</span> <span class="st">&quot;Score&quot;</span>)</span>
+<span id="cb797-4"><a href="estimating-a-population-proportion.html#cb797-4"></a></span>
+<span id="cb797-5"><a href="estimating-a-population-proportion.html#cb797-5"></a>m_score</span></code></pre></div>
 <pre><code>
 	Exact binomial test (Score CI without continuity correction)
 
@@ -1077,9 +1077,9 @@ probability of success
              0.8549784 </code></pre>
 <p>The Score approach is also used by <code>stats::prop.test()</code> and creates CIs by inverting p-values from score tests. It can be applied with a continuity correction (use <code>ci.method</code> = “prop.test”) or without.</p>
 <p>In this case, we see that the Score approach and the Clopper-Pearson approach give very similar results.</p>
-<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="estimating-a-population-proportion.html#cb798-1"></a><span class="kw">tidy</span>(m_score) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb798-2"><a href="estimating-a-population-proportion.html#cb798-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
-<span id="cb798-3"><a href="estimating-a-population-proportion.html#cb798-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="estimating-a-population-proportion.html#cb799-1"></a><span class="kw">tidy</span>(m_score) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb799-2"><a href="estimating-a-population-proportion.html#cb799-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
+<span id="cb799-3"><a href="estimating-a-population-proportion.html#cb799-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1101,11 +1101,11 @@ probability of success
 </tbody>
 </table>
 <p>As mentioned, the score test can also be run incorporating something called a <em>continuity correction</em>, since we are using a Normal approximation to the exact binomial distribution to establish our margin for error. R, by default, includes this continuity correction for the Score test when we use <code>prop.test</code> to collect it.</p>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="estimating-a-population-proportion.html#cb799-1"></a>m_score_cor &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
-<span id="cb799-2"><a href="estimating-a-population-proportion.html#cb799-2"></a>                                  <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb799-3"><a href="estimating-a-population-proportion.html#cb799-3"></a>                                  <span class="dt">ci.method =</span> <span class="st">&quot;prop.test&quot;</span>)</span>
-<span id="cb799-4"><a href="estimating-a-population-proportion.html#cb799-4"></a></span>
-<span id="cb799-5"><a href="estimating-a-population-proportion.html#cb799-5"></a>m_score_cor</span></code></pre></div>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="estimating-a-population-proportion.html#cb800-1"></a>m_score_cor &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
+<span id="cb800-2"><a href="estimating-a-population-proportion.html#cb800-2"></a>                                  <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb800-3"><a href="estimating-a-population-proportion.html#cb800-3"></a>                                  <span class="dt">ci.method =</span> <span class="st">&quot;prop.test&quot;</span>)</span>
+<span id="cb800-4"><a href="estimating-a-population-proportion.html#cb800-4"></a></span>
+<span id="cb800-5"><a href="estimating-a-population-proportion.html#cb800-5"></a>m_score_cor</span></code></pre></div>
 <pre><code>
 	Exact binomial test (Score CI with continuity correction)
 
@@ -1117,9 +1117,9 @@ alternative hypothesis: true probability of success is not equal to 0.5
 sample estimates:
 probability of success 
              0.8549784 </code></pre>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="estimating-a-population-proportion.html#cb801-1"></a><span class="kw">tidy</span>(m_score_cor) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb801-2"><a href="estimating-a-population-proportion.html#cb801-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
-<span id="cb801-3"><a href="estimating-a-population-proportion.html#cb801-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="estimating-a-population-proportion.html#cb802-1"></a><span class="kw">tidy</span>(m_score_cor) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb802-2"><a href="estimating-a-population-proportion.html#cb802-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
+<span id="cb802-3"><a href="estimating-a-population-proportion.html#cb802-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1143,11 +1143,11 @@ probability of success
 </div>
 <div id="the-agresti-coull-approach" class="section level3">
 <h3><span class="header-section-number">23.2.4</span> The Agresti-Coull Approach</h3>
-<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="estimating-a-population-proportion.html#cb802-1"></a>m_agresti &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
-<span id="cb802-2"><a href="estimating-a-population-proportion.html#cb802-2"></a>                                <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb802-3"><a href="estimating-a-population-proportion.html#cb802-3"></a>                                <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>)</span>
-<span id="cb802-4"><a href="estimating-a-population-proportion.html#cb802-4"></a></span>
-<span id="cb802-5"><a href="estimating-a-population-proportion.html#cb802-5"></a>m_agresti</span></code></pre></div>
+<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="estimating-a-population-proportion.html#cb803-1"></a>m_agresti &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
+<span id="cb803-2"><a href="estimating-a-population-proportion.html#cb803-2"></a>                                <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb803-3"><a href="estimating-a-population-proportion.html#cb803-3"></a>                                <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>)</span>
+<span id="cb803-4"><a href="estimating-a-population-proportion.html#cb803-4"></a></span>
+<span id="cb803-5"><a href="estimating-a-population-proportion.html#cb803-5"></a>m_agresti</span></code></pre></div>
 <pre><code>
 	Exact binomial test (Agresti-Coull CI)
 
@@ -1160,9 +1160,9 @@ sample estimates:
 probability of success 
              0.8549784 </code></pre>
 <p>The Agresti-Coull approach is the Wald method after adding Z successes and Z failures to the data, where Z is the appropriate quantile for a standard Normal distribution (1.96 for a 95% CI).</p>
-<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="estimating-a-population-proportion.html#cb804-1"></a><span class="kw">tidy</span>(m_agresti) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb804-2"><a href="estimating-a-population-proportion.html#cb804-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
-<span id="cb804-3"><a href="estimating-a-population-proportion.html#cb804-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="estimating-a-population-proportion.html#cb805-1"></a><span class="kw">tidy</span>(m_agresti) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb805-2"><a href="estimating-a-population-proportion.html#cb805-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
+<span id="cb805-3"><a href="estimating-a-population-proportion.html#cb805-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1187,11 +1187,11 @@ probability of success
 <div id="the-plus-4-approach" class="section level3">
 <h3><span class="header-section-number">23.2.5</span> The “Plus 4” approach</h3>
 <p>This approach is just the Wald method after adding 2 successes and 2 failures (so 4 observations) to the data. It will be very similar to the Agresti-Coull method if we are working with a 95% confidence interval.</p>
-<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="estimating-a-population-proportion.html#cb805-1"></a>m_plus4 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
-<span id="cb805-2"><a href="estimating-a-population-proportion.html#cb805-2"></a>                              <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb805-3"><a href="estimating-a-population-proportion.html#cb805-3"></a>                              <span class="dt">ci.method =</span> <span class="st">&quot;plus4&quot;</span>)</span>
-<span id="cb805-4"><a href="estimating-a-population-proportion.html#cb805-4"></a></span>
-<span id="cb805-5"><a href="estimating-a-population-proportion.html#cb805-5"></a>m_plus4</span></code></pre></div>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="estimating-a-population-proportion.html#cb806-1"></a>m_plus4 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>,</span>
+<span id="cb806-2"><a href="estimating-a-population-proportion.html#cb806-2"></a>                              <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb806-3"><a href="estimating-a-population-proportion.html#cb806-3"></a>                              <span class="dt">ci.method =</span> <span class="st">&quot;plus4&quot;</span>)</span>
+<span id="cb806-4"><a href="estimating-a-population-proportion.html#cb806-4"></a></span>
+<span id="cb806-5"><a href="estimating-a-population-proportion.html#cb806-5"></a>m_plus4</span></code></pre></div>
 <pre><code>
 	Exact binomial test (Plus 4 CI)
 
@@ -1203,9 +1203,9 @@ alternative hypothesis: true probability of success is not equal to 0.5
 sample estimates:
 probability of success 
              0.8549784 </code></pre>
-<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="estimating-a-population-proportion.html#cb807-1"></a><span class="kw">tidy</span>(m_plus4) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb807-2"><a href="estimating-a-population-proportion.html#cb807-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
-<span id="cb807-3"><a href="estimating-a-population-proportion.html#cb807-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="estimating-a-population-proportion.html#cb808-1"></a><span class="kw">tidy</span>(m_plus4) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb808-2"><a href="estimating-a-population-proportion.html#cb808-2"></a><span class="st">  </span><span class="kw">select</span>(estimate, conf.low, conf.high, statistic, parameter) <span class="op">%&gt;%</span></span>
+<span id="cb808-3"><a href="estimating-a-population-proportion.html#cb808-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1240,7 +1240,7 @@ probability of success
 <p>Returning to the serum zinc example, we’ve got 395 “successes” (value in the normal range) out of 462 “trials” (values measured), so that X = 395 and n = 462</p>
 <p>So we have <span class="math inline">\(p_1 = \frac{X + 0}{n + 1} = \frac{395}{463} = 0.8531\)</span>, <span class="math inline">\(p_2 = \frac{X + 1}{n + 1} = \frac{396}{463} = 0.8553\)</span>, and <span class="math inline">\(q_1 = 1 - p_1 = 0.1469\)</span> and <span class="math inline">\(q_2 = 1 - p_2 = 0.1447\)</span></p>
 <p>We have <span class="math inline">\(n = 462\)</span> so if we want a 95% confidence interval (<span class="math inline">\(\alpha = 0.05\)</span>), then we have <span class="math inline">\(t_{\alpha/2, n-1} = t_{0.025, 461} = 1.9651\)</span>, which I determined using R’s <code>qt</code> function:</p>
-<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="estimating-a-population-proportion.html#cb808-1"></a><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df =</span> <span class="dv">461</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="estimating-a-population-proportion.html#cb809-1"></a><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df =</span> <span class="dv">461</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] 1.965123</code></pre>
 <ul>
 <li>Thus, our lower bound for a 95% confidence interval is <span class="math inline">\(p_1 - t_{\alpha/2, n-1}\sqrt{\frac{p_1 q_1}{n}}\)</span>, or <span class="math inline">\(0.8531 - 1.9651 \sqrt{\frac{0.8531(0.1469)}{462}}\)</span>, which is 0.8531 - 0.0324 or 0.8207.</li>
@@ -1252,13 +1252,13 @@ probability of success
 <h3><span class="header-section-number">23.2.7</span> A Function in R to Calculate the SAIFS Confidence Interval</h3>
 <p>I built an R function, called <code>saifs.ci</code> and contained in the Markdown for this document as well as the <code>Love-boost.R</code> script on the web site, which takes as its arguments a value for X = the number of successes, n = the number of trials, and conf.level = the confidence level, and produces the sample proportion, the SAIFS lower bound and upper bound for the specified two-sided confidence interval for the population proportion, using the equations above.</p>
 <p>Here, for instance, are 95%, 90% and 99% confidence intervals for the population proportion <span class="math inline">\(\pi\)</span> that we have been studying in the serum zinc data.</p>
-<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="estimating-a-population-proportion.html#cb810-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="estimating-a-population-proportion.html#cb811-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>)</span></code></pre></div>
 <pre><code>Sample Proportion             0.025             0.975 
             0.855             0.821             0.887 </code></pre>
-<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="estimating-a-population-proportion.html#cb812-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>, <span class="dt">conf=</span><span class="fl">0.9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="estimating-a-population-proportion.html#cb813-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>, <span class="dt">conf=</span><span class="fl">0.9</span>)</span></code></pre></div>
 <pre><code>Sample Proportion              0.05              0.95 
             0.855             0.826             0.882 </code></pre>
-<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="estimating-a-population-proportion.html#cb814-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>, <span class="dt">conf=</span><span class="fl">0.99</span>, <span class="dt">dig=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="estimating-a-population-proportion.html#cb815-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">395</span>, <span class="dt">n =</span> <span class="dv">462</span>, <span class="dt">conf=</span><span class="fl">0.99</span>, <span class="dt">dig=</span><span class="dv">5</span>)</span></code></pre></div>
 <pre><code>Sample Proportion             0.005             0.995 
           0.85498           0.81054           0.89763 </code></pre>
 <p>Note that in the final interval, I asked the machine to round to five digits rather than the default of three. On my desktop (and probably yours), doing so results in this output:</p>
@@ -1268,28 +1268,28 @@ probability of success
 </div>
 <div id="the-saifs.ci-function-in-r" class="section level3">
 <h3><span class="header-section-number">23.2.8</span> The <code>saifs.ci</code> function in R</h3>
-<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="estimating-a-population-proportion.html#cb817-1"></a><span class="st">`</span><span class="dt">saifs.ci</span><span class="st">`</span> &lt;-<span class="st"> </span></span>
-<span id="cb817-2"><a href="estimating-a-population-proportion.html#cb817-2"></a><span class="st">  </span><span class="cf">function</span>(x, n, <span class="dt">conf.level=</span><span class="fl">0.95</span>, <span class="dt">dig=</span><span class="dv">3</span>)</span>
-<span id="cb817-3"><a href="estimating-a-population-proportion.html#cb817-3"></a>  {</span>
-<span id="cb817-4"><a href="estimating-a-population-proportion.html#cb817-4"></a>    p.sample &lt;-<span class="st"> </span><span class="kw">round</span>(x<span class="op">/</span>n, <span class="dt">digits=</span>dig)</span>
-<span id="cb817-5"><a href="estimating-a-population-proportion.html#cb817-5"></a>    </span>
-<span id="cb817-6"><a href="estimating-a-population-proportion.html#cb817-6"></a>    p1 &lt;-<span class="st"> </span>x <span class="op">/</span><span class="st"> </span>(n<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb817-7"><a href="estimating-a-population-proportion.html#cb817-7"></a>    p2 &lt;-<span class="st"> </span>(x<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb817-8"><a href="estimating-a-population-proportion.html#cb817-8"></a>    </span>
-<span id="cb817-9"><a href="estimating-a-population-proportion.html#cb817-9"></a>    var1 &lt;-<span class="st"> </span>(p1<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p1))<span class="op">/</span>n</span>
-<span id="cb817-10"><a href="estimating-a-population-proportion.html#cb817-10"></a>    se1 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var1)</span>
-<span id="cb817-11"><a href="estimating-a-population-proportion.html#cb817-11"></a>    var2 &lt;-<span class="st"> </span>(p2<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p2))<span class="op">/</span>n</span>
-<span id="cb817-12"><a href="estimating-a-population-proportion.html#cb817-12"></a>    se2 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var2)</span>
-<span id="cb817-13"><a href="estimating-a-population-proportion.html#cb817-13"></a>    </span>
-<span id="cb817-14"><a href="estimating-a-population-proportion.html#cb817-14"></a>    lowq =<span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>conf.level)<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb817-15"><a href="estimating-a-population-proportion.html#cb817-15"></a>    tcut &lt;-<span class="st"> </span><span class="kw">qt</span>(lowq, <span class="dt">df=</span>n<span class="dv">-1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</span>
-<span id="cb817-16"><a href="estimating-a-population-proportion.html#cb817-16"></a>    </span>
-<span id="cb817-17"><a href="estimating-a-population-proportion.html#cb817-17"></a>    lower.bound &lt;-<span class="st"> </span><span class="kw">round</span>(p1 <span class="op">-</span><span class="st"> </span>tcut<span class="op">*</span>se1, <span class="dt">digits=</span>dig)</span>
-<span id="cb817-18"><a href="estimating-a-population-proportion.html#cb817-18"></a>    upper.bound &lt;-<span class="st"> </span><span class="kw">round</span>(p2 <span class="op">+</span><span class="st"> </span>tcut<span class="op">*</span>se2, <span class="dt">digits=</span>dig)</span>
-<span id="cb817-19"><a href="estimating-a-population-proportion.html#cb817-19"></a>    res &lt;-<span class="st"> </span><span class="kw">c</span>(p.sample, lower.bound, upper.bound)</span>
-<span id="cb817-20"><a href="estimating-a-population-proportion.html#cb817-20"></a>    <span class="kw">names</span>(res) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Sample Proportion&#39;</span>,lowq, <span class="dv">1</span><span class="op">-</span>lowq)</span>
-<span id="cb817-21"><a href="estimating-a-population-proportion.html#cb817-21"></a>    res</span>
-<span id="cb817-22"><a href="estimating-a-population-proportion.html#cb817-22"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="estimating-a-population-proportion.html#cb818-1"></a><span class="st">`</span><span class="dt">saifs.ci</span><span class="st">`</span> &lt;-<span class="st"> </span></span>
+<span id="cb818-2"><a href="estimating-a-population-proportion.html#cb818-2"></a><span class="st">  </span><span class="cf">function</span>(x, n, <span class="dt">conf.level=</span><span class="fl">0.95</span>, <span class="dt">dig=</span><span class="dv">3</span>)</span>
+<span id="cb818-3"><a href="estimating-a-population-proportion.html#cb818-3"></a>  {</span>
+<span id="cb818-4"><a href="estimating-a-population-proportion.html#cb818-4"></a>    p.sample &lt;-<span class="st"> </span><span class="kw">round</span>(x<span class="op">/</span>n, <span class="dt">digits=</span>dig)</span>
+<span id="cb818-5"><a href="estimating-a-population-proportion.html#cb818-5"></a>    </span>
+<span id="cb818-6"><a href="estimating-a-population-proportion.html#cb818-6"></a>    p1 &lt;-<span class="st"> </span>x <span class="op">/</span><span class="st"> </span>(n<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb818-7"><a href="estimating-a-population-proportion.html#cb818-7"></a>    p2 &lt;-<span class="st"> </span>(x<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(n<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb818-8"><a href="estimating-a-population-proportion.html#cb818-8"></a>    </span>
+<span id="cb818-9"><a href="estimating-a-population-proportion.html#cb818-9"></a>    var1 &lt;-<span class="st"> </span>(p1<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p1))<span class="op">/</span>n</span>
+<span id="cb818-10"><a href="estimating-a-population-proportion.html#cb818-10"></a>    se1 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var1)</span>
+<span id="cb818-11"><a href="estimating-a-population-proportion.html#cb818-11"></a>    var2 &lt;-<span class="st"> </span>(p2<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p2))<span class="op">/</span>n</span>
+<span id="cb818-12"><a href="estimating-a-population-proportion.html#cb818-12"></a>    se2 &lt;-<span class="st"> </span><span class="kw">sqrt</span>(var2)</span>
+<span id="cb818-13"><a href="estimating-a-population-proportion.html#cb818-13"></a>    </span>
+<span id="cb818-14"><a href="estimating-a-population-proportion.html#cb818-14"></a>    lowq =<span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>conf.level)<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb818-15"><a href="estimating-a-population-proportion.html#cb818-15"></a>    tcut &lt;-<span class="st"> </span><span class="kw">qt</span>(lowq, <span class="dt">df=</span>n<span class="dv">-1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</span>
+<span id="cb818-16"><a href="estimating-a-population-proportion.html#cb818-16"></a>    </span>
+<span id="cb818-17"><a href="estimating-a-population-proportion.html#cb818-17"></a>    lower.bound &lt;-<span class="st"> </span><span class="kw">round</span>(p1 <span class="op">-</span><span class="st"> </span>tcut<span class="op">*</span>se1, <span class="dt">digits=</span>dig)</span>
+<span id="cb818-18"><a href="estimating-a-population-proportion.html#cb818-18"></a>    upper.bound &lt;-<span class="st"> </span><span class="kw">round</span>(p2 <span class="op">+</span><span class="st"> </span>tcut<span class="op">*</span>se2, <span class="dt">digits=</span>dig)</span>
+<span id="cb818-19"><a href="estimating-a-population-proportion.html#cb818-19"></a>    res &lt;-<span class="st"> </span><span class="kw">c</span>(p.sample, lower.bound, upper.bound)</span>
+<span id="cb818-20"><a href="estimating-a-population-proportion.html#cb818-20"></a>    <span class="kw">names</span>(res) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Sample Proportion&#39;</span>,lowq, <span class="dv">1</span><span class="op">-</span>lowq)</span>
+<span id="cb818-21"><a href="estimating-a-population-proportion.html#cb818-21"></a>    res</span>
+<span id="cb818-22"><a href="estimating-a-population-proportion.html#cb818-22"></a>  }</span></code></pre></div>
 </div>
 </div>
 <div id="a-second-example-ebola-mortality-rates-through-9-months-of-the-epidemic" class="section level2">
@@ -1304,35 +1304,35 @@ probability of success
 <p>And our 95% confidence interval (so that we’ll use <span class="math inline">\(\alpha\)</span> = 0.05) for the true population proportion, <span class="math inline">\(\pi\)</span>, of EVD cases with definitive outcomes, who will die is
 <span class="math inline">\(p \pm Z_{.025} \sqrt{\frac{p(1-p)}{n}}\)</span>, or 0.708 <span class="math inline">\(\pm\)</span> 1.96(0.011) = <span class="math inline">\(0.708 \pm 0.022\)</span>, or (0.686, 0.730)</p>
 <p>Note that I simply recalled from our prior work that <span class="math inline">\(Z_{0.025} = 1.96\)</span>, but we can verify this:</p>
-<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="estimating-a-population-proportion.html#cb818-1"></a><span class="kw">qnorm</span>(<span class="fl">0.025</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="estimating-a-population-proportion.html#cb819-1"></a><span class="kw">qnorm</span>(<span class="fl">0.025</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>[1] 1.959964</code></pre>
 <p>Since both np=(1737)(0.708)=1230 and n(1-p)=(1737)(1-0.708)=507 are substantially greater than 5, this should be a reasonably accurate confidence interval.</p>
 <p>We have 95% confidence in an interval estimate for the true population proportion that falls between 0.686 and 0.730. Equivalently, we could say that we’re 95% confident that the true case fatality rate expressed as a percentage rather than a proportion, is between 68.6% and 73.0%.</p>
 </div>
 <div id="using-r-to-estimate-the-ci-for-our-ebola-example" class="section level3">
 <h3><span class="header-section-number">23.3.2</span> Using R to estimate the CI for our Ebola example</h3>
-<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="estimating-a-population-proportion.html#cb820-1"></a>ebola_wald &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb820-2"><a href="estimating-a-population-proportion.html#cb820-2"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;Wald&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb820-3"><a href="estimating-a-population-proportion.html#cb820-3"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
-<span id="cb820-4"><a href="estimating-a-population-proportion.html#cb820-4"></a>ebola_clop &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb820-5"><a href="estimating-a-population-proportion.html#cb820-5"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb820-6"><a href="estimating-a-population-proportion.html#cb820-6"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
-<span id="cb820-7"><a href="estimating-a-population-proportion.html#cb820-7"></a>ebola_scor &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb820-8"><a href="estimating-a-population-proportion.html#cb820-8"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;Score&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb820-9"><a href="estimating-a-population-proportion.html#cb820-9"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
-<span id="cb820-10"><a href="estimating-a-population-proportion.html#cb820-10"></a>ebola_agco &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb820-11"><a href="estimating-a-population-proportion.html#cb820-11"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb820-12"><a href="estimating-a-population-proportion.html#cb820-12"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
-<span id="cb820-13"><a href="estimating-a-population-proportion.html#cb820-13"></a>ebola_plus &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb820-14"><a href="estimating-a-population-proportion.html#cb820-14"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;plus4&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb820-15"><a href="estimating-a-population-proportion.html#cb820-15"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
-<span id="cb820-16"><a href="estimating-a-population-proportion.html#cb820-16"></a></span>
-<span id="cb820-17"><a href="estimating-a-population-proportion.html#cb820-17"></a>ebola_res &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(ebola_wald, ebola_clop, ebola_scor, </span>
-<span id="cb820-18"><a href="estimating-a-population-proportion.html#cb820-18"></a>                       ebola_agco, ebola_plus) <span class="op">%&gt;%</span></span>
-<span id="cb820-19"><a href="estimating-a-population-proportion.html#cb820-19"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">approach =</span> <span class="kw">c</span>(<span class="st">&quot;Wald&quot;</span>, <span class="st">&quot;Clopper-Pearson&quot;</span>, <span class="st">&quot;Score&quot;</span>,</span>
-<span id="cb820-20"><a href="estimating-a-population-proportion.html#cb820-20"></a>                      <span class="st">&quot;Agresti-Coull&quot;</span>, <span class="st">&quot;Plus4&quot;</span>))</span>
-<span id="cb820-21"><a href="estimating-a-population-proportion.html#cb820-21"></a></span>
-<span id="cb820-22"><a href="estimating-a-population-proportion.html#cb820-22"></a>ebola_res <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="estimating-a-population-proportion.html#cb821-1"></a>ebola_wald &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb821-2"><a href="estimating-a-population-proportion.html#cb821-2"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;Wald&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb821-3"><a href="estimating-a-population-proportion.html#cb821-3"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
+<span id="cb821-4"><a href="estimating-a-population-proportion.html#cb821-4"></a>ebola_clop &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb821-5"><a href="estimating-a-population-proportion.html#cb821-5"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb821-6"><a href="estimating-a-population-proportion.html#cb821-6"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
+<span id="cb821-7"><a href="estimating-a-population-proportion.html#cb821-7"></a>ebola_scor &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb821-8"><a href="estimating-a-population-proportion.html#cb821-8"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;Score&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb821-9"><a href="estimating-a-population-proportion.html#cb821-9"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
+<span id="cb821-10"><a href="estimating-a-population-proportion.html#cb821-10"></a>ebola_agco &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb821-11"><a href="estimating-a-population-proportion.html#cb821-11"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb821-12"><a href="estimating-a-population-proportion.html#cb821-12"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
+<span id="cb821-13"><a href="estimating-a-population-proportion.html#cb821-13"></a>ebola_plus &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb821-14"><a href="estimating-a-population-proportion.html#cb821-14"></a>                                 <span class="dt">ci.method =</span> <span class="st">&quot;plus4&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb821-15"><a href="estimating-a-population-proportion.html#cb821-15"></a><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(estimate, conf.low, conf.high)</span>
+<span id="cb821-16"><a href="estimating-a-population-proportion.html#cb821-16"></a></span>
+<span id="cb821-17"><a href="estimating-a-population-proportion.html#cb821-17"></a>ebola_res &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(ebola_wald, ebola_clop, ebola_scor, </span>
+<span id="cb821-18"><a href="estimating-a-population-proportion.html#cb821-18"></a>                       ebola_agco, ebola_plus) <span class="op">%&gt;%</span></span>
+<span id="cb821-19"><a href="estimating-a-population-proportion.html#cb821-19"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">approach =</span> <span class="kw">c</span>(<span class="st">&quot;Wald&quot;</span>, <span class="st">&quot;Clopper-Pearson&quot;</span>, <span class="st">&quot;Score&quot;</span>,</span>
+<span id="cb821-20"><a href="estimating-a-population-proportion.html#cb821-20"></a>                      <span class="st">&quot;Agresti-Coull&quot;</span>, <span class="st">&quot;Plus4&quot;</span>))</span>
+<span id="cb821-21"><a href="estimating-a-population-proportion.html#cb821-21"></a></span>
+<span id="cb821-22"><a href="estimating-a-population-proportion.html#cb821-22"></a>ebola_res <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">6</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1379,17 +1379,17 @@ probability of success
 </div>
 <div id="plotting-the-confidence-intervals-for-the-ebola-virus-disease-example" class="section level3">
 <h3><span class="header-section-number">23.3.3</span> Plotting the Confidence Intervals for the Ebola Virus Disease Example</h3>
-<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="estimating-a-population-proportion.html#cb821-1"></a><span class="kw">ggplot</span>(ebola_res, <span class="kw">aes</span>(<span class="dt">x =</span> approach, <span class="dt">y =</span> estimate)) <span class="op">+</span></span>
-<span id="cb821-2"><a href="estimating-a-population-proportion.html#cb821-2"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb821-3"><a href="estimating-a-population-proportion.html#cb821-3"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> conf.low, <span class="dt">ymax =</span> conf.high)) <span class="op">+</span></span>
-<span id="cb821-4"><a href="estimating-a-population-proportion.html#cb821-4"></a><span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb821-5"><a href="estimating-a-population-proportion.html#cb821-5"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;95% CIs for x = 1229, n = 1737&quot;</span>)</span></code></pre></div>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-267-1.png" width="672" /></p>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="estimating-a-population-proportion.html#cb822-1"></a><span class="kw">ggplot</span>(ebola_res, <span class="kw">aes</span>(<span class="dt">x =</span> approach, <span class="dt">y =</span> estimate)) <span class="op">+</span></span>
+<span id="cb822-2"><a href="estimating-a-population-proportion.html#cb822-2"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb822-3"><a href="estimating-a-population-proportion.html#cb822-3"></a><span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> conf.low, <span class="dt">ymax =</span> conf.high)) <span class="op">+</span></span>
+<span id="cb822-4"><a href="estimating-a-population-proportion.html#cb822-4"></a><span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb822-5"><a href="estimating-a-population-proportion.html#cb822-5"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;95% CIs for x = 1229, n = 1737&quot;</span>)</span></code></pre></div>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-275-1.png" width="672" /></p>
 <p>So in this case, it really doesn’t matter which one you choose. With a smaller sample, we may not come to the same conclusion about the relative merits of these different approaches.</p>
 </div>
 <div id="what-about-the-saifs.ci-result" class="section level3">
 <h3><span class="header-section-number">23.3.4</span> What about the <code>saifs.ci()</code> result?</h3>
-<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="estimating-a-population-proportion.html#cb822-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="estimating-a-population-proportion.html#cb823-1"></a><span class="kw">saifs.ci</span>(<span class="dt">x =</span> <span class="dv">1229</span>, <span class="dt">n =</span> <span class="dv">1737</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>Sample Proportion             0.025             0.975 
             0.708             0.686             0.729 </code></pre>
 </div>
@@ -1398,23 +1398,23 @@ probability of success
 <h2><span class="header-section-number">23.4</span> Can the Choice of Confidence Interval Method Matter?</h2>
 <p>Yes. This will especially be the case when we have a small sample size, and a probability of “success” that is close to either 0 or 1. For instance, suppose we run 10 trials, and obtain a single success, then use these data to estimate the true proportion of success, <span class="math inline">\(\pi\)</span>.</p>
 <p>The 90% confidence intervals under this circumstance are very different.</p>
-<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="estimating-a-population-proportion.html#cb824-1"></a>tidy1 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
-<span id="cb824-2"><a href="estimating-a-population-proportion.html#cb824-2"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;Wald&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
-<span id="cb824-3"><a href="estimating-a-population-proportion.html#cb824-3"></a>tidy2 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
-<span id="cb824-4"><a href="estimating-a-population-proportion.html#cb824-4"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
-<span id="cb824-5"><a href="estimating-a-population-proportion.html#cb824-5"></a>tidy3 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
-<span id="cb824-6"><a href="estimating-a-population-proportion.html#cb824-6"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;Score&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
-<span id="cb824-7"><a href="estimating-a-population-proportion.html#cb824-7"></a>tidy4 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
-<span id="cb824-8"><a href="estimating-a-population-proportion.html#cb824-8"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
-<span id="cb824-9"><a href="estimating-a-population-proportion.html#cb824-9"></a>tidy5 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
-<span id="cb824-10"><a href="estimating-a-population-proportion.html#cb824-10"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;plus4&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
-<span id="cb824-11"><a href="estimating-a-population-proportion.html#cb824-11"></a></span>
-<span id="cb824-12"><a href="estimating-a-population-proportion.html#cb824-12"></a>res &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(tidy1, tidy2, tidy3, tidy4, tidy5) <span class="op">%&gt;%</span></span>
-<span id="cb824-13"><a href="estimating-a-population-proportion.html#cb824-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">approach =</span> <span class="kw">c</span>(<span class="st">&quot;Wald&quot;</span>, <span class="st">&quot;Clopper-Pearson&quot;</span>, <span class="st">&quot;Score&quot;</span>,</span>
-<span id="cb824-14"><a href="estimating-a-population-proportion.html#cb824-14"></a>                      <span class="st">&quot;Agresti-Coull&quot;</span>, <span class="st">&quot;Plus4&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb824-15"><a href="estimating-a-population-proportion.html#cb824-15"></a><span class="st">  </span><span class="kw">select</span>(approach, estimate, conf.low, conf.high)</span>
-<span id="cb824-16"><a href="estimating-a-population-proportion.html#cb824-16"></a></span>
-<span id="cb824-17"><a href="estimating-a-population-proportion.html#cb824-17"></a>res <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="estimating-a-population-proportion.html#cb825-1"></a>tidy1 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>,</span>
+<span id="cb825-2"><a href="estimating-a-population-proportion.html#cb825-2"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;Wald&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
+<span id="cb825-3"><a href="estimating-a-population-proportion.html#cb825-3"></a>tidy2 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb825-4"><a href="estimating-a-population-proportion.html#cb825-4"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;Clopper-Pearson&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
+<span id="cb825-5"><a href="estimating-a-population-proportion.html#cb825-5"></a>tidy3 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb825-6"><a href="estimating-a-population-proportion.html#cb825-6"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;Score&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
+<span id="cb825-7"><a href="estimating-a-population-proportion.html#cb825-7"></a>tidy4 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb825-8"><a href="estimating-a-population-proportion.html#cb825-8"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;agresti-coull&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
+<span id="cb825-9"><a href="estimating-a-population-proportion.html#cb825-9"></a>tidy5 &lt;-<span class="st"> </span>mosaic<span class="op">::</span><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb825-10"><a href="estimating-a-population-proportion.html#cb825-10"></a>                            <span class="dt">ci.method =</span> <span class="st">&quot;plus4&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span>
+<span id="cb825-11"><a href="estimating-a-population-proportion.html#cb825-11"></a></span>
+<span id="cb825-12"><a href="estimating-a-population-proportion.html#cb825-12"></a>res &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(tidy1, tidy2, tidy3, tidy4, tidy5) <span class="op">%&gt;%</span></span>
+<span id="cb825-13"><a href="estimating-a-population-proportion.html#cb825-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">approach =</span> <span class="kw">c</span>(<span class="st">&quot;Wald&quot;</span>, <span class="st">&quot;Clopper-Pearson&quot;</span>, <span class="st">&quot;Score&quot;</span>,</span>
+<span id="cb825-14"><a href="estimating-a-population-proportion.html#cb825-14"></a>                      <span class="st">&quot;Agresti-Coull&quot;</span>, <span class="st">&quot;Plus4&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb825-15"><a href="estimating-a-population-proportion.html#cb825-15"></a><span class="st">  </span><span class="kw">select</span>(approach, estimate, conf.low, conf.high)</span>
+<span id="cb825-16"><a href="estimating-a-population-proportion.html#cb825-16"></a></span>
+<span id="cb825-17"><a href="estimating-a-population-proportion.html#cb825-17"></a>res <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1458,7 +1458,7 @@ probability of success
 </tbody>
 </table>
 <p>Note that the Wald procedure doesn’t force the confidence interval to appear in the (0, 1) range.</p>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-270-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-278-1.png" width="672" /></p>
 <p><strong>None of these three approaches is always better than any of the others.</strong> When we have a sample size below 100, or the sample proportion of success is either below 0.10 or above 0.90, caution is warranted, although in many cases, the various methods give similar responses.</p>
 
 </div>

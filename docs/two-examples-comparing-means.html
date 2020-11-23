@@ -838,7 +838,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Should you buy generic rather than brand-name batteries? <span class="citation">Bock, Velleman, and De Veaux (<a href="#ref-BockVD" role="doc-biblioref">2004</a>)</span> descibe a designed experiment to test battery life. A (male) student obtained six pairs of AA alkaline batteries from two major battery manufacturers; a well-known brand name and a generic brand, so that battery brand was the factor of interest.</p>
 <p>To estimate the difference in mean lifetimes across the two manufacturers, the student kept a battery-powered CD player with the same CD running continuously, with the volume control fixed at 5, and measured the time until no more music was heard through the headphones. (He ran an initial trial to find out approximately how long that would take, so he didn’t have to spend the first 3 hours of each run listening to the same CD.) The outcome was the time in minutes until the sound stopped. To account for changes in the CD player’s performance over time, he randomized the run order by choosing pairs of batteries (the CD-player required two batteries to run) at random.</p>
 <p>Here are the results for the 6 brand name and 6 generic tests, in minutes, found in the <code>battery.csv</code> data file, where <code>run</code> indicates the order in which the tests were run…</p>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="two-examples-comparing-means.html#cb662-1"></a>battery &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/battery.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="two-examples-comparing-means.html#cb663-1"></a>battery &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/battery.csv&quot;</span>)</span></code></pre></div>
 <pre><code>Parsed with column specification:
 cols(
   run = col_double(),
@@ -846,7 +846,7 @@ cols(
   type = col_character(),
   time = col_double()
 )</code></pre>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="two-examples-comparing-means.html#cb664-1"></a>battery</span></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="two-examples-comparing-means.html#cb665-1"></a>battery</span></code></pre></div>
 <pre><code># A tibble: 12 x 4
      run  test type        time
    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
@@ -894,22 +894,22 @@ cols(
 </div>
 <div id="question-9.-what-does-the-distribution-of-outcomes-in-each-group-tell-us" class="section level3">
 <h3><span class="header-section-number">20.1.7</span> Question 9. What does the distribution of outcomes in each group tell us?</h3>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="two-examples-comparing-means.html#cb666-1"></a><span class="kw">ggplot</span>(battery, <span class="kw">aes</span>(<span class="dt">x =</span> type, <span class="dt">y =</span> time, <span class="dt">fill =</span> type)) <span class="op">+</span></span>
-<span id="cb666-2"><a href="two-examples-comparing-means.html#cb666-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type), <span class="dt">alpha =</span> <span class="fl">0.75</span>, <span class="dt">width =</span> <span class="fl">0.125</span>) <span class="op">+</span></span>
-<span id="cb666-3"><a href="two-examples-comparing-means.html#cb666-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
-<span id="cb666-4"><a href="two-examples-comparing-means.html#cb666-4"></a><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
-<span id="cb666-5"><a href="two-examples-comparing-means.html#cb666-5"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb666-6"><a href="two-examples-comparing-means.html#cb666-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Battery Running Time, by Manufacturer&quot;</span>,</span>
-<span id="cb666-7"><a href="two-examples-comparing-means.html#cb666-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Running Time (minutes)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Manufacturer&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="two-examples-comparing-means.html#cb667-1"></a><span class="kw">ggplot</span>(battery, <span class="kw">aes</span>(<span class="dt">x =</span> type, <span class="dt">y =</span> time, <span class="dt">fill =</span> type)) <span class="op">+</span></span>
+<span id="cb667-2"><a href="two-examples-comparing-means.html#cb667-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type), <span class="dt">alpha =</span> <span class="fl">0.75</span>, <span class="dt">width =</span> <span class="fl">0.125</span>) <span class="op">+</span></span>
+<span id="cb667-3"><a href="two-examples-comparing-means.html#cb667-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb667-4"><a href="two-examples-comparing-means.html#cb667-4"></a><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></span>
+<span id="cb667-5"><a href="two-examples-comparing-means.html#cb667-5"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb667-6"><a href="two-examples-comparing-means.html#cb667-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Battery Running Time, by Manufacturer&quot;</span>,</span>
+<span id="cb667-7"><a href="two-examples-comparing-means.html#cb667-7"></a>       <span class="dt">y =</span> <span class="st">&quot;Running Time (minutes)&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Manufacturer&quot;</span>)</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/battery1-fig-1.png" width="672" /></p>
 <p>We can generate histograms, too, but that’s an issue, because we have so few observations.</p>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="two-examples-comparing-means.html#cb667-1"></a><span class="kw">ggplot</span>(battery, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">fill =</span> type)) <span class="op">+</span></span>
-<span id="cb667-2"><a href="two-examples-comparing-means.html#cb667-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
-<span id="cb667-3"><a href="two-examples-comparing-means.html#cb667-3"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>type) <span class="op">+</span></span>
-<span id="cb667-4"><a href="two-examples-comparing-means.html#cb667-4"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb667-5"><a href="two-examples-comparing-means.html#cb667-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Battery Running Time, by Manufacturer&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="two-examples-comparing-means.html#cb668-1"></a><span class="kw">ggplot</span>(battery, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">fill =</span> type)) <span class="op">+</span></span>
+<span id="cb668-2"><a href="two-examples-comparing-means.html#cb668-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
+<span id="cb668-3"><a href="two-examples-comparing-means.html#cb668-3"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>type) <span class="op">+</span></span>
+<span id="cb668-4"><a href="two-examples-comparing-means.html#cb668-4"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb668-5"><a href="two-examples-comparing-means.html#cb668-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Battery Running Time, by Manufacturer&quot;</span>)</span></code></pre></div>
 <p><img src="431-notes_files/figure-html/histogram-battery-fig-1.png" width="672" /></p>
-<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="two-examples-comparing-means.html#cb668-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(time <span class="op">~</span><span class="st"> </span>type, <span class="dt">data =</span> battery)</span></code></pre></div>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="two-examples-comparing-means.html#cb669-1"></a>mosaic<span class="op">::</span><span class="kw">favstats</span>(time <span class="op">~</span><span class="st"> </span>type, <span class="dt">data =</span> battery)</span></code></pre></div>
 <pre><code>        type   min    Q1 median      Q3   max     mean        sd n missing
 1 brand name 169.5 175.3 187.35 197.075 205.5 186.8833 14.374341 6       0
 2    generic 194.0 203.5 205.00 208.675 222.5 206.5667  9.366251 6       0</code></pre>
@@ -987,14 +987,14 @@ cols(
 <div id="the-breakfast-study-does-oat-bran-cereal-lower-serum-ldl-cholesterol" class="section level2">
 <h2><span class="header-section-number">20.2</span> The Breakfast Study: Does Oat Bran Cereal Lower Serum LDL Cholesterol?</h2>
 <p><span class="citation">Norman and Streiner (<a href="#ref-Norman-Streiner" role="doc-biblioref">2014</a>)</span> describe a crossover study that was conducted to investigate whether oat bran cereal helps to lower serum cholesterol levels in hypercholesterolemic males. Fourteen such individuals were randomly placed on a diet that included either oat bran or corn flakes; after two weeks, their low-density lipoprotein (LDL) cholesterol levels, in mmol/l were recorded. Each subject was then switched to the alternative diet. After a second two-week period, the LDL cholesterol level of each subject was again recorded.</p>
-<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="two-examples-comparing-means.html#cb670-1"></a>breakfast &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/breakfast.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="two-examples-comparing-means.html#cb671-1"></a>breakfast &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/breakfast.csv&quot;</span>)</span></code></pre></div>
 <pre><code>Parsed with column specification:
 cols(
   subject = col_double(),
   cornflakes = col_double(),
   oatbran = col_double()
 )</code></pre>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="two-examples-comparing-means.html#cb672-1"></a>breakfast</span></code></pre></div>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="two-examples-comparing-means.html#cb673-1"></a>breakfast</span></code></pre></div>
 <pre><code># A tibble: 14 x 3
    subject cornflakes oatbran
      &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
@@ -1039,16 +1039,16 @@ cols(
 <div id="question-7.-did-pairing-help-reduce-nuisance-variation" class="section level3">
 <h3><span class="header-section-number">20.2.7</span> Question 7. Did pairing help reduce nuisance variation?</h3>
 <p>After we drop the <code>breakfast.csv</code> file into the <code>breakfast</code> data frame, we look at the correlation of cornflakes and oatbran results across our 14 subjects.</p>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="two-examples-comparing-means.html#cb674-1"></a>breakfast <span class="op">%$%</span><span class="st"> </span><span class="kw">cor</span>(cornflakes, oatbran)</span></code></pre></div>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="two-examples-comparing-means.html#cb675-1"></a>breakfast <span class="op">%$%</span><span class="st"> </span><span class="kw">cor</span>(cornflakes, oatbran)</span></code></pre></div>
 <pre><code>[1] 0.9233247</code></pre>
 <p>The sample Pearson correlation coefficient is very strong and positive at 0.92, so the paired samples approach will use these data far more effectively than the (incorrect) independent samples approach.</p>
 </div>
 <div id="question-8.-what-does-the-distribution-of-paired-differences-tell-us" class="section level3">
 <h3><span class="header-section-number">20.2.8</span> Question 8. What does the distribution of paired differences tell us?</h3>
 <p>We summarize the distribution of the paired differences (cornflakes - oatbran) below.</p>
-<p><img src="431-notes_files/figure-html/unnamed-chunk-232-1.png" width="672" /></p>
+<p><img src="431-notes_files/figure-html/unnamed-chunk-240-1.png" width="672" /></p>
 <p>The Normal distribution doesn’t look too ridiculous in this case for the paired (cornflakes-oatbran) differences. Suppose we assume Normality and run the paired t test.</p>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="two-examples-comparing-means.html#cb676-1"></a><span class="kw">t.test</span>(breakfast<span class="op">$</span>cornflakes <span class="op">-</span><span class="st"> </span>breakfast<span class="op">$</span>oatbran)</span></code></pre></div>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="two-examples-comparing-means.html#cb677-1"></a><span class="kw">t.test</span>(breakfast<span class="op">$</span>cornflakes <span class="op">-</span><span class="st"> </span>breakfast<span class="op">$</span>oatbran)</span></code></pre></div>
 <pre><code>
 	One Sample t-test
 
@@ -1081,8 +1081,8 @@ mean of x
 <div id="the-r-calculations" class="section level3">
 <h3><span class="header-section-number">20.3.2</span> The R Calculations</h3>
 <p><strong>Question 1.</strong> What sample size will be required to yield 90% power to detect an effect half the size of the effect we observed in the breakfast study, in a new paired samples study using a two-tailed 5% significance level?</p>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="two-examples-comparing-means.html#cb678-1"></a><span class="kw">power.t.test</span>(<span class="dt">delta =</span> <span class="fl">0.18</span>, <span class="dt">sd =</span> <span class="fl">0.41</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, </span>
-<span id="cb678-2"><a href="two-examples-comparing-means.html#cb678-2"></a>             <span class="dt">power =</span> <span class="fl">0.9</span>, <span class="dt">type=</span><span class="st">&quot;paired&quot;</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="two-examples-comparing-means.html#cb679-1"></a><span class="kw">power.t.test</span>(<span class="dt">delta =</span> <span class="fl">0.18</span>, <span class="dt">sd =</span> <span class="fl">0.41</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, </span>
+<span id="cb679-2"><a href="two-examples-comparing-means.html#cb679-2"></a>             <span class="dt">power =</span> <span class="fl">0.9</span>, <span class="dt">type=</span><span class="st">&quot;paired&quot;</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 <pre><code>
      Paired t test power calculation 
 
@@ -1096,8 +1096,8 @@ mean of x
 NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code></pre>
 <p>And so our new study will require at least <strong>57 subjects</strong> (each measured in two circumstances, so 114 total measurements) in order to achieve at least 90% power to detect the difference of 0.18 mmol/l while meeting these specifications.</p>
 <p><strong>Question 2.</strong> What if we were willing to accept only 80% power?</p>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="two-examples-comparing-means.html#cb680-1"></a><span class="kw">power.t.test</span>(<span class="dt">delta =</span> <span class="fl">0.18</span>, <span class="dt">sd =</span> <span class="fl">0.41</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, </span>
-<span id="cb680-2"><a href="two-examples-comparing-means.html#cb680-2"></a>             <span class="dt">power =</span> <span class="fl">0.8</span>, <span class="dt">type=</span><span class="st">&quot;paired&quot;</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="two-examples-comparing-means.html#cb681-1"></a><span class="kw">power.t.test</span>(<span class="dt">delta =</span> <span class="fl">0.18</span>, <span class="dt">sd =</span> <span class="fl">0.41</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, </span>
+<span id="cb681-2"><a href="two-examples-comparing-means.html#cb681-2"></a>             <span class="dt">power =</span> <span class="fl">0.8</span>, <span class="dt">type=</span><span class="st">&quot;paired&quot;</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 <pre><code>
      Paired t test power calculation 
 
@@ -1114,8 +1114,8 @@ NOTE: n is number of *pairs*, sd is std.dev. of *differences* within pairs</code
 <div id="independent-samples-instead-of-paired-samples" class="section level3">
 <h3><span class="header-section-number">20.3.3</span> Independent samples, instead of paired samples?</h3>
 <p>What would happen if, instead of doing a paired samples study, we did one using independent samples? Assuming we used a balanced design, and assigned the same number of different people at random to either the oatbran supplement or regular cornflakes alone, we could do such a study, but it would require many more people to obtain similar power to the paired samples study.</p>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="two-examples-comparing-means.html#cb682-1"></a><span class="kw">power.t.test</span>(<span class="dt">delta =</span> <span class="fl">0.18</span>, <span class="dt">sd =</span> <span class="fl">0.41</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, </span>
-<span id="cb682-2"><a href="two-examples-comparing-means.html#cb682-2"></a>             <span class="dt">power =</span> <span class="fl">0.9</span>, <span class="dt">type=</span><span class="st">&quot;two.sample&quot;</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="two-examples-comparing-means.html#cb683-1"></a><span class="kw">power.t.test</span>(<span class="dt">delta =</span> <span class="fl">0.18</span>, <span class="dt">sd =</span> <span class="fl">0.41</span>, <span class="dt">sig.level =</span> <span class="fl">0.05</span>, </span>
+<span id="cb683-2"><a href="two-examples-comparing-means.html#cb683-2"></a>             <span class="dt">power =</span> <span class="fl">0.9</span>, <span class="dt">type=</span><span class="st">&quot;two.sample&quot;</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
 <pre><code>
      Two-sample t test power calculation 
 

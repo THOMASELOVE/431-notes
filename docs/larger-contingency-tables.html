@@ -865,11 +865,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="getting-the-table-into-r" class="section level3">
 <h3><span class="header-section-number">25.1.1</span> Getting the Table into R</h3>
 <p>To answer this, we’ll have to get the data from this contingency table into a matrix in R. Here’s one approach…</p>
-<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="larger-contingency-tables.html#cb836-1"></a>T1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">16</span>,<span class="dv">26</span>,<span class="dv">29</span>,<span class="dv">24</span>,<span class="dv">26</span>,<span class="dv">18</span>), <span class="dt">ncol=</span><span class="dv">3</span>, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</span>
-<span id="cb836-2"><a href="larger-contingency-tables.html#cb836-2"></a><span class="kw">rownames</span>(T1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Active&quot;</span>, <span class="st">&quot;Placebo&quot;</span>)</span>
-<span id="cb836-3"><a href="larger-contingency-tables.html#cb836-3"></a><span class="kw">colnames</span>(T1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;None&quot;</span>, <span class="st">&quot;Partial&quot;</span>, <span class="st">&quot;Complete&quot;</span>)</span>
-<span id="cb836-4"><a href="larger-contingency-tables.html#cb836-4"></a></span>
-<span id="cb836-5"><a href="larger-contingency-tables.html#cb836-5"></a>T1</span></code></pre></div>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="larger-contingency-tables.html#cb837-1"></a>T1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">16</span>,<span class="dv">26</span>,<span class="dv">29</span>,<span class="dv">24</span>,<span class="dv">26</span>,<span class="dv">18</span>), <span class="dt">ncol=</span><span class="dv">3</span>, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</span>
+<span id="cb837-2"><a href="larger-contingency-tables.html#cb837-2"></a><span class="kw">rownames</span>(T1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Active&quot;</span>, <span class="st">&quot;Placebo&quot;</span>)</span>
+<span id="cb837-3"><a href="larger-contingency-tables.html#cb837-3"></a><span class="kw">colnames</span>(T1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;None&quot;</span>, <span class="st">&quot;Partial&quot;</span>, <span class="st">&quot;Complete&quot;</span>)</span>
+<span id="cb837-4"><a href="larger-contingency-tables.html#cb837-4"></a></span>
+<span id="cb837-5"><a href="larger-contingency-tables.html#cb837-5"></a>T1</span></code></pre></div>
 <pre><code>        None Partial Complete
 Active    16      26       29
 Placebo   24      26       18</code></pre>
@@ -877,18 +877,18 @@ Placebo   24      26       18</code></pre>
 <div id="manipulating-the-tables-presentation" class="section level3">
 <h3><span class="header-section-number">25.1.2</span> Manipulating the Table’s presentation</h3>
 <p>We can add margins to the matrix to get a table including row and column totals.</p>
-<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="larger-contingency-tables.html#cb838-1"></a><span class="kw">addmargins</span>(T1)</span></code></pre></div>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="larger-contingency-tables.html#cb839-1"></a><span class="kw">addmargins</span>(T1)</span></code></pre></div>
 <pre><code>        None Partial Complete Sum
 Active    16      26       29  71
 Placebo   24      26       18  68
 Sum       40      52       47 139</code></pre>
 <p>Instead of the counts, we can tabulate the proportion of all patients within each cell.</p>
-<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="larger-contingency-tables.html#cb840-1"></a><span class="kw">prop.table</span>(T1)</span></code></pre></div>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="larger-contingency-tables.html#cb841-1"></a><span class="kw">prop.table</span>(T1)</span></code></pre></div>
 <pre><code>             None   Partial  Complete
 Active  0.1151079 0.1870504 0.2086331
 Placebo 0.1726619 0.1870504 0.1294964</code></pre>
 <p>Now, to actually obtain a <em>p</em> value and perform the significance test with <span class="math inline">\(H_0\)</span>: rows and columns are independent vs. <span class="math inline">\(H_A\)</span>: rows and columns are associated, we simply run a Pearson chi-square test on T1 …</p>
-<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="larger-contingency-tables.html#cb842-1"></a><span class="kw">chisq.test</span>(T1)</span></code></pre></div>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="larger-contingency-tables.html#cb843-1"></a><span class="kw">chisq.test</span>(T1)</span></code></pre></div>
 <pre><code>
 	Pearson&#39;s Chi-squared test
 
@@ -896,7 +896,7 @@ data:  T1
 X-squared = 4.1116, df = 2, p-value = 0.128</code></pre>
 <p>Thanks to a p-value of about 0.13 (using the Pearson chi-square test) our conclusion would be to retain the null hypothesis of independence in this setting.</p>
 <p>We could have run a Fisher’s exact test, too, if we needed it.</p>
-<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="larger-contingency-tables.html#cb844-1"></a><span class="kw">fisher.test</span>(T1)</span></code></pre></div>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="larger-contingency-tables.html#cb845-1"></a><span class="kw">fisher.test</span>(T1)</span></code></pre></div>
 <pre><code>
 	Fisher&#39;s Exact Test for Count Data
 
@@ -986,13 +986,13 @@ alternative hypothesis: two.sided</code></pre>
 <li>The null hypothesis is that the rows and columns are independent.</li>
 <li>The alternative hypothesis is that there is an association between the rows and the columns.</li>
 </ul>
-<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="larger-contingency-tables.html#cb846-1"></a>death.tab &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2040</span>,<span class="dv">367</span>,<span class="dv">327</span>,<span class="dv">149</span>,<span class="dv">60</span>,<span class="dv">48</span>,<span class="dv">288</span>,<span class="dv">25</span>,<span class="dv">70</span>,<span class="dv">703</span>,</span>
-<span id="cb846-2"><a href="larger-contingency-tables.html#cb846-2"></a>                      <span class="dv">197</span>,<span class="dv">252</span>,<span class="dv">425</span>,<span class="dv">62</span>,<span class="dv">88</span>,<span class="dv">121</span>,<span class="dv">72</span>,<span class="dv">79</span>), <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">6</span>)</span>
-<span id="cb846-3"><a href="larger-contingency-tables.html#cb846-3"></a><span class="kw">rownames</span>(death.tab) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1955-65&quot;</span>, <span class="st">&quot;1970&quot;</span>, <span class="st">&quot;1970-71&quot;</span>, <span class="st">&quot;1975-77&quot;</span>, <span class="st">&quot;1977-78&quot;</span>,</span>
-<span id="cb846-4"><a href="larger-contingency-tables.html#cb846-4"></a>                 <span class="st">&quot;1980&quot;</span>)</span>
-<span id="cb846-5"><a href="larger-contingency-tables.html#cb846-5"></a><span class="kw">colnames</span>(death.tab) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Confirmed&quot;</span>, <span class="st">&quot;Inaccurate&quot;</span>, <span class="st">&quot;Incorrect&quot;</span>)</span>
-<span id="cb846-6"><a href="larger-contingency-tables.html#cb846-6"></a> </span>
-<span id="cb846-7"><a href="larger-contingency-tables.html#cb846-7"></a><span class="kw">addmargins</span>(death.tab)</span></code></pre></div>
+<div class="sourceCode" id="cb847"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb847-1"><a href="larger-contingency-tables.html#cb847-1"></a>death.tab &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2040</span>,<span class="dv">367</span>,<span class="dv">327</span>,<span class="dv">149</span>,<span class="dv">60</span>,<span class="dv">48</span>,<span class="dv">288</span>,<span class="dv">25</span>,<span class="dv">70</span>,<span class="dv">703</span>,</span>
+<span id="cb847-2"><a href="larger-contingency-tables.html#cb847-2"></a>                      <span class="dv">197</span>,<span class="dv">252</span>,<span class="dv">425</span>,<span class="dv">62</span>,<span class="dv">88</span>,<span class="dv">121</span>,<span class="dv">72</span>,<span class="dv">79</span>), <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">6</span>)</span>
+<span id="cb847-3"><a href="larger-contingency-tables.html#cb847-3"></a><span class="kw">rownames</span>(death.tab) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1955-65&quot;</span>, <span class="st">&quot;1970&quot;</span>, <span class="st">&quot;1970-71&quot;</span>, <span class="st">&quot;1975-77&quot;</span>, <span class="st">&quot;1977-78&quot;</span>,</span>
+<span id="cb847-4"><a href="larger-contingency-tables.html#cb847-4"></a>                 <span class="st">&quot;1980&quot;</span>)</span>
+<span id="cb847-5"><a href="larger-contingency-tables.html#cb847-5"></a><span class="kw">colnames</span>(death.tab) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Confirmed&quot;</span>, <span class="st">&quot;Inaccurate&quot;</span>, <span class="st">&quot;Incorrect&quot;</span>)</span>
+<span id="cb847-6"><a href="larger-contingency-tables.html#cb847-6"></a> </span>
+<span id="cb847-7"><a href="larger-contingency-tables.html#cb847-7"></a><span class="kw">addmargins</span>(death.tab)</span></code></pre></div>
 <pre><code>        Confirmed Inaccurate Incorrect  Sum
 1955-65      2040        367       327 2734
 1970          149         60        48  257
@@ -1002,7 +1002,7 @@ alternative hypothesis: two.sided</code></pre>
 1980          121         72        79  272
 Sum          3726        783       864 5373</code></pre>
 <p>To see the potential heterogeneity across rows in these data, we should perhaps also look at the proportions of autopsies in each of the three accuracy categories for each study.</p>
-<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="larger-contingency-tables.html#cb848-1"></a><span class="kw">addmargins</span>(<span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(death.tab,<span class="dv">1</span>),<span class="dv">1</span>),<span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="larger-contingency-tables.html#cb849-1"></a><span class="kw">addmargins</span>(<span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">prop.table</span>(death.tab,<span class="dv">1</span>),<span class="dv">1</span>),<span class="dv">2</span>) </span></code></pre></div>
 <pre><code>        Confirmed Inaccurate Incorrect Sum
 1955-65      74.6       13.4      12.0 100
 1970         58.0       23.3      18.7 100
@@ -1011,7 +1011,7 @@ Sum          3726        783       864 5373</code></pre>
 1977-78      73.9       10.8      15.3 100
 1980         44.5       26.5      29.0 100</code></pre>
 <p>In three of the studies, approximately 3/4 of the results were confirmed. In the other three, 45%, 58% and 61% were confirmed. It looks like there’s a fair amount of variation in results across studies. To see if this is true, formally, we run Pearson’s chi-square test of independence, where the null hypothesis is that the rows and columns are independent, and the alternative hypothesis is that there is an association between the rows and the columns.</p>
-<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="larger-contingency-tables.html#cb850-1"></a><span class="kw">chisq.test</span>(death.tab)</span></code></pre></div>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="larger-contingency-tables.html#cb851-1"></a><span class="kw">chisq.test</span>(death.tab)</span></code></pre></div>
 <pre><code>
 	Pearson&#39;s Chi-squared test
 
@@ -1027,16 +1027,16 @@ X-squared = 209.09, df = 10, p-value &lt; 2.2e-16</code></pre>
 <div id="smoking-and-mortality-in-the-uk" class="section level3">
 <h3><span class="header-section-number">25.4.1</span> Smoking and Mortality in the UK</h3>
 <p>In the early 1970s and then again 20 years later, in Whickham, United Kingdom, surveys yielded the following relationship between whether a person was a smoker at the time of the original survey and whether they were still alive 20 years later.</p>
-<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="larger-contingency-tables.html#cb852-1"></a>whickham1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">502</span>, <span class="dv">230</span>, <span class="dv">443</span>, <span class="dv">139</span>), <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">2</span>)</span>
-<span id="cb852-2"><a href="larger-contingency-tables.html#cb852-2"></a><span class="kw">rownames</span>(whickham1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Non-Smoker&quot;</span>, <span class="st">&quot;Smoker&quot;</span>)</span>
-<span id="cb852-3"><a href="larger-contingency-tables.html#cb852-3"></a><span class="kw">colnames</span>(whickham1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</span>
-<span id="cb852-4"><a href="larger-contingency-tables.html#cb852-4"></a><span class="kw">addmargins</span>(whickham1)</span></code></pre></div>
+<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="larger-contingency-tables.html#cb853-1"></a>whickham1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">502</span>, <span class="dv">230</span>, <span class="dv">443</span>, <span class="dv">139</span>), <span class="dt">byrow=</span><span class="ot">TRUE</span>, <span class="dt">nrow=</span><span class="dv">2</span>)</span>
+<span id="cb853-2"><a href="larger-contingency-tables.html#cb853-2"></a><span class="kw">rownames</span>(whickham1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Non-Smoker&quot;</span>, <span class="st">&quot;Smoker&quot;</span>)</span>
+<span id="cb853-3"><a href="larger-contingency-tables.html#cb853-3"></a><span class="kw">colnames</span>(whickham1) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</span>
+<span id="cb853-4"><a href="larger-contingency-tables.html#cb853-4"></a><span class="kw">addmargins</span>(whickham1)</span></code></pre></div>
 <pre><code>           Alive Dead  Sum
 Non-Smoker   502  230  732
 Smoker       443  139  582
 Sum          945  369 1314</code></pre>
 <p>Here’s the two-by-two table analysis.</p>
-<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="larger-contingency-tables.html#cb854-1"></a>Epi<span class="op">::</span><span class="kw">twoby2</span>(whickham1)</span></code></pre></div>
+<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="larger-contingency-tables.html#cb855-1"></a>Epi<span class="op">::</span><span class="kw">twoby2</span>(whickham1)</span></code></pre></div>
 <pre><code>2 by 2 table analysis: 
 ------------------------------------------------------ 
 Outcome   : Alive 
@@ -1065,22 +1065,22 @@ Conditional MLE Odds Ratio:  0.6850    0.5307   0.8822
 <div id="the-whickham-data-with-age-too" class="section level3">
 <h3><span class="header-section-number">25.4.2</span> The <code>whickham</code> data with age, too</h3>
 <p>The table below gives the mortality experience separated into subtables by initial age group.</p>
-<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="larger-contingency-tables.html#cb856-1"></a>age &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;18-24&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;25-34&quot;</span>, <span class="dv">4</span>), </span>
-<span id="cb856-2"><a href="larger-contingency-tables.html#cb856-2"></a>         <span class="kw">rep</span>(<span class="st">&quot;35-44&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;45-54&quot;</span>, <span class="dv">4</span>), </span>
-<span id="cb856-3"><a href="larger-contingency-tables.html#cb856-3"></a>         <span class="kw">rep</span>(<span class="st">&quot;55-64&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;65-74&quot;</span>, <span class="dv">4</span>), </span>
-<span id="cb856-4"><a href="larger-contingency-tables.html#cb856-4"></a>         <span class="kw">rep</span>(<span class="st">&quot;75+&quot;</span>, <span class="dv">4</span>))</span>
-<span id="cb856-5"><a href="larger-contingency-tables.html#cb856-5"></a>smoking &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Smoker&quot;</span>, <span class="st">&quot;Smoker&quot;</span>, <span class="st">&quot;Non-Smoker&quot;</span>, <span class="st">&quot;Non-Smoker&quot;</span>), <span class="dv">7</span>))</span>
-<span id="cb856-6"><a href="larger-contingency-tables.html#cb856-6"></a>status &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="st">&quot;Dead&quot;</span>), <span class="dv">14</span>))</span>
-<span id="cb856-7"><a href="larger-contingency-tables.html#cb856-7"></a>counts &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">53</span>, <span class="dv">2</span>, <span class="dv">61</span>, <span class="dv">1</span>, <span class="dv">121</span>, <span class="dv">3</span>, <span class="dv">152</span>, <span class="dv">5</span>,</span>
-<span id="cb856-8"><a href="larger-contingency-tables.html#cb856-8"></a>            <span class="dv">95</span>, <span class="dv">14</span>, <span class="dv">114</span>, <span class="dv">7</span>, <span class="dv">103</span>, <span class="dv">27</span>, <span class="dv">66</span>, <span class="dv">12</span>,</span>
-<span id="cb856-9"><a href="larger-contingency-tables.html#cb856-9"></a>            <span class="dv">64</span>, <span class="dv">51</span>, <span class="dv">81</span>, <span class="dv">40</span>, <span class="dv">7</span>, <span class="dv">29</span>, <span class="dv">28</span>, <span class="dv">101</span>,</span>
-<span id="cb856-10"><a href="larger-contingency-tables.html#cb856-10"></a>            <span class="dv">0</span>, <span class="dv">13</span>, <span class="dv">0</span>, <span class="dv">64</span>)</span>
-<span id="cb856-11"><a href="larger-contingency-tables.html#cb856-11"></a></span>
-<span id="cb856-12"><a href="larger-contingency-tables.html#cb856-12"></a>whickham2 &lt;-<span class="st"> </span><span class="kw">tibble</span>(smoking, status, age, counts) <span class="op">%&gt;%</span></span>
-<span id="cb856-13"><a href="larger-contingency-tables.html#cb856-13"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">smoking =</span> <span class="kw">factor</span>(smoking),</span>
-<span id="cb856-14"><a href="larger-contingency-tables.html#cb856-14"></a>           <span class="dt">status =</span> <span class="kw">factor</span>(status),</span>
-<span id="cb856-15"><a href="larger-contingency-tables.html#cb856-15"></a>           <span class="dt">age =</span> <span class="kw">factor</span>(age))</span></code></pre></div>
-<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="larger-contingency-tables.html#cb857-1"></a>whickham2</span></code></pre></div>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="larger-contingency-tables.html#cb857-1"></a>age &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;18-24&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;25-34&quot;</span>, <span class="dv">4</span>), </span>
+<span id="cb857-2"><a href="larger-contingency-tables.html#cb857-2"></a>         <span class="kw">rep</span>(<span class="st">&quot;35-44&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;45-54&quot;</span>, <span class="dv">4</span>), </span>
+<span id="cb857-3"><a href="larger-contingency-tables.html#cb857-3"></a>         <span class="kw">rep</span>(<span class="st">&quot;55-64&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;65-74&quot;</span>, <span class="dv">4</span>), </span>
+<span id="cb857-4"><a href="larger-contingency-tables.html#cb857-4"></a>         <span class="kw">rep</span>(<span class="st">&quot;75+&quot;</span>, <span class="dv">4</span>))</span>
+<span id="cb857-5"><a href="larger-contingency-tables.html#cb857-5"></a>smoking &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Smoker&quot;</span>, <span class="st">&quot;Smoker&quot;</span>, <span class="st">&quot;Non-Smoker&quot;</span>, <span class="st">&quot;Non-Smoker&quot;</span>), <span class="dv">7</span>))</span>
+<span id="cb857-6"><a href="larger-contingency-tables.html#cb857-6"></a>status &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Alive&quot;</span>, <span class="st">&quot;Dead&quot;</span>), <span class="dv">14</span>))</span>
+<span id="cb857-7"><a href="larger-contingency-tables.html#cb857-7"></a>counts &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">53</span>, <span class="dv">2</span>, <span class="dv">61</span>, <span class="dv">1</span>, <span class="dv">121</span>, <span class="dv">3</span>, <span class="dv">152</span>, <span class="dv">5</span>,</span>
+<span id="cb857-8"><a href="larger-contingency-tables.html#cb857-8"></a>            <span class="dv">95</span>, <span class="dv">14</span>, <span class="dv">114</span>, <span class="dv">7</span>, <span class="dv">103</span>, <span class="dv">27</span>, <span class="dv">66</span>, <span class="dv">12</span>,</span>
+<span id="cb857-9"><a href="larger-contingency-tables.html#cb857-9"></a>            <span class="dv">64</span>, <span class="dv">51</span>, <span class="dv">81</span>, <span class="dv">40</span>, <span class="dv">7</span>, <span class="dv">29</span>, <span class="dv">28</span>, <span class="dv">101</span>,</span>
+<span id="cb857-10"><a href="larger-contingency-tables.html#cb857-10"></a>            <span class="dv">0</span>, <span class="dv">13</span>, <span class="dv">0</span>, <span class="dv">64</span>)</span>
+<span id="cb857-11"><a href="larger-contingency-tables.html#cb857-11"></a></span>
+<span id="cb857-12"><a href="larger-contingency-tables.html#cb857-12"></a>whickham2 &lt;-<span class="st"> </span><span class="kw">tibble</span>(smoking, status, age, counts) <span class="op">%&gt;%</span></span>
+<span id="cb857-13"><a href="larger-contingency-tables.html#cb857-13"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">smoking =</span> <span class="kw">factor</span>(smoking),</span>
+<span id="cb857-14"><a href="larger-contingency-tables.html#cb857-14"></a>           <span class="dt">status =</span> <span class="kw">factor</span>(status),</span>
+<span id="cb857-15"><a href="larger-contingency-tables.html#cb857-15"></a>           <span class="dt">age =</span> <span class="kw">factor</span>(age))</span></code></pre></div>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="larger-contingency-tables.html#cb858-1"></a>whickham2</span></code></pre></div>
 <pre><code># A tibble: 28 x 4
    smoking    status age   counts
    &lt;fct&gt;      &lt;fct&gt;  &lt;fct&gt;  &lt;dbl&gt;
@@ -1095,10 +1095,10 @@ Conditional MLE Odds Ratio:  0.6850    0.5307   0.8822
  9 Smoker     Alive  35-44     95
 10 Smoker     Dead   35-44     14
 # ... with 18 more rows</code></pre>
-<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="larger-contingency-tables.html#cb859-1"></a>whick_t2 &lt;-<span class="st"> </span></span>
-<span id="cb859-2"><a href="larger-contingency-tables.html#cb859-2"></a><span class="st">    </span><span class="kw">xtabs</span>(counts <span class="op">~</span><span class="st"> </span>smoking <span class="op">+</span><span class="st"> </span>status <span class="op">+</span><span class="st"> </span>age, <span class="dt">data =</span> whickham2)</span>
-<span id="cb859-3"><a href="larger-contingency-tables.html#cb859-3"></a></span>
-<span id="cb859-4"><a href="larger-contingency-tables.html#cb859-4"></a>whick_t2</span></code></pre></div>
+<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="larger-contingency-tables.html#cb860-1"></a>whick_t2 &lt;-<span class="st"> </span></span>
+<span id="cb860-2"><a href="larger-contingency-tables.html#cb860-2"></a><span class="st">    </span><span class="kw">xtabs</span>(counts <span class="op">~</span><span class="st"> </span>smoking <span class="op">+</span><span class="st"> </span>status <span class="op">+</span><span class="st"> </span>age, <span class="dt">data =</span> whickham2)</span>
+<span id="cb860-3"><a href="larger-contingency-tables.html#cb860-3"></a></span>
+<span id="cb860-4"><a href="larger-contingency-tables.html#cb860-4"></a>whick_t2</span></code></pre></div>
 <pre><code>, , age = 18-24
 
             status
@@ -1189,7 +1189,7 @@ smoking      Alive Dead
 <p>Thus, for all age groups except 25-34 year olds, not smoking appears to be associated with higher odds of remaining alive.</p>
 <p>Why? Not surprisingly, there is a strong association between age and mortality, with mortality rates being very low for young people (2.5% for 18-24 year olds) and increasing to 100% for 75+ year olds.</p>
 <p>There is also an association between age and smoking, with smoking rates peaking in the 45-54 year old range and then falling off rapidly. In particular, respondents who were 65 and older at the time of the first survey had very low smoking rates (25.4%) but very high mortality rates (85.5%). Smoking was hardly the cause, however, since even among the 65-74 year olds mortality was higher among smokers (80.6%) than it was among non-smokers (78.3%). A flat version of the table (<code>ftable</code> in R) can help us with these calculations.</p>
-<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="larger-contingency-tables.html#cb861-1"></a><span class="kw">ftable</span>(whick_t2)</span></code></pre></div>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="larger-contingency-tables.html#cb862-1"></a><span class="kw">ftable</span>(whick_t2)</span></code></pre></div>
 <pre><code>                  age 18-24 25-34 35-44 45-54 55-64 65-74 75+
 smoking    status                                            
 Non-Smoker Alive         61   152   114    66    81    28   0
@@ -1201,15 +1201,15 @@ Smoker     Alive         53   121    95   103    64     7   0
 <h3><span class="header-section-number">25.4.3</span> Checking Assumptions: The Woolf test</h3>
 <p>We can also obtain a test (using the <code>woolf_test</code> function, in the <code>vcd</code> library) to see if the common odds ratio estimated in the Mantel-Haenszel procedure is reasonable for all age groups. In other words, the Woolf test is a test of the assumption of homogeneous odds ratios across the six age groups.</p>
 <p>If the Woolf test is significant, it suggests that the Cochran-Mantel-Haenszel test is not appropriate, since the odds ratios for smoking and mortality vary too much in the sub-tables by age group. Here, we have the following log odds ratios (estimated using conditional maximum likelihood, rather than cross-product ratios) and the associated Woolf test.</p>
-<div class="sourceCode" id="cb863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb863-1"><a href="larger-contingency-tables.html#cb863-1"></a><span class="co">## Next two results use the vcd package</span></span>
-<span id="cb863-2"><a href="larger-contingency-tables.html#cb863-2"></a>vcd<span class="op">::</span><span class="kw">oddsratio</span>(whick_t2, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="larger-contingency-tables.html#cb864-1"></a><span class="co">## Next two results use the vcd package</span></span>
+<span id="cb864-2"><a href="larger-contingency-tables.html#cb864-2"></a>vcd<span class="op">::</span><span class="kw">oddsratio</span>(whick_t2, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>log odds ratios for smoking and status by age 
 
       18-24       25-34       35-44       45-54       55-64       65-74 
  0.65018114 -0.22473479  0.84069420  0.34608770  0.47421763  0.09933253 
         75+ 
 -1.56397554 </code></pre>
-<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="larger-contingency-tables.html#cb865-1"></a>vcd<span class="op">::</span><span class="kw">woolf_test</span>(whick_t2)</span></code></pre></div>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="larger-contingency-tables.html#cb866-1"></a>vcd<span class="op">::</span><span class="kw">woolf_test</span>(whick_t2)</span></code></pre></div>
 <pre><code>
 	Woolf-test on Homogeneity of Odds Ratios (no 3-Way assoc.)
 
@@ -1223,7 +1223,7 @@ X-squared = 3.2061, df = 6, p-value = 0.7826</code></pre>
 <p>The null hypothesis would be that, in the population, smoking and mortality are independent within strata formed by age group. In other words, <span class="math inline">\(H_0\)</span> requires that smoking be of no value in predicting mortality once age has been accounted for.</p>
 <p>The alternative hypothesis would be that, in the population, smoking and mortality are associated within the strata formed by age group. In other words, <span class="math inline">\(H_A\)</span> requires that smoking be of at least some value in predicting mortality even after age has been accounted for.</p>
 <p>We can consider the evidence that helps us choose between these two hypotheses with a Cochran-Mantel-Haenszel test, which is obtained in R through the <code>mantelhaen.test</code> function. This test requires us to assume that, in the population and within each age group, the smoking-mortality odds ratio is the same. Essentially, this means that the association of smoking with mortality is the same for older and younger people.</p>
-<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="larger-contingency-tables.html#cb867-1"></a><span class="kw">mantelhaen.test</span>(whick_t2, <span class="dt">conf.level  =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="larger-contingency-tables.html#cb868-1"></a><span class="kw">mantelhaen.test</span>(whick_t2, <span class="dt">conf.level  =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>
 	Mantel-Haenszel chi-squared test with continuity correction
 
@@ -1244,7 +1244,7 @@ common odds ratio
 <div id="without-the-continuity-correction" class="section level3">
 <h3><span class="header-section-number">25.4.5</span> Without the Continuity Correction</h3>
 <p>By default, R presents the Mantel-Haenszel test with a continuity correction, when used for a 2x2xK table. In virtually all cases, go ahead and do this, but as you can see below, the difference it makes in this case is modest.</p>
-<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="larger-contingency-tables.html#cb869-1"></a><span class="kw">mantelhaen.test</span>(whick_t2, <span class="dt">correct=</span><span class="ot">FALSE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="larger-contingency-tables.html#cb870-1"></a><span class="kw">mantelhaen.test</span>(whick_t2, <span class="dt">correct=</span><span class="ot">FALSE</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <pre><code>
 	Mantel-Haenszel chi-squared test without continuity correction
 
