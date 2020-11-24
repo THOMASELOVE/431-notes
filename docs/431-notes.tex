@@ -243,7 +243,7 @@ To start, I'll present a series of commands I run at the beginning of these Note
 \KeywordTok{library}\NormalTok{(rms)}
 \KeywordTok{library}\NormalTok{(mosaic)}
 \KeywordTok{library}\NormalTok{(Epi)}
-\KeywordTok{library}\NormalTok{(tidymodels) }\CommentTok{# note: tidymodels includes the broom package}
+\KeywordTok{library}\NormalTok{(broom) }\CommentTok{# note: tidymodels includes the broom package}
 \KeywordTok{library}\NormalTok{(tidyverse) }\CommentTok{# note: tidyverse includes the dplyr and ggplot2 packages}
 
 \KeywordTok{theme_set}\NormalTok{(}\KeywordTok{theme_bw}\NormalTok{())}
@@ -18217,7 +18217,7 @@ In the remaining chapters, we will build on that foundation in three additional 
 \hypertarget{add-some-packages}{%
 \section{Add Some Packages}\label{add-some-packages}}
 
-Here, we'll add several packages to those we've loaded at the start of the notes, and, as always, finish up with the \texttt{tidymodels} and \texttt{tidyverse} packages.
+Here, we'll add several packages to those we've loaded at the start of the notes, and, as always, finish up with the \texttt{broom} and \texttt{tidyverse} packages.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -18226,7 +18226,7 @@ Here, we'll add several packages to those we've loaded at the start of the notes
 \KeywordTok{library}\NormalTok{(car)}
 \KeywordTok{library}\NormalTok{(GGally)}
 \KeywordTok{library}\NormalTok{(ggrepel)}
-\KeywordTok{library}\NormalTok{(tidymodels)}
+\KeywordTok{library}\NormalTok{(broom)}
 \KeywordTok{library}\NormalTok{(tidyverse)}
 \end{Highlighting}
 \end{Shaded}
@@ -20734,6 +20734,2407 @@ It's worth remembering that none of the three models was particularly strong. Ev
 \end{enumerate}
 
 In this case, I'd pick Model C from among these options, based mainly on the stronger test sample results and the fact that it's a smaller model (with fewer predictors) and if none of the models are going to do very well in terms of predicting \texttt{chol}, there's not much to choose from anyway.
+
+\hypertarget{species-found-on-the-galapagos-islands}{%
+\chapter{Species Found on the Galapagos Islands}\label{species-found-on-the-galapagos-islands}}
+
+This chapter was written in 2016 and 2017, before (for example) I knew anything about the \texttt{broom} package. Some of the methods involved are no longer part of what we usually do, but I thought it might be helpful to see some alternate approaches. Feel free to stick with the methods shown in the previous chapters if you want to do something more tidy.
+
+\hypertarget{a-little-background}{%
+\section{A Little Background}\label{a-little-background}}
+
+The \texttt{gala} data describe describe features of the 30 Galapagos Islands.
+
+The Galapagos Islands are found about 900 km west of South America: specifically the continental part of Ecuador. The Islands form a province of Ecuador and serve as a national park and marine reserve. They are noted for their vast numbers of unique (or endemic) species and were studied by Charles Darwin during the voyage of the Beagle. I didn't know most of this, but it's on Wikipedia, so I'll assume it's all true until someone sets me straight.
+
+\begin{figure}
+\centering
+\includegraphics{figures/galapic.jpg}
+\caption{galapic.jpg}
+\end{figure}
+
+\hypertarget{sources}{%
+\subsection{Sources}\label{sources}}
+
+The data were initially presented by Johnson M and Raven P (1973) Species number and endemism: the Galapagos Archipelago revisited. \emph{Science} 179: 893-895 and also appear in several regression texts, including my source: \citet{Faraway2015}. Note that Faraway filled in some missing data to simplify things a bit. A similar version of the data is available as part of the \texttt{faraway} library in R, but I encourage you to use the version I supply on our web site.
+
+\hypertarget{variables-in-the-gala-data-frame}{%
+\subsection{\texorpdfstring{Variables in the \texttt{gala} data frame}{Variables in the gala data frame}}\label{variables-in-the-gala-data-frame}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{id} = island identification code
+\item
+  \textbf{island} = island name
+\item
+  \textbf{species} = our outcome, the number of species found on the island
+\item
+  \textbf{area} = the area of the island, in square kilometers
+\item
+  \textbf{elevation} = the highest elevation of the island, in meters
+\item
+  \textbf{nearest} = the distance from the nearest island, in kilometers
+\item
+  \textbf{scruz} = the distance from Santa Cruz Island, in kilometers. Santa Cruz is the home to the largest human population in the Islands, and to the town of Puerto Ayora.
+\item
+  \textbf{adjacent} = the area of the adjacent island, in square kilometers
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 30 x 8
+      id island       species  area elevation nearest scruz adjacent
+   <dbl> <chr>          <dbl> <dbl>     <dbl>   <dbl> <dbl>    <dbl>
+ 1     1 Baltra            58 25.1        346     0.6   0.6     1.84
+ 2     2 Bartolome         31  1.24       109     0.6  26.3   572.  
+ 3     3 Caldwell           3  0.21       114     2.8  58.7     0.78
+ 4     4 Champion          25  0.1         46     1.9  47.4     0.18
+ 5     5 Coamano            2  0.05        77     1.9   1.9   904.  
+ 6     6 Daphne.Major      18  0.34       119     8     8       1.84
+ 7     7 Daphne.Minor      24  0.08        93     6    12       0.34
+ 8     8 Darwin            10  2.33       168    34.1 290.      2.85
+ 9     9 Eden               8  0.03        71     0.4   0.4    18.0 
+10    10 Enderby            2  0.18       112     2.6  50.2     0.1 
+# ... with 20 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Hmisc}\OperatorTok{::}\KeywordTok{describe}\NormalTok{(gala) }\CommentTok{# check for missing and inexplicable values}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+gala 
+
+ 8  Variables      30  Observations
+--------------------------------------------------------------------------------
+id 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       30        1     15.5    10.33     2.45     3.90 
+     .25      .50      .75      .90      .95 
+    8.25    15.50    22.75    27.10    28.55 
+
+lowest :  1  2  3  4  5, highest: 26 27 28 29 30
+--------------------------------------------------------------------------------
+island 
+       n  missing distinct 
+      30        0       30 
+
+lowest : Baltra     Bartolome  Caldwell   Champion   Coamano   
+highest: SantaFe    SantaMaria Seymour    Tortuga    Wolf      
+--------------------------------------------------------------------------------
+species 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       27    0.999    85.23    109.5      2.0      2.9 
+     .25      .50      .75      .90      .95 
+    13.0     42.0     96.0    280.5    319.1 
+
+lowest :   2   3   5   8  10, highest: 237 280 285 347 444
+--------------------------------------------------------------------------------
+area 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       29        1    261.7    478.6   0.0390   0.0770 
+     .25      .50      .75      .90      .95 
+  0.2575   2.5900  59.2375 578.5460 782.6215 
+
+lowest :    0.01    0.03    0.05    0.08    0.10
+highest:  551.62  572.33  634.49  903.82 4669.32
+                                                                            
+Value          0    20    30    60   130   170   550   570   630   900  4670
+Frequency     17     3     1     2     1     1     1     1     1     1     1
+Proportion 0.567 0.100 0.033 0.067 0.033 0.033 0.033 0.033 0.033 0.033 0.033
+
+For the frequency table, variable is rounded to the nearest 10
+--------------------------------------------------------------------------------
+elevation 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       30        1      368    411.1    47.35    68.80 
+     .25      .50      .75      .90      .95 
+   97.75   192.00   435.25   868.20  1229.40 
+
+lowest :   25   46   49   71   76, highest:  777  864  906 1494 1707
+--------------------------------------------------------------------------------
+nearest 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       22    0.997    10.06    13.73    0.445    0.590 
+     .25      .50      .75      .90      .95 
+   0.800    3.050   10.025   34.100   40.205 
+
+lowest :  0.2  0.4  0.5  0.6  0.7, highest: 16.5 29.1 34.1 45.2 47.4
+--------------------------------------------------------------------------------
+scruz 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       29        1    56.98    65.17     0.49     0.60 
+     .25      .50      .75      .90      .95 
+   11.02    46.65    81.08    97.73   193.90 
+
+lowest :   0.0   0.4   0.6   1.9   8.0, highest:  93.1  95.3 119.6 254.7 290.2
+--------------------------------------------------------------------------------
+adjacent 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       21    0.998    261.1    477.8     0.10     0.10 
+     .25      .50      .75      .90      .95 
+    0.52     2.59    59.24   578.55   782.62 
+
+lowest :    0.03    0.10    0.18    0.21    0.34
+highest:  129.49  572.33  634.49  903.82 4669.32
+                                                                
+Value          0    20    30    60   130   570   630   900  4670
+Frequency     17     2     2     2     2     2     1     1     1
+Proportion 0.567 0.067 0.067 0.067 0.067 0.067 0.033 0.033 0.033
+
+For the frequency table, variable is rounded to the nearest 10
+--------------------------------------------------------------------------------
+\end{verbatim}
+
+\hypertarget{dtdp-a-scatterplot-matrix}{%
+\section{DTDP: A Scatterplot Matrix}\label{dtdp-a-scatterplot-matrix}}
+
+After missingness and range checks, the first step in any data analysis problem is to draw the picture. The most useful picture for me in thinking about a regression problem with a reasonably small number of predictors is a scatterplot matrix.
+
+Our outcome, that we are predicting here is the number of \texttt{species}.
+
+We'll use five predictors:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{area}
+\item
+  \texttt{elevation}
+\item
+  \texttt{nearest}
+\item
+  \texttt{scruz} and
+\item
+  \texttt{adjacent}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggpairs}\NormalTok{(gala }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(area, elevation, nearest,}
+\NormalTok{                        scruz, adjacent, species))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-381-1.pdf}
+
+\hypertarget{questions-about-the-scatterplot-matrix}{%
+\subsection{Questions about the Scatterplot Matrix}\label{questions-about-the-scatterplot-matrix}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What are we looking for in the scatterplots in the bottom row?
+\item
+  What can we learn from the Pearson correlations in the right column?
+\item
+  How do the density plots help increase our understanding of the data?
+\item
+  What about the scatterplots that are not in the top row?
+\item
+  What can we learn from the Pearson correlations that compare predictors?
+\end{enumerate}
+
+\hypertarget{fitting-a-kitchen-sink-linear-regression-model}{%
+\section{Fitting A ``Kitchen Sink'' Linear Regression model}\label{fitting-a-kitchen-sink-linear-regression-model}}
+
+Next, we'll fit a multiple linear regression model to predict the number of species based on the five predictors included in the gala data frame (and scatterplot matrix above.) We use the lm command to fit the linear model, and use what is called Wilkinson-Rogers notation to specify the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\NormalTok{area }\OperatorTok{+}\StringTok{ }\NormalTok{elevation }\OperatorTok{+}\StringTok{ }\NormalTok{nearest }\OperatorTok{+}\StringTok{ }\NormalTok{scruz }\OperatorTok{+}\StringTok{ }
+\StringTok{               }\NormalTok{adjacent, }\DataTypeTok{data=}\NormalTok{gala)}
+\KeywordTok{summary}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species ~ area + elevation + nearest + scruz + adjacent, 
+    data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-111.679  -34.898   -7.862   33.460  182.584 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  7.068221  19.154198   0.369 0.715351    
+area        -0.023938   0.022422  -1.068 0.296318    
+elevation    0.319465   0.053663   5.953 3.82e-06 ***
+nearest      0.009144   1.054136   0.009 0.993151    
+scruz       -0.240524   0.215402  -1.117 0.275208    
+adjacent    -0.074805   0.017700  -4.226 0.000297 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 60.98 on 24 degrees of freedom
+Multiple R-squared:  0.7658,	Adjusted R-squared:  0.7171 
+F-statistic:  15.7 on 5 and 24 DF,  p-value: 6.838e-07
+\end{verbatim}
+
+\hypertarget{questions-about-the-kitchen-sink-model-summaries}{%
+\subsection{Questions about the Kitchen Sink Model Summaries}\label{questions-about-the-kitchen-sink-model-summaries}}
+
+What conclusions can we draw from the \texttt{summary} output for this model? Specifically \ldots{}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  What is being predicted? What is the prediction equation?
+\item
+  How do we interpret the \texttt{elevation} estimate of 0.32?
+\item
+  How do we interpret the \texttt{area} estimate of -0.02?
+\item
+  How do we interpret the intercept estimate of 7.07?
+\item
+  Overall, does the model add statistically detectable predictive value over the simplest possible model, using the intercept term alone?
+\item
+  What proportion of the variation in \texttt{species} counts does this model account for?
+\item
+  What does the residual standard error mean in this context?
+\item
+  What can we learn from the standard errors in the coefficient output?
+\item
+  What can we learn from the \texttt{t} values and \texttt{Pr(\textgreater{}\textbar{}t\textbar{})} values in the coefficient output?
+\item
+  How should we interpret the meaning of the \texttt{Adjusted\ R-squared} value?
+\end{enumerate}
+
+\hypertarget{finding-confidence-intervals-for-our-coefficient-estimates}{%
+\section{Finding Confidence Intervals for our Coefficient Estimates}\label{finding-confidence-intervals-for-our-coefficient-estimates}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{confint}\NormalTok{(model1, }\DataTypeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                  2.5 %      97.5 %
+(Intercept) -32.4641006 46.60054205
+area         -0.0702158  0.02233912
+elevation     0.2087102  0.43021935
+nearest      -2.1664857  2.18477363
+scruz        -0.6850926  0.20404416
+adjacent     -0.1113362 -0.03827344
+\end{verbatim}
+
+\hypertarget{questions-about-the-confidence-intervals}{%
+\subsection{Questions about the Confidence Intervals}\label{questions-about-the-confidence-intervals}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{15}
+\tightlist
+\item
+  What can we learn from the provided confidence interval for \texttt{elevation}?
+\item
+  How do the confidence interval results here compare to the t tests in the \texttt{summary} output?
+\end{enumerate}
+
+\hypertarget{measuring-collinearity---the-variance-inflation-factor}{%
+\section{Measuring Collinearity - the Variance Inflation Factor}\label{measuring-collinearity---the-variance-inflation-factor}}
+
+The \textbf{variance inflation factor} (abbreviated VIF) can be used to quantify the impact of multicollinearity in a linear regression model.
+
+The VIF is sometimes interpreted by taking its square root, and then interpreting the result as telling you how much larger the standard error for that coefficient is, as compared to what it would be if that variable were uncorrelated with the other predictors.
+
+In R, the \texttt{vif} function from the \texttt{car} library, when applied to a linear regression model, specifies the variance inflation factors for each of the model's coefficients, as follows.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{vif}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     area elevation   nearest     scruz  adjacent 
+ 2.928145  3.992545  1.766099  1.675031  1.826403 
+\end{verbatim}
+
+So, for instance, the VIF of 3.99 for \texttt{elevation} implies that the standard error of the elevation coefficient is approximately 2 times larger than it would be if elevation was uncorrelated with the other predictors.
+
+\textbf{I will look closely at any VIF value that is greater than 5, although some people use a cutoff of 10.}
+
+\begin{itemize}
+\tightlist
+\item
+  Another collinearity measure called tolerance is simply 1/\texttt{VIF}.
+\item
+  For example, the tolerance for \texttt{elevation} would be 0.25, and the cutoff for a potentially problematic tolerance is either 0.2 or lower, or 0.1 or lower.
+\end{itemize}
+
+To calculate the VIF for a predictor \(x_1\), use all of the other predictors to predict \(x_1\) and find the multiple \(R^2\) value.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{VIF} for \(x_1\) = 1 / (1 - \(R^2_{x_1 | others}\)), and \texttt{tolerance} = (1 - \(R^2_{x_1 | others}\)).
+\end{itemize}
+
+\hypertarget{global-f-testing-of-overall-significance}{%
+\section{Global (F) Testing of Overall Significance}\label{global-f-testing-of-overall-significance}}
+
+Our Galapagos Islands species count regression model (called \texttt{model1}) predicts the count of an island's species using \texttt{area}, \texttt{elevation}, \texttt{nearest}, \texttt{scruz} and \texttt{adjacent}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nullmodel <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\DecValTok{1}\NormalTok{, }\DataTypeTok{data=}\NormalTok{gala)}
+\KeywordTok{summary}\NormalTok{(nullmodel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species ~ 1, data = gala)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-83.23 -72.23 -43.23  10.77 358.77 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    85.23      20.93   4.072 0.000328 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 114.6 on 29 degrees of freedom
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(model1, nullmodel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Model 1: species ~ area + elevation + nearest + scruz + adjacent
+Model 2: species ~ 1
+  Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
+1     24  89231                                  
+2     29 381081 -5   -291850 15.699 6.838e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{questions-about-the-global-test-via-anova}{%
+\subsection{Questions about the Global Test via ANOVA}\label{questions-about-the-global-test-via-anova}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{17}
+\tightlist
+\item
+  How do we interpret the null model fit above?
+\item
+  What are the hypotheses being tested by this ANOVA output?
+\item
+  What conclusions can we draw from the ANOVA output presented here?
+\item
+  Where do we find information regarding the result for the previous question in the summary output for the linear model?
+\item
+  How would we set up an ANOVA model to test whether the ``kitchen sink'' model's predictive value would be meaningfully impacted by removing the \texttt{adjacent} predictor from the model?
+\item
+  Where do we find information regarding these result for the previous question in the \texttt{summary} output for the linear model?
+\item
+  How would we set an ANOVA model to test whether a model with \texttt{area} only would be a detectable improvement over the null model?
+\end{enumerate}
+
+\hypertarget{sequential-testing-in-a-regression-model-with-anova}{%
+\section{Sequential Testing in a Regression Model with ANOVA}\label{sequential-testing-in-a-regression-model-with-anova}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: species
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+area       1 145470  145470 39.1262 1.826e-06 ***
+elevation  1  65664   65664 17.6613 0.0003155 ***
+nearest    1     29      29  0.0079 0.9300674    
+scruz      1  14280   14280  3.8408 0.0617324 .  
+adjacent   1  66406   66406 17.8609 0.0002971 ***
+Residuals 24  89231    3718                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{questions-about-sequential-testing-and-anova}{%
+\subsection{Questions about Sequential Testing and ANOVA}\label{questions-about-sequential-testing-and-anova}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{24}
+\tightlist
+\item
+  What conclusions can we draw from the \texttt{area} row in the output above?
+\item
+  What conclusions can we draw from the \texttt{elevation} row?
+\item
+  Does \texttt{nearest} add statistically detectable predictive value to the model including \texttt{area} and \texttt{elevation}, but none of the other predictors?
+\item
+  Does \texttt{adjacent} add detectable predictive value as last predictor into the model?
+\item
+  Where else in the regression output can we find the answer to the previous question?
+\item
+  How does the mean square of the residuals (3718) relate to the residual standard error?
+\item
+  What percentage of the variation in the species counts is accounted for by area alone?
+\item
+  What percentage of the variation explained by the kitchen sink model would also be accounted for in a two-predictor regression model including \texttt{area} and \texttt{elevation} alone?
+\item
+  How could we use the original linear model output to whether a model using the four predictors that appear most promising here would be statistically meaningfully worse than the full model with all five predictors?
+\item
+  What does the following output do differently than the output above, and why is that potentially useful here? Why is the p value for \texttt{scruz} so different?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(}\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\NormalTok{area }\OperatorTok{+}\StringTok{ }\NormalTok{elevation }\OperatorTok{+}\StringTok{ }\NormalTok{adjacent }\OperatorTok{+}\StringTok{ }\NormalTok{scruz }\OperatorTok{+}\StringTok{ }\NormalTok{nearest, }\DataTypeTok{data=}\NormalTok{gala))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: species
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+area       1 145470  145470 39.1262 1.826e-06 ***
+elevation  1  65664   65664 17.6613 0.0003155 ***
+adjacent   1  73171   73171 19.6804 0.0001742 ***
+scruz      1   7544    7544  2.0291 0.1671885    
+nearest    1      0       0  0.0001 0.9931506    
+Residuals 24  89231    3718                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{34}
+\tightlist
+\item
+  Consider the ANOVA below, run on a new model with \texttt{elevation} after \texttt{adjacent}. What happens? Why?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(}\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\NormalTok{area }\OperatorTok{+}\StringTok{ }\NormalTok{adjacent }\OperatorTok{+}\StringTok{ }\NormalTok{elevation }\OperatorTok{+}\StringTok{ }\NormalTok{scruz }\OperatorTok{+}\StringTok{ }\NormalTok{nearest, }\DataTypeTok{data=}\NormalTok{gala))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: species
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+area       1 145470  145470 39.1262 1.826e-06 ***
+adjacent   1   2850    2850  0.7666    0.3900    
+elevation  1 135985  135985 36.5751 3.030e-06 ***
+scruz      1   7544    7544  2.0291    0.1672    
+nearest    1      0       0  0.0001    0.9932    
+Residuals 24  89231    3718                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{an-anova-table-for-the-model-as-a-whole}{%
+\section{An ANOVA table for the Model as a Whole}\label{an-anova-table-for-the-model-as-a-whole}}
+
+It's probably also worthwhile to compute a completed ANOVA table for the model as a whole. All elements are in the ANOVA tables above, or the model summary.
+
+\begin{longtable}[]{@{}rrrrrr@{}}
+\toprule
+Group & DF & SS & MS \textbar{} F \textbar{} & F \textbar{} P & P\tabularnewline
+\midrule
+\endhead
+Regression & 5 \textbar{} 2 & 291849 \textbar{} 58 & 58369.8 \textbar{} 15.7 & 15.7 \textbar{} 6.83 & 6.838e-07\tabularnewline
+Residuals & 24 \textbar{} 89 & 89231 \textbar{} 3 & 3718.0 & &\tabularnewline
+Total \textbar{} & 29 & 381080 \textbar{} \textbar{} \textbar{} & & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{35}
+\tightlist
+\item
+  How did I determine the Mean Square for the Regression model?
+\item
+  What conclusions can we draw from this ANOVA table?
+\end{enumerate}
+
+\hypertarget{assumption-checking-for-our-galuxe1pagos-islands-models}{%
+\section{Assumption Checking for our Galápagos Islands models}\label{assumption-checking-for-our-galuxe1pagos-islands-models}}
+
+Remember that the key assumptions of multiple linear regression are:
+
+\begin{itemize}
+\tightlist
+\item
+  {[}Linearity{]} We have also assumed that the structural part of the model is correctly specified (we've included all the predictors that need to be in the model, and expressed them in the most appropriate manner, and we've left out any predictors that don't need to be in the model.)
+\item
+  {[}Normality{]} The regression makes errors that come from a Normal distribution
+\item
+  {[}Homoscedasticity = Constant Variance{]} The regression makes errors that come from a distribution with constant variance at all predictor levels.
+\item
+  {[}Independence{]} The regression errors are independent of each other.
+\end{itemize}
+
+In addition, we need to realize that sometimes a few observations may be particularly problematic. For instance:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  An observation may simply not fit the model well (i.e.~it creates a large residual)
+\item
+  An observation may have high leverage over the fit of the model (this happens with observations that have an unusual combination of predictor values, in particular)
+\item
+  An observation may actually have high influence on the model (in the sense that whether they are included or excluded has a large impact on the model's fit, and the value of its parameter estimates.)
+\item
+  Or any combination of high residual, leverage and influence may occur.
+\end{enumerate}
+
+So it is important to check the assumptions that we can with the data we have. Our most important tools are plots and other summaries of residuals, and what are called influence statistics.
+
+\hypertarget{my-first-plot-studentized-residuals-vs.-fitted-values}{%
+\section{My First Plot: Studentized Residuals vs.~Fitted Values}\label{my-first-plot-studentized-residuals-vs.-fitted-values}}
+
+The first diagnostic plot I usually draw for a multiple regression is a scatterplot of the model's \textbf{studentized} residuals\footnote{More on studentized and standardized residuals later. For now, think of them like z scores.} (on the vertical axis) vs.~the model's fitted values (on the horizontal.) This plot can be used to assess potential non-linearity, non-constant variance, and non-Normality in the residuals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala}\OperatorTok{$}\NormalTok{stures <-}\StringTok{ }\KeywordTok{rstudent}\NormalTok{(model1); gala}\OperatorTok{$}\NormalTok{fits <-}\StringTok{ }\KeywordTok{fitted}\NormalTok{(model1)}
+\KeywordTok{ggplot}\NormalTok{(gala, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ fits, }\DataTypeTok{y =}\NormalTok{ stures)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{shape =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{col =} \StringTok{"blue"}\NormalTok{, }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{weight =} \FloatTok{0.5}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_hline}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{yintercept =} \DecValTok{0}\NormalTok{), }\DataTypeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Fitted Values of Species"}\NormalTok{, }
+         \DataTypeTok{y =} \StringTok{"Studentized Residuals"}\NormalTok{,}
+         \DataTypeTok{title =} \StringTok{"gala data: Model 1}\CharTok{\textbackslash{}n}\StringTok{Studentized Residuals vs. Fitted Values"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+`geom_smooth()` using method = 'loess' and formula 'y ~ x'
+\end{verbatim}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/p60-1} \end{center}
+
+\hypertarget{questions-about-studentized-residuals-vs.-fitted-values}{%
+\subsection{Questions about Studentized Residuals vs.~Fitted Values}\label{questions-about-studentized-residuals-vs.-fitted-values}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{37}
+\tightlist
+\item
+  Consider the point at bottom right. What can you infer about this observation?
+\item
+  Why did I include the dotted horizontal line at Studentized Residual = 0?
+\item
+  What is the purpose of the thin blue line?
+\item
+  What does this plot suggest about the potential for outliers in the residuals?
+\end{enumerate}
+
+\hypertarget{automatic-regression-diagnostics-for-model-1}{%
+\section{Automatic Regression Diagnostics for Model 1}\label{automatic-regression-diagnostics-for-model-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\NormalTok{area }\OperatorTok{+}\StringTok{ }\NormalTok{elevation }\OperatorTok{+}\StringTok{ }\NormalTok{nearest }\OperatorTok{+}\StringTok{ }\NormalTok{scruz }\OperatorTok{+}\StringTok{ }\NormalTok{adjacent, }\DataTypeTok{data=}\NormalTok{gala))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/p58-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{model-1-diagnostic-plot-1}{%
+\section{Model 1: Diagnostic Plot 1}\label{model-1-diagnostic-plot-1}}
+
+As we've seen, the first of R's automated diagnostic plots for a linear model is a plot of the residuals vs.~the fitted values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model1, }\DataTypeTok{which=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/p61-1} \end{center}
+
+\hypertarget{questions-about-diagnostic-plot-1-residuals-vs.-fitted-values}{%
+\subsection{Questions about Diagnostic Plot 1: Residuals vs.~Fitted Values}\label{questions-about-diagnostic-plot-1-residuals-vs.-fitted-values}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{41}
+\tightlist
+\item
+  What type of regression residuals is R plotting here?
+\item
+  Which points are identified by numbers here?
+\item
+  Why did R include the gray dotted line at Residual = 0?
+\item
+  What is the purpose of the thin red line?
+\item
+  What can you tell about the potential for outliers in the model 1 residuals from the plot?
+\item
+  What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it? Which assumptions can we assess with it?
+\item
+  What would we do if we saw a violation of assumptions in this plot?
+\item
+  What are the key differences between this plot and the one I showed earlier?
+\end{enumerate}
+
+\hypertarget{diagnostic-plot-2-assessing-normality}{%
+\section{Diagnostic Plot 2: Assessing Normality}\label{diagnostic-plot-2-assessing-normality}}
+
+The second diagnostic plot prepared by R for any linear model using the plot command is a Normal Q-Q plot of the standardized residuals from the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model1, }\DataTypeTok{which=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/p62-1} \end{center}
+
+\hypertarget{questions-about-diagnostic-plot-2-normal-plot-of-standardized-residuals}{%
+\subsection{Questions about Diagnostic Plot 2: Normal Plot of Standardized Residuals}\label{questions-about-diagnostic-plot-2-normal-plot-of-standardized-residuals}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{49}
+\tightlist
+\item
+  Which points are being identified here by number?
+\item
+  Which assumption(s) of multiple regression does this plot help us check?
+\item
+  What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it?
+\item
+  What would we do if we saw a violation of assumptions in this plot?
+\end{enumerate}
+
+We could also look at studentized residuals, or we could apply a more complete set of plots and other assessments of normality. Usually, I don't.
+
+\hypertarget{diagnostic-plot-3-assessing-constant-variance}{%
+\section{Diagnostic Plot 3: Assessing Constant Variance}\label{diagnostic-plot-3-assessing-constant-variance}}
+
+The third diagnostic plot prepared by R for any linear model using the \texttt{plot} command shows the square root of the model's standardized residuals vs.~its fitted values. R calls this a \textbf{scale-location plot}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model1, }\DataTypeTok{which=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/p63-1} \end{center}
+
+\hypertarget{questions-about-diagnostic-plot-3-scale-location-plot}{%
+\subsection{Questions about Diagnostic Plot 3: Scale-Location Plot}\label{questions-about-diagnostic-plot-3-scale-location-plot}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{53}
+\tightlist
+\item
+  Which points are being identified here by number?
+\item
+  Which assumption(s) of multiple regression does this plot help us check?
+\item
+  What is the role of the thin red line in this plot?
+\item
+  What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it?
+\item
+  What would we do if we saw a violation of assumptions in this plot?
+\end{enumerate}
+
+\hypertarget{obtaining-fitted-values-and-residuals-from-a-model}{%
+\section{Obtaining Fitted Values and Residuals from a Model}\label{obtaining-fitted-values-and-residuals-from-a-model}}
+
+Remember that we can use the \texttt{fitted} function applied to a model to find the predictions made by the regression model for each of the observations used to create the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{round}\NormalTok{(}\KeywordTok{fitted}\NormalTok{(model1),}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     1      2      3      4      5      6      7      8      9     10     11 
+116.73  -7.27  29.33  10.36 -36.38  43.09  33.92  -9.02  28.31  30.79  47.66 
+    12     13     14     15     16     17     18     19     20     21     22 
+ 96.99  -4.03  64.63  -0.50 386.40  88.69   4.04 215.68 150.48  35.08  75.55 
+    23     24     25     26     27     28     29     30 
+206.95 277.68 261.42  85.38 195.62  49.81  52.94  26.70 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala[}\DecValTok{1}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 10
+     id island species  area elevation nearest scruz adjacent stures  fits
+  <dbl> <chr>    <dbl> <dbl>     <dbl>   <dbl> <dbl>    <dbl>  <dbl> <dbl>
+1     1 Baltra      58  25.1       346     0.6   0.6     1.84  -1.00  117.
+\end{verbatim}
+
+\hypertarget{questions-about-fitted-values}{%
+\subsection{Questions about Fitted Values}\label{questions-about-fitted-values}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{58}
+\tightlist
+\item
+  Verify that the first fitted value {[}116.73{]} is in fact what you get for Baltra (observation 1) when you apply the regression equation:
+\end{enumerate}
+
+\begin{verbatim}
+species = 7.07 - 0.02 area + 0.32 elevation 
+               + 0.009 nearest - 0.24 scruz - 0.07 adjacent
+\end{verbatim}
+
+We can compare these predictions to the actual observed counts of the number of species on each island. Subtracting the fitted values from the observed values gives us the residuals, as does the \texttt{resid} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{round}\NormalTok{(}\KeywordTok{resid}\NormalTok{(model1),}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      1       2       3       4       5       6       7       8       9      10 
+ -58.73   38.27  -26.33   14.64   38.38  -25.09   -9.92   19.02  -20.31  -28.79 
+     11      12      13      14      15      16      17      18      19      20 
+  49.34   -3.99   62.03  -59.63   40.50  -39.40  -37.69   -2.04 -111.68  -42.48 
+     21      22      23      24      25      26      27      28      29      30 
+ -23.08   -5.55   73.05  -40.68  182.58  -23.38   89.38   -5.81  -36.94   -5.70 
+\end{verbatim}
+
+\hypertarget{questions-about-residuals}{%
+\subsection{Questions about Residuals}\label{questions-about-residuals}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{59}
+\tightlist
+\item
+  What does a positive residual indicate?
+\item
+  What does a negative residual indicate?
+\item
+  The standard deviation of the full set of 30 residuals turns out to be 55.47. How does this compare to the residual standard error?
+\item
+  The command below identifies Santa Cruz. What does it indicate about Santa Cruz, specifically?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala}\OperatorTok{$}\NormalTok{island[}\KeywordTok{which.max}\NormalTok{(}\KeywordTok{resid}\NormalTok{(model1))]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "SantaCruz"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{63}
+\tightlist
+\item
+  From the results below, what is the \texttt{model1} residual for Santa Cruz? What does this imply about the \texttt{species} prediction made by Model 1 for Santa Cruz?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{which.max}\NormalTok{(}\KeywordTok{resid}\NormalTok{(model1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+25 
+25 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{round}\NormalTok{(}\KeywordTok{resid}\NormalTok{(model1),}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      1       2       3       4       5       6       7       8       9      10 
+ -58.73   38.27  -26.33   14.64   38.38  -25.09   -9.92   19.02  -20.31  -28.79 
+     11      12      13      14      15      16      17      18      19      20 
+  49.34   -3.99   62.03  -59.63   40.50  -39.40  -37.69   -2.04 -111.68  -42.48 
+     21      22      23      24      25      26      27      28      29      30 
+ -23.08   -5.55   73.05  -40.68  182.58  -23.38   89.38   -5.81  -36.94   -5.70 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala[}\KeywordTok{which.max}\NormalTok{(}\KeywordTok{resid}\NormalTok{(model1)),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 10
+     id island    species  area elevation nearest scruz adjacent stures  fits
+  <dbl> <chr>       <dbl> <dbl>     <dbl>   <dbl> <dbl>    <dbl>  <dbl> <dbl>
+1    25 SantaCruz     444  904.       864     0.6     0     0.52   4.38  261.
+\end{verbatim}
+
+\hypertarget{relationship-between-fitted-and-observed-values}{%
+\section{Relationship between Fitted and Observed Values}\label{relationship-between-fitted-and-observed-values}}
+
+We've already seen that the \texttt{fitted} command can produce predicted values for each observations used to develop a regression model, and that the \texttt{resid} command can produce the residuals (observed - predicted) for those same observations.
+Returning to our original model1, let's compare the fitted values (stored earlier in \texttt{fits}) to the observed values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(gala, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ species, }\DataTypeTok{y =}\NormalTok{ fits)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{shape =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{1}\NormalTok{, }\DataTypeTok{col =} \StringTok{"purple"}\NormalTok{, }\DataTypeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Observed Species Count"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Model Predicted Species"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{431-notes_files/figure-latex/p65-1} \end{center}
+
+\hypertarget{questions-about-fitted-and-observed-values}{%
+\subsection{Questions about Fitted and Observed Values}\label{questions-about-fitted-and-observed-values}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{64}
+\tightlist
+\item
+  Why did I draw the dotted purple line with y-intercept 0 and slope 1? Why is that particular line of interest?
+\item
+  If a point on this plot is in the top left here, above the dotted line, what does that mean?
+\item
+  If a point is below the dotted line here, what does that mean?
+\item
+  How does this plot display the size of an observation's residual?
+\end{enumerate}
+
+\hypertarget{standardizing-residuals}{%
+\section{Standardizing Residuals}\label{standardizing-residuals}}
+
+We've already seen that the raw residuals from a regression model can be obtained using the \texttt{resid} function. Residuals are defined to have mean 0. This is one of the requirements of the least squares procedure for estimating a linear model, and their true standard deviation is effectively estimated using the residual standard error.
+
+There are two additional types of residuals for us to be aware of: standardized residuals, and studentized (sometimes called externally standardized, or jackknife) residuals. Each approach standardizes the residuals by dividing them by a standard deviation estimate, so the resulting residuals should have mean 0 and standard deviation 1 if assumptions hold.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Standardized} residuals are the original (raw) residuals, scaled by a standard deviation estimate developed using the entire data set.
+\item
+  \textbf{Studentized} residuals are the original (raw) residuals, scaled by a standard deviation estimate developed using the entire data set EXCEPT for this particular observation.
+\end{itemize}
+
+The \texttt{rstandard} function, when applied to a linear regression model, will generate the standardized residuals, while \texttt{rstudent} generates the model's studentized residuals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala}\OperatorTok{$}\NormalTok{stanres <-}\StringTok{ }\KeywordTok{rstandard}\NormalTok{(model1)}
+\NormalTok{gala.res <-}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(gala, stanres, stures)}
+\NormalTok{gala_long <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(gala.res, }\DataTypeTok{key =} \StringTok{"type"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"resid"}\NormalTok{)}
+
+\NormalTok{p1 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(gala.res, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ stanres, }\DataTypeTok{y =}\NormalTok{ stures)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Standardized Residuals"}\NormalTok{, }
+         \DataTypeTok{y =} \StringTok{"Studentized Residuals"}\NormalTok{)}
+
+\NormalTok{p2 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(gala_long, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ type, }\DataTypeTok{y =}\NormalTok{ resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y =} \StringTok{"Value of Residual"}\NormalTok{, }\DataTypeTok{x =} \StringTok{""}\NormalTok{)}
+
+\NormalTok{gridExtra}\OperatorTok{::}\KeywordTok{grid.arrange}\NormalTok{(p1, p2, }\DataTypeTok{nrow =} \DecValTok{1}\NormalTok{, }\DataTypeTok{top =} \StringTok{"Model 1 Residuals"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+`geom_smooth()` using method = 'loess' and formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{431-notes_files/figure-latex/p66-1.pdf}
+
+\hypertarget{questions-about-standardized-and-studentized-residuals}{%
+\subsection{Questions about Standardized and Studentized Residuals}\label{questions-about-standardized-and-studentized-residuals}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{68}
+\tightlist
+\item
+  From the plots above, what conclusions can you draw about the two methods of standardizing residuals as they apply in the case of our model1?
+\end{enumerate}
+
+\hypertarget{three-types-of-residuals}{%
+\section{Three Types of Residuals}\label{three-types-of-residuals}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala.res <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{raw.residuals =} \KeywordTok{resid}\NormalTok{(model1),}
+                       \DataTypeTok{standardized =} \KeywordTok{rstandard}\NormalTok{(model1),}
+                       \DataTypeTok{studentized =} \KeywordTok{rstudent}\NormalTok{(model1)) }\OperatorTok{%>%}\StringTok{ }\NormalTok{tbl_df}
+
+\NormalTok{gala.res_long <-}\StringTok{ }\KeywordTok{gather}\NormalTok{(gala.res, }\DataTypeTok{key =} \StringTok{"type"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"res"}\NormalTok{)}
+\KeywordTok{ggplot}\NormalTok{(gala.res_long, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ type, }\DataTypeTok{y =}\NormalTok{ res)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Residual"}\NormalTok{, }\DataTypeTok{title =} \StringTok{"3 Types of Residuals for Model 1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/p67-1.pdf}
+
+\hypertarget{questions-about-three-types-of-residuals}{%
+\subsection{Questions about Three Types of Residuals}\label{questions-about-three-types-of-residuals}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{69}
+\tightlist
+\item
+  Consider the three types of residuals, shown above. Can you specify a reason why looking at the raw residuals might be helpful in this case?
+\item
+  Why might (either of the two approaches to) standardizing be useful?
+\item
+  Does there seem to be a substantial problem with Normality in the residuals?
+\item
+  How about the Normality of the studentized residuals? Which seems clearer?
+\end{enumerate}
+
+\hypertarget{influence-measures-for-multiple-regression}{%
+\section{Influence Measures for Multiple Regression}\label{influence-measures-for-multiple-regression}}
+
+R can output a series of \textbf{influence measures} for a regression model. Let me show you all of the available measures for model 1, but just for three of the data points - \#1 (which is not particularly influential) and \#12 and \#16 (which are).
+
+First, we'll look at the raw data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{16}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 11
+     id island species   area elevation nearest scruz adjacent stures  fits
+  <dbl> <chr>    <dbl>  <dbl>     <dbl>   <dbl> <dbl>    <dbl>  <dbl> <dbl>
+1     1 Baltra      58   25.1       346     0.6   0.6     1.84 -1.00  117. 
+2    12 Ferna~      93  634.       1494     4.3  95.3  4669.   -0.286  97.0
+3    16 Isabe~     347 4669.       1707     0.7  28.1   634.   -5.33  386. 
+# ... with 1 more variable: stanres <dbl>
+\end{verbatim}
+
+And then, we'll gather the output available in the \texttt{influence.measures} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{influence.measures}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+Here's an edited version of this output\ldots{}
+
+\begin{verbatim}
+Influence measures of
+lm(formula = species ~ area + elevation + nearest + scruz + adjacent, 
+data = gala) :
+
+     dfb.1_  dfb.area  dfb.elvt dfb.nrst  dfb.scrz  dfb.adjc
+1  -0.15064   0.13572 -0.122412  0.07684  0.084786  1.14e-01
+12  0.16112   0.16395 -0.122578  0.03093 -0.059059 -8.27e-01
+16 -1.18618 -20.87453  4.885852  0.36713 -1.022431 -8.09e-01
+
+     dffit   cov.r   cook.d    hat inf
+1   -0.29335  1.0835 1.43e-02 0.0787    
+12  -1.24249 25.1101 2.68e-01 0.9497   *
+16 -29.59041  0.3275 6.81e+01 0.9685   *
+\end{verbatim}
+
+This output presents dfbetas for each coefficient, followed by dffit statistics, covariance ratios, Cook's distance and leverage values (\texttt{hat}) along with an indicator of influence.
+
+We'll consider each of these elements in turn.
+
+\hypertarget{dfbetas}{%
+\section{DFBETAs}\label{dfbetas}}
+
+The first part of the influence measures output concerns what are generally called \texttt{dfbetas} \ldots{}
+
+\begin{longtable}[]{@{}rcrrrrrr@{}}
+\toprule
+id & island & dfb.1\_ & dfb.area & dfb.elvt & dfb.nrst & dfb.scrz & dfb.adjc\tabularnewline
+\midrule
+\endhead
+1 & Baltra & -0.151 & 0.136 & -0.122 & 0.077 & 0.085 & 0.114\tabularnewline
+12 & Fernandina & 0.161 & 0.164 & -0.123 & 0.031 & -0.059 & -0.827\tabularnewline
+16 & Isabela & -1.186 & -20.875 & 4.886 & 0.367 & -1.022 & -0.809\tabularnewline
+\bottomrule
+\end{longtable}
+
+The \texttt{dfbetas} look at a standardized difference in the estimate of a coefficient (slope) that will occur if the specified point (here, \texttt{island}) is removed from the data set.
+
+\begin{itemize}
+\tightlist
+\item
+  Positive values indicate that deleting the point will yield a smaller coefficient.
+\item
+  Negative values indicate that deleting the point will yield a larger coefficient.
+\item
+  If the absolute value of the dfbeta is greater than \(2 / \sqrt{n}\), where \(n\) is the sample size, then the \texttt{dfbeta} is considered to be large.
+\end{itemize}
+
+In this case, our cutoff would be \(2 / \sqrt{30}\) or 0.365, so that the Isabela \texttt{dfbeta} values are all indicative of large influence. Essentially, if we remove Isabela from the data, and refit the model, our regression slopes will change a lot (see below). Fernandina has some influence as well, especially on the \texttt{adjacent} coefficient.
+
+\begin{longtable}[]{@{}rrr@{}}
+\toprule
+Predictor & Coefficient (\emph{p}) \textbf{all 30 islands} & Coefficient (\emph{p}) \textbf{without Isabela}\tabularnewline
+\midrule
+\endhead
+Intercept & 7.07 (\emph{p} = 0.72) & 22.59 (\emph{p} = 0.11)\tabularnewline
+\texttt{area} & -0.02 (\emph{p} = 0.30) & 0.30 (\emph{p} \textless{} 0.01)\tabularnewline
+\texttt{elevation} & 0.32 (\emph{p} \textless{} 0.01) & 0.14 (\emph{p} \textless{} 0.01)\tabularnewline
+\texttt{nearest} & 0.01 (\emph{p} = 0.99) & -0.26 (\emph{p} = 0.73)\tabularnewline
+\texttt{scruz} & -0.24 (\emph{p} = 0.28) & -0.09 (\emph{p} = 0.55)\tabularnewline
+\texttt{adjacent} & -0.08 (\emph{p} \textless{} 0.01) & -0.07 (\emph{p} \textless{} 0.01)\tabularnewline
+\bottomrule
+\end{longtable}
+
+After the dfbetas, the \texttt{influence.measures} output presents \texttt{dffit}, covariance ratios, Cook's distance and leverage values (\texttt{hat}) for each observation, along with an indicator of influence.
+
+\begin{verbatim}
+id  island         dffit   cov.r   cook.d    hat inf
+1   Baltra      -0.29335  1.0835 1.43e-02 0.0787    
+12  Fernandina  -1.24249 25.1101 2.68e-01 0.9497   *
+16  Isabela    -29.59041  0.3275 6.81e+01 0.9685   *
+\end{verbatim}
+
+\hypertarget{cooks-d-or-cooks-distance}{%
+\section{Cook's d or Cook's Distance}\label{cooks-d-or-cooks-distance}}
+
+The main measure of influence is Cook's Distance, also called Cook's d.~Cook's d provides a summary of the influence of a particular point on all of the regression coefficients. It is a function of the standardized residual and the leverage.
+
+\begin{itemize}
+\tightlist
+\item
+  Cook's distance values greater than 1 are generally indicators of high influence.
+\item
+  Obviously, Isabela (with a value of Cook's d = 68.1) is a highly influential observation by this measure.
+\end{itemize}
+
+\hypertarget{plotting-cooks-distance}{%
+\subsection{Plotting Cook's Distance}\label{plotting-cooks-distance}}
+
+As one of its automated regression diagnostic plots, R will produce an index plot of the Cook's distance values. Note the relatively enormous influence for island 16 (Isabela).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(model1, }\DataTypeTok{which =} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/model 1 diagnostic 4-1.pdf}
+
+\hypertarget{dffits}{%
+\section{DFFITS}\label{dffits}}
+
+A similar measure to Cook's distance is called \texttt{DFFITS}. The \texttt{DFFITS} value describes the influence of the point on the fitted value. It's the number of standard deviations that the fitted value changes if the observation is removed. This is defined as a function of the studentized residual and the leverage.
+
+\begin{itemize}
+\tightlist
+\item
+  If the absolute value of \texttt{DFFITS} is greater than 2 times \(\sqrt{p / n-p}\), where \emph{p} is the number of predictors (not including the intercept), we deem the observation influential.
+\item
+  For the \texttt{gala} data, we'd consider any point with \texttt{DFFITS} greater than 2 x \(\sqrt{5 / (30-5)}\) = 0.894 to be influential by this standard, since n = 30 and we are estimating p = 5 slopes in our model. This is true of both Fernandina and Isabela.
+\end{itemize}
+
+\hypertarget{covariance-ratio}{%
+\section{Covariance Ratio}\label{covariance-ratio}}
+
+The covariance ratio \texttt{cov.r} indicates the role of the observation on the precision of estimation. If \texttt{cov.r} is greater than 1, then this observation improves the precision, overall, and if it's less than 1, the observation drops the precision of estimation, and these are the points about which we'll be most concerned.
+
+\begin{itemize}
+\tightlist
+\item
+  As with most of our other influence measures, Isabela appears to be a concern.
+\end{itemize}
+
+\hypertarget{leverage}{%
+\section{Leverage}\label{leverage}}
+
+The \texttt{hat} value is a measure of leverage. Specifically, this addresses whether or not the point in question is unusual in terms of its combination of predictor values.
+
+\begin{itemize}
+\tightlist
+\item
+  The usual cutoff for a large leverage value is 2.5 times the average leverage across all observations, where the average leverage is equal to k/n, where n is the number of observations included in the regression model, and k is the number of model coefficients (slopes plus intercept).
+\item
+  In the \texttt{gala} example, we'd regard any observation with a hat value larger than 2.5 x 6/30 = 0.5 to have large leverage. This includes Fernandina and Isabela.
+\end{itemize}
+
+\hypertarget{indicator-of-influence}{%
+\subsection{Indicator of Influence}\label{indicator-of-influence}}
+
+The little asterisk indicates an observation which is influential according to R's standards for any of these measures. You can take the absence of an asterisk as a clear indication that a point is NOT influential. Points with asterisks may or may not be influential in an important way. In practice, I usually focus on the Cook's distance to make decisions about likely influence, when the results aren't completely clear.
+
+\hypertarget{building-predictions-from-our-models}{%
+\section{Building Predictions from our models}\label{building-predictions-from-our-models}}
+
+The \texttt{predict} function, when applied to a linear regression model, produces the fitted values, just as the \texttt{fitted} function did, and, as we've seen, it can be used to generate \emph{prediction} intervals for a single new observation, or \emph{confidence} intervals for a group of new observations with the same predictor values.
+
+Let us, just for a moment, consider a ``typical'' island, exemplified by the median value of all the predictors\footnote{This approach is motivated by @Faraway2015, pp. 52-53.}. There's a trick to creating this and dumping it in a vector I will call \texttt{x.medians}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{model.matrix}\NormalTok{(model1)}
+\NormalTok{x.medians <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(x, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{median}\NormalTok{(x))}
+\NormalTok{x.medians}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(Intercept)        area   elevation     nearest       scruz    adjacent 
+       1.00        2.59      192.00        3.05       46.65        2.59 
+\end{verbatim}
+
+We want to use the model to predict our outcome (species) on the basis of the inputs above: a new island with values of all predictors equal to the median of the existing islands. As before, building an interval forecast around a fitted value requires us to decide whether we are:
+
+\begin{itemize}
+\tightlist
+\item
+  predicting the number of species for one particular island with the specified characteristics (in which case we use something called a prediction interval) or
+\item
+  predicting the mean number of species across all islands that have the specified characteristics (in which case we use the confidence interval).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newdata <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{t}\NormalTok{(x.medians))}
+\KeywordTok{predict}\NormalTok{(model1, newdata, }\DataTypeTok{interval=}\StringTok{"prediction"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       fit       lwr      upr
+1 56.95714 -72.06155 185.9758
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{predict}\NormalTok{(model1, newdata, }\DataTypeTok{interval=}\StringTok{"confidence"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       fit      lwr      upr
+1 56.95714 28.52381 85.39048
+\end{verbatim}
+
+\hypertarget{questions-about-the-prediction-and-confidence-interval-methods}{%
+\subsection{Questions about the Prediction and Confidence Interval Methods}\label{questions-about-the-prediction-and-confidence-interval-methods}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{73}
+\tightlist
+\item
+  What is the 95\% prediction interval for this new observation? Does that make sense?
+\item
+  Which interval (prediction or confidence) is wider? Does that make sense?
+\item
+  Is there an island that has characteristics that match our new medians variable?
+\item
+  What happens if we don't specify new data in making a prediction?
+\end{enumerate}
+
+\hypertarget{making-a-prediction-with-new-data-without-broom}{%
+\section{\texorpdfstring{Making a Prediction with New Data (without \texttt{broom})}{Making a Prediction with New Data (without broom)}}\label{making-a-prediction-with-new-data-without-broom}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{77}
+\tightlist
+\item
+  How does the output below help us to make a prediction with a new data point, or series of them? Interpret the resulting intervals.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newdata2 <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{area =} \DecValTok{2}\NormalTok{, }\DataTypeTok{elevation =} \DecValTok{100}\NormalTok{, }\DataTypeTok{nearest =} \DecValTok{3}\NormalTok{, }
+                       \DataTypeTok{scruz =} \DecValTok{5}\NormalTok{, }\DataTypeTok{adjacent =} \DecValTok{1}\NormalTok{)}
+\KeywordTok{predict}\NormalTok{(model1, newdata2, }\DataTypeTok{interval=}\StringTok{"prediction"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       fit       lwr      upr
+1 37.71683 -92.46825 167.9019
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{predict}\NormalTok{(model1, newdata2, }\DataTypeTok{interval=}\StringTok{"confidence"}\NormalTok{, }\DataTypeTok{level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       fit      lwr     upr
+1 37.71683 4.388351 71.0453
+\end{verbatim}
+
+\hypertarget{scaling-predictors-using-z-scores-semi-standardized-coefficients}{%
+\section{Scaling Predictors using Z Scores: Semi-Standardized Coefficients}\label{scaling-predictors-using-z-scores-semi-standardized-coefficients}}
+
+We know that the interpretation of the coefficients in a regression model is sensitive to the scale of the predictors. We have already seen how to ``standardize'' each predictor by subtracting its mean and dividing by its standard deviation.
+
+\begin{itemize}
+\tightlist
+\item
+  Each coefficient in this semi-standardized model has the following interpretation: the expected difference in the outcome, comparing units (subjects) that differ by one standard deviation in the variable of interest, but for which all other variables are fixed at their average.
+\item
+  Remember also that the intercept in such a model shows the mean outcome across all subjects.
+\end{itemize}
+
+Consider a two-variable model, using \texttt{area} and \texttt{elevation} to predict the number of \texttt{species}\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\NormalTok{area }\OperatorTok{+}\StringTok{ }\NormalTok{elevation, }\DataTypeTok{data=}\NormalTok{gala)}
+\KeywordTok{summary}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species ~ area + elevation, data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-192.619  -33.534  -19.199    7.541  261.514 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)   
+(Intercept) 17.10519   20.94211   0.817  0.42120   
+area         0.01880    0.02594   0.725  0.47478   
+elevation    0.17174    0.05317   3.230  0.00325 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 79.34 on 27 degrees of freedom
+Multiple R-squared:  0.554,	Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05
+\end{verbatim}
+
+Now compare these results to the ones we get after scaling the area and elevation variables. Remember that the \texttt{scale} function centers a variable on zero by subtracting the mean from each observation, and then scales the result by dividing by the standard deviation. This ensures that each regression input has mean 0 and standard deviation 1, and is thus a \emph{z score}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model2.z <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\KeywordTok{scale}\NormalTok{(area) }\OperatorTok{+}\StringTok{ }\KeywordTok{scale}\NormalTok{(elevation), }\DataTypeTok{data=}\NormalTok{gala)}
+\KeywordTok{summary}\NormalTok{(model2.z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species ~ scale(area) + scale(elevation), data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-192.619  -33.534  -19.199    7.541  261.514 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)         85.23      14.48   5.884 2.87e-06 ***
+scale(area)         16.25      22.42   0.725  0.47478    
+scale(elevation)    72.41      22.42   3.230  0.00325 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 79.34 on 27 degrees of freedom
+Multiple R-squared:  0.554,	Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05
+\end{verbatim}
+
+\hypertarget{questions-about-the-semi-standardized-model}{%
+\subsection{Questions about the Semi-Standardized Model}\label{questions-about-the-semi-standardized-model}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{78}
+\tightlist
+\item
+  What changes after centering and rescaling the predictors, and what does not?
+\item
+  Why might rescaling like this be a helpful thing to do if you want to compare predictors in terms of importance?
+\end{enumerate}
+
+\hypertarget{fully-standardized-regression-coefficients}{%
+\section{Fully Standardized Regression Coefficients}\label{fully-standardized-regression-coefficients}}
+
+Suppose we standardize the coefficients by also taking centering and scaling (using the z score) the outcome variable: \texttt{species}, creating a \textbf{fully standardized} model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model2.zout <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{scale}\NormalTok{(species) }\OperatorTok{~}\StringTok{ }
+\StringTok{                  }\KeywordTok{scale}\NormalTok{(area) }\OperatorTok{+}\StringTok{ }\KeywordTok{scale}\NormalTok{(elevation), }\DataTypeTok{data=}\NormalTok{gala)}
+\KeywordTok{summary}\NormalTok{(model2.zout)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = scale(species) ~ scale(area) + scale(elevation), 
+    data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.68031 -0.29253 -0.16749  0.06578  2.28131 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)   
+(Intercept)      4.594e-17  1.264e-01   0.000  1.00000   
+scale(area)      1.418e-01  1.956e-01   0.725  0.47478   
+scale(elevation) 6.316e-01  1.956e-01   3.230  0.00325 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6921 on 27 degrees of freedom
+Multiple R-squared:  0.554,	Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05
+\end{verbatim}
+
+\hypertarget{questions-about-the-standardized-model}{%
+\subsection{Questions about the Standardized Model}\label{questions-about-the-standardized-model}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{80}
+\tightlist
+\item
+  How do you interpret the value 0.142 of the \texttt{scale(area)} coefficient here? You may want to start by reviewing the summary of the original \texttt{gala} data shown here.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(gala[}\KeywordTok{c}\NormalTok{(}\StringTok{"species"}\NormalTok{, }\StringTok{"area"}\NormalTok{, }\StringTok{"elevation"}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    species            area            elevation      
+ Min.   :  2.00   Min.   :   0.010   Min.   :  25.00  
+ 1st Qu.: 13.00   1st Qu.:   0.258   1st Qu.:  97.75  
+ Median : 42.00   Median :   2.590   Median : 192.00  
+ Mean   : 85.23   Mean   : 261.709   Mean   : 368.03  
+ 3rd Qu.: 96.00   3rd Qu.:  59.237   3rd Qu.: 435.25  
+ Max.   :444.00   Max.   :4669.320   Max.   :1707.00  
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{81}
+\tightlist
+\item
+  How do you interpret the value 0.632 of the \texttt{scale(elevation)} coefficient in the standardized model?
+\item
+  What is the intercept in this setting? Will this be the case whenever you scale like this?
+\item
+  What are some of the advantages of looking at scaled regression coefficients?
+\item
+  Why are these called \emph{fully} standardized coefficients while the previous page described semi-standardized coefficients?
+\item
+  What would motivate you to use one of these two methods of standardization (fully standardized or semi-standardized) vs.~the other?
+\end{enumerate}
+
+\hypertarget{robust-standardization-of-regression-coefficients}{%
+\section{Robust Standardization of Regression Coefficients}\label{robust-standardization-of-regression-coefficients}}
+
+Another common option for scaling is to specify lower and upper comparison points, perhaps by comparing the impact of a move from the 25th to the 75th percentile for each variable, while holding all of the other variables constant.
+
+Occasionally, you will see robust semi-standardized regression coefficients, which measure the increase in the outcome, Y, associated with an increase in that particular predictor of one IQR (inter-quartile range).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala}\OperatorTok{$}\NormalTok{area.scaleiqr <-}\StringTok{ }\NormalTok{(gala}\OperatorTok{$}\NormalTok{area }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(gala}\OperatorTok{$}\NormalTok{area)) }\OperatorTok{/}\StringTok{ }\KeywordTok{IQR}\NormalTok{(gala}\OperatorTok{$}\NormalTok{area)}
+\NormalTok{gala}\OperatorTok{$}\NormalTok{elevation.scaleiqr <-}\StringTok{ }\NormalTok{(gala}\OperatorTok{$}\NormalTok{elevation }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(gala}\OperatorTok{$}\NormalTok{elevation)) }\OperatorTok{/}\StringTok{ }
+\StringTok{                            }\KeywordTok{IQR}\NormalTok{(gala}\OperatorTok{$}\NormalTok{elevation)}
+
+\NormalTok{model2.iqr <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(species }\OperatorTok{~}\StringTok{ }\NormalTok{area.scaleiqr }\OperatorTok{+}\StringTok{ }\NormalTok{elevation.scaleiqr,}
+                 \DataTypeTok{data=}\NormalTok{gala)}
+\KeywordTok{summary}\NormalTok{(model2.iqr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species ~ area.scaleiqr + elevation.scaleiqr, data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-192.619  -33.534  -19.199    7.541  261.514 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          85.233     14.485   5.884 2.87e-06 ***
+area.scaleiqr         1.109      1.530   0.725  0.47478    
+elevation.scaleiqr   57.963     17.946   3.230  0.00325 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 79.34 on 27 degrees of freedom
+Multiple R-squared:  0.554,	Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05
+\end{verbatim}
+
+\hypertarget{questions-about-robust-standardization}{%
+\subsection{Questions about Robust Standardization}\label{questions-about-robust-standardization}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{86}
+\tightlist
+\item
+  How should we interpret the 57.96 value for the scaled \texttt{elevation} variable? You may want to start by considering the summary of the original elevation data below.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(gala}\OperatorTok{$}\NormalTok{elevation)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  25.00   97.75  192.00  368.03  435.25 1707.00 
+\end{verbatim}
+
+A \textbf{robust standardized coefficient} analysis measures the increase in Y (in IQR of Y) associated with an increase in the predictor of interest of one IQR.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gala}\OperatorTok{$}\NormalTok{species.scaleiqr <-}\StringTok{ }\NormalTok{(gala}\OperatorTok{$}\NormalTok{species }\OperatorTok{-}\StringTok{ }\KeywordTok{mean}\NormalTok{(gala}\OperatorTok{$}\NormalTok{species)) }\OperatorTok{/}\StringTok{ }\KeywordTok{IQR}\NormalTok{(gala}\OperatorTok{$}\NormalTok{species)}
+\NormalTok{model2.iqrout <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(species.scaleiqr }\OperatorTok{~}\StringTok{ }\NormalTok{area.scaleiqr }\OperatorTok{+}\StringTok{ }\NormalTok{elevation.scaleiqr, }\DataTypeTok{data=}\NormalTok{gala)}
+\NormalTok{model2.iqrout}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species.scaleiqr ~ area.scaleiqr + elevation.scaleiqr, 
+    data = gala)
+
+Coefficients:
+       (Intercept)       area.scaleiqr  elevation.scaleiqr  
+        -1.013e-16           1.336e-02           6.983e-01  
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{87}
+\tightlist
+\item
+  What can we learn from the R output above?
+\end{enumerate}
+
+\hypertarget{scaling-inputs-by-dividing-by-2-standard-deviations}{%
+\section{Scaling Inputs by Dividing by 2 Standard Deviations}\label{scaling-inputs-by-dividing-by-2-standard-deviations}}
+
+It turns out that standardizing the inputs to a regression model by dividing by a standard deviation creates some difficulties when you want to include a binary predictor in the model.
+
+Instead, Andrew Gelman recommends that you consider centering all of the predictors (binary or continuous) by subtracting off the mean, and then, for the non-binary predictors, also dividing not by one, but rather by two standard deviations.
+
+\begin{itemize}
+\tightlist
+\item
+  Such a standardization can go a long way to helping us understand a model whose predictors are on different scales, and provides an interpretable starting point.
+\item
+  Another appealing part of this approach is that in the \texttt{arm} library, Gelman and his colleagues have created an R function called \texttt{standardize}, which can be used to automate the process of checking coefficients that have been standardized in this manner, after the regression model has been fit.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species ~ area + elevation, data = gala)
+
+Coefficients:
+(Intercept)         area    elevation  
+    17.1052       0.0188       0.1717  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{arm}\OperatorTok{::}\KeywordTok{standardize}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = species ~ z.area + z.elevation, data = gala)
+
+Coefficients:
+(Intercept)       z.area  z.elevation  
+      85.23        32.50       144.81  
+\end{verbatim}
+
+\hypertarget{questions-about-standardizing-by-dividing-by-two-sd}{%
+\subsection{Questions about Standardizing by Dividing by Two SD}\label{questions-about-standardizing-by-dividing-by-two-sd}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{88}
+\item
+  How does this result compare to the semi-standardized regression coefficients we have seen on the last few analyses?
+\item
+  How should we interpret the \texttt{z.area} coefficient of 32.5 here? Again, you may want to start by obtaining a statistical summary of the original \texttt{area} data, as shown below.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(gala}\OperatorTok{$}\NormalTok{area)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+   0.010    0.258    2.590  261.709   59.238 4669.320 
+\end{verbatim}
+
+To standardize the outcome in this way, as well, we use
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{arm}\OperatorTok{::}\KeywordTok{standardize}\NormalTok{(model2, }\DataTypeTok{standardize.y=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = z.species ~ z.area + z.elevation, data = gala)
+
+Coefficients:
+(Intercept)       z.area  z.elevation  
+  1.653e-19    1.418e-01    6.316e-01  
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{90}
+\tightlist
+\item
+  How should we interpret the \texttt{z.area} coefficient of 0.142 here?
+\item
+  How does these relate to the standardized regression coefficients we've seen before?
+\end{enumerate}
+
+\hypertarget{bmi-and-employment-study}{%
+\chapter{BMI and Employment Study}\label{bmi-and-employment-study}}
+
+This chapter was developed in 2018 and 2019. I didn't bother to revise it to focus on the approaches we've taken this year in 431, again, in part to get this in your hands in a timely way, and in part to let you see some other options. Another nice feature is that it uses the \texttt{mice} package to do some multiple imputation. While we'll have other approaches for this in 432, at least you'll see one possibility.
+
+\hypertarget{the-data}{%
+\section{The Data}\label{the-data}}
+
+A 2016 study published in \emph{BMJ Open} looked at the differential relationship between employment status and body-mass index among middle-aged and elderly adults living in South Korea\footnote{See Noh J, Kim J, Park J, Oh I, Kwon YD (2016) Age and gender differential relationship between employment status and body mass index among middle-aged and elderly adults: a cross-sectional study. BMJ Open 6(11): e012117. http://dx.doi.org/10.1136/bmjopen-2016-012117}. Data from this study were available online thanks to the Dryad data package\footnote{Noh J, Kim J, Park J, Oh I, Kwon YD (2016) Data from: Age and gender differential relationship between employment status and body mass index among middle aged and elderly adults: a cross-sectional study. Dryad Digital Repository. http://dx.doi.org/10.5061/dryad.ng8mn}. The original data came from a nationally representative sample of 7228 participants in the Korean Longitudinal Study of Aging. I sampled these data, and did some data ``rectangling'' (wrangling) to build the \texttt{emp\_bmi.csv} file on our web site.
+
+The available data in \texttt{emp\_bmi} describe 999 subjects, and included are 8 variables:
+
+\begin{longtable}[]{@{}rll@{}}
+\toprule
+Variable & Description & NA?\tabularnewline
+\midrule
+\endhead
+\texttt{pid} & subject identification number (categorical) & 0\tabularnewline
+\texttt{bmi} & our outcome, quantitative, body-mass index & 0\tabularnewline
+\texttt{age} & subject's age (between 51 and 95) & 1\tabularnewline
+\texttt{gender} & subject's gender (male or female) & 0\tabularnewline
+\texttt{employed} & employment status indicator (1/0) & 1\tabularnewline
+\texttt{married} & marital status indicator (1/0) & 1\tabularnewline
+\texttt{alcohol} & 3-level factor & 2\tabularnewline
+\texttt{education} & 4-level factor & 5\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Hmisc}\OperatorTok{::}\KeywordTok{describe}\NormalTok{(emp_bmi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+emp_bmi 
+
+ 8  Variables      999  Observations
+--------------------------------------------------------------------------------
+pid 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+     999        0      999        1    31774    20178     3506     6961 
+     .25      .50      .75      .90      .95 
+   16671    31761    46902    54635    58433 
+
+lowest :    22    41    52    82   112, highest: 61471 61481 61532 61641 61691
+--------------------------------------------------------------------------------
+bmi 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+     999        0      373        1    23.24    2.808    19.21    20.13 
+     .25      .50      .75      .90      .95 
+   21.54    23.24    24.78    26.56    27.34 
+
+lowest : 15.60 15.63 16.22 16.44 16.53, highest: 31.11 31.24 32.05 33.50 34.67
+--------------------------------------------------------------------------------
+age 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+     998        1       43    0.999    66.29    11.56       52       53 
+     .25      .50      .75      .90      .95 
+      57       66       74       81       83 
+
+lowest : 51 52 53 54 55, highest: 89 90 92 93 95
+--------------------------------------------------------------------------------
+gender 
+       n  missing distinct 
+     999        0        2 
+                        
+Value      female   male
+Frequency     570    429
+Proportion  0.571  0.429
+--------------------------------------------------------------------------------
+employed 
+       n  missing distinct     Info      Sum     Mean      Gmd 
+     998        1        2    0.723      404   0.4048   0.4824 
+
+--------------------------------------------------------------------------------
+married 
+       n  missing distinct     Info      Sum     Mean      Gmd 
+     998        1        2    0.548      758   0.7595   0.3657 
+
+--------------------------------------------------------------------------------
+alcohol 
+       n  missing distinct 
+     997        2        3 
+                                                                      
+Value                  alcohol dependent                 heavy drinker
+Frequency                             45                           306
+Proportion                         0.045                         0.307
+                                        
+Value      normal drinker or non-drinker
+Frequency                            646
+Proportion                         0.648
+--------------------------------------------------------------------------------
+education 
+       n  missing distinct 
+     994        5        4 
+                                                                  
+Value      1 elem school grad or lower        2 middle school grad
+Frequency                          421                         180
+Proportion                       0.424                       0.181
+                                                                  
+Value               3 high school grad    4 college grad or higher
+Frequency                          292                         101
+Proportion                       0.294                       0.102
+--------------------------------------------------------------------------------
+\end{verbatim}
+
+\hypertarget{specifying-outcome-and-predictors-for-our-model}{%
+\subsection{Specifying Outcome and Predictors for our Model}\label{specifying-outcome-and-predictors-for-our-model}}
+
+In the original study, a key goal was to understand the relationship between employment and body-mass index. Our goal in this example will be to create a model to predict \texttt{bmi} focusing on employment status (so our key predictor is \texttt{employed}) while accounting for the additional predictors \texttt{age}, \texttt{gender}, \texttt{married}, \texttt{alcohol} and \texttt{education}. A natural thing to do would be to consider interactions of these predictor variables (for example, does the relationship between \texttt{bmi} and \texttt{employed} change when comparing men to women?) but we'll postpone that discussion until 432.
+
+\hypertarget{dealing-with-missing-predictor-values}{%
+\subsection{Dealing with Missing Predictor Values}\label{dealing-with-missing-predictor-values}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(mice)}
+\KeywordTok{md.pattern}\NormalTok{(emp_bmi)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/md.pattern-1.pdf}
+
+\begin{verbatim}
+    pid bmi gender age employed married alcohol education   
+990   1   1      1   1        1       1       1         1  0
+5     1   1      1   1        1       1       1         0  1
+1     1   1      1   1        1       1       0         1  1
+1     1   1      1   1        1       0       1         1  1
+1     1   1      1   1        0       1       1         1  1
+1     1   1      1   0        1       1       0         1  2
+      0   0      0   1        1       1       2         5 10
+\end{verbatim}
+
+We will eventually build a model to predict \texttt{bmi} using all of the other variables besides \texttt{pid}. So we'll eventually have to account for the 9 people with missing values (one of whom has two missing values, as we see above.) What I'm going to do in this example is to first build a complete-case analysis on the 990 subjects without missing values and then, later, do multiple imputation to account for the 9 subjects with missing values (and their 10 actual missing values) sensibly.
+
+I'll put the ``complete cases'' data set of 990 subjects in \texttt{emp\_bmi\_noNA}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emp_bmi_noNA <-}\StringTok{ }\NormalTok{emp_bmi }\OperatorTok{%>%}\StringTok{ }\NormalTok{na.omit}
+\NormalTok{emp_bmi_noNA}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 990 x 8
+     pid   bmi   age gender employed married alcohol           education        
+   <dbl> <dbl> <dbl> <chr>     <dbl>   <dbl> <chr>             <chr>            
+ 1    22  20.8    58 male          1       1 heavy drinker     4 college grad o~
+ 2    41  21.4    76 female        0       1 normal drinker o~ 1 elem school gr~
+ 3    52  20.9    66 female        1       1 heavy drinker     1 elem school gr~
+ 4    82  23.7    67 male          1       1 alcohol dependent 2 middle school ~
+ 5   112  25.5    63 female        0       1 heavy drinker     1 elem school gr~
+ 6   181  20.5    51 female        1       1 heavy drinker     3 high school gr~
+ 7   182  25.3    51 male          1       1 alcohol dependent 3 high school gr~
+ 8   411  20.8    66 female        1       1 normal drinker o~ 2 middle school ~
+ 9   491  20.8    64 female        0       1 normal drinker o~ 3 high school gr~
+10   531  24.3    84 female        0       0 normal drinker o~ 1 elem school gr~
+# ... with 980 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colSums}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(emp_bmi_noNA))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      pid       bmi       age    gender  employed   married   alcohol education 
+        0         0         0         0         0         0         0         0 
+\end{verbatim}
+
+\hypertarget{the-kitchen-sink-model}{%
+\section{The ``Kitchen Sink'' Model}\label{the-kitchen-sink-model}}
+
+A ``kitchen sink'' model includes all available predictors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ebmodel}\FloatTok{.1}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{alcohol }\OperatorTok{+}\StringTok{ }\NormalTok{education, }\DataTypeTok{data =}\NormalTok{ emp_bmi_noNA)}
+\KeywordTok{summary}\NormalTok{(ebmodel}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = bmi ~ age + gender + employed + married + alcohol + 
+    education, data = emp_bmi_noNA)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.7033 -1.6057 -0.0494  1.4992 11.7303 
+
+Coefficients:
+                                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                          26.15391    0.88356  29.601  < 2e-16 ***
+age                                  -0.04260    0.01065  -3.998 6.86e-05 ***
+gendermale                            0.29811    0.20271   1.471   0.1417    
+employed                             -0.45761    0.19153  -2.389   0.0171 *  
+married                               0.09438    0.21280   0.444   0.6575    
+alcoholheavy drinker                  0.25317    0.40727   0.622   0.5343    
+alcoholnormal drinker or non-drinker  0.14121    0.40766   0.346   0.7291    
+education2 middle school grad        -0.28862    0.24020  -1.202   0.2298    
+education3 high school grad          -0.50123    0.22192  -2.259   0.0241 *  
+education4 college grad or higher    -0.79862    0.31068  -2.571   0.0103 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.513 on 980 degrees of freedom
+Multiple R-squared:  0.02251,	Adjusted R-squared:  0.01353 
+F-statistic: 2.508 on 9 and 980 DF,  p-value: 0.007716
+\end{verbatim}
+
+\hypertarget{using-categorical-variables-factors-as-predictors}{%
+\section{Using Categorical Variables (Factors) as Predictors}\label{using-categorical-variables-factors-as-predictors}}
+
+We have six predictors here, and five of them are categorical. Note that R recognizes each kind of variable in this case and models them appropriately. Let's look at the coefficients of our model.
+
+\hypertarget{gender-a-binary-variable-represented-by-letters}{%
+\subsection{\texorpdfstring{\texttt{gender}: A binary variable represented by letters}{gender: A binary variable represented by letters}}\label{gender-a-binary-variable-represented-by-letters}}
+
+The \texttt{gender} variable contains the two categories: male and female, and R recognizes this as a factor. When building a regression model with such a variable, R assigns the first of the two levels of the factor to the baseline, and includes in the model an indicator variable for the second level. By default, R assigns each factor a level order alphabetically.
+
+So, in this case, we have:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.factor}\NormalTok{(emp_bmi_noNA}\OperatorTok{$}\NormalTok{gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{levels}\NormalTok{(emp_bmi_noNA}\OperatorTok{$}\NormalTok{gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+NULL
+\end{verbatim}
+
+As you see in the model, the \texttt{gender} information is captured by the indicator variable \texttt{gendermale}, which is 1 when \texttt{gender\ =\ male} and 0 otherwise.
+
+So, when our model includes:
+
+\begin{verbatim}
+Coefficients:     Estimate Std. Error t value Pr(>|t|)    
+gendermale         0.29811    0.20271   1.471   0.1417    
+\end{verbatim}
+
+this means that a male subject is predicted to have an outcome that is 0.29811 points higher than a female subject, if they have the same values of all of the other predictors.
+
+Note that if we wanted to switch the levels so that ``male'' came first (and so that R would use ``male'' as the baseline category and ``female'' as the 1 value in an indicator), we could do so with the \texttt{forcats} package and the \texttt{fct\_relevel} command. Building a model with this version of \texttt{gender} will simply reverse the sign of our indicator variable, but not change any of the other output.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emp_bmi_noNA}\OperatorTok{$}\NormalTok{gender}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\KeywordTok{fct_relevel}\NormalTok{(emp_bmi_noNA}\OperatorTok{$}\NormalTok{gender, }\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{)}
+\NormalTok{revised.model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender}\FloatTok{.2} \OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{alcohol }\OperatorTok{+}\StringTok{ }\NormalTok{education, }\DataTypeTok{data =}\NormalTok{ emp_bmi_noNA)}
+\KeywordTok{summary}\NormalTok{(revised.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = bmi ~ age + gender.2 + employed + married + alcohol + 
+    education, data = emp_bmi_noNA)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.7033 -1.6057 -0.0494  1.4992 11.7303 
+
+Coefficients:
+                                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                          26.45202    0.94648  27.948  < 2e-16 ***
+age                                  -0.04260    0.01065  -3.998 6.86e-05 ***
+gender.2female                       -0.29811    0.20271  -1.471   0.1417    
+employed                             -0.45761    0.19153  -2.389   0.0171 *  
+married                               0.09438    0.21280   0.444   0.6575    
+alcoholheavy drinker                  0.25317    0.40727   0.622   0.5343    
+alcoholnormal drinker or non-drinker  0.14121    0.40766   0.346   0.7291    
+education2 middle school grad        -0.28862    0.24020  -1.202   0.2298    
+education3 high school grad          -0.50123    0.22192  -2.259   0.0241 *  
+education4 college grad or higher    -0.79862    0.31068  -2.571   0.0103 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.513 on 980 degrees of freedom
+Multiple R-squared:  0.02251,	Adjusted R-squared:  0.01353 
+F-statistic: 2.508 on 9 and 980 DF,  p-value: 0.007716
+\end{verbatim}
+
+Note that the two categories here need to be both \emph{mutually exclusive} (a subject cannot be in more than one category) and \emph{collectively exhaustive} (all subjects must fit into this set of categories) in order to work properly as a regression predictor.
+
+\hypertarget{employed-a-binary-variable-represented-a-10-indicator}{%
+\subsection{\texorpdfstring{\texttt{employed}: A binary variable represented a 1/0 indicator}{employed: A binary variable represented a 1/0 indicator}}\label{employed-a-binary-variable-represented-a-10-indicator}}
+
+The \texttt{employed} and \texttt{married} variables are each described using an indicator variable, which is 1 if the condition of interest holds and 0 if it does not. R doesn't recognize this as a factor, but rather as a quantitative variable. However, this is no problem for modeling, where we just need to remember that if \texttt{employed} = 1, the subject is employed, and if \texttt{employed} = 0, the subject is not employed, to interpret the results. The same approach is used for \texttt{married}.
+
+\begin{verbatim}
+Coefficients:    Estimate Std. Error t value Pr(>|t|)    
+employed         -0.45761    0.19153  -2.389   0.0171 *  
+married           0.09438    0.21280   0.444   0.6575    
+\end{verbatim}
+
+So, in our model, if subject A is employed, they are expected to have an outcome that is 0.46 points lower (-0.46 points higher) than subject B who is not employed but otherwise identical to subject A.
+
+Similarly, if subject X is married, and subject Y is unmarried, but they otherwise have the same values of all predictors, then our model will predict a \texttt{bmi} for X that is 0.094 points higher than for Y.
+
+\hypertarget{alcohol-a-three-category-variable-coded-by-names}{%
+\subsection{\texorpdfstring{\texttt{alcohol}: A three-category variable coded by names}{alcohol: A three-category variable coded by names}}\label{alcohol-a-three-category-variable-coded-by-names}}
+
+Our \texttt{alcohol} information divides subjects into three categories, which are:
+
+\begin{itemize}
+\tightlist
+\item
+  normal drinker or non-drinker
+\item
+  heavy drinker
+\item
+  alcohol dependent
+\end{itemize}
+
+R builds a model using \(k-1\) predictors to describe a variable with \(k\) levels. As mentioned previously, R selects a baseline category when confronted with a factor variable, and it always selects the first level as the baseline. The levels are sorted alphabetically, unless we tell R to sort them some other way. So, we have
+
+\begin{verbatim}
+Coefficients:                        Estimate Std. Error t value Pr(>|t|)    
+alcoholheavy drinker                  0.25317    0.40727   0.622   0.5343    
+alcoholnormal drinker or non-drinker  0.14121    0.40766   0.346   0.7291    
+\end{verbatim}
+
+How do we interpret this?
+
+\begin{itemize}
+\tightlist
+\item
+  Suppose subject A is alcohol dependent, B is a heavy drinker and C is a normal drinker or non-drinker, but subjects A-C have the same values of all other predictors.
+\item
+  Our model predicts that B would have a BMI that is 0.25 points higher than A.
+\item
+  Our model predicts that C would have a BMI that is 0.14 points higher than A.
+\end{itemize}
+
+A good way to think about this\ldots{}
+
+\begin{longtable}[]{@{}rlrr@{}}
+\toprule
+Subject & Status & alcoholheavy drinker & alcoholnormal drinker or non-drinker\tabularnewline
+\midrule
+\endhead
+A & alcohol dependent & 0 & 0\tabularnewline
+B & heavy drinker & 1 & 0\tabularnewline
+C & normal drinker or non-drinker & 0 & 1\tabularnewline
+\bottomrule
+\end{longtable}
+
+and so, with two variables, we cover each of these three possible \texttt{alcohol} levels.
+
+When we have an ordered variable like this one, we usually want the baseline category to be at either end of the scale (either the highest or the lowest, but not something in the middle.) Another good idea in many settings is to use as the baseline category the most common category. Here, the baseline R chose was ``alcohol dependent'' which is the least common category, so I might want to use the \texttt{fct\_relevel} function again to force R to choose, say, normal drinker/non-drinker as the baseline category.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emp_bmi_noNA}\OperatorTok{$}\NormalTok{alcohol}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\KeywordTok{fct_relevel}\NormalTok{(emp_bmi_noNA}\OperatorTok{$}\NormalTok{alcohol, }
+           \StringTok{"normal drinker or non-drinker"}\NormalTok{, }\StringTok{"heavy drinker"}\NormalTok{)}
+\NormalTok{revised.model}\FloatTok{.2}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{alcohol}\FloatTok{.2} \OperatorTok{+}\StringTok{ }\NormalTok{education, }\DataTypeTok{data =}\NormalTok{ emp_bmi_noNA)}
+\KeywordTok{summary}\NormalTok{(revised.model}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = bmi ~ age + gender + employed + married + alcohol.2 + 
+    education, data = emp_bmi_noNA)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.7033 -1.6057 -0.0494  1.4992 11.7303 
+
+Coefficients:
+                                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                       26.29512    0.82860  31.734  < 2e-16 ***
+age                               -0.04260    0.01065  -3.998 6.86e-05 ***
+gendermale                         0.29811    0.20271   1.471   0.1417    
+employed                          -0.45761    0.19153  -2.389   0.0171 *  
+married                            0.09438    0.21280   0.444   0.6575    
+alcohol.2heavy drinker             0.11196    0.19647   0.570   0.5689    
+alcohol.2alcohol dependent        -0.14121    0.40766  -0.346   0.7291    
+education2 middle school grad     -0.28862    0.24020  -1.202   0.2298    
+education3 high school grad       -0.50123    0.22192  -2.259   0.0241 *  
+education4 college grad or higher -0.79862    0.31068  -2.571   0.0103 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.513 on 980 degrees of freedom
+Multiple R-squared:  0.02251,	Adjusted R-squared:  0.01353 
+F-statistic: 2.508 on 9 and 980 DF,  p-value: 0.007716
+\end{verbatim}
+
+How do we interpret this revised model?
+
+\begin{itemize}
+\tightlist
+\item
+  Again, subject A is alcohol dependent, B is a heavy drinker and C is a normal drinker or non-drinker, but subjects A-C have the same values of all other predictors.
+\item
+  Our model predicts that B would have a BMI that is 0.11 points higher than C.
+\item
+  Our model predicts that A would have a BMI that is 0.14 points lower than C.
+\end{itemize}
+
+So, those are the same conclusions, just rephrased.
+
+\hypertarget{t-tests-and-multi-categorical-variables}{%
+\subsection{t tests and multi-categorical variables}\label{t-tests-and-multi-categorical-variables}}
+
+The usual ``last predictor in'' t test works perfectly for binary factors, but suppose we have a factor like \texttt{alcohol} which is represented by two different indicator variables. If we want to know whether the \texttt{alcohol} information, as a group, adds statistically significant value to the model that includes all of the other predictors, then our best strategy is to compare two models - one with the alcohol information, and one without.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model.with.a <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{alcohol }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }\NormalTok{education, }
+                   \DataTypeTok{data =}\NormalTok{ emp_bmi_noNA)}
+\NormalTok{model.no.a <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }\NormalTok{education, }
+                 \DataTypeTok{data =}\NormalTok{ emp_bmi_noNA)}
+\KeywordTok{anova}\NormalTok{(model.with.a, model.no.a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Model 1: bmi ~ age + gender + alcohol + employed + married + education
+Model 2: bmi ~ age + gender + employed + married + education
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1    980 6189.9                           
+2    982 6193.6 -2   -3.6288 0.2873 0.7504
+\end{verbatim}
+
+The \emph{p} value for both of the indicator variables associated with \texttt{alcohol} combined is 0.75, according to an ANOVA F test with 2 degrees of freedom.
+
+Note that we can get the same information from an ANOVA table of the larger model if we add the \texttt{alcohol} predictor to the model last.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(}\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }\NormalTok{education }\OperatorTok{+}\StringTok{ }\NormalTok{alcohol, }
+         \DataTypeTok{data =}\NormalTok{ emp_bmi_noNA))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: bmi
+           Df Sum Sq Mean Sq F value   Pr(>F)   
+age         1   55.5  55.510  8.7884 0.003105 **
+gender      1    0.4   0.369  0.0585 0.809000   
+employed    1   30.7  30.733  4.8657 0.027626 * 
+married     1    0.4   0.374  0.0592 0.807746   
+education   3   51.9  17.311  2.7408 0.042202 * 
+alcohol     2    3.6   1.814  0.2873 0.750382   
+Residuals 980 6189.9   6.316                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Again, we see \emph{p} for the two \texttt{alcohol} indicators is 0.75.
+
+\hypertarget{education-a-four-category-variable-coded-by-names}{%
+\subsection{\texorpdfstring{\texttt{education}: A four-category variable coded by names}{education: A four-category variable coded by names}}\label{education-a-four-category-variable-coded-by-names}}
+
+The \texttt{education} variable's codes are a little better designed. By preceding the text with a number for each code, we force R to attend to the level order we want to see.
+
+\begin{verbatim}
+Coefficients:                     Estimate Std. Error t value Pr(>|t|)    
+education2 middle school grad     -0.28862    0.24020  -1.202   0.2298    
+education3 high school grad       -0.50123    0.22192  -2.259   0.0241 *  
+education4 college grad or higher -0.79862    0.31068  -2.571   0.0103 *  
+\end{verbatim}
+
+Since we have four education levels, we need those three indicator variables.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{education2\ middle\ school\ grad} is 1 if the subject is a middle school graduate, and 0 if they have some other status
+\item
+  \texttt{education3\ high\ school\ grad} is 1 if the subject is a high school graduate, and 0 if they have some other status
+\item
+  \texttt{education4\ college\ grad\ or\ higher} is 1 if the subject is a college graduate or has more education, and 0 if they have some other status.
+\item
+  So the subjects with only elementary school or lower education are represented by zeros in all three indicators.
+\end{itemize}
+
+Suppose we have four subjects now, with the same values of all other predictors, but different levels of education.
+
+\begin{longtable}[]{@{}clc@{}}
+\toprule
+Subject & Education & Estimated BMI\tabularnewline
+\midrule
+\endhead
+A & elementary school or less & A\tabularnewline
+B & middle school grad & A - 0.289\tabularnewline
+C & high school grad & A - 0.501\tabularnewline
+D & college grad & A - 0.799\tabularnewline
+\bottomrule
+\end{longtable}
+
+Note that the four categories are \emph{mutually exclusive} (a subject cannot be in more than one category) and \emph{collectively exhaustive} (all subjects must fit into this set of categories.) As we have seen, this is a requirement of categorical variables in a regression analysis.
+
+Let's run the ANOVA test for the \texttt{education} information captured in those three indicator variables\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(}\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }\NormalTok{alcohol }\OperatorTok{+}\StringTok{ }\NormalTok{education, }
+         \DataTypeTok{data =}\NormalTok{ emp_bmi_noNA))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: bmi
+           Df Sum Sq Mean Sq F value   Pr(>F)   
+age         1   55.5  55.510  8.7884 0.003105 **
+gender      1    0.4   0.369  0.0585 0.809000   
+employed    1   30.7  30.733  4.8657 0.027626 * 
+married     1    0.4   0.374  0.0592 0.807746   
+alcohol     2    3.5   1.750  0.2771 0.758055   
+education   3   52.1  17.354  2.7476 0.041820 * 
+Residuals 980 6189.9   6.316                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+So, as a group, the three indicator variables add statistically significant predictive value at the 5\% significance level, since the F test for those three variables has \emph{p} = 0.042
+
+\hypertarget{interpreting-the-kitchen-sink-model}{%
+\subsection{Interpreting the Kitchen Sink Model}\label{interpreting-the-kitchen-sink-model}}
+
+So, again, here's our model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ebmodel}\FloatTok{.1}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{alcohol }\OperatorTok{+}\StringTok{ }\NormalTok{education, }\DataTypeTok{data =}\NormalTok{ emp_bmi_noNA)}
+\NormalTok{ebmodel}\FloatTok{.1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = bmi ~ age + gender + employed + married + alcohol + 
+    education, data = emp_bmi_noNA)
+
+Coefficients:
+                         (Intercept)                                   age  
+                            26.15391                              -0.04260  
+                          gendermale                              employed  
+                             0.29811                              -0.45761  
+                             married                  alcoholheavy drinker  
+                             0.09438                               0.25317  
+alcoholnormal drinker or non-drinker         education2 middle school grad  
+                             0.14121                              -0.28862  
+         education3 high school grad     education4 college grad or higher  
+                            -0.50123                              -0.79862  
+\end{verbatim}
+
+If we wanted to predict a BMI level for a new subject like the ones used in the development of this model, that prediction would be:
+
+\begin{itemize}
+\tightlist
+\item
+  26.15
+\item
+  minus 0.426 times the subject's \texttt{age}
+\item
+  plus 0.298 if the subject's \texttt{gender} was \texttt{male}
+\item
+  minus 0.458 if the subject's employment status was \texttt{employed}
+\item
+  plus 0.253 if the subject's \texttt{alcohol} classification was \texttt{heavy\ drinker}
+\item
+  plus 0.141 if the subject's \texttt{alcohol} classification was \texttt{normal\ drinker\ or\ non-drinker}
+\item
+  minus 0.289 if the subject's \texttt{education} classification was \texttt{2\ middle\ school\ grad}
+\item
+  minus 0.501 if the subject's \texttt{education} classification was \texttt{3\ high\ school\ grad}
+\item
+  minus 0.799 if the subject's \texttt{education} classification was \texttt{4\ college\ grad\ or\ higher}
+\end{itemize}
+
+\hypertarget{scatterplot-matrix-with-categorical-predictors}{%
+\section{Scatterplot Matrix with Categorical Predictors}\label{scatterplot-matrix-with-categorical-predictors}}
+
+Let's look at a scatterplot matrix of a few key predictors, with my favorite approach (at least for quantitative predictors)\ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggpairs}\NormalTok{(emp_bmi_noNA }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(age, gender, employed, education, bmi))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-384-1.pdf}
+
+\hypertarget{residual-plots-when-we-have-categorical-predictors}{%
+\section{Residual Plots when we have Categorical Predictors}\label{residual-plots-when-we-have-categorical-predictors}}
+
+Here are the main residual plots from the kitchen sink model \texttt{ebmodel.1} defined previously.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(ebmodel}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/resid_plot_ebmodel_1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Sometimes, in small samples, the categorical variables will make the regression residuals line up in somewhat strange patterns. But in this case, there's no real problem. The use of categorical variables also has some impact on leverage, as it's hard for a subject to be a serious outlier in terms of a predictor if that predictor only has a few possible levels.
+
+\hypertarget{stepwise-regression-and-categorical-predictors}{%
+\section{Stepwise Regression and Categorical Predictors}\label{stepwise-regression-and-categorical-predictors}}
+
+When R does backwards elimination for stepwise model selection, it makes decisions about each categorical variable as in/out across all of the indicator variables simultaneously, as you'd hope.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stats}\OperatorTok{::}\KeywordTok{step}\NormalTok{(ebmodel}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Start:  AIC=1834.64
+bmi ~ age + gender + employed + married + alcohol + education
+
+            Df Sum of Sq    RSS    AIC
+- alcohol    2     3.629 6193.6 1831.2
+- married    1     1.243 6191.2 1832.8
+<none>                   6189.9 1834.6
+- gender     1    13.660 6203.6 1834.8
+- education  3    52.063 6242.0 1836.9
+- employed   1    36.057 6226.0 1838.4
+- age        1   100.976 6290.9 1848.7
+
+Step:  AIC=1831.22
+bmi ~ age + gender + employed + married + education
+
+            Df Sum of Sq    RSS    AIC
+- married    1     1.026 6194.6 1829.4
+<none>                   6193.6 1831.2
+- gender     1    19.071 6212.6 1832.3
+- education  3    51.934 6245.5 1833.5
+- employed   1    34.736 6228.3 1834.8
+- age        1   108.599 6302.2 1846.4
+
+Step:  AIC=1829.39
+bmi ~ age + gender + employed + education
+
+            Df Sum of Sq    RSS    AIC
+<none>                   6194.6 1829.4
+- gender     1    22.169 6216.7 1830.9
+- education  3    51.282 6245.9 1831.5
+- employed   1    34.390 6229.0 1832.9
+- age        1   125.431 6320.0 1847.2
+\end{verbatim}
+
+\begin{verbatim}
+
+Call:
+lm(formula = bmi ~ age + gender + employed + education, data = emp_bmi_noNA)
+
+Coefficients:
+                      (Intercept)                                age  
+                         26.50206                           -0.04459  
+                       gendermale                           employed  
+                          0.34057                           -0.44571  
+    education2 middle school grad        education3 high school grad  
+                         -0.28787                           -0.49772  
+education4 college grad or higher  
+                         -0.79037  
+\end{verbatim}
+
+Note that the stepwise approach first drops two degrees of freedom (two indicator variables) for \texttt{alcohol} and then drops the one degree of freedom for \texttt{married} before it settles on a model with \texttt{age}, \texttt{gender}, \texttt{education} and \texttt{employed}.
+
+\hypertarget{pooling-results-after-multiple-imputation}{%
+\section{Pooling Results after Multiple Imputation}\label{pooling-results-after-multiple-imputation}}
+
+As mentioned earlier, having built a model using complete cases, we should probably investigate the impact of multiple imputation on the missing observations. We'll fit 100 imputations using the \texttt{emp\_bmi} data and then fit a pooled regression model across those imputations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emp_bmi_mi <-}\StringTok{ }\KeywordTok{mice}\NormalTok{(emp_bmi, }\DataTypeTok{m =} \DecValTok{100}\NormalTok{, }\DataTypeTok{maxit =} \DecValTok{5}\NormalTok{, }
+                   \DataTypeTok{printFlag =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{seed =} \DecValTok{4476}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning: Number of logged events: 3
+\end{verbatim}
+
+Now, we'll fit the pooled kitchen sink regression model to these imputed data sets and pool them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model.empbmi.mi <-}\StringTok{ }\KeywordTok{with}\NormalTok{(emp_bmi_mi, }\KeywordTok{lm}\NormalTok{(bmi }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{gender }\OperatorTok{+}\StringTok{ }\NormalTok{employed }\OperatorTok{+}\StringTok{ }\NormalTok{married }\OperatorTok{+}\StringTok{ }
+\StringTok{                          }\NormalTok{alcohol }\OperatorTok{+}\StringTok{ }\NormalTok{education))}
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{pool}\NormalTok{(model.empbmi.mi))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                   term    estimate  std.error  statistic
+1                           (Intercept) 26.15264235 0.88035377 29.7069693
+2                                   age -0.04257649 0.01063883 -4.0019893
+3                            gendermale  0.29771567 0.20235080  1.4712849
+4                              employed -0.45683748 0.19109736 -2.3906007
+5                               married  0.09440409 0.21243805  0.4443841
+6                  alcoholheavy drinker  0.25287293 0.40270585  0.6279346
+7  alcoholnormal drinker or non-drinker  0.14106527 0.40341787  0.3496753
+8         education2 middle school grad -0.28857465 0.23994471 -1.2026714
+9           education3 high school grad -0.50085137 0.22138465 -2.2623582
+10    education4 college grad or higher -0.79834801 0.30947194 -2.5797104
+        df      p.value
+1  979.908 0.000000e+00
+2  979.908 6.754702e-05
+3  979.908 1.415351e-01
+4  979.908 1.700880e-02
+5  979.908 6.568630e-01
+6  979.908 5.301931e-01
+7  979.908 7.266575e-01
+8  979.908 2.293940e-01
+9  979.908 2.389357e-02
+10 979.908 1.003300e-02
+\end{verbatim}
+
+OK. That's it.
 
   \bibliography{book.bib,packages.bib}
 

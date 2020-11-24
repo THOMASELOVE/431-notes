@@ -85,7 +85,7 @@ library(patchwork)
 library(rms)
 library(mosaic)
 library(Epi)
-library(tidymodels) # note: tidymodels includes the broom package
+library(broom) # note: tidymodels includes the broom package
 library(tidyverse) # note: tidyverse includes the dplyr and ggplot2 packages
 
 theme_set(theme_bw())
