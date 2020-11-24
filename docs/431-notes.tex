@@ -18301,8 +18301,8 @@ Key topics regarding multiple regression we cover in 431 include:
   - The importance of logic, theory and empirical evidence. (LTE)
 \end{enumerate}
 
-\hypertarget{regression-diagnostics}{%
-\chapter{Regression Diagnostics}\label{regression-diagnostics}}
+\hypertarget{Reg-Diag}{%
+\chapter{Regression Diagnostics}\label{Reg-Diag}}
 
 Some of this discussion comes from \citet{BockVD}.
 
@@ -18331,7 +18331,7 @@ Of course, the multiple regression model is not limited to three predictors. We 
 
 To fix ideas, suppose we return to the Western Collaborative Group Study (WCGS) data we studied back in Chapter \ref{WCGS-Study}, which described 3154 men ages 39-59 who were free of heart disease and were employees of one of 10 California companies in 1960-1961.
 
-We are going to select a random sample of 500 of those men, with complete data on our outcome of interest, which is total cholesterol in mg/dl (\texttt{chol}) and on our three predictors of interest, which are systolic blood pressure in mm Hg (\texttt{sbp}), body mass index (\texttt{bmi}) and behavioral pattern (\texttt{behpat}), which is a four-category variable with levels A1, A2, B3 and B4.
+We are going to select a random sample of 500 of those men, with complete data on our outcome of interest, which is total cholesterol in mg/dl (\texttt{chol}) and on our three predictors of interest, which are systolic blood pressure in mm Hg (\texttt{sbp}), body mass index (\texttt{bmi}) and behavioral pattern (\texttt{dibpat}), which is a two-category variable with levels ``Type A'' or ``Type B''.
 
 \begin{itemize}
 \tightlist
@@ -19727,6 +19727,1013 @@ OK. That's something of an improvement. How about the other residual plots with 
 \includegraphics{431-notes_files/figure-latex/unnamed-chunk-353-1.pdf}
 
 The impact of the skew is reduced, at least. I might well be satisfied enough with this, in practice.
+
+\hypertarget{building-prediction-models-for-wcgs}{%
+\chapter{\texorpdfstring{Building Prediction Models for \texttt{wcgs}}{Building Prediction Models for wcgs}}\label{building-prediction-models-for-wcgs}}
+
+Sometimes, we use a regression model for description of a multivariate relationship which requires only that we provide an adequate fit to the data at hand. Should we want to use the model for prediction, then a more appropriate standard which requires us to fit a model that does each of the following three things:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  {[}fits well{]} Provides an adequate fit to the data at hand
+\item
+  {[}parsimonious{]} Includes only those predictors which actually have detectable predictive value
+\item
+  {[}predicts well out of sample{]} Does a better job predicting our outcome in new data than other alternative models
+\end{enumerate}
+
+We'll spend considerable time in 432 studying how best to validate a regression model, but for now, we'll focus on a pair of issues:
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Given a set of predictors, how should we let the computer help us understand which subsets of those predictors are most worthy of our additional attention?
+\item
+  Given a pair of models to compare, what tools should we use to determine which one better predicts new data?
+\end{enumerate}
+
+\hypertarget{predicting-cholesterol-level-in-wcgs-again}{%
+\section{Predicting Cholesterol Level in WCGS, Again}\label{predicting-cholesterol-level-in-wcgs-again}}
+
+To address these issues, I'll again look at the \texttt{wcgs} data (Western Collaborative Group Study), described in Chapter \ref{WCGS-Study}, then again in Chapter \ref{Reg-Diag}.
+
+This time, we'll try to predict the variable \texttt{chol} on the basis of some subset of the following six predictors: \texttt{age}, \texttt{bmi}, \texttt{sbp}, \texttt{dbp}, \texttt{smoke} and \texttt{dibpat}.
+
+The steps we'll take are as follows.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Check the \texttt{wcgs} data for missing or out-of-range values in the variables under study, so we don't regret it later. Make a decision about how to handle issues here.
+\item
+  Partition the \texttt{wcgs} data into a training (development) sample of 2000 observations, and a test (holdout) sample of the remaining observations.
+\item
+  Using only the model development sample, fit three candidate models.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Model A will predict \texttt{chol} using all six predictors.
+  \item
+    Model B will predict \texttt{chol} using five predictors, specifically \texttt{age}, \texttt{bmi}, \texttt{dbp}, \texttt{dibpat} and \texttt{smoke}.
+  \item
+    Model C will predict \texttt{chol} using only three predictors, specifically \texttt{age}, \texttt{dbp} and \texttt{smoke}
+  \end{itemize}
+\item
+  Compare the fit quality of these models in the development sample to see if any of them is superior in terms of in-sample predictive quality.
+\item
+  Assess regression assumptions in each of these models in the development sample.
+\item
+  Finally moving to the holdout sample, compare the quality of predictions made by the models in terms of several criteria to see if any of the models (A, B or C) is clearly superior in terms of out-of-sample prediction.
+\end{enumerate}
+
+\hypertarget{checking-for-missing-or-problematic-values}{%
+\section{Checking for Missing or Problematic Values}\label{checking-for-missing-or-problematic-values}}
+
+Suppose that after consulting with clinical experts, we want to ensure that:
+
+\begin{itemize}
+\tightlist
+\item
+  all \texttt{age} values are between 39 and 59 years
+\item
+  all \texttt{bmi} are between 15 and 50
+\item
+  all \texttt{sbp} are between 80 and 250 mm Hg
+\item
+  all \texttt{dbp} are between 50 and 200 mm Hg
+\item
+  all values of \texttt{sbp-dbp} are at least 10 and no more than 90 mm Hg
+\item
+  all values of \texttt{chol} are between 100 and 400 mg/dl
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Hmisc}\OperatorTok{::}\KeywordTok{describe}\NormalTok{(wcgs }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(age, bmi, sbp, dbp, smoke, dibpat, chol))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+wcgs %>% select(age, bmi, sbp, dbp, smoke, dibpat, chol) 
+
+ 7  Variables      3154  Observations
+--------------------------------------------------------------------------------
+age 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+    3154        0       21    0.996    46.28    6.256       39       40 
+     .25      .50      .75      .90      .95 
+      42       45       50       55       57 
+
+lowest : 39 40 41 42 43, highest: 55 56 57 58 59
+--------------------------------------------------------------------------------
+bmi 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+    3154        0      679        1    24.52    2.803    20.59    21.52 
+     .25      .50      .75      .90      .95 
+   22.96    24.39    25.84    27.45    28.73 
+
+lowest : 11.19061 15.66050 16.87200 17.21633 17.22242
+highest: 36.04248 37.22973 37.24805 37.65281 38.94737
+--------------------------------------------------------------------------------
+sbp 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+    3154        0       62    0.996    128.6    16.25      110      112 
+     .25      .50      .75      .90      .95 
+     120      126      136      148      156 
+
+lowest :  98 100 102 104 106, highest: 200 208 210 212 230
+--------------------------------------------------------------------------------
+dbp 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+    3154        0       42    0.992    82.02    10.51       68       70 
+     .25      .50      .75      .90      .95 
+      76       80       86       94      100 
+
+lowest :  58  60  62  64  66, highest: 125 129 130 136 150
+--------------------------------------------------------------------------------
+smoke 
+       n  missing distinct 
+    3154        0        2 
+                      
+Value         No   Yes
+Frequency   1652  1502
+Proportion 0.524 0.476
+--------------------------------------------------------------------------------
+dibpat 
+       n  missing distinct 
+    3154        0        2 
+                        
+Value      Type A Type B
+Frequency    1589   1565
+Proportion  0.504  0.496
+--------------------------------------------------------------------------------
+chol 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+    3142       12      237        1    226.4    47.99    161.1    175.0 
+     .25      .50      .75      .90      .95 
+   197.2    223.0    253.0    280.0    302.0 
+
+lowest : 103 110 111 112 113, highest: 386 390 400 414 645
+--------------------------------------------------------------------------------
+\end{verbatim}
+
+Here are the issues I see:
+
+\begin{itemize}
+\tightlist
+\item
+  The (\texttt{chol}) total cholesterol levels include 12 missing values (so we need to decide what to do about them) and values of 414 and 645 that I don't think are plausible. Since \texttt{chol} is our outcome, I'm inclined to delete those 14 subjects from our analyses.
+\item
+  The \texttt{bmi} value of 11.9 is much smaller than all other values, and seems implausible, so I'm inclined to delete that subject, as well.
+\item
+  All of the \texttt{age} values are between 39 and 59, as they should be.
+\item
+  The \texttt{dibpat} and \texttt{smoke} binary variables each appear to be reasonable given the timing of the data collection (the early 1960s).
+\item
+  The blood pressures, individually, for \texttt{sbp} and \texttt{dbp} appear reasonable in terms of their ranges and have no missing data. It's worth it to check to see that everyone has a \texttt{sbp} meaningfully larger than their \texttt{dbp}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wcgs }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{bp_diff =}\NormalTok{ sbp }\OperatorTok{-}\StringTok{ }\NormalTok{dbp) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, sbp, dbp, bp_diff) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{slice_min}\NormalTok{(bp_diff, }\DataTypeTok{n =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 4
+     id   sbp   dbp bp_diff
+  <dbl> <dbl> <dbl>   <dbl>
+1  3822   120   100      20
+2 11406   104    80      24
+3 10204   110    86      24
+\end{verbatim}
+
+This looks fine. Are any combinations out of line in the other direction, with a difference of 90 or more?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wcgs }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{bp_diff =}\NormalTok{ sbp }\OperatorTok{-}\StringTok{ }\NormalTok{dbp) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, sbp, dbp, bp_diff) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(bp_diff }\OperatorTok{>=}\StringTok{ }\DecValTok{90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 8 x 4
+     id   sbp   dbp bp_diff
+  <dbl> <dbl> <dbl>   <dbl>
+1  2172   208   102     106
+2 12453   196    86     110
+3 12280   190    98      92
+4 13268   170    80      90
+5  3546   188    90      98
+6  2078   188    86     102
+7 19078   230   118     112
+8 22025   210   108     102
+\end{verbatim}
+
+This \texttt{sbp\ -\ dbp} value is called the pulse pressure. Given that these men did not (at enrollment) have heart disease, it is surprising to see so many values separated by more than what would be typical (about 40-60 mm Hg.)
+
+I'll be a little aggressive in my cleaning and also drop these 8 subjects with \texttt{sbp\ -\ dbp} of 90 or more mm Hg. So, we need to deal with the missingness in \texttt{chol}, the strange \texttt{bmi} value and the strange \texttt{chol} value in addition to dropping subjects with \texttt{sbp\ -\ dbp} to get to a ``clean'' data set here.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wcgs_ms <-}\StringTok{ }\NormalTok{wcgs }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, age, bmi, sbp, dbp, smoke, dibpat, chol) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(}\KeywordTok{complete.cases}\NormalTok{(.)) }\OperatorTok{%>%}\StringTok{ }\CommentTok{# drops 12 subjects}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(bmi }\OperatorTok{>}\StringTok{ }\DecValTok{15}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\CommentTok{# drops 1 subject}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(sbp }\OperatorTok{-}\StringTok{ }\NormalTok{dbp }\OperatorTok{<}\StringTok{ }\DecValTok{90}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\CommentTok{# drops 7 more subjects}
+\StringTok{    }\KeywordTok{filter}\NormalTok{(chol }\OperatorTok{<=}\StringTok{ }\DecValTok{400}\NormalTok{) }\CommentTok{# drops 2 more subjects}
+
+\KeywordTok{nrow}\NormalTok{(wcgs); }\KeywordTok{nrow}\NormalTok{(wcgs_ms)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3154
+\end{verbatim}
+
+\begin{verbatim}
+[1] 3132
+\end{verbatim}
+
+So we have dropped a total of 22 subjects from the data set. We could certainly consider imputing missing values of \texttt{chol}, but I am uncomfortable doing that for an outcome.
+
+\hypertarget{partitioning-the-wcgsms-sample}{%
+\section{\texorpdfstring{Partitioning the \texttt{wcgsms} sample}{Partitioning the wcgsms sample}}\label{partitioning-the-wcgsms-sample}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Partition the \texttt{wcgs} data into a training (development) sample of 2000 observations, and a test (holdout) sample of the remaining observations.
+\end{enumerate}
+
+Before we partition, it's always a good idea to ensure that each of the subject identifiers (here, \texttt{id}) are unique.
+
+We could simply count the number of rows in the data set and make sure it matches the number of distinct \texttt{id} values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(wcgs_ms), }\KeywordTok{n_distinct}\NormalTok{(wcgs_ms }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(id)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3132 3132
+\end{verbatim}
+
+Looks good. If you preferm, check directly with the \texttt{identical()} function, which should return TRUE.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{identical}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(wcgs_ms), }\KeywordTok{n_distinct}\NormalTok{(wcgs_ms }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(id)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] TRUE
+\end{verbatim}
+
+Remember to set a seed so that you can replicate the selection.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{431}\NormalTok{)}
+
+\NormalTok{wcgs_ms_train <-}\StringTok{ }\NormalTok{wcgs_ms }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{slice_sample}\NormalTok{(., }\DataTypeTok{n =} \DecValTok{2000}\NormalTok{)}
+
+\NormalTok{wcgs_ms_test <-}\StringTok{ }\KeywordTok{anti_join}\NormalTok{(wcgs_ms, wcgs_ms_train, }\DataTypeTok{by =} \StringTok{"id"}\NormalTok{)}
+
+\KeywordTok{c}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(wcgs_ms), }\KeywordTok{nrow}\NormalTok{(wcgs_ms_train), }\KeywordTok{nrow}\NormalTok{(wcgs_ms_test))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3132 2000 1132
+\end{verbatim}
+
+OK. This looks good. We have 2000 observations in the training sample, and the rest in the test sample.
+
+Given a large sample size (at least 500 observations in the full data set) I would usually think about holding out somewhere between 20\% and 30\% of the data in this manner, but it's OK to stray a bit from those bounds, as we have here, with 1132/3132 = 36\% held out for the test sample.
+
+\hypertarget{should-we-transform-our-outcome}{%
+\section{Should we transform our outcome?}\label{should-we-transform-our-outcome}}
+
+Consider the Box-Cox approach, which we'll check in our complete (model C) model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## requires library(car)}
+
+\KeywordTok{boxCox}\NormalTok{(}\KeywordTok{lm}\NormalTok{(chol }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{dbp }\OperatorTok{+}\StringTok{ }\NormalTok{smoke }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }
+             \DataTypeTok{data =}\NormalTok{ wcgs_ms_train))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-361-1.pdf}
+
+It looks like we might want to consider using the square root of the cholesterol level as our outcome. We'll try that.
+
+\hypertarget{scatterplot-matrix-and-assessment-of-collinearity}{%
+\section{Scatterplot Matrix and Assessment of Collinearity}\label{scatterplot-matrix-and-assessment-of-collinearity}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## requires library(GGally)}
+
+\NormalTok{wcgs_ms_train <-}\StringTok{ }\NormalTok{wcgs_ms_train }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sqrtchol =} \KeywordTok{sqrt}\NormalTok{(chol))}
+
+\KeywordTok{ggpairs}\NormalTok{(wcgs_ms_train }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(age, bmi, sbp, dbp, smoke, dibpat, sqrtchol),}
+        \DataTypeTok{lower =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{combo =} \KeywordTok{wrap}\NormalTok{(}\StringTok{"facethist"}\NormalTok{, }\DataTypeTok{binwidth =} \FloatTok{0.5}\NormalTok{)), }
+        \DataTypeTok{title =} \StringTok{"2000 subjects in `wcgs_ms_train`"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-362-1.pdf}
+
+With so many observations and more than just a few predictors, it's not always easy to parse this plot. We might have considered splitting it into two parts.
+
+Let's check for collinearity. Unsurprisingly, \texttt{sbp} and \texttt{dbp} are highly correlated with each other. Does this give us problems with variance inflation? Again, we'll consider the largest model we'll fit.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{car}\OperatorTok{::}\KeywordTok{vif}\NormalTok{(}\KeywordTok{lm}\NormalTok{(chol }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{dbp }\OperatorTok{+}\StringTok{ }\NormalTok{smoke }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }
+             \DataTypeTok{data =}\NormalTok{ wcgs_ms_train))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     age      bmi      sbp      dbp    smoke   dibpat 
+1.038393 1.157091 2.536938 2.578828 1.035868 1.016123 
+\end{verbatim}
+
+The VIF is largest for \texttt{sbp} and \texttt{dbp}, suggesting that perhaps we won't need them both. Since we have candidate models using only \texttt{dbp}, let's see how they fare.
+
+\hypertarget{fit-our-three-candidate-models}{%
+\section{Fit our Three Candidate Models}\label{fit-our-three-candidate-models}}
+
+Due to our choice to transform our outcome, we will now fit the following candidate models:
+
+\begin{itemize}
+\tightlist
+\item
+  Model A will predict \texttt{sqrt(chol)} using all six predictors.
+\item
+  Model B will predict \texttt{sqrt(chol)} using five predictors, specifically \texttt{age}, \texttt{bmi}, \texttt{dbp}, \texttt{dibpat} and \texttt{smoke}.
+\item
+  Model C will predict \texttt{sqrt(chol)} using only two predictors, specifically \texttt{dbp} and \texttt{smoke}
+\end{itemize}
+
+\hypertarget{three-candidate-models}{%
+\subsection{Three Candidate Models}\label{three-candidate-models}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelA <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(chol) }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{dbp }\OperatorTok{+}\StringTok{ }\NormalTok{smoke }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }
+             \DataTypeTok{data =}\NormalTok{ wcgs_ms_train)}
+\NormalTok{modelB <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(chol) }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{dbp }\OperatorTok{+}\StringTok{ }\NormalTok{smoke }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }
+             \DataTypeTok{data =}\NormalTok{ wcgs_ms_train)}
+\NormalTok{modelC <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(chol) }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{dbp }\OperatorTok{+}\StringTok{ }\NormalTok{smoke, }
+             \DataTypeTok{data =}\NormalTok{ wcgs_ms_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{could-we-have-fit-other-models}{%
+\subsection{Could we have fit other models?}\label{could-we-have-fit-other-models}}
+
+Sure. One approach would have been to consider an automated variable selection tool, even though they're all pretty terrible. Stepwise regression is a common, if poor, choice for this task. The problem is that there's no good tool for this task, essentially, as we'll discuss further in 432.
+
+\begin{itemize}
+\tightlist
+\item
+  A stepwise regression applied to \texttt{modelA} in the training sample with backwards elimination suggests our \texttt{modelB}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stats}\OperatorTok{::}\KeywordTok{step}\NormalTok{(modelA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Start:  AIC=1357.64
+sqrt(chol) ~ age + bmi + sbp + dbp + smoke + dibpat
+
+         Df Sum of Sq    RSS    AIC
+- sbp     1     0.359 3916.0 1355.8
+<none>                3915.6 1357.6
+- bmi     1     5.044 3920.6 1358.2
+- dibpat  1    10.321 3925.9 1360.9
+- age     1    22.217 3937.8 1367.0
+- dbp     1    28.014 3943.6 1369.9
+- smoke   1    46.322 3961.9 1379.2
+
+Step:  AIC=1355.82
+sqrt(chol) ~ age + bmi + dbp + smoke + dibpat
+
+         Df Sum of Sq    RSS    AIC
+<none>                3916.0 1355.8
+- bmi     1     4.858 3920.8 1356.3
+- dibpat  1    10.204 3926.2 1359.0
+- age     1    21.913 3937.9 1365.0
+- smoke   1    46.021 3962.0 1377.2
+- dbp     1    52.228 3968.2 1380.3
+\end{verbatim}
+
+\begin{verbatim}
+
+Call:
+lm(formula = sqrt(chol) ~ age + bmi + dbp + smoke + dibpat, data = wcgs_ms_train)
+
+Coefficients:
+ (Intercept)           age           bmi           dbp      smokeYes  
+    12.03138       0.01930       0.02074       0.01835       0.30687  
+dibpatType B  
+    -0.14393  
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  A stepwise regression with forward selection from the intercept only model moving towards \texttt{modelA} in the training sample also suggests \texttt{modelB}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{min_model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(chol) }\OperatorTok{~}\StringTok{ }\DecValTok{1}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ wcgs_ms_train)}
+\NormalTok{biggest <-}\StringTok{ }\KeywordTok{formula}\NormalTok{(}\KeywordTok{lm}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(chol) }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{bmi }\OperatorTok{+}\StringTok{ }\NormalTok{sbp }\OperatorTok{+}\StringTok{ }\NormalTok{dbp }\OperatorTok{+}\StringTok{ }\NormalTok{smoke }\OperatorTok{+}\StringTok{ }\NormalTok{dibpat, }
+             \DataTypeTok{data =}\NormalTok{ wcgs_ms_train))}
+\NormalTok{fwd_step <-}\StringTok{ }\NormalTok{stats}\OperatorTok{::}\KeywordTok{step}\NormalTok{(min_model, }\DataTypeTok{direction =} \StringTok{'forward'}\NormalTok{, }\DataTypeTok{scope =}\NormalTok{ biggest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Start:  AIC=1430.36
+sqrt(chol) ~ 1
+
+         Df Sum of Sq    RSS    AIC
++ dbp     1    83.336 4001.7 1391.1
++ sbp     1    57.718 4027.3 1403.9
++ smoke   1    39.557 4045.5 1412.9
++ age     1    39.060 4046.0 1413.1
++ dibpat  1    20.740 4064.3 1422.2
++ bmi     1    19.788 4065.2 1422.7
+<none>                4085.0 1430.4
+
+Step:  AIC=1391.13
+sqrt(chol) ~ dbp
+
+         Df Sum of Sq    RSS    AIC
++ smoke   1    45.953 3955.7 1370.0
++ age     1    24.171 3977.5 1381.0
++ dibpat  1    16.675 3985.0 1384.8
+<none>                4001.7 1391.1
++ bmi     1     1.964 3999.7 1392.2
++ sbp     1     0.766 4000.9 1392.8
+
+Step:  AIC=1370.04
+sqrt(chol) ~ dbp + smoke
+
+         Df Sum of Sq    RSS    AIC
++ age     1   24.3512 3931.4 1359.7
++ dibpat  1   13.4535 3942.3 1365.2
++ bmi     1    4.7652 3951.0 1369.6
+<none>                3955.7 1370.0
++ sbp     1    0.0080 3955.7 1372.0
+
+Step:  AIC=1359.69
+sqrt(chol) ~ dbp + smoke + age
+
+         Df Sum of Sq    RSS    AIC
++ dibpat  1   10.5635 3920.8 1356.3
++ bmi     1    5.2180 3926.2 1359.0
+<none>                3931.4 1359.7
++ sbp     1    0.0906 3931.3 1361.6
+
+Step:  AIC=1356.3
+sqrt(chol) ~ dbp + smoke + age + dibpat
+
+       Df Sum of Sq    RSS    AIC
++ bmi   1    4.8581 3916.0 1355.8
+<none>              3920.8 1356.3
++ sbp   1    0.1735 3920.6 1358.2
+
+Step:  AIC=1355.82
+sqrt(chol) ~ dbp + smoke + age + dibpat + bmi
+
+       Df Sum of Sq    RSS    AIC
+<none>              3916.0 1355.8
++ sbp   1   0.35901 3915.6 1357.6
+\end{verbatim}
+
+It is tempting to conclude that \texttt{modelB} is somehow a good model, since both forwards and stepwise regression like \texttt{modelB} in our training sample given the predictors we fed to the algorithm. Resist that temptation. As you'll see, even with the pretty simple validation strategy we're going to use here, we won't wind up selecting model B.
+
+\hypertarget{coefficients-of-our-3-models-with-tidy}{%
+\subsection{\texorpdfstring{Coefficients of our 3 models with \texttt{tidy}}{Coefficients of our 3 models with tidy}}\label{coefficients-of-our-3-models-with-tidy}}
+
+Given the large sample size, let's look at some 99\% confidence intervals for our model coefficients. We'll use \texttt{tidy} from the \texttt{broom} package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(modelA, }\DataTypeTok{conf.int =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.99}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(term, estimate, conf.low, conf.high, p.value) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r}
+\hline
+term & estimate & conf.low & conf.high & p.value\\
+\hline
+(Intercept) & 12.058 & 10.933 & 13.183 & 0.000\\
+\hline
+age & 0.019 & 0.005 & 0.034 & 0.001\\
+\hline
+bmi & 0.021 & -0.013 & 0.055 & 0.109\\
+\hline
+sbp & -0.001 & -0.010 & 0.007 & 0.669\\
+\hline
+dbp & 0.020 & 0.006 & 0.034 & 0.000\\
+\hline
+smokeYes & 0.310 & 0.146 & 0.475 & 0.000\\
+\hline
+dibpatType B & -0.145 & -0.308 & 0.018 & 0.022\\
+\hline
+\end{tabular}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(modelB, }\DataTypeTok{conf.int =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.99}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(term, estimate, conf.low, conf.high, p.value) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r}
+\hline
+term & estimate & conf.low & conf.high & p.value\\
+\hline
+(Intercept) & 12.031 & 10.918 & 13.145 & 0.000\\
+\hline
+age & 0.019 & 0.004 & 0.034 & 0.001\\
+\hline
+bmi & 0.021 & -0.013 & 0.055 & 0.116\\
+\hline
+dbp & 0.018 & 0.009 & 0.028 & 0.000\\
+\hline
+smokeYes & 0.307 & 0.143 & 0.470 & 0.000\\
+\hline
+dibpatType B & -0.144 & -0.307 & 0.019 & 0.023\\
+\hline
+\end{tabular}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(modelC, }\DataTypeTok{conf.int =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.99}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(term, estimate, conf.low, conf.high, p.value) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r}
+\hline
+term & estimate & conf.low & conf.high & p.value\\
+\hline
+(Intercept) & 12.243 & 11.325 & 13.160 & 0\\
+\hline
+age & 0.020 & 0.005 & 0.035 & 0\\
+\hline
+dbp & 0.021 & 0.012 & 0.029 & 0\\
+\hline
+smokeYes & 0.305 & 0.142 & 0.467 & 0\\
+\hline
+\end{tabular}
+
+\hypertarget{anova-comparison-of-the-3-models}{%
+\subsection{ANOVA comparison of the 3 models}\label{anova-comparison-of-the-3-models}}
+
+Since model C is a subset of model B which is a subset of model A, we can compare these models with ANOVA tests.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(modelC, modelB, modelA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Model 1: sqrt(chol) ~ age + dbp + smoke
+Model 2: sqrt(chol) ~ age + bmi + dbp + smoke + dibpat
+Model 3: sqrt(chol) ~ age + bmi + sbp + dbp + smoke + dibpat
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)  
+1   1996 3931.4                             
+2   1994 3916.0  2    15.422 3.9247 0.0199 *
+3   1993 3915.6  1     0.359 0.1827 0.6691  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  There appears to be a detectable improvement (using \(\alpha = 0.05\)) for model B as compared to model C, but not if we use \(\alpha = 0.01\).
+\item
+  The improvement from model B to model A doesn't appear to meet the standard for a statistically detectable impact based on this ANOVA comparison.
+\end{itemize}
+
+\hypertarget{assessing-fit-quality-of-our-3-models-with-glance}{%
+\subsection{\texorpdfstring{Assessing Fit Quality of our 3 models with \texttt{glance}}{Assessing Fit Quality of our 3 models with glance}}\label{assessing-fit-quality-of-our-3-models-with-glance}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{repA <-}\StringTok{ }\KeywordTok{glance}\NormalTok{(modelA) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{name =} \StringTok{"modelA"}\NormalTok{)}
+\NormalTok{repB <-}\StringTok{ }\KeywordTok{glance}\NormalTok{(modelB) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{name =} \StringTok{"modelB"}\NormalTok{)}
+\NormalTok{repC <-}\StringTok{ }\KeywordTok{glance}\NormalTok{(modelC) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{name =} \StringTok{"modelC"}\NormalTok{)}
+
+\NormalTok{fit_report <-}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(repA, repB, repC)}
+
+\NormalTok{fit_report }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{select}\NormalTok{(name, }\DataTypeTok{r2 =}\NormalTok{ r.squared, }\DataTypeTok{adjr2 =}\NormalTok{ adj.r.squared, sigma, }
+\NormalTok{           AIC, BIC, nobs, df, }\DataTypeTok{df.res =}\NormalTok{ df.residual) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{kable}\NormalTok{(}\DataTypeTok{digits =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r|r|r|r|r}
+\hline
+name & r2 & adjr2 & sigma & AIC & BIC & nobs & df & df.res\\
+\hline
+modelA & 0.0415 & 0.0386 & 1.402 & 7035 & 7080 & 2000 & 6 & 1993\\
+\hline
+modelB & 0.0414 & 0.0390 & 1.401 & 7034 & 7073 & 2000 & 5 & 1994\\
+\hline
+modelC & 0.0376 & 0.0362 & 1.403 & 7037 & 7065 & 2000 & 3 & 1996\\
+\hline
+\end{tabular}
+
+Our conclusions are:
+
+\begin{itemize}
+\tightlist
+\item
+  Model A has the strongest \(R^2\) value, as it must because it contains the predictors in the other models, and \(R^2\) is greedy.
+\item
+  Model B has a slightly stronger adjusted \(R^2\) and \(\sigma\) than the other models, and also has the best performance according to AIC.
+\item
+  Model C (the smallest of these models) shows the best in-sample BIC result.
+\item
+  None of the differences we observe between these models are particularly large, and none of the models are especially effective, as judged by \(R^2\).
+\end{itemize}
+
+\hypertarget{develop-residual-plots}{%
+\section{Develop Residual Plots}\label{develop-residual-plots}}
+
+We'll use \texttt{augment} from the \texttt{broom} package to calculate our summaries of the quality of fit at the level of the individual observations, and the fact that our fitted values refer to the square root of cholesterol level is fine for assessing assumptions in-sample.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## requires library(broom) or library(tidymodels)}
+
+\NormalTok{aug_A <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(modelA, }\DataTypeTok{data =}\NormalTok{ wcgs_ms_train)}
+\NormalTok{aug_B <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(modelB, }\DataTypeTok{data =}\NormalTok{ wcgs_ms_train)}
+\NormalTok{aug_C <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(modelC, }\DataTypeTok{data =}\NormalTok{ wcgs_ms_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{first-set-of-residual-diagnostics-3-models}{%
+\subsection{First Set of Residual Diagnostics (3 models)}\label{first-set-of-residual-diagnostics-3-models}}
+
+For each model, we'll start with the pair of plots that show us:
+
+\begin{itemize}
+\tightlist
+\item
+  the residuals vs.~the fitted values, to check for non-linearity and non-constant variance, as well as\\
+\item
+  Normal Q-Q plots of the standardized residuals to check for important non-Normality.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## requires library(ggrepel)}
+
+\NormalTok{p1a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_A, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =}\NormalTok{ .resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_A }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                   }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+               \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_A }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                        }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+                    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{0}\NormalTok{, }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model A"}\NormalTok{,}
+         \DataTypeTok{x =} \StringTok{"Fitted sqrt(cholesterol)"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Residual"}\NormalTok{) }
+
+\NormalTok{p1b <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_B, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =}\NormalTok{ .resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_B }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                   }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+               \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_B }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                        }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+                    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{0}\NormalTok{, }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model B"}\NormalTok{,}
+         \DataTypeTok{x =} \StringTok{"Fitted sqrt(cholesterol)"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Residual"}\NormalTok{)}
+
+\NormalTok{p1c <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_C, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =}\NormalTok{ .resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_C }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                   }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+               \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_C }\OperatorTok{%>%}\StringTok{ }
+\StringTok{                        }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.resid), }\DataTypeTok{n =} \DecValTok{5}\NormalTok{),}
+                    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_abline}\NormalTok{(}\DataTypeTok{intercept =} \DecValTok{0}\NormalTok{, }\DataTypeTok{slope =} \DecValTok{0}\NormalTok{, }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model C"}\NormalTok{,}
+         \DataTypeTok{caption =} \StringTok{"In each plot, 5 largest |residuals| highlighted in red."}\NormalTok{,}
+         \DataTypeTok{x =} \StringTok{"Fitted sqrt(cholesterol)"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Residual"}\NormalTok{)}
+
+\NormalTok{p2a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_A, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_qq}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_qq_line}\NormalTok{(}\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model A: Normal Q-Q Plot"}\NormalTok{,}
+         \DataTypeTok{y =} \StringTok{"Model A Standardized Residual"}\NormalTok{, }
+         \DataTypeTok{x =} \StringTok{"Standard Normal Quantiles"}\NormalTok{)}
+
+\NormalTok{p2b <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_B, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_qq}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_qq_line}\NormalTok{(}\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model B: Normal Q-Q Plot"}\NormalTok{,}
+         \DataTypeTok{y =} \StringTok{"Model B Standardized Residual"}\NormalTok{, }
+         \DataTypeTok{x =} \StringTok{"Standard Normal Quantiles"}\NormalTok{)}
+
+\NormalTok{p2c <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_C, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{sample =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_qq}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_qq_line}\NormalTok{(}\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model C: Normal Q-Q Plot"}\NormalTok{,}
+         \DataTypeTok{y =} \StringTok{"Model C Standardized Residual"}\NormalTok{, }
+         \DataTypeTok{x =} \StringTok{"Standard Normal Quantiles"}\NormalTok{)}
+
+\NormalTok{(p1a }\OperatorTok{+}\StringTok{ }\NormalTok{p2a) }\OperatorTok{/}\StringTok{ }\NormalTok{(p1b }\OperatorTok{+}\StringTok{ }\NormalTok{p2b) }\OperatorTok{/}\StringTok{ }\NormalTok{(p1c }\OperatorTok{+}\StringTok{ }\NormalTok{p2c) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{plot_annotation}\NormalTok{(}
+        \DataTypeTok{title =} \StringTok{"Residual Diagnostics: Set 1 for Models A, B, C"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-373-1.pdf}
+
+In each of these plots, I see no clear signs of substantial non-linearity or any substantial problems with the assumptions of constant variance or Normality. No standardized residuals are especially unusual, and there's no sign of a substantial curve or fan shape in the plots of residuals vs.~fitted values.
+
+\hypertarget{second-set-of-residual-diagnostics-3-models}{%
+\subsection{Second Set of Residual Diagnostics (3 models)}\label{second-set-of-residual-diagnostics-3-models}}
+
+As a second check on the assumption of non-constant variance, we'll draw scale-location plots. As a second check on the potential for poorly fit or highly leveraged points to influence our results, we'll also run the residuals vs.~leverage plots.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## requires library(ggrepel)}
+
+\NormalTok{p3a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_A, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model A Scale-Location Plot"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Fitted sqrt(cholesterol)"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Square Root of |Standardized Residual|"}\NormalTok{)}
+
+\NormalTok{p3b <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_B, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model B Scale-Location Plot"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Fitted sqrt(cholesterol)"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Square Root of |Standardized Residual|"}\NormalTok{)}
+
+\NormalTok{p3c <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_C, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .fitted, }\DataTypeTok{y =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid)))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model C Scale-Location Plot"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Fitted sqrt(cholesterol)"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Square Root of |Standardized Residual|"}\NormalTok{)}
+
+
+\NormalTok{p4a <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_A, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .hat, }\DataTypeTok{y =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_A }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_A }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{3}\OperatorTok{*}\KeywordTok{mean}\NormalTok{(.hat)), }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model A Residuals vs. Leverage"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"Red points indicate Cook's d at least 0.5"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Leverage"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Standardized Residual"}\NormalTok{)}
+
+\NormalTok{p4b <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_B, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .hat, }\DataTypeTok{y =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_B }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_B }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{3}\OperatorTok{*}\KeywordTok{mean}\NormalTok{(.hat)), }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model B Residuals vs. Leverage"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"Red points indicate Cook's d at least 0.5"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Leverage"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Standardized Residual"}\NormalTok{)}
+
+\NormalTok{p4c <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(aug_C, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ .hat, }\DataTypeTok{y =}\NormalTok{ .std.resid)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_C }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+             \DataTypeTok{col =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_text_repel}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ aug_C }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(.cooksd }\OperatorTok{>=}\StringTok{ }\FloatTok{0.5}\NormalTok{),}
+               \KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ id), }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"loess"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\DataTypeTok{span =} \DecValTok{2}\NormalTok{, }\DataTypeTok{se =}\NormalTok{ F) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{3}\OperatorTok{*}\KeywordTok{mean}\NormalTok{(.hat)), }\DataTypeTok{lty =} \StringTok{"dashed"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Model C Residuals vs. Leverage"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"Red points indicate Cook's d at least 0.5"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Leverage"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Standardized Residual"}\NormalTok{)}
+
+\NormalTok{(p3a }\OperatorTok{+}\StringTok{ }\NormalTok{p4a) }\OperatorTok{/}\StringTok{ }\NormalTok{(p3b }\OperatorTok{+}\StringTok{ }\NormalTok{p4b) }\OperatorTok{/}\StringTok{ }\NormalTok{(p3c }\OperatorTok{+}\StringTok{ }\NormalTok{p4c) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{plot_annotation}\NormalTok{(}
+        \DataTypeTok{title =} \StringTok{"Residual Diagnostics: Set 2 for Models A, B, C"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{431-notes_files/figure-latex/unnamed-chunk-374-1.pdf}
+
+Again, I don't see any signs of powerful trends in the scale-location plot for any of the three models, so there's no clear sign of non-constant variance.
+
+For each of the three models, the residuals vs.~leverage plot shows no points highlighted in red (which would indicate substantial influence - a Cook's distance value above 5.) So I don't see anything to worry about.
+
+\hypertarget{numerical-summaries-of-these-measures-all-3-models}{%
+\subsection{Numerical Summaries of these measures (all 3 models)}\label{numerical-summaries-of-these-measures-all-3-models}}
+
+We could summarize the largest standardized residual and the largest Cook's distance, for instance, for each model, with something like this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_A }\OperatorTok{%>%}\StringTok{ }\KeywordTok{slice_max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(.std.resid), }\DataTypeTok{n =} \DecValTok{1}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, sqrtchol, .fitted, .resid, .std.resid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 5
+     id sqrtchol .fitted .resid .std.resid
+  <dbl>    <dbl>   <dbl>  <dbl>      <dbl>
+1 10340     19.7    14.7   5.08       3.63
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aug_A }\OperatorTok{%>%}\StringTok{ }\KeywordTok{slice_max}\NormalTok{(.cooksd, }\DataTypeTok{n =} \DecValTok{1}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(id, sqrtchol, .fitted, .resid, .hat, .cooksd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 6
+     id sqrtchol .fitted .resid    .hat .cooksd
+  <dbl>    <dbl>   <dbl>  <dbl>   <dbl>   <dbl>
+1 10072     10.6    15.5  -4.90 0.00938  0.0167
+\end{verbatim}
+
+\hypertarget{test-sample-comparisons-for-our-3-models}{%
+\section{Test Sample Comparisons for our 3 Models}\label{test-sample-comparisons-for-our-3-models}}
+
+Finally, we'll use our three candidate models (A, B and C) to predict the results in our holdout sample of 1132 observations not used to fit these models to see which model performs better in these new data.
+
+Once again, we'll be using \texttt{augment} to do this work. To start, this is straightforward - we just need to specify the new data we want to predict with \texttt{newdata}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test_A <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(modelA, }\DataTypeTok{newdata =}\NormalTok{ wcgs_ms_test) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{mod_n =} \StringTok{"Model A"}\NormalTok{)}
+\NormalTok{test_B <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(modelB, }\DataTypeTok{newdata =}\NormalTok{ wcgs_ms_test) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{mod_n =} \StringTok{"Model B"}\NormalTok{)}
+\NormalTok{test_C <-}\StringTok{ }\KeywordTok{augment}\NormalTok{(modelC, }\DataTypeTok{newdata =}\NormalTok{ wcgs_ms_test) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{mod_n =} \StringTok{"Model C"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Let's look at the first two results using Model A.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test_A }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sqrtchol =} \KeywordTok{sqrt}\NormalTok{(chol)) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(chol, sqrtchol, .fitted, .resid) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 4
+   chol sqrtchol .fitted .resid
+  <dbl>    <dbl>   <dbl>  <dbl>
+1   194     13.9    15.2 -1.28 
+2   258     16.1    15.5  0.592
+\end{verbatim}
+
+As we can see, the \texttt{.fitted} value is trying to predict the square root of \texttt{chol} and not \texttt{chol}. When we are doing validation in our test sample, it is more helpful to get back to the scale of our original outcome. So here, we'd square the \texttt{.fitted} value (to back out of our square root transformation) and get the actual prediction our model makes for \texttt{chol}. Then we can take the observed \texttt{chol} value and subtract the prediction of \texttt{chol} to get a new residual on the scale of our original \texttt{chol} values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test_res <-}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(test_A, test_B, test_C) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{fit_chol =}\NormalTok{ .fitted}\OperatorTok{^}\DecValTok{2}\NormalTok{, }\DataTypeTok{res_chol =}\NormalTok{ chol }\OperatorTok{-}\StringTok{ }\NormalTok{fit_chol) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{select}\NormalTok{(mod_n, id, chol, fit_chol, res_chol, }\KeywordTok{everything}\NormalTok{()) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{arrange}\NormalTok{(id, mod_n)}
+
+\NormalTok{test_res }\OperatorTok{%>%}\StringTok{ }\KeywordTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 6 x 13
+  mod_n    id  chol fit_chol res_chol   age   bmi   sbp   dbp smoke dibpat
+  <chr> <dbl> <dbl>    <dbl>    <dbl> <dbl> <dbl> <dbl> <dbl> <chr> <chr> 
+1 Mode~  2003   181     214.    -33.2    42  23.6   110    78 No    Type B
+2 Mode~  2003   181     214.    -32.7    42  23.6   110    78 No    Type B
+3 Mode~  2003   181     216.    -35.0    42  23.6   110    78 No    Type B
+4 Mode~  2004   132     222.    -89.9    41  23.1   124    78 Yes   Type B
+5 Mode~  2004   132     222.    -89.9    41  23.1   124    78 Yes   Type B
+6 Mode~  2004   132     224.    -92.5    41  23.1   124    78 Yes   Type B
+# ... with 2 more variables: .fitted <dbl>, .resid <dbl>
+\end{verbatim}
+
+Now, we can summarize the quality of the predictions across each of the models with four summary statistics calculated across the 1132 observations in the test sample.
+
+\begin{itemize}
+\tightlist
+\item
+  the mean absolute prediction error, or MAPE
+\item
+  the \emph{median} absolute prediction error, or medAPE
+\item
+  the maximum absolute prediction error, or maxAPE
+\item
+  the square root of the mean \emph{squared} prediction error, or RMSPE
+\end{itemize}
+
+No one of these dominates the other, but we might be interested in which model gives us the best (smallest) result for each of these summaries. Let's run them.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test_res }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(mod_n) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{MAPE =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{abs}\NormalTok{(res_chol)),}
+              \DataTypeTok{medAPE =} \KeywordTok{median}\NormalTok{(}\KeywordTok{abs}\NormalTok{(res_chol)),}
+              \DataTypeTok{maxAPE =} \KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(res_chol)),}
+              \DataTypeTok{RMSPE =} \KeywordTok{sqrt}\NormalTok{(}\KeywordTok{mean}\NormalTok{(res_chol}\OperatorTok{^}\DecValTok{2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 3 x 5
+  mod_n    MAPE medAPE maxAPE RMSPE
+  <chr>   <dbl>  <dbl>  <dbl> <dbl>
+1 Model A  32.2   27.1   151.  40.8
+2 Model B  32.2   27.1   150.  40.8
+3 Model C  32.1   26.5   147.  40.8
+\end{verbatim}
+
+Which model has the best performance in the testing sample?
+
+\begin{itemize}
+\tightlist
+\item
+  Model C has the smallest (best) MAPE, median APR, maximum APE and RMSPE.
+\item
+  Theres not an enormous difference between the models on most of these summaries, but Model C (the smallest model) does appear to do a bit better.
+\end{itemize}
+
+\hypertarget{putting-it-together---which-model-do-we-like-best}{%
+\section{Putting it Together - which model do we like best?}\label{putting-it-together---which-model-do-we-like-best}}
+
+It's worth remembering that none of the three models was particularly strong. Even Model A (with the full set of predictors) had an \(R^2\) of only about 4.15\%.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  All 3 models had reasonable residual plots, so we don't have much to choose from there.
+\item
+  Within the development sample, Model B had slightly better adjusted \(R^2\), \(\sigma\) and AIC results than the other models, while Model C had the best BIC.
+\item
+  Model C had the best results in the test sample, across all four summaries we examined.
+\end{enumerate}
+
+In this case, I'd pick Model C from among these options, based mainly on the stronger test sample results and the fact that it's a smaller model (with fewer predictors) and if none of the models are going to do very well in terms of predicting \texttt{chol}, there's not much to choose from anyway.
 
   \bibliography{book.bib,packages.bib}
 

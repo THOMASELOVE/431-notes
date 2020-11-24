@@ -1,4 +1,4 @@
-# Regression Diagnostics
+# Regression Diagnostics {#Reg-Diag}
 
 Some of this discussion comes from @BockVD.
 
@@ -20,7 +20,7 @@ Of course, the multiple regression model is not limited to three predictors. We 
 
 To fix ideas, suppose we return to the Western Collaborative Group Study (WCGS) data we studied back in Chapter \@ref(WCGS-Study), which described 3154 men ages 39-59 who were free of heart disease and were employees of one of 10 California companies in 1960-1961. 
 
-We are going to select a random sample of 500 of those men, with complete data on our outcome of interest, which is total cholesterol in mg/dl (`chol`) and on our three predictors of interest, which are systolic blood pressure in mm Hg (`sbp`), body mass index (`bmi`) and behavioral pattern (`behpat`), which is a four-category variable with levels A1, A2, B3 and B4. 
+We are going to select a random sample of 500 of those men, with complete data on our outcome of interest, which is total cholesterol in mg/dl (`chol`) and on our three predictors of interest, which are systolic blood pressure in mm Hg (`sbp`), body mass index (`bmi`) and behavioral pattern (`dibpat`), which is a two-category variable with levels "Type A" or "Type B". 
 
 - Individuals exhibiting a Type A behavior pattern show evidence of being competitive and self-critical without feeling joy in their efforts or accomplishments, and are more likely to have high work involvement, important life imbalance, and high blood pressure.
 - Individuals exhibiting a Type B behavior pattern show evidence of being more reflective, more relaxed, less competitive and less anxious then Type A individuals.
