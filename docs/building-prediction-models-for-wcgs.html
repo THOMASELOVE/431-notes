@@ -24,7 +24,7 @@
 <meta name="author" content="Thomas E. Love" />
 
 
-<meta name="date" content="2020-11-23" />
+<meta name="date" content="2020-11-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1107,7 +1107,7 @@ lowest : 103 110 111 112 113, highest: 386 390 400 414 645
 <p>We could simply count the number of rows in the data set and make sure it matches the number of distinct <code>id</code> values.</p>
 <div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1019-1"><a href="building-prediction-models-for-wcgs.html#cb1019-1"></a><span class="kw">c</span>(<span class="kw">nrow</span>(wcgs_ms), <span class="kw">n_distinct</span>(wcgs_ms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(id)))</span></code></pre></div>
 <pre><code>[1] 3132 3132</code></pre>
-<p>Looks good. If you preferm, check directly with the <code>identical()</code> function, which should return TRUE.</p>
+<p>Looks good. If you prefer, check directly with the <code>identical()</code> function, which should return TRUE.</p>
 <div class="sourceCode" id="cb1021"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1021-1"><a href="building-prediction-models-for-wcgs.html#cb1021-1"></a><span class="kw">identical</span>(<span class="kw">nrow</span>(wcgs_ms), <span class="kw">n_distinct</span>(wcgs_ms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(id)))</span></code></pre></div>
 <pre><code>[1] TRUE</code></pre>
 <p>Remember to set a seed so that you can replicate the selection.</p>
@@ -1762,7 +1762,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>Which model has the best performance in the testing sample?</p>
 <ul>
 <li>Model C has the smallest (best) MAPE, median APR, maximum APE and RMSPE.</li>
-<li>Theres not an enormous difference between the models on most of these summaries, but Model C (the smallest model) does appear to do a bit better.</li>
+<li>There are no enormous differences between the models on most of these summaries, but Model C (the smallest model) appears a bit better.</li>
 </ul>
 </div>
 <div id="putting-it-together---which-model-do-we-like-best" class="section level2">

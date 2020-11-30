@@ -24,7 +24,7 @@
 <meta name="author" content="Thomas E. Love" />
 
 
-<meta name="date" content="2020-11-23" />
+<meta name="date" content="2020-11-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1685,7 +1685,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 14.62 on 3148 degrees of freedom
 Multiple R-squared:  0.06595,	Adjusted R-squared:  0.06506 
 F-statistic: 74.09 on 3 and 3148 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>The actual regression equation in this setting includes both weight, and an indicator variable (1 = yes, 0 = no) for arcus senilis status, and the product of weight and that 1/0 indicator.</p>
+<p>The actual regression equation in this setting includes both weight, and an indicator variable (1 = yes, 0 = no) for arcus senilis status, and the product term combining weight and that 1/0 indicator. In 432, we’ll spend substantial time and energy discussing these product terms, but we’ll not do much of that in 431.</p>
 <ul>
 <li>Note the use of the product term <code>weight*arcus</code> in the setup of the model to allow both the slope of weight and the intercept term in the model to change depending on arcus senilis status.
 <ul>
@@ -1693,7 +1693,7 @@ F-statistic: 74.09 on 3 and 3148 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>For a patient without arcus senilis, the regression equation is SBP = 95.92 + 0.19 weight + 5.96 (0) - 0.028 weight (0) = 95.92 + 0.19 weight.</li>
 </ul></li>
 </ul>
-<p>The linear model including the interaction of weight and arcus to predict sbp for the 3152 patients with known Arcus Senilis status has R-squared = 6.6%.</p>
+<p>The linear model including the interaction of weight and arcus to predict sbp for the 3152 patients with known Arcus Senilis status has R-squared = 6.6%. Again, we’ll discuss interaction more substantially in 432.</p>
 </div>
 <div id="predictions-from-these-linear-models" class="section level2">
 <h2><span class="header-section-number">13.11</span> Predictions from these Linear Models</h2>

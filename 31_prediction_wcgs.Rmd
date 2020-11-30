@@ -95,7 +95,7 @@ We could simply count the number of rows in the data set and make sure it matche
 c(nrow(wcgs_ms), n_distinct(wcgs_ms %>% select(id)))
 ```
 
-Looks good. If you preferm, check directly with the `identical()` function, which should return TRUE.
+Looks good. If you prefer, check directly with the `identical()` function, which should return TRUE.
 
 ```{r}
 identical(nrow(wcgs_ms), n_distinct(wcgs_ms %>% select(id)))
@@ -483,7 +483,7 @@ test_res %>%
 Which model has the best performance in the testing sample?
 
 - Model C has the smallest (best) MAPE, median APR, maximum APE and RMSPE.
-- Theres not an enormous difference between the models on most of these summaries, but Model C (the smallest model) does appear to do a bit better.
+- There are no enormous differences between the models on most of these summaries, but Model C (the smallest model) appears a bit better.
 
 ## Putting it Together - which model do we like best?
 

@@ -120,7 +120,7 @@
 
 \title{Data Science for Biological, Medical and Health Research: Notes for PQHS/CRSP/MPHP 431}
 \author{Thomas E. Love}
-\date{2020-11-23}
+\date{2020-11-30}
 
 \begin{document}
 \maketitle
@@ -8800,7 +8800,7 @@ Multiple R-squared:  0.06595,	Adjusted R-squared:  0.06506
 F-statistic: 74.09 on 3 and 3148 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
-The actual regression equation in this setting includes both weight, and an indicator variable (1 = yes, 0 = no) for arcus senilis status, and the product of weight and that 1/0 indicator.
+The actual regression equation in this setting includes both weight, and an indicator variable (1 = yes, 0 = no) for arcus senilis status, and the product term combining weight and that 1/0 indicator. In 432, we'll spend substantial time and energy discussing these product terms, but we'll not do much of that in 431.
 
 \begin{itemize}
 \tightlist
@@ -8816,7 +8816,7 @@ The actual regression equation in this setting includes both weight, and an indi
   \end{itemize}
 \end{itemize}
 
-The linear model including the interaction of weight and arcus to predict sbp for the 3152 patients with known Arcus Senilis status has R-squared = 6.6\%.
+The linear model including the interaction of weight and arcus to predict sbp for the 3152 patients with known Arcus Senilis status has R-squared = 6.6\%. Again, we'll discuss interaction more substantially in 432.
 
 \hypertarget{predictions-from-these-linear-models}{%
 \section{Predictions from these Linear Models}\label{predictions-from-these-linear-models}}
@@ -19991,7 +19991,7 @@ We could simply count the number of rows in the data set and make sure it matche
 [1] 3132 3132
 \end{verbatim}
 
-Looks good. If you preferm, check directly with the \texttt{identical()} function, which should return TRUE.
+Looks good. If you prefer, check directly with the \texttt{identical()} function, which should return TRUE.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -20714,7 +20714,7 @@ Which model has the best performance in the testing sample?
 \item
   Model C has the smallest (best) MAPE, median APR, maximum APE and RMSPE.
 \item
-  Theres not an enormous difference between the models on most of these summaries, but Model C (the smallest model) does appear to do a bit better.
+  There are no enormous differences between the models on most of these summaries, but Model C (the smallest model) appears a bit better.
 \end{itemize}
 
 \hypertarget{putting-it-together---which-model-do-we-like-best}{%

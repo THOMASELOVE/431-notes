@@ -320,13 +320,13 @@ glance(model3) %>% select(r.squared:p.value, AIC) %>% kable(digits = 3)
 summary(model3)
 ```
 
-The actual regression equation in this setting includes both weight, and an indicator variable (1 = yes, 0 = no) for arcus senilis status, and the product of weight and that 1/0 indicator.
+The actual regression equation in this setting includes both weight, and an indicator variable (1 = yes, 0 = no) for arcus senilis status, and the product term combining weight and that 1/0 indicator. In 432, we'll spend substantial time and energy discussing these product terms, but we'll not do much of that in 431.
 
 - Note the use of the product term `weight*arcus` in the setup of the model to allow both the slope of weight and the intercept term in the model to change depending on arcus senilis status.
     + For a patient who has arcus, the regression equation is SBP = 95.92 + 0.19 weight + 5.96 (1) - 0.028 weight (1) = 101.88 + 0.162 weight.
     + For a patient without arcus senilis, the regression equation is SBP = 95.92 + 0.19 weight + 5.96 (0) - 0.028 weight (0) = 95.92 + 0.19 weight. 
 
-The linear model including the interaction of weight and arcus to predict sbp for the `r sum(!is.na(wcgs$arcus))` patients with known Arcus Senilis status has R-squared = `r 100*signif(summary(model3)$r.square,3)`\%.
+The linear model including the interaction of weight and arcus to predict sbp for the `r sum(!is.na(wcgs$arcus))` patients with known Arcus Senilis status has R-squared = `r 100*signif(summary(model3)$r.square,3)`\%. Again, we'll discuss interaction more substantially in 432.
 
 
 ## Predictions from these Linear Models
