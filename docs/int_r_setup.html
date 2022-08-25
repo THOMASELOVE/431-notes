@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notes for 431 - Setting Up R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./01-datascience.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Setting Up R</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link active">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#r-markdown" id="toc-r-markdown" class="nav-link active" data-scroll-target="#r-markdown">R Markdown</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a></li>
+  <li><a href="#the-love-boost.r-script" id="toc-the-love-boost.r-script" class="nav-link" data-scroll-target="#the-love-boost.r-script">The <code>Love-boost.R</code> script</a></li>
+  <li><a href="#packages-used-in-these-notes" id="toc-packages-used-in-these-notes" class="nav-link" data-scroll-target="#packages-used-in-these-notes">Packages Used in these Notes</a>
+  <ul class="collapse">
+  <li><a href="#the-tidyverse" id="toc-the-tidyverse" class="nav-link" data-scroll-target="#the-tidyverse">The <code>tidyverse</code></a></li>
+  <li><a href="#packages-not-included-in-the-notes-at-present" id="toc-packages-not-included-in-the-notes-at-present" class="nav-link" data-scroll-target="#packages-not-included-in-the-notes-at-present">Packages Not Included in the Notes at Present</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Setting Up R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>These Notes make extensive use of</p>
+<ul>
+<li>the statistical <a href="https://cran.case.edu/">software language R</a>, and</li>
+<li>the development environment <a href="https://www.rstudio.com/products/rstudio/">RStudio</a>,</li>
+</ul>
+<p>both of which are free, and you’ll need to install them on your machine. Instructions for doing so will be found on <a href="https://thomaselove.github.io/431-2022/">the course website</a>.</p>
+<p>If you need a gentle introduction, or if you’re just new to R and RStudio and need to learn about them, we encourage you to take a look at <a href="http://moderndive.com/">https://moderndive.com/</a>, which provides an introduction to statistical and data sciences via R at <span class="citation" data-cites="ModernDive">Ismay and Kim (<a href="references.html#ref-ModernDive" role="doc-biblioref">2022</a>)</span>.</p>
+<section id="r-markdown" class="level2">
+<h2 class="anchored" data-anchor-id="r-markdown">R Markdown</h2>
+<p>These notes were written using <a href="https://quarto.org/">Quarto</a>, which is an amplification of R Markdown (which we’ll learn in 431.) <a href="https://rmarkdown.rstudio.com/">R Markdown</a>, like R and RStudio and Quarto, is free and open source.</p>
+<p>R Markdown is described as an <em>authoring framework</em> for data science, which lets you</p>
+<ul>
+<li>save and execute R code</li>
+<li>generate high-quality reports that can be shared with an audience</li>
+</ul>
+<p>This description comes from <a href="https://rmarkdown.rstudio.com/lesson-1.html">RStudio’s introduction to R Markdown</a> which provides an overview and quick tour of what’s possible with R Markdown.</p>
+<p>Another excellent resource to learn more about R Markdown tools is the Communicate section (especially the <a href="https://r4ds.hadley.nz/rmarkdown.html">R Markdown chapter</a>) of <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span>.</p>
+</section>
+<section id="r-packages" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="r-packages">R Packages</h2>
+<p>At the start of each chapter that involves R code, I’ll present a series of commands I run to set up R to use several packages (libraries) of functions that expand its capabilities, make a specific change to how I want R output to be displayed (that’s the <code>comment = NA</code> piece) and sets the theme for most graphs to <code>theme_bw()</code>. A chunk of code like this will occur near the top of any R Markdown work.</p>
+<p>For example, this is the setup for one of our early chapters that loads four packages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You only need to install a package once, but you need to reload it (using the <code>library()</code> function) every time you start a new session. I always load the package called <code>tidyverse</code> last, since doing so avoids some annoying problems.</p>
+</section>
+<section id="the-love-boost.r-script" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="the-love-boost.r-script">The <code>Love-boost.R</code> script</h2>
+<p>In October, when we start Part B of the course, we’ll use some special R functions I’ve gathered for you in a script called <code>Love-boost</code>. I’ll tell R about that code using the following command…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"data/Love-boost.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>Love-boost.R</code> script includes four functions:</p>
+<ul>
+<li><code>bootdif</code></li>
+<li><code>saifs.ci</code></li>
+<li><code>twobytwo</code></li>
+<li><code>retrodesign</code></li>
+</ul>
+</section>
+<section id="packages-used-in-these-notes" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="packages-used-in-these-notes">Packages Used in these Notes</h2>
+<p>A complete list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at <a href="https://thomaselove.github.io/431-2022/">our course web site</a>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Package</th>
+<th style="text-align: center;">Parts</th>
+<th style="text-align: center;">Key functions in the Package</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>arm</code></td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>boot</code></td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>broom</code></td>
+<td style="text-align: center;">A, B, C</td>
+<td style="text-align: center;"><code>tidy</code>, <code>augment</code>, <code>glance</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>car</code></td>
+<td style="text-align: center;">A, C</td>
+<td style="text-align: center;"><code>boxCox</code>, <code>powerTransform</code>, <code>testTransform</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Epi</code></td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;"><code>twoby2</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>fivethirtyeight</code></td>
+<td style="text-align: center;">Appendix</td>
+<td style="text-align: center;">source of data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>GGally</code></td>
+<td style="text-align: center;">A, C</td>
+<td style="text-align: center;"><code>ggpairs</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>ggrepel</code></td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>ggridges</code></td>
+<td style="text-align: center;">A, B</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>gt</code></td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">for presenting tables</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Hmisc</code></td>
+<td style="text-align: center;">A, B, C</td>
+<td style="text-align: center;"><code>describe</code> and others</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>janitor</code></td>
+<td style="text-align: center;">A, B, C</td>
+<td style="text-align: center;"><code>tabyl</code> and others</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>knitr</code></td>
+<td style="text-align: center;">A, B, C</td>
+<td style="text-align: center;"><code>kable</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>mice</code></td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>mosaic</code></td>
+<td style="text-align: center;">A, B, C</td>
+<td style="text-align: center;"><code>favstats</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>naniar</code></td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;"><code>n_miss</code>, <code>miss_case_table</code>, <code>gg_miss_var</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>NHANES</code></td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">source of data</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>palmerpenguins</code></td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">source of data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>patchwork</code></td>
+<td style="text-align: center;">A, B, C</td>
+<td style="text-align: center;">for combining/annotating plots</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>psych</code></td>
+<td style="text-align: center;">A, B</td>
+<td style="text-align: center;"><code>describe</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>pwr</code></td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>rms</code></td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>simputation</code></td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">various impuation functions</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>tidyverse</code></td>
+<td style="text-align: center;">A, B, C, Appendix</td>
+<td style="text-align: center;">dozens of functions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>vcd</code></td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">–</td>
+</tr>
+</tbody>
+</table>
+<section id="the-tidyverse" class="level3">
+<h3 class="anchored" data-anchor-id="the-tidyverse">The <code>tidyverse</code></h3>
+<p>The <code>tidyverse</code> package is actually a meta-package which includes the following core packages:</p>
+<ul>
+<li><code>ggplot2</code> for creating graphics</li>
+<li><code>dplyr</code> for data manipulation</li>
+<li><code>tidyr</code> for creating tidy data</li>
+<li><code>readr</code> for reading in rectangular data</li>
+<li><code>purrr</code> for working with functions and vectors</li>
+<li><code>tibble</code> for creating tibbles - lazy, surly data frames</li>
+<li><code>stringr</code> for working with data strings</li>
+<li><code>forcats</code> for solving problems with factors</li>
+</ul>
+<p>Loading the tidyverse with <code>library(tidyverse)</code> loads those eight packages.</p>
+<p>Installing the tidyverse also installs several other useful packages on your machine. Read more about the <code>tidyverse</code> at <a href="https://www.tidyverse.org/">https://www.tidyverse.org/</a></p>
+</section>
+<section id="packages-not-included-in-the-notes-at-present" class="level3">
+<h3 class="anchored" data-anchor-id="packages-not-included-in-the-notes-at-present">Packages Not Included in the Notes at Present</h3>
+<ul>
+<li><code>devtools</code></li>
+<li><code>equatiomatic</code></li>
+<li><code>gapminder</code></li>
+<li><code>here</code></li>
+<li><code>kableExtra</code></li>
+<li><code>magrittr</code></li>
+<li><code>markdown</code></li>
+<li><code>modelsummary</code></li>
+<li><code>nhanesA</code></li>
+<li><code>rmarkdown</code></li>
+<li><code>rmdformats</code></li>
+<li><code>rstanarm</code></li>
+<li><code>sessioninfo</code></li>
+<li><code>tableone</code></li>
+<li><code>tidymodels</code></li>
+<li><code>visdat</code></li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-ModernDive" class="csl-entry" role="doc-biblioentry">
+Ismay, Chester, and Albert Y. Kim. 2022. <em>ModernDive: Statistical Inference via Data Science</em>. <a href="http://moderndive.com/">http://moderndive.com/</a>.
+</div>
+<div id="ref-R4DS" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, and Garrett Grolemund. 2022. <em>R for Data Science</em>. Second. O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Working with These Notes</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./01-datascience.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
