@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notes for 431 - 4&nbsp; Data Structures, Variable Types &amp; Sampling NHANES</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05-nhanes_cc.html" rel="next">
+<link href="./03-nhanes.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Structures, Variable Types &amp; Sampling NHANES</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NHANES: A First Look</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-data_types.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Structures, Variable Types &amp; Sampling NHANES</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualizing NHANES Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-assessingnormality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">4.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#data-require-structure-and-context" id="toc-data-require-structure-and-context" class="nav-link" data-scroll-target="#data-require-structure-and-context"> <span class="header-section-number">4.2</span> Data require structure and context</a></li>
+  <li><a href="#newNHANES" id="toc-newNHANES" class="nav-link" data-scroll-target="#newNHANES"> <span class="header-section-number">4.3</span> Sampling Adults in NHANES</a>
+  <ul class="collapse">
+  <li><a href="#creating-a-temporary-cleaner-data-frame" id="toc-creating-a-temporary-cleaner-data-frame" class="nav-link" data-scroll-target="#creating-a-temporary-cleaner-data-frame"> <span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Data Frame</a></li>
+  <li><a href="#sampling-nh_temp-to-obtain-our-nh_adult750-sample" id="toc-sampling-nh_temp-to-obtain-our-nh_adult750-sample" class="nav-link" data-scroll-target="#sampling-nh_temp-to-obtain-our-nh_adult750-sample"> <span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</a></li>
+  <li><a href="#summarizing-the-datas-structure" id="toc-summarizing-the-datas-structure" class="nav-link" data-scroll-target="#summarizing-the-datas-structure"> <span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</a></li>
+  <li><a href="#what-are-the-variables" id="toc-what-are-the-variables" class="nav-link" data-scroll-target="#what-are-the-variables"> <span class="header-section-number">4.3.4</span> What are the variables?</a></li>
+  </ul></li>
+  <li><a href="#quantitative-variables" id="toc-quantitative-variables" class="nav-link" data-scroll-target="#quantitative-variables"> <span class="header-section-number">4.4</span> Quantitative Variables</a>
+  <ul class="collapse">
+  <li><a href="#a-look-at-bmi-body-mass-index" id="toc-a-look-at-bmi-body-mass-index" class="nav-link" data-scroll-target="#a-look-at-bmi-body-mass-index"> <span class="header-section-number">4.4.1</span> A look at BMI (Body-Mass Index)</a></li>
+  </ul></li>
+  <li><a href="#qualitative-categorical-variables" id="toc-qualitative-categorical-variables" class="nav-link" data-scroll-target="#qualitative-categorical-variables"> <span class="header-section-number">4.5</span> Qualitative (Categorical) Variables</a></li>
+  <li><a href="#counting-missing-values" id="toc-counting-missing-values" class="nav-link" data-scroll-target="#counting-missing-values"> <span class="header-section-number">4.6</span> Counting Missing Values</a></li>
+  <li><a href="#nh_cc" id="toc-nh_cc" class="nav-link" data-scroll-target="#nh_cc"> <span class="header-section-number">4.7</span> <code>nh_adults500cc</code>: A Sample of Complete Cases</a></li>
+  <li><a href="#saving-our-samples-in-.rds-files" id="toc-saving-our-samples-in-.rds-files" class="nav-link" data-scroll-target="#saving-our-samples-in-.rds-files"> <span class="header-section-number">4.8</span> Saving our Samples in <code>.Rds</code> files</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Structures, Variable Types &amp; Sampling NHANES</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="setup-packages-used-here" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">4.1</span> Setup: Packages Used Here</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-require-structure-and-context" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="data-require-structure-and-context"><span class="header-section-number">4.2</span> Data require structure and context</h2>
+<p><strong>Descriptive statistics</strong> are concerned with the presentation, organization and summary of data, as suggested in <span class="citation" data-cites="Norman-Streiner">Norman and Streiner (<a href="references.html#ref-Norman-Streiner" role="doc-biblioref">2014</a>)</span>. This includes various methods of organizing and graphing data to get an idea of what those data can tell us.</p>
+<p>As <span class="citation" data-cites="Vittinghoff">Vittinghoff et al. (<a href="references.html#ref-Vittinghoff" role="doc-biblioref">2012</a>)</span> suggest, the nature of the measurement determines how best to describe it statistically, and the main distinction is between <strong>numerical</strong> and <strong>categorical</strong> variables. Even this is a little tricky - plenty of data can have values that look like numerical values, but are just numerals serving as labels.</p>
+<p>As <span class="citation" data-cites="BockVD">Bock, Velleman, and De Veaux (<a href="references.html#ref-BockVD" role="doc-biblioref">2004</a>)</span> point out, the truly critical notion, of course, is that data values, no matter what kind, are useless without their contexts. The Five W’s (Who, What [and in what units], When, Where, Why, and often How) are just as useful for establishing the context of data as they are in journalism. If you can’t answer Who and What, in particular, you don’t have any useful information.</p>
+<p>In general, each row of a data frame corresponds to an individual (respondent, experimental unit, record, or observation) about whom some characteristics are gathered in columns (and these characteristics may be called variables, factors or data elements.) Every column / variable should have a name that indicates <em>what</em> it is measuring, and every row / observation should have a name that indicates <em>who</em> is being measured.</p>
+</section>
+<section id="newNHANES" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="newNHANES"><span class="header-section-number">4.3</span> Sampling Adults in NHANES</h2>
+<p>In <a href="03-nhanes.html"><span>Chapter&nbsp;3</span></a>, we spent some time with a sample from the National Health and Nutrition Examination. Now, by changing the value of the <code>set.seed</code> function which determines the starting place for the random sampling, and changing some other specifications, we’ll generate a new sample describing 750 unique (distinct) adult subjects who completed the 2011-12 version of the survey when they were between the ages of 21 and 64.</p>
+<section id="creating-a-temporary-cleaner-data-frame" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="creating-a-temporary-cleaner-data-frame"><span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Data Frame</h3>
+<p>I’ll start by describing the plan we will use to create a new data frame called <code>nh_temp</code> from which we will eventually build our final sample. In particular, let me lay out the steps I will use to create the <code>nh_temp</code> frame from the original <code>NHANES</code> data frame available in the R package called <code>NHANES</code>.</p>
+<ol type="1">
+<li><p>We’ll <strong>filter</strong> the original NHANES data frame to include only the responses from the 2011-12 administration of the survey. This will cut the sample in half, from 10,000 rows to 5,000.</p></li>
+<li><p>We’ll then <strong>filter</strong> again to restrict the sample to adults whose age is at least 21 and also less than 65. I’ll do this because I want to avoid problems with including both children and adults in my sample, and because I also want to focus on the population of people in the US who are usually covered by private insurance from their job, or by Medicaid insurance from the government, rather than those covered by Medicare.</p></li>
+<li><p>As we discussed previously, what is listed in the NHANES data frame as <code>Gender</code> should be more correctly referred to as <code>Sex</code>. <code>Sex</code> is a biological feature of an individual, while <code>Gender</code> is a social construct. This is an important distinction, so I’ll change the name of the variable.</p></li>
+<li><p>We’ll also rename three other variables, specifically we’ll use <code>Race</code> to describe the <code>Race3</code> variable in the original NHANES data frame, as well as <code>SBP</code> to refer to the average systolic blood pressure, which is specified as <code>BPSysAve</code>, and <code>DBP</code> to refer to the average diastolic blood pressure, which is specified as <code>BPDiaAve</code>.</p></li>
+<li><p>Having accomplished the previous four steps, we’ll then <em>select</em> the variables we want to keep in the sample. (We use <em>select</em> for choosing variables or columns in the data frame, and <em>filter</em> for selecting subjects or rows.) The sixteen variables we will select are: ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, Pulse, PhysActive, Smoke100, SleepTrouble, MaritalStatus and HealthGen.</p></li>
+<li><p>The original NHANES data frame includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we’d like to only include each subject one time. We use the <code>distinct()</code> function to limit the data frame to completely unique subjects (so that, for example, we don’t wind up with two or more rows that have the same ID number.)</p></li>
+</ol>
+<p>Here is the code I used to complete the six steps listed above and create the <code>nh_temp</code> data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nh_temp <span class="ot">&lt;-</span> NHANES <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(SurveyYr <span class="sc">==</span> <span class="st">"2011_12"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">21</span> <span class="sc">&amp;</span> Age <span class="sc">&lt;</span> <span class="dv">65</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Sex =</span> Gender, <span class="at">Race =</span> Race3, <span class="at">SBP =</span> BPSysAve, <span class="at">DBP =</span> BPDiaAve) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>           Pulse, PhysActive, Smoke100, SleepTrouble, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>           MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The resulting <code>nh_temp</code> data frame has 1700 rows and 16 columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nh_temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,700 × 16
+      ID Sex     Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
+   &lt;int&gt; &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
+ 1 62172 fema…    43   172    98.6 Black High S…  33.3   103    72    80 No     
+ 2 62176 fema…    34   172.   68.7 White Colleg…  23.3   107    69    92 Yes    
+ 3 62180 male     35   179.   89   White Colleg…  27.9   107    66    66 No     
+ 4 62199 male     57   186    96.9 White Colleg…  28     110    65    84 Yes    
+ 5 62205 male     28   171.   84.8 White Colleg…  28.9   122    87    70 Yes    
+ 6 62206 fema…    35   167.   81.5 White Some C…  29.1   106    50    58 No     
+ 7 62208 male     38   169.   63.2 Hisp… Some C…  22.2   105    59    52 Yes    
+ 8 62209 fema…    62   143.   53.5 Mexi… 8th Gr…  26     108    57    72 No     
+ 9 62220 fema…    31   167.  113.  Black Colleg…  40.4   120    71    62 Yes    
+10 62222 male     32   179    80.1 White Colleg…  25     104    73    78 No     
+# … with 1,690 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
+#   ¹​Education, ²​PhysActive
+# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+</div>
+</div>
+</section>
+<section id="sampling-nh_temp-to-obtain-our-nh_adult750-sample" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="sampling-nh_temp-to-obtain-our-nh_adult750-sample"><span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</h3>
+<p>Having established the <code>nh_temp</code> sampling frame, we now select a random sample of 750 adults from the 1700 available responses.</p>
+<ul>
+<li>We will use the <code>set.seed()</code> function in R to set a random numerical seed to ensure that if you redo this work, you will obtain the same sample.
+<ul>
+<li>Setting a seed is an important part of being able to replicate the work later when sampling is involved.</li>
+</ul></li>
+<li>Then we will use the <code>slice_sample()</code> function to actually draw the random sample, without replacement.
+<ul>
+<li>“Without replacement” means that once we’ve selected a particular subject, we won’t select them again.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431002</span>) </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># use set.seed to ensure that we all get the same random sample </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>nh_adult750 <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(nh_temp, <span class="at">n =</span> <span class="dv">750</span>, <span class="at">replace =</span> F) </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>nh_adult750</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 750 × 16
+      ID Sex     Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
+   &lt;int&gt; &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
+ 1 68648 fema…    30   181.   67.1 White Colleg…  20.4   103    59    78 No     
+ 2 67200 male     30   180.   86.6 White Colleg…  26.7   113    68    70 Yes    
+ 3 66404 fema…    35   160.   71.1 White Colleg…  27.8   116    80    68 Yes    
+ 4 70535 male     40   177.   82   White Colleg…  26.3   130    79    68 No     
+ 5 65308 fema…    54   151.   60.6 Mexi… 8th Gr…  26.6   130    64    48 No     
+ 6 67392 male     41   171.   90.7 Hisp… Colleg…  31.2   124    82    68 Yes    
+ 7 63218 male     35   163.   81   Mexi… 8th Gr…  30.3   128    96    82 No     
+ 8 65879 fema…    32   160.   66.4 Mexi… Colleg…  25.9   104    70    78 Yes    
+ 9 63617 male     29   189.   83.3 White Colleg…  23.2   105    72    76 Yes    
+10 64720 male     29   174.   62.3 Black Colleg…  20.6   127    60    84 Yes    
+# … with 740 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
+#   ¹​Education, ²​PhysActive
+# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+</div>
+</div>
+<p>The <code>nh_adult750</code> data frame now includes 750 rows (observations) on 16 variables (columns). Essentially, we have 16 pieces of information on each of 750 adult NHANES subjects who were included in the 2011-12 panel.</p>
+</section>
+<section id="summarizing-the-datas-structure" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="summarizing-the-datas-structure"><span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</h3>
+<p>We can identify the number of rows and columns in a data frame or tibble with the <code>dim</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 750  16</code></pre>
+</div>
+</div>
+<p>The <code>str</code> function provides a lot of information about the structure of a data frame or tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [750 × 16] (S3: tbl_df/tbl/data.frame)
+ $ ID           : int [1:750] 68648 67200 66404 70535 65308 67392 63218 65879 63617 64720 ...
+ $ Sex          : Factor w/ 2 levels "female","male": 1 2 1 2 1 2 2 1 2 2 ...
+ $ Age          : int [1:750] 30 30 35 40 54 41 35 32 29 29 ...
+ $ Height       : num [1:750] 181 180 160 177 151 ...
+ $ Weight       : num [1:750] 67.1 86.6 71.1 82 60.6 90.7 81 66.4 83.3 62.3 ...
+ $ Race         : Factor w/ 6 levels "Asian","Black",..: 5 5 5 5 4 3 4 4 5 2 ...
+ $ Education    : Factor w/ 5 levels "8th Grade","9 - 11th Grade",..: 5 5 5 5 1 5 1 5 5 5 ...
+ $ BMI          : num [1:750] 20.4 26.7 27.8 26.3 26.6 31.2 30.3 25.9 23.2 20.6 ...
+ $ SBP          : int [1:750] 103 113 116 130 130 124 128 104 105 127 ...
+ $ DBP          : int [1:750] 59 68 80 79 64 82 96 70 72 60 ...
+ $ Pulse        : int [1:750] 78 70 68 68 48 68 82 78 76 84 ...
+ $ PhysActive   : Factor w/ 2 levels "No","Yes": 1 2 2 1 1 2 1 2 2 2 ...
+ $ Smoke100     : Factor w/ 2 levels "No","Yes": 1 2 1 2 2 1 2 1 2 2 ...
+ $ SleepTrouble : Factor w/ 2 levels "No","Yes": 2 1 1 1 1 1 1 1 2 1 ...
+ $ MaritalStatus: Factor w/ 6 levels "Divorced","LivePartner",..: 3 4 3 3 2 3 3 3 3 2 ...
+ $ HealthGen    : Factor w/ 5 levels "Excellent","Vgood",..: 1 1 1 2 4 3 NA 1 2 4 ...</code></pre>
+</div>
+</div>
+<p>To see the first few observations, use <code>head</code>, and to see the last few, try <code>tail</code>…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(nh_adult750, <span class="dv">5</span>) <span class="co"># shows the last five observations in the data set</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 16
+     ID Sex      Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
+  &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
+1 63924 female    29   165.  113.  Black High S…  41.9    98    56    74 No     
+2 69825 female    43   164.   63.3 White Colleg…  23.7   122    83    88 Yes    
+3 68109 male      45   170.   78.7 Black High S…  27.1   140    79   102 Yes    
+4 64598 female    60   158    74.5 White Some C…  29.8   137    80    78 Yes    
+5 64048 female    54   161.   67.5 White Some C…  26.2   121    87    72 No     
+# … with 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
+#   ¹​Education, ²​PhysActive
+# ℹ Use `colnames()` to see all variable names</code></pre>
+</div>
+</div>
+</section>
+<section id="what-are-the-variables" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="what-are-the-variables"><span class="header-section-number">4.3.4</span> What are the variables?</h3>
+<p>We can use the <code>glimpse</code> function to get a short preview of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 750
+Columns: 16
+$ ID            &lt;int&gt; 68648, 67200, 66404, 70535, 65308, 67392, 63218, 65879, …
+$ Sex           &lt;fct&gt; female, male, female, male, female, male, male, female, …
+$ Age           &lt;int&gt; 30, 30, 35, 40, 54, 41, 35, 32, 29, 29, 64, 28, 31, 59, …
+$ Height        &lt;dbl&gt; 181.3, 180.2, 159.8, 176.6, 150.9, 170.6, 163.4, 160.2, …
+$ Weight        &lt;dbl&gt; 67.1, 86.6, 71.1, 82.0, 60.6, 90.7, 81.0, 66.4, 83.3, 62…
+$ Race          &lt;fct&gt; White, White, White, White, Mexican, Hispanic, Mexican, …
+$ Education     &lt;fct&gt; College Grad, College Grad, College Grad, College Grad, …
+$ BMI           &lt;dbl&gt; 20.4, 26.7, 27.8, 26.3, 26.6, 31.2, 30.3, 25.9, 23.2, 20…
+$ SBP           &lt;int&gt; 103, 113, 116, 130, 130, 124, 128, 104, 105, 127, 128, 1…
+$ DBP           &lt;int&gt; 59, 68, 80, 79, 64, 82, 96, 70, 72, 60, 74, 76, 82, 66, …
+$ Pulse         &lt;int&gt; 78, 70, 68, 68, 48, 68, 82, 78, 76, 84, 62, 56, 78, 66, …
+$ PhysActive    &lt;fct&gt; No, Yes, Yes, No, No, Yes, No, Yes, Yes, Yes, Yes, No, N…
+$ Smoke100      &lt;fct&gt; No, Yes, No, Yes, Yes, No, Yes, No, Yes, Yes, No, No, Ye…
+$ SleepTrouble  &lt;fct&gt; Yes, No, No, No, No, No, No, No, Yes, No, No, Yes, No, Y…
+$ MaritalStatus &lt;fct&gt; Married, NeverMarried, Married, Married, LivePartner, Ma…
+$ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, NA, …</code></pre>
+</div>
+</div>
+<p>The variables we have collected are described in the brief table below<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 63%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Variable</th>
+<th>Description</th>
+<th>Sample Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">ID</td>
+<td>a numerical code identifying the subject</td>
+<td>68648, 67200</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Sex</td>
+<td>sex of subject (2 levels)</td>
+<td>female, male</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Age</td>
+<td>age (years) at screening of subject</td>
+<td>30, 35</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Height</td>
+<td>height (in cm) at screening of subject</td>
+<td>181.3, 180.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Weight</td>
+<td>weight (in kg) at screening of subject</td>
+<td>67.1, 86.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Race</td>
+<td>reported race of subject (6 levels)</td>
+<td>White, Black</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Education</td>
+<td>educational level of subject (5 levels)</td>
+<td>College Grad, High School</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">BMI</td>
+<td>body-mass index, in kg/m<sup>2</sup></td>
+<td>20.4, 26.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">SBP</td>
+<td>systolic blood pressure in mm Hg</td>
+<td>103, 113</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">DBP</td>
+<td>diastolic blood pressure in mm Hg</td>
+<td>59, 68</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Pulse</td>
+<td>60 second pulse rate in beats per minute</td>
+<td>78, 70</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">PhysActive</td>
+<td>Moderate or vigorous-intensity sports?</td>
+<td>Yes, No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Smoke100</td>
+<td>Smoked at least 100 cigarettes lifetime?</td>
+<td>Yes, No</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">SleepTrouble</td>
+<td>Told a doctor they have trouble sleeping?</td>
+<td>Yes, No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">MaritalStatus</td>
+<td>Marital Status</td>
+<td>Married, Divorced</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">HealthGen</td>
+<td>Self-report general health rating (5 levels)</td>
+<td>Vgood, Fair</td>
+</tr>
+</tbody>
+</table>
+<p>The levels for the multi-categorical variables are:</p>
+<ul>
+<li><strong>Race</strong>: Mexican, Hispanic, White, Black, Asian, or Other.</li>
+<li><strong>Education</strong>: 8th Grade, 9 - 11th Grade, High School, Some College, or College Grad.</li>
+<li><strong>MaritalStatus</strong>: Married, Widowed, Divorced, Separated, NeverMarried or LivePartner (living with partner).</li>
+<li><strong>HealthGen</strong>: Excellent, Vgood, Good, Fair or Poor.</li>
+</ul>
+<p>Some details can be obtained using the <code>summary</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       ID            Sex           Age            Height          Weight      
+ Min.   :62206   female:388   Min.   :21.00   Min.   :142.4   Min.   : 39.30  
+ 1st Qu.:64277   male  :362   1st Qu.:30.00   1st Qu.:161.8   1st Qu.: 67.40  
+ Median :66925                Median :40.00   Median :168.9   Median : 80.00  
+ Mean   :66936                Mean   :40.82   Mean   :168.9   Mean   : 83.16  
+ 3rd Qu.:69414                3rd Qu.:51.00   3rd Qu.:175.7   3rd Qu.: 95.30  
+ Max.   :71911                Max.   :64.00   Max.   :200.4   Max.   :198.70  
+                                              NA's   :5       NA's   :5       
+       Race              Education        BMI             SBP       
+ Asian   : 70   8th Grade     : 50   Min.   :16.70   Min.   : 83.0  
+ Black   :128   9 - 11th Grade: 76   1st Qu.:24.20   1st Qu.:108.0  
+ Hispanic: 63   High School   :143   Median :27.90   Median :118.0  
+ Mexican : 80   Some College  :241   Mean   :29.08   Mean   :118.8  
+ White   :393   College Grad  :240   3rd Qu.:32.10   3rd Qu.:127.0  
+ Other   : 16                        Max.   :80.60   Max.   :209.0  
+                                     NA's   :5       NA's   :33     
+      DBP             Pulse        PhysActive Smoke100  SleepTrouble
+ Min.   :  0.00   Min.   : 40.00   No :326    No :453   No :555     
+ 1st Qu.: 66.00   1st Qu.: 66.00   Yes:424    Yes:297   Yes:195     
+ Median : 73.00   Median : 72.00                                    
+ Mean   : 72.69   Mean   : 73.53                                    
+ 3rd Qu.: 80.00   3rd Qu.: 80.00                                    
+ Max.   :108.00   Max.   :124.00                                    
+ NA's   :33       NA's   :32                                        
+      MaritalStatus     HealthGen  
+ Divorced    : 78   Excellent: 84  
+ LivePartner : 70   Vgood    :197  
+ Married     :388   Good     :252  
+ NeverMarried:179   Fair     :104  
+ Separated   : 19   Poor     : 14  
+ Widowed     : 16   NA's     : 99  
+                                   </code></pre>
+</div>
+</div>
+<p>Note the appearance of <code>NA's</code> (indicating missing values) in some columns, and that some variables are summarized by a list of their (categorical) values (with counts) and some (quantitative/numeric) variables are summarized with a minimum, quartiles and means.</p>
+</section>
+</section>
+<section id="quantitative-variables" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="quantitative-variables"><span class="header-section-number">4.4</span> Quantitative Variables</h2>
+<p>Variables recorded in numbers that we use as numbers are called <strong>quantitative</strong>. Familiar examples include incomes, heights, weights, ages, distances, times, and counts. All quantitative variables have measurement units, which tell you how the quantitative variable was measured. Without units (like miles per hour, angstroms, yen or degrees Celsius) the values of a quantitative variable have no meaning.</p>
+<ul>
+<li><p>It does little good to be told the price of something if you don’t know the currency being used.</p></li>
+<li><p>You might be surprised to see someone whose age is 72 listed in a database on childhood diseases until you find out that age is measured in months.</p></li>
+<li><p>Often just seeking the units can reveal a variable whose definition is challenging - just how do we measure “friendliness”, or “success,” for example.</p></li>
+<li><p>Quantitative variables may also be classified by whether they are <strong>continuous</strong> or can only take on a <strong>discrete</strong> set of values. Continuous data may take on any value, within a defined range. Suppose we are measuring height. While height is really continuous, our measuring stick usually only lets us measure with a certain degree of precision. If our measurements are only trustworthy to the nearest centimeter with the ruler we have, we might describe them as discrete measures. But we could always get a more precise ruler. The measurement divisions we make in moving from a continuous concept to a discrete measurement are usually fairly arbitrary. Another way to think of this, if you enjoy music, is that, as suggested in <span class="citation" data-cites="Norman-Streiner">Norman and Streiner (<a href="references.html#ref-Norman-Streiner" role="doc-biblioref">2014</a>)</span>, a piano is a <em>discrete</em> instrument, but a violin is a <em>continuous</em> one, enabling finer distinctions between notes than the piano is capable of making. Sometimes the distinction between continuous and discrete is important, but usually, it’s not.</p>
+<ul>
+<li>The <code>nh_adult750</code> data includes several quantitative variables, specifically <code>Age</code>, <code>Height</code>, BMI<code>,</code>SBP<code>,</code>DBP<code>and</code>Pulse`.</li>
+<li>We know these are quantitative because they have units: <code>Age</code> in years, <code>Height</code> in centimeters, <code>BMI</code> in kg/m<sup>2</sup>, the <code>BP</code> measurements in mm Hg, and <code>Pulse</code> in beats per minute.</li>
+<li>Depending on the context, we would likely treat most of these as <em>discrete</em> given that are measurements are fairly crude (this is certainly true for <code>Age</code>, measured in years) although BMI is probably <em>continuous</em> in most settings, even though it is a function of two other measures (<code>Height</code> and <code>Weight</code>) which are rounded off to integer numbers of centimeters and kilograms, respectively.</li>
+</ul></li>
+<li><p>It is also possible to separate out quantitative variables into <strong>ratio</strong> variables or <strong>interval</strong> variables. An interval variable has equal distances between values, but the zero point is arbitrary. A ratio variable has equal intervals between values, and a meaningful zero point. For example, weight is an example of a ratio variable, while IQ is an example of an interval variable. We all know what zero weight is. An intelligence score like IQ is a different matter. We say that the average IQ is 100, but that’s only by convention. We could just as easily have decided to add 400 to every IQ value and make the average 500 instead. Because IQ’s intervals are equal, the difference between and IQ of 70 and an IQ of 80 is the same as the difference between 120 and 130. However, an IQ of 100 is not twice as high as an IQ of 50. The point is that if the zero point is artificial and movable, then the differences between numbers are meaningful but the ratios between them are not. On the other hand, most lab test values are ratio variables, as are physical characteristics like height and weight. A person who weighs 100 kg is twice as heavy as one who weighs 50 kg; even when we convert kg to pounds, this is still true. For the most part, we can treat and analyze interval or ratio variables the same way.</p>
+<ul>
+<li>Each of the quantitative variables in our <code>nh_adult750</code> data can be thought of as ratio variables.</li>
+</ul></li>
+<li><p>Quantitative variables lend themselves to many of the summaries we will discuss, like means, quantiles, and our various measures of spread, like the standard deviation or inter-quartile range. They also have at least a chance to follow the Normal distribution.</p></li>
+</ul>
+<section id="a-look-at-bmi-body-mass-index" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="a-look-at-bmi-body-mass-index"><span class="header-section-number">4.4.1</span> A look at BMI (Body-Mass Index)</h3>
+<p>The definition of BMI (<em>body-mass index</em>) for adult subjects (which is expressed in units of kg/m<sup>2</sup>) is:</p>
+<p><span class="math display">\[
+\mbox{Body Mass Index} = \frac{\mbox{weight in kg}}{(\mbox{height in meters})^2} = 703 \times \frac{\mbox{weight in pounds}}{(\mbox{height in inches})^2}
+\]</span></p>
+<blockquote class="blockquote">
+<p>[BMI is essentially] … a measure of a person’s <em>thinness</em> or <em>thickness</em>… BMI was designed for use as a simple means of classifying average sedentary (physically inactive) populations, with an average body composition. For these individuals, the current value recommendations are as follow: a BMI from 18.5 up to 25 may indicate optimal weight, a BMI lower than 18.5 suggests the person is underweight, a number from 25 up to 30 may indicate the person is overweight, and a number from 30 upwards suggests the person is obese.</p>
+<p>Wikipedia, https://en.wikipedia.org/wiki/Body_mass_index</p>
+</blockquote>
+</section>
+</section>
+<section id="qualitative-categorical-variables" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="qualitative-categorical-variables"><span class="header-section-number">4.5</span> Qualitative (Categorical) Variables</h2>
+<p><strong>Qualitative</strong> or categorical variables consist of names of categories. These names may be numerical, but the numbers (or names) are simply codes to identify the groups or categories into which the individuals are divided. Categorical variables with two categories, like yes or no, up or down, or, more generally, 1 and 0, are called <strong>binary</strong> variables. Those with more than two-categories are sometimes called <strong>multi-categorical</strong> variables.</p>
+<ul>
+<li><p>When the categories included in a variable are merely names, and come in no particular order, we sometimes call them <strong>nominal</strong> variables. The most important summary of such a variable is usually a table of frequencies, and the mode becomes an important single summary, while the mean and median are essentially useless.</p>
+<ul>
+<li>In the nh_adult750 data, <code>Race</code> is a nominal variable with multiple unordered categories. So is <code>MaritalStatus</code>.</li>
+</ul></li>
+<li><p>The alternative categorical variable (where order matters) is called <strong>ordinal</strong>, and includes variables that are sometimes thought of as falling right in between quantitative and qualitative variables.</p>
+<ul>
+<li>Examples of ordinal multi-categorical variables in the <code>nh_adult750</code> data include the Education and HealthGen variables.</li>
+<li>Answers to questions like “How is your overall physical health?” with available responses Excellent, Very Good, Good, Fair or Poor, which are often coded as 1-5, certainly provide a perceived <em>order</em>, but a group of people with average health status 4 (Very Good) is not necessarily twice as healthy as a group with average health status of 2 (Fair).</li>
+</ul></li>
+<li><p>Sometimes we treat the values from ordinal variables as sufficiently scaled to permit us to use quantitative approaches like means, quantiles, and standard deviations to summarize and model the results, and at other times, we’ll treat ordinal variables as if they were nominal, with tables and percentages our primary tools.</p></li>
+<li><p>Note that all binary variables may be treated as ordinal, or nominal.</p>
+<ul>
+<li>Binary variables in the <code>nh_adult750</code> data include <code>Sex</code>, <code>PhysActive</code>, <code>Smoke100</code>, <code>SleepTrouble</code>. Each can be thought of as either ordinal or nominal.</li>
+</ul></li>
+</ul>
+<p>Lots of variables may be treated as either quantitative or qualitative, depending on how we use them. For instance, we usually think of age as a quantitative variable, but if we simply use age to make the distinction between “child” and “adult” then we are using it to describe categorical information. Just because your variable’s values are numbers, don’t assume that the information provided is quantitative.</p>
+</section>
+<section id="counting-missing-values" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="counting-missing-values"><span class="header-section-number">4.6</span> Counting Missing Values</h2>
+<p>The <code>summary()</code> command counts the number of missing observations in each variable, but sometimes you want considerably more information.</p>
+<p>We can use some functions from the <code>naniar</code> package to learn useful things about the missing data in our <code>nh_adult750</code> sample.</p>
+<p>The <code>miss_var_table</code> command provides a table of the number of variables with 0, 1, 2, up to n, missing values and the percentage of the total number of variables those variables make up.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_table</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  n_miss_in_var n_vars pct_vars
+          &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+1             0      9    56.2 
+2             5      3    18.8 
+3            32      1     6.25
+4            33      2    12.5 
+5            99      1     6.25</code></pre>
+</div>
+</div>
+<p>So, for instance, we have 9 variables with no missing data, and that constitutes 56.25% of the 16 variables in our <code>nh_adult750</code> data.</p>
+<p>The <code>miss_var_summary()</code> function tabulates the number, percent missing, and cumulative sum of missing of each variable in our data frame, in order of most to least missing values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_summary</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 3
+   variable      n_miss pct_miss
+   &lt;chr&gt;          &lt;int&gt;    &lt;dbl&gt;
+ 1 HealthGen         99   13.2  
+ 2 SBP               33    4.4  
+ 3 DBP               33    4.4  
+ 4 Pulse             32    4.27 
+ 5 Height             5    0.667
+ 6 Weight             5    0.667
+ 7 BMI                5    0.667
+ 8 ID                 0    0    
+ 9 Sex                0    0    
+10 Age                0    0    
+11 Race               0    0    
+12 Education          0    0    
+13 PhysActive         0    0    
+14 Smoke100           0    0    
+15 SleepTrouble       0    0    
+16 MaritalStatus      0    0    </code></pre>
+</div>
+</div>
+<p>So, for example, the <code>r</code>miss_var_summary(nh_temp) |&gt; slice_head(n = 1) |&gt; select(variable)<code>variable is the one missing more of our data than anything else within the</code>nh_adult750` data frame.</p>
+<p>A graph of this information is available, as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="04-data_types_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>I’ll note that there are also functions to count the number of missing observations by case (observation) rather than variable. For example, we can use <code>miss_case_table</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_case_table</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  n_miss_in_case n_cases pct_cases
+           &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;
+1              0     636    84.8  
+2              1      78    10.4  
+3              3      15     2    
+4              4      19     2.53 
+5              6       1     0.133
+6              7       1     0.133</code></pre>
+</div>
+</div>
+<p>Now we see that 636 observations, or 84.8% of all cases have no missing data.</p>
+<p>We can use <code>miss_case_summary()</code> to identify cases with missing data, as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_case_summary</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 750 × 3
+    case n_miss pct_miss
+   &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+ 1   342      7     43.8
+ 2   606      6     37.5
+ 3   157      4     25  
+ 4   169      4     25  
+ 5   204      4     25  
+ 6   234      4     25  
+ 7   323      4     25  
+ 8   415      4     25  
+ 9   478      4     25  
+10   483      4     25  
+# … with 740 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="nh_cc" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="nh_cc"><span class="header-section-number">4.7</span> <code>nh_adults500cc</code>: A Sample of Complete Cases</h2>
+<p>If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our <code>nh_temp</code> sampling frame to filter for complete cases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>nh_temp2 <span class="ot">&lt;-</span> NHANES <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(SurveyYr <span class="sc">==</span> <span class="st">"2011_12"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">21</span> <span class="sc">&amp;</span> Age <span class="sc">&lt;</span> <span class="dv">65</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Sex =</span> Gender, <span class="at">Race =</span> Race3, <span class="at">SBP =</span> BPSysAve, <span class="at">DBP =</span> BPDiaAve) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>           Pulse, PhysActive, Smoke100, SleepTrouble, </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>           MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s check that this new sampling frame has no missing data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_table</span>(nh_temp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  n_miss_in_var n_vars pct_vars
+          &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+1             0     16      100</code></pre>
+</div>
+</div>
+<p>OK. Now, let’s create a second sample, called <code>nh_adult500cc</code>, where now, we will select 500 adults with complete data on all of the variables of interest, and using a different random seed. The <code>cc</code> here stands for complete cases.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431003</span>) </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># use set.seed to ensure that we all get the same random sample </span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>nh_adult500cc <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(nh_temp2, <span class="at">n =</span> <span class="dv">500</span>, <span class="at">replace =</span> F) </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>nh_adult500cc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 500 × 16
+      ID Sex     Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
+   &lt;int&gt; &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
+ 1 64079 fema…    25   159.   86.2 Hisp… Some C…  34.2   120    67    84 Yes    
+ 2 64374 fema…    52   169    65.5 Asian Colleg…  22.9    92    58    60 Yes    
+ 3 71875 male     42   182.   94.1 Black Colleg…  28.5   102    63    76 Yes    
+ 4 66396 fema…    46   161.  107.  Asian 8th Gr…  41.2   111    61    70 No     
+ 5 64315 fema…    52   161.   64.5 White 9 - 11…  24.9   130    69    68 Yes    
+ 6 64015 male     32   168.   82.3 Mexi… Some C…  29     119    79    70 No     
+ 7 63590 male     21   181.   98.3 Black Some C…  29.9   121    67    58 Yes    
+ 8 70893 fema…    30   171.   65.7 White 9 - 11…  22.5   104    75    74 Yes    
+ 9 70828 male     26   178.  100.  White Some C…  31.5   119    77    66 No     
+10 67930 male     59   172.   91.7 Mexi… Colleg…  31     127    85    66 No     
+# … with 490 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
+#   ¹​Education, ²​PhysActive
+# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+</div>
+</div>
+</section>
+<section id="saving-our-samples-in-.rds-files" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="saving-our-samples-in-.rds-files"><span class="header-section-number">4.8</span> Saving our Samples in <code>.Rds</code> files</h2>
+<p>We’ll save the <code>nh_adult750</code> and <code>nh_adult500cc</code> samples to use in later parts of the notes. To do this, we’ll save them as <code>.Rds</code> files, which will have some advantages for us later on.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(nh_adult750, <span class="at">file =</span> <span class="st">"data/nh_adult750.Rds"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(nh_adult500cc, <span class="at">file =</span> <span class="st">"data/nh_adult500cc.Rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You will also find these <code>.Rds</code> files as part of the <a href="https://github.com/THOMASELOVE/431-data"><code>431-data</code> repository</a> for the course.</p>
+<p>Next, we’ll load, explore and learn about some of the variables in these two samples.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-BockVD" class="csl-entry" role="doc-biblioentry">
+Bock, David E., Paul F. Velleman, and Richard D. De Veaux. 2004. <em>Stats: Modelling the World</em>. Boston <span>MA</span>: Pearson Addison-Wesley.
+</div>
+<div id="ref-Norman-Streiner" class="csl-entry" role="doc-biblioentry">
+Norman, Geoffrey R., and David L. Streiner. 2014. <em>Biostatistics: The Bare Essentials</em>. Fourth. People’s Medical Publishing House.
+</div>
+<div id="ref-Vittinghoff" class="csl-entry" role="doc-biblioentry">
+Vittinghoff, Eric, David V. Glidden, Stephen C. Shiboski, and Charles E. McCulloch. 2012. <em>Regression Methods in Biostatistics: Linear, Logistic, Survival, and Repeated Measures Models</em>. Second. Springer-Verlag, Inc. <a href="http://www.biostat.ucsf.edu/vgsm/">http://www.biostat.ucsf.edu/vgsm/</a>.
+</div>
+</div>
+</section>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>Descriptions are adapted from the ?NHANES help file. Remember that what NHANES lists as Gender is captured here as Sex, and similarly Race3, BPSysAve and BPDiaAve from NHANES are here listed as Race, SBP and DBP.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03-nhanes.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NHANES: A First Look</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05-nhanes_cc.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualizing NHANES Data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

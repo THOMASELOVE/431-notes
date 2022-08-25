@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notes for 431 - 8&nbsp; Missing Data and Single Imputation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./09-nnyfs_foundations.html" rel="next">
+<link href="./07-summarizing_categories.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NHANES: A First Look</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Structures, Variable Types &amp; Sampling NHANES</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualizing NHANES Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-missing_data.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-assessingnormality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">8.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#a-simulated-example-with-15-subjects" id="toc-a-simulated-example-with-15-subjects" class="nav-link" data-scroll-target="#a-simulated-example-with-15-subjects"> <span class="header-section-number">8.2</span> A Simulated Example with 15 subjects</a></li>
+  <li><a href="#identifying-missingness-with-naniar-functions" id="toc-identifying-missingness-with-naniar-functions" class="nav-link" data-scroll-target="#identifying-missingness-with-naniar-functions"> <span class="header-section-number">8.3</span> Identifying missingness with <code>naniar</code> functions</a></li>
+  <li><a href="#missing-data-mechanisms" id="toc-missing-data-mechanisms" class="nav-link" data-scroll-target="#missing-data-mechanisms"> <span class="header-section-number">8.4</span> Missing-data mechanisms</a></li>
+  <li><a href="#options-for-dealing-with-missingness" id="toc-options-for-dealing-with-missingness" class="nav-link" data-scroll-target="#options-for-dealing-with-missingness"> <span class="header-section-number">8.5</span> Options for Dealing with Missingness</a></li>
+  <li><a href="#complete-case-and-available-case-analyses" id="toc-complete-case-and-available-case-analyses" class="nav-link" data-scroll-target="#complete-case-and-available-case-analyses"> <span class="header-section-number">8.6</span> Complete Case (and Available Case) analyses</a></li>
+  <li><a href="#single-imputation" id="toc-single-imputation" class="nav-link" data-scroll-target="#single-imputation"> <span class="header-section-number">8.7</span> Single Imputation</a></li>
+  <li><a href="#multiple-imputation" id="toc-multiple-imputation" class="nav-link" data-scroll-target="#multiple-imputation"> <span class="header-section-number">8.8</span> Multiple Imputation</a></li>
+  <li><a href="#building-a-complete-case-analysis" id="toc-building-a-complete-case-analysis" class="nav-link" data-scroll-target="#building-a-complete-case-analysis"> <span class="header-section-number">8.9</span> Building a Complete Case Analysis</a></li>
+  <li><a href="#single-imputation-with-the-mean-or-mode" id="toc-single-imputation-with-the-mean-or-mode" class="nav-link" data-scroll-target="#single-imputation-with-the-mean-or-mode"> <span class="header-section-number">8.10</span> Single Imputation with the Mean or Mode</a></li>
+  <li><a href="#doing-single-imputation-with-simputation" id="toc-doing-single-imputation-with-simputation" class="nav-link" data-scroll-target="#doing-single-imputation-with-simputation"> <span class="header-section-number">8.11</span> Doing Single Imputation with <code>simputation</code></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="miss" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Almost all serious statistical analyses have to deal with missing data. Data values that are missing are indicated in R, and to R, by the symbol <code>NA</code>.</p>
+<section id="setup-packages-used-here" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">8.1</span> Setup: Packages Used Here</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simputation)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll focus on tools from the <code>naniar</code> and <code>simputation</code> packages in this chapter. This chapter also requires that the <code>mosaic</code> package is loaded on your machine, but that package is not included with <code>library()</code> above.</p>
+</section>
+<section id="a-simulated-example-with-15-subjects" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="a-simulated-example-with-15-subjects"><span class="header-section-number">8.2</span> A Simulated Example with 15 subjects</h2>
+<p>In the following tiny data set called <code>sbp_example</code>, we have four variables for a set of 15 subjects. In addition to a subject id, we have:</p>
+<ul>
+<li>the treatment this subject received (A, B or C are the treatments),</li>
+<li>an indicator (1 = yes, 0 = no) of whether the subject has diabetes,</li>
+<li>the subject’s systolic blood pressure at baseline</li>
+<li>the subject’s systolic blood pressure after the application of the treatment</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create some temporary variables</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>subject <span class="ot">&lt;-</span> <span class="dv">101</span><span class="sc">:</span><span class="dv">115</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="cn">NA</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="cn">NA</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">145</span>, <span class="dv">150</span>, <span class="cn">NA</span>, <span class="dv">155</span>, <span class="cn">NA</span>, <span class="dv">135</span>, <span class="cn">NA</span>, <span class="dv">115</span>, <span class="dv">170</span>, <span class="dv">150</span>, <span class="dv">145</span>, <span class="dv">140</span>, <span class="dv">160</span>, <span class="dv">135</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">105</span>, <span class="dv">135</span>, <span class="dv">150</span>, <span class="dv">120</span>, <span class="dv">135</span>, <span class="dv">115</span>, <span class="dv">160</span>, <span class="dv">150</span>, <span class="dv">130</span>, <span class="dv">155</span>, <span class="dv">140</span>, <span class="dv">140</span>, <span class="dv">150</span>, <span class="dv">135</span>, <span class="dv">120</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>sbp_example <span class="ot">&lt;-</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(subject, <span class="at">treat =</span> <span class="fu">factor</span>(x1), <span class="at">diabetes =</span> x2, </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">sbp.before =</span> x3, <span class="at">sbp.after =</span> x4) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(subject, x1, x2, x3, x4) <span class="co"># just cleaning up</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>sbp_example</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 5
+   subject treat diabetes sbp.before sbp.after
+     &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1     101 A            1        120       105
+ 2     102 B            0        145       135
+ 3     103 C            0        150       150
+ 4     104 A            1         NA       120
+ 5     105 C           NA        155       135
+ 6     106 A            1         NA       115
+ 7     107 A            0        135       160
+ 8     108 &lt;NA&gt;         1         NA       150
+ 9     109 B           NA        115       130
+10     110 C            1        170       155
+11     111 A            0        150       140
+12     112 B            0        145       140
+13     113 C            1        140       150
+14     114 A            1        160       135
+15     115 B           NA        135       120</code></pre>
+</div>
+</div>
+</section>
+<section id="identifying-missingness-with-naniar-functions" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="identifying-missingness-with-naniar-functions"><span class="header-section-number">8.3</span> Identifying missingness with <code>naniar</code> functions</h2>
+<p>The <code>naniar</code> package has many useful functions.</p>
+<ol type="1">
+<li>How many missing values do we have, overall?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_miss</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>How many variables have missing values, overall?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_var_miss</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Which variables contain missing values?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_which</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "treat"      "diabetes"   "sbp.before"</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li>How many missing values do we have in each variable?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_summary</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  variable   n_miss pct_miss
+  &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt;
+1 diabetes        3    20   
+2 sbp.before      3    20   
+3 treat           1     6.67
+4 subject         0     0   
+5 sbp.after       0     0   </code></pre>
+</div>
+</div>
+<p>We are missing one <code>treat</code>, 3 <code>diabetes</code> and 3 <code>sbp.before</code> values.</p>
+<ol start="5" type="1">
+<li>Can we plot missingness, by variable?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="08-missing_data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="6" type="1">
+<li>How many of the cases (rows) have missing values?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_case_miss</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+</div>
+<ol start="7" type="1">
+<li>How many cases have complete data, with no missing values?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_case_complete</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+</div>
+<ol start="8" type="1">
+<li>Can we tabulate missingness by case?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_case_table</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  n_miss_in_case n_cases pct_cases
+           &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;
+1              0       9     60   
+2              1       5     33.3 
+3              2       1      6.67</code></pre>
+</div>
+</div>
+<ol start="9" type="1">
+<li>Which cases have missing values?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_case_summary</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 3
+    case n_miss pct_miss
+   &lt;int&gt;  &lt;int&gt;    &lt;dbl&gt;
+ 1     8      2       40
+ 2     4      1       20
+ 3     5      1       20
+ 4     6      1       20
+ 5     9      1       20
+ 6    15      1       20
+ 7     1      0        0
+ 8     2      0        0
+ 9     3      0        0
+10     7      0        0
+11    10      0        0
+12    11      0        0
+13    12      0        0
+14    13      0        0
+15    14      0        0</code></pre>
+</div>
+</div>
+<ol start="10" type="1">
+<li>How can we identify the subjects with missing data?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sbp_example <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">complete.cases</span>(sbp_example))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  subject treat diabetes sbp.before sbp.after
+    &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1     104 A            1         NA       120
+2     105 C           NA        155       135
+3     106 A            1         NA       115
+4     108 &lt;NA&gt;         1         NA       150
+5     109 B           NA        115       130
+6     115 B           NA        135       120</code></pre>
+</div>
+</div>
+<p>We have nine subjects with complete data, three subjects with missing <code>diabetes</code> (only), two subjects with missing <code>sbp.before</code> (only), and 1 subject who is missing both <code>treat</code> and <code>sbp.before</code>.</p>
+</section>
+<section id="missing-data-mechanisms" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="missing-data-mechanisms"><span class="header-section-number">8.4</span> Missing-data mechanisms</h2>
+<p>My source for this description of mechanisms is Chapter 25 of <span class="citation" data-cites="Gelman-Hill">Gelman and Hill (<a href="references.html#ref-Gelman-Hill" role="doc-biblioref">2007</a>)</span>, and that chapter is <a href="http://www.stat.columbia.edu/~gelman/arm/missing.pdf">available at this link</a>.</p>
+<ol type="1">
+<li><strong>MCAR = Missingness completely at random</strong>. A variable is missing completely at random if the probability of missingness is the same for all units, for example, if for each subject, we decide whether to collect the <code>diabetes</code> status by rolling a die and refusing to answer if a “6” shows up. If data are missing completely at random, then throwing out cases with missing data does not bias your inferences.</li>
+<li><strong>Missingness that depends only on observed predictors</strong>. A more general assumption, called <strong>missing at random</strong> or <strong>MAR</strong>, is that the probability a variable is missing depends only on available information. Here, we would have to be willing to assume that the probability of nonresponse to <code>diabetes</code> depends only on the other, fully recorded variables in the data. It is often reasonable to model this process as a logistic regression, where the outcome variable equals 1 for observed cases and 0 for missing. When an outcome variable is missing at random, it is acceptable to exclude the missing cases (that is, to treat them as NA), as long as the regression controls for all the variables that affect the probability of missingness.</li>
+<li><strong>Missingness that depends on unobserved predictors</strong>. Missingness is no longer “at random” if it depends on information that has not been recorded and this information also predicts the missing values. If a particular treatment causes discomfort, a patient is more likely to drop out of the study. This missingness is not at random (unless “discomfort” is measured and observed for all patients). If missingness is not at random, it must be explicitly modeled, or else you must accept some bias in your inferences.</li>
+<li><strong>Missingness that depends on the missing value itself.</strong> Finally, a particularly difficult situation arises when the probability of missingness depends on the (potentially missing) variable itself. For example, suppose that people with higher earnings are less likely to reveal them.</li>
+</ol>
+<p>Essentially, situations 3 and 4 are referred to collectively as <strong>non-random missingness</strong>, and cause more trouble for us than 1 and 2.</p>
+</section>
+<section id="options-for-dealing-with-missingness" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="options-for-dealing-with-missingness"><span class="header-section-number">8.5</span> Options for Dealing with Missingness</h2>
+<p>There are several available methods for dealing with missing data that are MCAR or MAR, but they basically boil down to:</p>
+<ul>
+<li>Complete Case (or Available Case) analyses</li>
+<li>Single Imputation</li>
+<li>Multiple Imputation</li>
+</ul>
+</section>
+<section id="complete-case-and-available-case-analyses" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="complete-case-and-available-case-analyses"><span class="header-section-number">8.6</span> Complete Case (and Available Case) analyses</h2>
+<p>In <strong>Complete Case</strong> analyses, rows containing NA values are omitted from the data before analyses commence. This is the default approach for many statistical software packages, and may introduce unpredictable bias and fail to include some useful, often hard-won information.</p>
+<ul>
+<li>A complete case analysis can be appropriate when the number of missing observations is not large, and the missing pattern is either MCAR (missing completely at random) or MAR (missing at random.)</li>
+<li>Two problems arise with complete-case analysis:
+<ol type="1">
+<li>If the units with missing values differ systematically from the completely observed cases, this could bias the complete-case analysis.</li>
+<li>If many variables are included in a model, there may be very few complete cases, so that most of the data would be discarded for the sake of a straightforward analysis.</li>
+</ol></li>
+<li>A related approach is <em>available-case</em> analysis where different aspects of a problem are studied with different subsets of the data, perhaps identified on the basis of what is missing in them.</li>
+</ul>
+</section>
+<section id="single-imputation" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="single-imputation"><span class="header-section-number">8.7</span> Single Imputation</h2>
+<p>In <strong>single imputation</strong> analyses, NA values are estimated/replaced <em>one time</em> with <em>one particular data value</em> for the purpose of obtaining more complete samples, at the expense of creating some potential bias in the eventual conclusions or obtaining slightly <em>less</em> accurate estimates than would be available if there were no missing values in the data.</p>
+<ul>
+<li>A single imputation can be just a replacement with the mean or median (for a quantity) or the mode (for a categorical variable.) However, such an approach, though easy to understand, underestimates variance and ignores the relationship of missing values to other variables.</li>
+<li>Single imputation can also be done using a variety of models to try to capture information about the NA values that are available in other variables within the data set.</li>
+<li>The <code>simputation</code> package can help us execute single imputations using a wide variety of techniques, within the pipe approach used by the <code>tidyverse</code>. Another approach I have used in the past is the <code>mice</code> package, which can also perform single imputations.</li>
+</ul>
+</section>
+<section id="multiple-imputation" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="multiple-imputation"><span class="header-section-number">8.8</span> Multiple Imputation</h2>
+<p><strong>Multiple imputation</strong>, where NA values are repeatedly estimated/replaced with multiple data values, for the purpose of obtaining mode complete samples <em>and</em> capturing details of the variation inherent in the fact that the data have missingness, so as to obtain <em>more</em> accurate estimates than are possible with single imputation.</p>
+<ul>
+<li>We’ll postpone further discussion of multiple imputation to later in the semester.</li>
+</ul>
+</section>
+<section id="building-a-complete-case-analysis" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="building-a-complete-case-analysis"><span class="header-section-number">8.9</span> Building a Complete Case Analysis</h2>
+<p>We can drop all of the missing values from a data set with <code>drop_na</code> or with <code>na.omit</code> or by filtering for <code>complete.cases</code>. Any of these approaches produces the same result - a new data set with 9 rows (after dropping the six subjects with any NA values) and 5 columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cc<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(sbp_example)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cc<span class="fl">.2</span> <span class="ot">&lt;-</span> sbp_example <span class="sc">|&gt;</span> <span class="fu">drop_na</span>()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>cc<span class="fl">.3</span> <span class="ot">&lt;-</span> sbp_example <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">complete.cases</span>(sbp_example))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="single-imputation-with-the-mean-or-mode" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="single-imputation-with-the-mean-or-mode"><span class="header-section-number">8.10</span> Single Imputation with the Mean or Mode</h2>
+<p>The most straightforward approach to single imputation is to impute a single summary of the variable, such as the mean, median or mode.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> sbp.before, <span class="at">data =</span> sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> min  Q1 median     Q3 max     mean       sd  n missing
+ 115 135    145 151.25 170 143.3333 15.71527 12       3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sbp_example <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(diabetes, treat) <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> diabetes A B C NA_ Total
+        0 2 2 1   0     5
+        1 4 0 2   1     7
+     &lt;NA&gt; 0 2 1   0     3
+    Total 6 4 4   1    15</code></pre>
+</div>
+</div>
+<p>Here, suppose we decide to impute</p>
+<ul>
+<li><code>sbp.before</code> with the mean (143.3) among non-missing values,</li>
+<li><code>diabetes</code> with its more common value, 1, and</li>
+<li><code>treat</code> with its more common value, or mode (A)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>si<span class="fl">.1</span> <span class="ot">&lt;-</span> sbp_example <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">sbp.before =</span> <span class="fl">143.33</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">diabetes =</span> <span class="dv">1</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">treat =</span> <span class="st">"A"</span>))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>si<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 5
+   subject treat diabetes sbp.before sbp.after
+     &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1     101 A            1       120        105
+ 2     102 B            0       145        135
+ 3     103 C            0       150        150
+ 4     104 A            1       143.       120
+ 5     105 C            1       155        135
+ 6     106 A            1       143.       115
+ 7     107 A            0       135        160
+ 8     108 A            1       143.       150
+ 9     109 B            1       115        130
+10     110 C            1       170        155
+11     111 A            0       150        140
+12     112 B            0       145        140
+13     113 C            1       140        150
+14     114 A            1       160        135
+15     115 B            1       135        120</code></pre>
+</div>
+</div>
+</section>
+<section id="doing-single-imputation-with-simputation" class="level2" data-number="8.11">
+<h2 data-number="8.11" class="anchored" data-anchor-id="doing-single-imputation-with-simputation"><span class="header-section-number">8.11</span> Doing Single Imputation with <code>simputation</code></h2>
+<p>Single imputation is a potentially appropriate method when missingness can be assumed to be either completely at random (MCAR) or dependent only on observed predictors (MAR). We’ll use the <code>simputation</code> package to accomplish it.</p>
+<ul>
+<li>The <code>simputation</code> vignette is available at https://cran.r-project.org/web/packages/simputation/vignettes/intro.html</li>
+<li>The <code>simputation</code> reference manual is available at https://cran.r-project.org/web/packages/simputation/simputation.pdf</li>
+</ul>
+<p>Suppose we wanted to use:</p>
+<ul>
+<li>a robust linear model to predict <code>sbp.before</code> missing values, on the basis of <code>sbp.after</code> and <code>diabetes</code> status, and</li>
+<li>a predictive mean matching approach (which, unlike the robust linear model, will ensure that only values of <code>diabetes</code> that we’ve seen before will be imputed) to predict <code>diabetes</code> status, on the basis of <code>sbp.after</code>, and</li>
+<li>a decision tree approach to predict <code>treat</code> status, using all other variables in the data</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">50001</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>imp<span class="fl">.2</span> <span class="ot">&lt;-</span> sbp_example <span class="sc">|&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">impute_rlm</span>(sbp.before <span class="sc">~</span> sbp.after <span class="sc">+</span> diabetes) <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">impute_pmm</span>(diabetes <span class="sc">~</span> sbp.after) <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">impute_cart</span>(treat <span class="sc">~</span> .)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>imp<span class="fl">.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 5
+   subject treat diabetes sbp.before sbp.after
+ *   &lt;int&gt; &lt;fct&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1     101 A            1       120        105
+ 2     102 B            0       145        135
+ 3     103 C            0       150        150
+ 4     104 A            1       139.       120
+ 5     105 C            1       155        135
+ 6     106 A            1       136.       115
+ 7     107 A            0       135        160
+ 8     108 A            1       155.       150
+ 9     109 B            1       115        130
+10     110 C            1       170        155
+11     111 A            0       150        140
+12     112 B            0       145        140
+13     113 C            1       140        150
+14     114 A            1       160        135
+15     115 B            1       135        120</code></pre>
+</div>
+</div>
+<p>Details on the many available methods in <code>simputation</code> are provided <a href="https://cran.r-project.org/web/packages/simputation/simputation.pdf">in its manual</a>. These include:</p>
+<ul>
+<li><code>impute_cart</code> uses a Classification and Regression Tree approach for numerical or categorical data. There is also an <code>impute_rf</code> command which uses Random Forests for imputation.</li>
+<li><code>impute_pmm</code> is one of several “hot deck” options for imputation, this one is predictive mean matching, which can be used with numeric data (only). Missing values are first imputed using a predictive model. Next, these predictions are replaced with the observed values which are nearest to the prediction. Other imputation options in this group include random hot deck, sequential hot deck and k-nearest neighbor imputation.</li>
+<li><code>impute_rlm</code> is one of several regression imputation methods, including linear models, robust linear models (which use what is called M-estimation to impute numerical variables) and lasso/elastic net/ridge regression models.</li>
+</ul>
+<p>The <code>simputation</code> package can also do EM-based multivariate imputation, and multivariate random forest imputation, and several other approaches.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Gelman-Hill" class="csl-entry" role="doc-biblioentry">
+Gelman, Andrew, and Jennifer Hill. 2007. <em>Data Analysis Using Regression and Multilevel-Hierarchical Models</em>. New York: Cambridge University Press. <a href="http://www.stat.columbia.edu/~gelman/arm/">http://www.stat.columbia.edu/~gelman/arm/</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./07-summarizing_categories.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./09-nnyfs_foundations.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

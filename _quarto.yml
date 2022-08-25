@@ -16,19 +16,19 @@ book:
     - part: "Part A. Exploring Data"
       chapters:
         - 02-penguins.qmd
-##        - 03-nhanes.qmd
-##        - 04-data_types.qmd
-##        - 05-nhanes_cc.qmd
-##        - 06-summarizing_quantities.qmd
-##        - 07-summarizing_categories.qmd
-##        - 08-missing_data.qmd
-##        - 09-nnyfs_foundations.qmd
-##        - 10-assessingnormality.qmd
-##        - 11-straightlinemodels.qmd
-##        - 12-linear_trans.qmd
-##        - 13-crabs.qmd
-##        - 14-hydrate.qmd
-##        - 15-wcgs.qmd
+        - 03-nhanes.qmd
+        - 04-data_types.qmd
+        - 05-nhanes_cc.qmd
+        - 06-summarizing_quantities.qmd
+        - 07-summarizing_categories.qmd
+        - 08-missing_data.qmd
+        - 09-nnyfs_foundations.qmd
+        - 10-assessingnormality.qmd
+        - 11-straightlinemodels.qmd
+        - 12-linear_trans.qmd
+        - 13-crabs.qmd
+        - 14-hydrate.qmd
+        - 15-wcgs.qmd
  ##   - part: "Part B. Comparing Summaries"
  ##     chapters:
 ##        - 16-ci_for_mean.qmd
