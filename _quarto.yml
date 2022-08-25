@@ -7,7 +7,7 @@ book:
   author: "Thomas E. Love, Ph.D."
   date: "2022-08-25"
   search: true
-  downloads: [pdf, epub]
+  downloads: [pdf]
   output-file: "431-notes"
   chapters:
     - index.qmd
@@ -16,40 +16,40 @@ book:
     - part: "Part A. Exploring Data"
       chapters:
         - 02-penguins.qmd
-        - 03-nhanes.qmd
-        - 04-data_types.qmd
-        - 05-nhanes_cc.qmd
-        - 06-summarizing_quantities.qmd
-        - 07-summarizing_categories.qmd
-        - 08-missing_data.qmd
-        - 09-nnyfs_foundations.qmd
-        - 10-assessingnormality.qmd
-        - 11-straightlinemodels.qmd
-        - 12-linear_trans.qmd
-        - 13-crabs.qmd
-        - 14-hydrate.qmd
-        - 15-wcgs.qmd
-    - part: "Part B. Comparing Summaries"
-      chapters:
-        - 16-ci_for_mean.qmd
-        - 17-ibuprofen_sepsis.qmd
-        - 18-pairedsamples.qmd
-        - 19-samplesize.qmd
-        - 20-examples_2means.qmd
-        - 21-one_proportion.qmd
-        - 22-comparing_rates.qmd
-        - 23-power_for_rates.qmd
-        - 24-contingency_tables.qmd
-        - 25-anova.qmd
-    - part: "Part C. Building Models"
-      chapters: 
-        - 26-mult_reg_intro.qmd
-        - 27-regr_diagnostics.qmd
-        - 28-prediction_wcgs.qmd
-        - 29-galapagos.qmd
-        - 30-emp_bmi.qmd
-        - 31-nonlinearity.qmd
-        - 32-olsfits.qmd
+##        - 03-nhanes.qmd
+##        - 04-data_types.qmd
+##        - 05-nhanes_cc.qmd
+##        - 06-summarizing_quantities.qmd
+##        - 07-summarizing_categories.qmd
+##        - 08-missing_data.qmd
+##        - 09-nnyfs_foundations.qmd
+##        - 10-assessingnormality.qmd
+##        - 11-straightlinemodels.qmd
+##        - 12-linear_trans.qmd
+##        - 13-crabs.qmd
+##        - 14-hydrate.qmd
+##        - 15-wcgs.qmd
+ ##   - part: "Part B. Comparing Summaries"
+ ##     chapters:
+##        - 16-ci_for_mean.qmd
+  ##      - 17-ibuprofen_sepsis.qmd
+##        - 18-pairedsamples.qmd
+##        - 19-samplesize.qmd
+##        - 20-examples_2means.qmd
+##        - 21-one_proportion.qmd
+##        - 22-comparing_rates.qmd
+##        - 23-power_for_rates.qmd
+##        - 24-contingency_tables.qmd
+##        - 25-anova.qmd
+##    - part: "Part C. Building Models"
+##      chapters: 
+##        - 26-mult_reg_intro.qmd
+##        - 27-regr_diagnostics.qmd
+##        - 28-prediction_wcgs.qmd
+##        - 29-galapagos.qmd
+##        - 30-emp_bmi.qmd
+##        - 31-nonlinearity.qmd
+##        - 32-olsfits.qmd
   appendices:
     - 98_gettingdataintoR.qmd
     - references.qmd
