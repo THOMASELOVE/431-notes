@@ -44,8 +44,8 @@ book:
     - part: "Part C. Building Models"
       chapters: 
         - 26-mult_reg_intro.qmd
-##        - 27-regr_diagnostics.qmd
-##        - 28-prediction_wcgs.qmd
+        - 27-regr_diagnostics.qmd
+        - 28-prediction_wcgs.qmd
 ##        - 29-galapagos.qmd
 ##        - 30-emp_bmi.qmd
 ##        - 31-nonlinearity.qmd
