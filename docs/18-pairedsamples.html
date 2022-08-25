@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notes for 431 - 18&nbsp; Comparing Means with Paired Samples</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./19-samplesize.html" rel="next">
+<link href="./17-ibuprofen_sepsis.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NHANES: A First Look</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Structures, Variable Types &amp; Sampling NHANES</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualizing NHANES Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-assessingnormality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-ci_for_mean.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-pairedsamples.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-one_proportion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-comparing_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-power_for_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Power and Proportions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-contingency_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-anova.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">18.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#lead-in-the-blood-of-children" id="toc-lead-in-the-blood-of-children" class="nav-link" data-scroll-target="#lead-in-the-blood-of-children"> <span class="header-section-number">18.2</span> Lead in the Blood of Children</a></li>
+  <li><a href="#the-lead-in-the-blood-of-children-study" id="toc-the-lead-in-the-blood-of-children-study" class="nav-link" data-scroll-target="#the-lead-in-the-blood-of-children-study"> <span class="header-section-number">18.3</span> The Lead in the Blood of Children Study</a>
+  <ul class="collapse">
+  <li><a href="#our-key-questions-for-a-paired-samples-comparison" id="toc-our-key-questions-for-a-paired-samples-comparison" class="nav-link" data-scroll-target="#our-key-questions-for-a-paired-samples-comparison"> <span class="header-section-number">18.3.1</span> Our Key Questions for a Paired Samples Comparison</a></li>
+  <li><a href="#lead-study-caveats" id="toc-lead-study-caveats" class="nav-link" data-scroll-target="#lead-study-caveats"> <span class="header-section-number">18.3.2</span> Lead Study Caveats</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis-for-paired-samples" id="toc-exploratory-data-analysis-for-paired-samples" class="nav-link" data-scroll-target="#exploratory-data-analysis-for-paired-samples"> <span class="header-section-number">18.4</span> Exploratory Data Analysis for Paired Samples</a>
+  <ul class="collapse">
+  <li><a href="#the-paired-differences" id="toc-the-paired-differences" class="nav-link" data-scroll-target="#the-paired-differences"> <span class="header-section-number">18.4.1</span> The Paired Differences</a></li>
+  <li><a href="#impact-of-matching---scatterplot-and-correlation" id="toc-impact-of-matching---scatterplot-and-correlation" class="nav-link" data-scroll-target="#impact-of-matching---scatterplot-and-correlation"> <span class="header-section-number">18.4.2</span> Impact of Matching - Scatterplot and Correlation</a></li>
+  </ul></li>
+  <li><a href="#looking-at-separate-samples-using-pivot_longer" id="toc-looking-at-separate-samples-using-pivot_longer" class="nav-link" data-scroll-target="#looking-at-separate-samples-using-pivot_longer"> <span class="header-section-number">18.5</span> Looking at Separate Samples: Using <code>pivot_longer</code></a></li>
+  <li><a href="#estimating-the-difference-in-means-with-paired-samples" id="toc-estimating-the-difference-in-means-with-paired-samples" class="nav-link" data-scroll-target="#estimating-the-difference-in-means-with-paired-samples"> <span class="header-section-number">18.6</span> Estimating the Difference in Means with Paired Samples</a>
+  <ul class="collapse">
+  <li><a href="#paired-data-in-longer-format" id="toc-paired-data-in-longer-format" class="nav-link" data-scroll-target="#paired-data-in-longer-format"> <span class="header-section-number">18.6.1</span> Paired Data in Longer Format?</a></li>
+  </ul></li>
+  <li><a href="#matched-pairs-vs.-two-independent-samples" id="toc-matched-pairs-vs.-two-independent-samples" class="nav-link" data-scroll-target="#matched-pairs-vs.-two-independent-samples"> <span class="header-section-number">18.7</span> Matched Pairs vs.&nbsp;Two Independent Samples</a></li>
+  <li><a href="#estimating-the-population-mean-of-the-paired-differences" id="toc-estimating-the-population-mean-of-the-paired-differences" class="nav-link" data-scroll-target="#estimating-the-population-mean-of-the-paired-differences"> <span class="header-section-number">18.8</span> Estimating the Population Mean of the Paired Differences</a></li>
+  <li><a href="#t-based-ci-for-population-mean-of-paired-differences" id="toc-t-based-ci-for-population-mean-of-paired-differences" class="nav-link" data-scroll-target="#t-based-ci-for-population-mean-of-paired-differences"> <span class="header-section-number">18.9</span> t-based CI for Population Mean of Paired Differences</a>
+  <ul class="collapse">
+  <li><a href="#method-1" id="toc-method-1" class="nav-link" data-scroll-target="#method-1"> <span class="header-section-number">18.9.1</span> Method 1</a></li>
+  <li><a href="#method-2" id="toc-method-2" class="nav-link" data-scroll-target="#method-2"> <span class="header-section-number">18.9.2</span> Method 2</a></li>
+  <li><a href="#method-3" id="toc-method-3" class="nav-link" data-scroll-target="#method-3"> <span class="header-section-number">18.9.3</span> Method 3</a></li>
+  <li><a href="#method-4" id="toc-method-4" class="nav-link" data-scroll-target="#method-4"> <span class="header-section-number">18.9.4</span> Method 4</a></li>
+  <li><a href="#method-5" id="toc-method-5" class="nav-link" data-scroll-target="#method-5"> <span class="header-section-number">18.9.5</span> Method 5</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"> <span class="header-section-number">18.9.6</span> Assumptions</a></li>
+  </ul></li>
+  <li><a href="#bootstrap-ci-for-mean-difference-using-paired-samples" id="toc-bootstrap-ci-for-mean-difference-using-paired-samples" class="nav-link" data-scroll-target="#bootstrap-ci-for-mean-difference-using-paired-samples"> <span class="header-section-number">18.10</span> Bootstrap CI for mean difference using paired samples</a>
+  <ul class="collapse">
+  <li><a href="#assumptions-1" id="toc-assumptions-1" class="nav-link" data-scroll-target="#assumptions-1"> <span class="header-section-number">18.10.1</span> Assumptions</a></li>
+  </ul></li>
+  <li><a href="#wilcoxon-signed-rank-based-ci-for-paired-samples" id="toc-wilcoxon-signed-rank-based-ci-for-paired-samples" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-based-ci-for-paired-samples"> <span class="header-section-number">18.11</span> Wilcoxon Signed Rank-based CI for paired samples</a>
+  <ul class="collapse">
+  <li><a href="#assumptions-2" id="toc-assumptions-2" class="nav-link" data-scroll-target="#assumptions-2"> <span class="header-section-number">18.11.1</span> Assumptions</a></li>
+  </ul></li>
+  <li><a href="#choosing-a-confidence-interval-approach" id="toc-choosing-a-confidence-interval-approach" class="nav-link" data-scroll-target="#choosing-a-confidence-interval-approach"> <span class="header-section-number">18.12</span> Choosing a Confidence Interval Approach</a></li>
+  <li><a href="#conclusions-for-the-bloodlead-study" id="toc-conclusions-for-the-bloodlead-study" class="nav-link" data-scroll-target="#conclusions-for-the-bloodlead-study"> <span class="header-section-number">18.13</span> Conclusions for the <code>bloodlead</code> study</a></li>
+  <li><a href="#the-sign-test" id="toc-the-sign-test" class="nav-link" data-scroll-target="#the-sign-test"> <span class="header-section-number">18.14</span> The Sign test</a></li>
+  <li><a href="#paired-dependent-vs.-independent-samples" id="toc-paired-dependent-vs.-independent-samples" class="nav-link" data-scroll-target="#paired-dependent-vs.-independent-samples"> <span class="header-section-number">18.15</span> Paired (Dependent) vs.&nbsp;Independent Samples</a>
+  <ul class="collapse">
+  <li><a href="#three-tricky-examples" id="toc-three-tricky-examples" class="nav-link" data-scroll-target="#three-tricky-examples"> <span class="header-section-number">18.15.1</span> Three “Tricky” Examples</a></li>
+  </ul></li>
+  <li><a href="#a-more-complete-decision-support-tool-comparing-means" id="toc-a-more-complete-decision-support-tool-comparing-means" class="nav-link" data-scroll-target="#a-more-complete-decision-support-tool-comparing-means"> <span class="header-section-number">18.16</span> A More Complete Decision Support Tool: Comparing Means</a>
+  <ul class="collapse">
+  <li><a href="#answers-for-the-three-tricky-examples" id="toc-answers-for-the-three-tricky-examples" class="nav-link" data-scroll-target="#answers-for-the-three-tricky-examples"> <span class="header-section-number">18.16.1</span> Answers for the Three “Tricky” Examples</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Here, we’ll consider the problem of estimating a confidence interval to describe the difference in population means (or medians) based on a comparison of two samples of quantitative data, gathered using a matched pairs design.</p>
+<p>Specifically, we’ll use as our example the Lead in the Blood of Children study, described below.</p>
+<section id="setup-packages-used-here" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">18.1</span> Setup: Packages Used Here</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"data/Love-boost.R"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In addition to the <code>Love-boost.R</code> script, we will also use the <code>favstats</code> function from the <code>mosaic</code> package, and several functions from the <code>ggridges</code> and <code>Hmisc</code> packages.</p>
+</section>
+<section id="lead-in-the-blood-of-children" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="lead-in-the-blood-of-children"><span class="header-section-number">18.2</span> Lead in the Blood of Children</h2>
+<blockquote class="blockquote">
+<p>One of the best ways to eliminate a source of variation and the errors of interpretation associated with it is through the use of matched pairs. Each subject in one group is matched as closely as possible by a subject in the other group. If a 45-year-old African-American male with hypertension is given a [treatment designed to lower their blood pressure], then we give a second, similarly built 45-year old African-American male with hypertension a placebo.</p>
+</blockquote>
+<ul>
+<li><span class="citation" data-cites="Good2005">Good (<a href="references.html#ref-Good2005" role="doc-biblioref">2005</a>)</span>, section 5.2.4</li>
+</ul>
+</section>
+<section id="the-lead-in-the-blood-of-children-study" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="the-lead-in-the-blood-of-children-study"><span class="header-section-number">18.3</span> The Lead in the Blood of Children Study</h2>
+<p><span class="citation" data-cites="Morton1982">Morton et al. (<a href="references.html#ref-Morton1982" role="doc-biblioref">1982</a>)</span> studied the absorption of lead into the blood of children. This was a matched-sample study, where the exposed group of interest contained 33 children of parents who worked in a battery manufacturing factory (where lead was used) in the state of Oklahoma. Specifically, each child with a lead-exposed parent was matched to another child of the same age, exposure to traffic, and living in the same neighborhood whose parents did not work in lead-related industries. So the complete study had 66 children, arranged in 33 matched pairs. The outcome of interest, gathered from a sample of whole blood from each of the children, was lead content, measured in mg/dl.</p>
+<p>One motivation for doing this study is captured in the Abstract from <span class="citation" data-cites="Morton1982">Morton et al. (<a href="references.html#ref-Morton1982" role="doc-biblioref">1982</a>)</span>.</p>
+<blockquote class="blockquote">
+<p>It has been repeatedly reported that children of employees in a lead-related industry are at increased risk of lead absorption because of the high levels of lead found in the household dust of these workers.</p>
+</blockquote>
+<p>The data are available in several places, including Table 5 of <span class="citation" data-cites="Pruzek2009">Pruzek and Helmreich (<a href="references.html#ref-Pruzek2009" role="doc-biblioref">2009</a>)</span>, in the BloodLead data set within the <code>PairedData</code> package in R, but we also make them available in the <code>bloodlead.csv</code> file. A table of the first few pairs of observations (blood lead levels for one child exposed to lead and the matched control) is shown below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bloodlead <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/bloodlead.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 33 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): pair
+dbl (2): exposed, control
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bloodlead</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 × 3
+   pair  exposed control
+   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 P01        38      16
+ 2 P02        23      18
+ 3 P03        41      18
+ 4 P04        18      24
+ 5 P05        37      19
+ 6 P06        36      11
+ 7 P07        23      10
+ 8 P08        62      15
+ 9 P09        31      16
+10 P10        34      18
+# … with 23 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+<ul>
+<li>In each pair, one child was exposed (to having a parent working in the factory) and the other was not.</li>
+<li>Otherwise, though, each child was very similar to its matched partner.</li>
+<li>The data under <code>exposed</code> and <code>control</code> are the blood lead content, in mg/dl.</li>
+</ul>
+<p>Our primary goal will be to estimate the difference in lead content between the exposed and control children, and then use that sample estimate to make inferences about the difference in lead content between the population of all children like those in the exposed group and the population of all children like those in the control group.</p>
+<section id="our-key-questions-for-a-paired-samples-comparison" class="level3" data-number="18.3.1">
+<h3 data-number="18.3.1" class="anchored" data-anchor-id="our-key-questions-for-a-paired-samples-comparison"><span class="header-section-number">18.3.1</span> Our Key Questions for a Paired Samples Comparison</h3>
+<ol type="1">
+<li>What is the <strong>population</strong> under study?</li>
+</ol>
+<ul>
+<li>All pairs of children living in Oklahoma near the factory in question, in which one had a parent working in a factory that exposed them to lead, and the other did not.</li>
+</ul>
+<ol start="2" type="1">
+<li>What is the <strong>sample</strong>? Is it representative of the population?</li>
+</ol>
+<ul>
+<li>The sample consists of 33 pairs of one exposed and one control child.</li>
+<li>This is a case-control study, where the children were carefully enrolled to meet the design criteria. Absent any other information, we’re likely to assume that there is no serious bias associated with these pairs, and that assuming they represent the population effectively (and perhaps the broader population of kids whose parents work in lead-based industries more generally) may well be at least as reasonable as assuming they don’t.</li>
+</ul>
+<ol start="3" type="1">
+<li>Who are the subjects / <strong>individuals</strong> within the sample?</li>
+</ol>
+<ul>
+<li>Each of our 33 pairs of children includes one exposed child and one unexposed (control) child.</li>
+</ul>
+<ol start="4" type="1">
+<li>What <strong>data</strong> are available on each individual?</li>
+</ol>
+<ul>
+<li>The blood lead content, as measured in mg/dl of whole blood.</li>
+</ul>
+</section>
+<section id="lead-study-caveats" class="level3" data-number="18.3.2">
+<h3 data-number="18.3.2" class="anchored" data-anchor-id="lead-study-caveats"><span class="header-section-number">18.3.2</span> Lead Study Caveats</h3>
+<p>Note that the children were not randomly selected from general populations of kids whose parents did and did not work in lead-based industries.</p>
+<ul>
+<li>To make inferences to those populations, we must make <strong>strong assumptions</strong> to believe, for instance, that the sample of exposed children is as representative as a random sample of children with similar exposures across the world would be.</li>
+<li>The researchers did have a detailed theory about how the exposed children might be at increased risk of lead absorption, and in fact as part of the study gathered additional information about whether a possible explanation might be related to the quality of hygiene of the parents (all of them were fathers, actually) who worked in the factory.</li>
+<li>This is an observational study, so that the estimation of a causal effect between parental work in a lead-based industry and children’s blood lead content can be made, without substantial (and perhaps heroic) assumptions.</li>
+</ul>
+</section>
+</section>
+<section id="exploratory-data-analysis-for-paired-samples" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="exploratory-data-analysis-for-paired-samples"><span class="header-section-number">18.4</span> Exploratory Data Analysis for Paired Samples</h2>
+<p>We’ll begin by adjusting the data in two ways.</p>
+<ul>
+<li>We’d like that first variable (<code>pair</code>) to be a <code>factor</code> rather than a <code>character</code> type in R, because we want to be able to summarize it more effectively. So we’ll make that change.</li>
+<li>Also, we’d like to calculate the difference in lead content between the exposed and the control children in each pair, and we’ll save that within-pair difference in a variable called <code>lead_diff</code>. We’ll take <code>lead_diff</code> = <code>exposed</code> - <code>control</code> so that positive values indicate increased lead in the exposed child.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bloodlead_original <span class="ot">&lt;-</span> bloodlead</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>bloodlead <span class="ot">&lt;-</span> bloodlead_original <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pair =</span> <span class="fu">factor</span>(pair),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">lead_diff =</span> exposed <span class="sc">-</span> control)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>bloodlead</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 × 4
+   pair  exposed control lead_diff
+   &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+ 1 P01        38      16        22
+ 2 P02        23      18         5
+ 3 P03        41      18        23
+ 4 P04        18      24        -6
+ 5 P05        37      19        18
+ 6 P06        36      11        25
+ 7 P07        23      10        13
+ 8 P08        62      15        47
+ 9 P09        31      16        15
+10 P10        34      18        16
+# … with 23 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+<section id="the-paired-differences" class="level3" data-number="18.4.1">
+<h3 data-number="18.4.1" class="anchored" data-anchor-id="the-paired-differences"><span class="header-section-number">18.4.1</span> The Paired Differences</h3>
+<p>To begin, we focus on <code>lead_diff</code> for our exploratory work, which is the <code>exposed</code> - <code>control</code> difference in lead content within each of the 33 pairs. So, we’ll have 33 observations, as compared to the 462 in the serum zinc data, but most of the same tools are still helpful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bloodlead, <span class="fu">aes</span>(<span class="at">sample =</span> lead_diff)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="at">col =</span> <span class="st">"darkslategray"</span>) <span class="sc">+</span> <span class="fu">geom_qq_line</span>(<span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Normal Q-Q plot"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bloodlead, <span class="fu">aes</span>(<span class="at">x =</span> lead_diff)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">stat</span>(density)), </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">"darkslategray"</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(bloodlead<span class="sc">$</span>lead_diff), </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(bloodlead<span class="sc">$</span>lead_diff)),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram with Normal Density"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bloodlead, <span class="fu">aes</span>(<span class="at">x =</span> lead_diff, <span class="at">y =</span> <span class="st">""</span>)) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"darkslategray"</span>, <span class="at">outlier.color =</span> <span class="st">"darkslategray"</span>) <span class="sc">+</span> </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> (p2 <span class="sc">/</span> p3 <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))) <span class="sc">+</span> </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Difference in Blood Lead Content (mg/dl) for 33 Pairs of Children"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="18-pairedsamples_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Note that in all of this work, I plotted the paired differences. One obvious way to tell if you have paired samples is that you can pair every single subject from one exposure group to a unique subject in the other exposure group. Everyone has to be paired, so the sample sizes will always be the same in the two groups.</p>
+<p>Here’s a summary of the paired differences.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> lead_diff, <span class="at">data =</span> bloodlead)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> min Q1 median Q3 max    mean       sd  n missing
+  -9  4     15 25  60 15.9697 15.86365 33       0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bloodlead <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">skew1 =</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                            (<span class="fu">mean</span>(lead_diff) <span class="sc">-</span> <span class="fu">median</span>(lead_diff)) <span class="sc">/</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">sd</span>(lead_diff))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+   skew1
+   &lt;dbl&gt;
+1 0.0611</code></pre>
+</div>
+</div>
+</section>
+<section id="impact-of-matching---scatterplot-and-correlation" class="level3" data-number="18.4.2">
+<h3 data-number="18.4.2" class="anchored" data-anchor-id="impact-of-matching---scatterplot-and-correlation"><span class="header-section-number">18.4.2</span> Impact of Matching - Scatterplot and Correlation</h3>
+<p>Here, the data are paired by the study through matching on neighborhood, age and exposure to traffic. Each individual child’s outcome value is part of a pair with the outcome value for his/her matching partner. We can see this pairing in several ways, perhaps by drawing a scatterplot of the pairs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bloodlead, <span class="fu">aes</span>(<span class="at">x =</span> control, <span class="at">y =</span> exposed)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">x =</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="dv">65</span>, <span class="at">col =</span> <span class="st">"blue"</span>, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">paste</span>(<span class="st">"Pearson r = "</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">round</span>(<span class="fu">cor</span>(bloodlead<span class="sc">$</span>control, bloodlead<span class="sc">$</span>exposed),<span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Paired Samples in Blood Lead study"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Blood Lead Content (mg/dl) in Control Child"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Blood Lead Content (mg/dl) in Exposed Child"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="18-pairedsamples_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Each point here represents a <strong>pair</strong> of observations, one from a control child, and one from the matched exposed child. If there is a strong linear relationship (usually with a positive slope, thus positive correlation) between the paired outcomes, then the pairing will be more helpful in terms of improving statistical power of the estimates we build than if there is a weak relationship.</p>
+<ul>
+<li>The stronger the Pearson correlation coefficient, the more helpful pairing will be.</li>
+<li>Here, a straight line model using the control child’s blood lead content accounts for about 3.2% of the variation in blood lead content in the exposed child.</li>
+<li>As it turns out, pairing will have only a modest impact here on the inferences we draw in the study. We still will treat the data as paired, despite this.</li>
+</ul>
+</section>
+</section>
+<section id="looking-at-separate-samples-using-pivot_longer" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="looking-at-separate-samples-using-pivot_longer"><span class="header-section-number">18.5</span> Looking at Separate Samples: Using <code>pivot_longer</code></h2>
+<p>For the purpose of estimating the difference between the exposed and control children, the summaries of the paired differences are what we’ll need.</p>
+<p>In some settings, however, we might also look at a boxplot, or violin plot, or ridgeline plot that showed the distributions of exposed and control children separately. But we will run into trouble because one variable (blood lead content) is spread across multiple columns (control and exposed.) The solution is to “pivot” the tibble from its current format to build a new, tidy tibble. Because the data aren’t <em>tidied</em> here, so that we have one row for each subject and one column for each variable, we have to do some work to get them in that form for our usual plotting strategy to work well.</p>
+<ul>
+<li><code>pivot_longer()</code> “lengthens” the data, increasing the number of rows and decreasing the number of columns.</li>
+<li><code>pivot_wider()</code> performs the inverse of that transformation, “widening” the data.</li>
+</ul>
+<p>In our original <code>bloodlead</code> data, if we drop the <code>lead_diff</code> addition we made, we have <em>wide</em> data, with each row representing two different subjects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bloodlead_original, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  pair  exposed control
+  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 P01        38      16
+2 P02        23      18
+3 P03        41      18</code></pre>
+</div>
+</div>
+<p>And what we want to accomplish is to have one row for each subject, instead of one row for each pair of subjects. So we want to make the data <strong>longer</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bloodlead_longer <span class="ot">&lt;-</span> bloodlead_original <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(pair),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"status"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"lead_level"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>bloodlead_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 66 × 3
+   pair  status  lead_level
+   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
+ 1 P01   exposed         38
+ 2 P01   control         16
+ 3 P02   exposed         23
+ 4 P02   control         18
+ 5 P03   exposed         41
+ 6 P03   control         18
+ 7 P04   exposed         18
+ 8 P04   control         24
+ 9 P05   exposed         37
+10 P05   control         19
+# … with 56 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+<p>For more on this approach (in this case, we’re making the data “longer” and its opposite would be be making the data “wider”), visit the Tidy data chapter in <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span> and the tidyr repository on Github at https://github.com/tidyverse/tidyr.</p>
+<p>And now, we can plot as usual to compare the two samples.</p>
+<p>First, we’ll look at a boxplot, showing all of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bloodlead_longer, <span class="fu">aes</span>(<span class="at">x =</span> status, <span class="at">y =</span> lead_level)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> status), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot of Lead Content in Exposed and Control kids"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="18-pairedsamples_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We’ll also look at a ridgeline plot, because Dr.&nbsp;Love likes them, even though they’re really more useful when we’re comparing more than two samples.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bloodlead_longer, <span class="fu">aes</span>(<span class="at">x =</span> lead_level, <span class="at">y =</span> status, <span class="at">fill =</span> status)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Lead Content in Exposed and Control kids"</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">theme_ridges</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Picking joint bandwidth of 4.01</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="18-pairedsamples_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Both the center and the spread of the distribution are substantially larger in the exposed group than in the controls. Of course, numerical summaries show these patterns, too.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(lead_level <span class="sc">~</span> status, <span class="at">data =</span> bloodlead_longer) <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">status</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">Q1</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">Q3</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">control</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">15.88</td>
+<td style="text-align: right;">4.54</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">exposed</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">31.85</td>
+<td style="text-align: right;">14.41</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="estimating-the-difference-in-means-with-paired-samples" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="estimating-the-difference-in-means-with-paired-samples"><span class="header-section-number">18.6</span> Estimating the Difference in Means with Paired Samples</h2>
+<p>Suppose we want to estimate the difference in the mean blood level across the population of children represented by the sample taken in this study. To do so, we must take advantage of the matched samples design, and complete our estimation on the paired differences, treating them as if they were a single sample of data.</p>
+<p>One way to accomplish this is simply to run the usual intercept-only linear regression model on the paired differences.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model_lead <span class="ot">&lt;-</span> <span class="fu">lm</span>(lead_diff <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bloodlead)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_lead, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">15.97</td>
+<td style="text-align: right;">2.76</td>
+<td style="text-align: right;">5.78</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11.29</td>
+<td style="text-align: right;">20.65</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Our point estimate for the difference (exposed - control) in lead levels is 15.97 mg/dl, and our 90% confidence interval is (11.29, 20.65) mg/dl.</p>
+<section id="paired-data-in-longer-format" class="level3" data-number="18.6.1">
+<h3 data-number="18.6.1" class="anchored" data-anchor-id="paired-data-in-longer-format"><span class="header-section-number">18.6.1</span> Paired Data in Longer Format?</h3>
+<p>If we had the data in “longer” format, as in <code>bloodlead_longer</code>, with the pairs identified by the <code>pair</code> variable, then we could obtained the same confidence interval using:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model2_lead <span class="ot">&lt;-</span> <span class="fu">lm</span>(lead_level <span class="sc">~</span> status <span class="sc">+</span> <span class="fu">factor</span>(pair), <span class="at">data =</span> bloodlead_longer)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model2_lead, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 34 × 7
+   term            estimate std.error statistic    p.value conf.low conf.high
+   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept)        19.0       8.05    2.36   0.0244         5.38     32.7 
+ 2 statusexposed      16.0       2.76    5.78   0.00000204    11.3      20.6 
+ 3 factor(pair)P02    -6.50     11.2    -0.579  0.566        -25.5      12.5 
+ 4 factor(pair)P03     2.50     11.2     0.223  0.825        -16.5      21.5 
+ 5 factor(pair)P04    -6.00     11.2    -0.535  0.596        -25.0      13.0 
+ 6 factor(pair)P05     1.00     11.2     0.0891 0.930        -18.0      20.0 
+ 7 factor(pair)P06    -3.50     11.2    -0.312  0.757        -22.5      15.5 
+ 8 factor(pair)P07   -10.5      11.2    -0.936  0.356        -29.5       8.50
+ 9 factor(pair)P08    11.5      11.2     1.03   0.313         -7.50     30.5 
+10 factor(pair)P09    -3.50     11.2    -0.312  0.757        -22.5      15.5 
+# … with 24 more rows
+# ℹ Use `print(n = ...)` to see more rows</code></pre>
+</div>
+</div>
+<p>and the key elements are found in the <code>statusexposed</code> row, which we can focus on nicely (since the output of the <code>tidy()</code> function is always a tibble) with:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model2_lead, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"statusexposed"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">statusexposed</td>
+<td style="text-align: right;">15.97</td>
+<td style="text-align: right;">2.76</td>
+<td style="text-align: right;">5.78</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11.29</td>
+<td style="text-align: right;">20.65</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>and again, we have our 90% confidence interval estimate of the population mean difference between exposed and control children.</p>
+</section>
+</section>
+<section id="matched-pairs-vs.-two-independent-samples" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="matched-pairs-vs.-two-independent-samples"><span class="header-section-number">18.7</span> Matched Pairs vs.&nbsp;Two Independent Samples</h2>
+<p>These data were NOT obtained from two independent samples, but rather from matched pairs.</p>
+<ul>
+<li>We only have matched pairs if each individual observation in the “treatment” group is matched to one and only one observation in the “control” group by the way in which the data were gathered. Paired (or matched) data can arise in several ways.
+<ul>
+<li>The most common is a “pre-post” study where subjects are measured both before and after an exposure happens.</li>
+<li>In observational studies, we often match up subjects who did and did not receive an exposure so as to account for differences on things like age, sex, race and other covariates. This is what happens in the Lead in the Blood of Children study.</li>
+</ul></li>
+<li>If the data are from paired samples, we should (and in fact) must form paired differences, with no subject left unpaired.
+<ul>
+<li>If we cannot line up the data comparing two samples of quantitative data so that the links between the individual “treated” and “control” observations to form matched pairs are evident, then the data are not paired.</li>
+<li>If the sample sizes were different, we’d know we have independent samples, because matched pairs requires that each subject in the “treated” group be matched to a single, unique member of the “control” group, and thus that we have exactly as many “treated” as “control” subjects.</li>
+<li>But having as many subjects in one treatment group as the other (which is called a <em>balanced design</em>) is only necessary, and not sufficient, for us to conclude that matched pairs are used.</li>
+</ul></li>
+</ul>
+<p>As <span class="citation" data-cites="BockVD">Bock, Velleman, and De Veaux (<a href="references.html#ref-BockVD" role="doc-biblioref">2004</a>)</span> suggest,</p>
+<blockquote class="blockquote">
+<p>… if you know the data are paired, you can take advantage of that fact - in fact, you <em>must</em> take advantage of it. … You must decide whether the data are paired from understanding how they were collected and what they mean. … There is no test to determine whether the data are paired.</p>
+</blockquote>
+</section>
+<section id="estimating-the-population-mean-of-the-paired-differences" class="level2" data-number="18.8">
+<h2 data-number="18.8" class="anchored" data-anchor-id="estimating-the-population-mean-of-the-paired-differences"><span class="header-section-number">18.8</span> Estimating the Population Mean of the Paired Differences</h2>
+<p>There are two main approaches used frequently to estimate the population mean of paired differences.</p>
+<ul>
+<li>Estimation using the t distribution (and assuming at least an approximately Normal distribution for the paired differences)</li>
+<li>Estimation using the bootstrap (which doesn’t require the Normal assumption)</li>
+</ul>
+<p>In addition, we might consider estimating an alternate statistic when the data don’t follow a symmetric distribution, like the median, with the bootstrap. In other settings, a rank-based alternative called the Wilcoxon signed rank test is available to estimate a psuedo-median. All of these approaches mirror what we did with a single sample, earlier in these Notes.</p>
+</section>
+<section id="t-based-ci-for-population-mean-of-paired-differences" class="level2" data-number="18.9">
+<h2 data-number="18.9" class="anchored" data-anchor-id="t-based-ci-for-population-mean-of-paired-differences"><span class="header-section-number">18.9</span> t-based CI for Population Mean of Paired Differences</h2>
+<p>In R, there are at least five different methods for obtaining the t-based confidence interval for the population difference in means between paired samples. They are all mathematically identical. The key idea is to calculate the paired differences (exposed - control, for example) in each pair, and then treat the result as if it were a single sample and apply the methods developed for that situation earlier in these Notes.</p>
+<section id="method-1" class="level3" data-number="18.9.1">
+<h3 data-number="18.9.1" class="anchored" data-anchor-id="method-1"><span class="header-section-number">18.9.1</span> Method 1</h3>
+<p>We can use the single-sample approach, applied to the variable containing the paired differences. Let’s build a <strong>90%</strong> two-sided confidence interval for the population mean of the difference in blood lead content across all possible pairs of an exposed (parent works in a lead-based industry) and a control (parent does not) child.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tt1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(bloodlead<span class="sc">$</span>lead_diff, <span class="at">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">alt =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>tt1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  bloodlead$lead_diff
+t = 5.783, df = 32, p-value = 2.036e-06
+alternative hypothesis: true mean is not equal to 0
+90 percent confidence interval:
+ 11.29201 20.64738
+sample estimates:
+mean of x 
+  15.9697 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(tt1) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">parameter</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+<th style="text-align: left;">method</th>
+<th style="text-align: left;">alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15.97</td>
+<td style="text-align: right;">5.78</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">11.29</td>
+<td style="text-align: right;">20.65</td>
+<td style="text-align: left;">One Sample t-test</td>
+<td style="text-align: left;">two.sided</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The 90% confidence interval is (11.29, 20.65) according to this t-based procedure. An appropriate interpretation of the 90% two-sided confidence interval would be:</p>
+<ul>
+<li>(11.29, 20.65) milligrams per deciliter is a 90% two-sided confidence interval for the population mean difference in blood lead content between exposed and control children.</li>
+<li>Our point estimate for the true population difference in mean blood lead content is 15.97 mg.dl. The values in the interval (11.29, 20.65) mg/dl represent a reasonable range of estimates for the true population difference in mean blood lead content, and we are 90% confident that this method of creating a confidence interval will produce a result containing the true population mean difference.</li>
+<li>Were we to draw 100 samples of 33 matched pairs from the population described by this sample, and use each such sample to produce a confidence interval in this manner, approximately 90 of those confidence intervals would cover the true population mean difference in blood lead content levels.</li>
+</ul>
+</section>
+<section id="method-2" class="level3" data-number="18.9.2">
+<h3 data-number="18.9.2" class="anchored" data-anchor-id="method-2"><span class="header-section-number">18.9.2</span> Method 2</h3>
+<p>Or, we can apply the single-sample approach to a calculated difference in blood lead content between the exposed and control groups. Here, we’ll get a <strong>95%</strong> two-sided confidence interval for that difference, instead of the 90% interval we obtained above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tt2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(bloodlead<span class="sc">$</span>exposed <span class="sc">-</span> bloodlead<span class="sc">$</span>control, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">alt =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>tt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  bloodlead$exposed - bloodlead$control
+t = 5.783, df = 32, p-value = 2.036e-06
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 10.34469 21.59470
+sample estimates:
+mean of x 
+  15.9697 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(tt2) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">parameter</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+<th style="text-align: left;">method</th>
+<th style="text-align: left;">alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15.97</td>
+<td style="text-align: right;">5.78</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">10.34</td>
+<td style="text-align: right;">21.59</td>
+<td style="text-align: left;">One Sample t-test</td>
+<td style="text-align: left;">two.sided</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="method-3" class="level3" data-number="18.9.3">
+<h3 data-number="18.9.3" class="anchored" data-anchor-id="method-3"><span class="header-section-number">18.9.3</span> Method 3</h3>
+<p>Or, we can provide R with two separate samples (unaffected and affected) and specify that the samples are paired. Here, we’ll get a <strong>99%</strong> <strong>one-sided</strong> confidence interval (lower bound) for the population mean difference in blood lead content.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tt3 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(bloodlead<span class="sc">$</span>exposed, bloodlead<span class="sc">$</span>control, <span class="at">conf.level =</span> <span class="fl">0.99</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">alt =</span> <span class="st">"greater"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>tt3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  bloodlead$exposed and bloodlead$control
+t = 5.783, df = 32, p-value = 1.018e-06
+alternative hypothesis: true mean difference is greater than 0
+99 percent confidence interval:
+ 9.207658      Inf
+sample estimates:
+mean difference 
+        15.9697 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(tt3) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">parameter</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+<th style="text-align: left;">method</th>
+<th style="text-align: left;">alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15.97</td>
+<td style="text-align: right;">5.78</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">9.21</td>
+<td style="text-align: right;">Inf</td>
+<td style="text-align: left;">Paired t-test</td>
+<td style="text-align: left;">greater</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Again, the three different methods using <code>t.test</code> for paired samples will all produce identical results if we feed them the same confidence level and type of interval (two-sided, greater than or less than).</p>
+</section>
+<section id="method-4" class="level3" data-number="18.9.4">
+<h3 data-number="18.9.4" class="anchored" data-anchor-id="method-4"><span class="header-section-number">18.9.4</span> Method 4</h3>
+<p>We can also use an intercept-only linear regression model to estimate the population mean of the paired differences with a two-tailed confidence interval, by creating a variable containing those paired differences.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>model_lead <span class="ot">&lt;-</span> <span class="fu">lm</span>(lead_diff <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bloodlead)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_lead, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  term        estimate std.error statistic    p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)     16.0      2.76      5.78 0.00000204     10.3      21.6</code></pre>
+</div>
+</div>
+</section>
+<section id="method-5" class="level3" data-number="18.9.5">
+<h3 data-number="18.9.5" class="anchored" data-anchor-id="method-5"><span class="header-section-number">18.9.5</span> Method 5</h3>
+<p>If we have the data in a longer format, with a variable identifying the matched pairs, we can use a different specification for a linear model to obtain the same estimate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>model2_lead <span class="ot">&lt;-</span> <span class="fu">lm</span>(lead_level <span class="sc">~</span> status <span class="sc">+</span> <span class="fu">factor</span>(pair), <span class="at">data =</span> bloodlead_longer)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model2_lead, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"statusexposed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  term          estimate std.error statistic    p.value conf.low conf.high
+  &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 statusexposed     16.0      2.76      5.78 0.00000204     10.3      21.6</code></pre>
+</div>
+</div>
+</section>
+<section id="assumptions" class="level3" data-number="18.9.6">
+<h3 data-number="18.9.6" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">18.9.6</span> Assumptions</h3>
+<p>If we are building a confidence interval based on a sample of observations drawn from a population, then we must pay close attention to the assumptions of those procedures. The confidence interval procedure for the population mean paired difference using the t distribution assumes that:</p>
+<ol type="1">
+<li>We want to estimate the population mean paired difference.</li>
+<li>We have drawn a sample of paired differences at random from the population of interest.</li>
+<li>The sampled paired differences are drawn from the population set of paired differences independently and have identical distributions.</li>
+<li>The population follows a Normal distribution. At the very least, the sample itself is approximately Normal.</li>
+</ol>
+</section>
+</section>
+<section id="bootstrap-ci-for-mean-difference-using-paired-samples" class="level2" data-number="18.10">
+<h2 data-number="18.10" class="anchored" data-anchor-id="bootstrap-ci-for-mean-difference-using-paired-samples"><span class="header-section-number">18.10</span> Bootstrap CI for mean difference using paired samples</h2>
+<p>The same bootstrap approach is used for paired differences as for a single sample. We use the <code>smean.cl.boot()</code> function in the <code>Hmisc</code> package to obtain bootstrap confidence intervals for the population mean of the paired differences in blood lead content.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431555</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.boot</span>(bloodlead<span class="sc">$</span>lead_diff, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">conf.int =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+15.96970 10.81742 21.48788 </code></pre>
+</div>
+</div>
+<p>Note that in this case, the confidence interval for the difference in means is a bit less wide than the 95% confidence interval generated by the t test, which was (10.34, 21.59). It’s common for the bootstrap to produce a narrower range (i.e.&nbsp;an apparently more precise estimate) for the population mean, but it’s not automatic that the endpoints from the bootstrap will be inside those provided by the t test, either.</p>
+<p>For example, this bootstrap CI doesn’t contain the t-test based interval, since its upper bound exceeds that of the t-based interval:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431002</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.boot</span>(bloodlead<span class="sc">$</span>lead_diff, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">conf.int =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+15.96970 10.81667 21.66667 </code></pre>
+</div>
+</div>
+<p>This demonstration aside, the appropriate thing to do when applying the bootstrap to specify a confidence interval is select a seed and the number (<code>B</code> = 1,000 or 10,000, usually) of desired bootstrap replications, then run the bootstrap just once and move on, rather than repeating the process multiple times looking for a particular result.</p>
+<section id="assumptions-1" class="level3" data-number="18.10.1">
+<h3 data-number="18.10.1" class="anchored" data-anchor-id="assumptions-1"><span class="header-section-number">18.10.1</span> Assumptions</h3>
+<p>The bootstrap confidence interval procedure for the population mean (or median) of a set of paired differences assumes that:</p>
+<ol type="1">
+<li>We want to estimate the population mean of the paired differences (or the population median).</li>
+<li>We have drawn a sample of observations at random from the population of interest.</li>
+<li>The sampled observations are drawn from the population of paired differences independently and have identical distributions.</li>
+<li>We are willing to put up with the fact that different people (not using the same random seed) will get somewhat different confidence interval estimates using the same data.</li>
+</ol>
+<p>As we’ve seen, a major part of the bootstrap’s appeal is the ability to relax some assumptions.</p>
+</section>
+</section>
+<section id="wilcoxon-signed-rank-based-ci-for-paired-samples" class="level2" data-number="18.11">
+<h2 data-number="18.11" class="anchored" data-anchor-id="wilcoxon-signed-rank-based-ci-for-paired-samples"><span class="header-section-number">18.11</span> Wilcoxon Signed Rank-based CI for paired samples</h2>
+<p>We could also use the Wilcoxon signed rank procedure to generate a CI for the pseudo-median of the paired differences.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>wt <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(bloodlead<span class="sc">$</span>lead_diff, <span class="at">conf.int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">conf.level =</span> <span class="fl">0.90</span>, <span class="at">exact =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>wt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  bloodlead$lead_diff
+V = 499, p-value = 1.155e-05
+alternative hypothesis: true location is not equal to 0
+90 percent confidence interval:
+ 10.99992 20.49998
+sample estimates:
+(pseudo)median 
+      15.49996 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  estimate statistic   p.value conf.low conf.high method                 alter…¹
+     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt;  
+1     15.5       499 0.0000115     11.0      20.5 Wilcoxon signed rank … two.si…
+# … with abbreviated variable name ¹​alternative</code></pre>
+</div>
+</div>
+<p>As in the one sample case, we can revise this code slightly to specify a different confidence level, or gather a one-sided rather than a two-sided confidence interval.</p>
+<section id="assumptions-2" class="level3" data-number="18.11.1">
+<h3 data-number="18.11.1" class="anchored" data-anchor-id="assumptions-2"><span class="header-section-number">18.11.1</span> Assumptions</h3>
+<p>The Wilcoxon signed rank confidence interval procedure in working with paired differences assumes that:</p>
+<ol type="1">
+<li>We want to estimate the population <strong>pseudo-median</strong> of the paired differences.</li>
+<li>We have drawn a sample of observations at random from the population of paired differences of interest.</li>
+<li>The sampled observations are drawn from the population of paired differences independently and have identical distributions.</li>
+<li>The population follows a symmetric distribution. At the very least, the sample itself shows no substantial skew, so that the sample pseudo-median is a reasonable estimate for the population median.</li>
+</ol>
+</section>
+</section>
+<section id="choosing-a-confidence-interval-approach" class="level2" data-number="18.12">
+<h2 data-number="18.12" class="anchored" data-anchor-id="choosing-a-confidence-interval-approach"><span class="header-section-number">18.12</span> Choosing a Confidence Interval Approach</h2>
+<p>Suppose we want to find a confidence interval for the population mean difference between two populations based on matched pairs.</p>
+<ol type="1">
+<li>If we are willing to assume that the population distribution is <strong>Normal</strong>
+<ul>
+<li>we usually use a t-based CI.</li>
+</ul></li>
+<li>If we are <strong>unwilling</strong> to assume that the population is Normal,
+<ul>
+<li>use a <strong>bootstrap</strong> procedure to get a CI for the population mean, or even the median</li>
+<li>but are willing to assume the population is symmetric, consider a <strong>Wilcoxon signed rank</strong> procedure to get a CI for the median, rather than the mean.</li>
+</ul></li>
+</ol>
+<p>The two methods you’ll use most often are the bootstrap (especially if the data don’t appear to be at least pretty well fit by a Normal model) and the t-based confidence intervals (if the data do appear to fit a Normal model reasonably well.)</p>
+</section>
+<section id="conclusions-for-the-bloodlead-study" class="level2" data-number="18.13">
+<h2 data-number="18.13" class="anchored" data-anchor-id="conclusions-for-the-bloodlead-study"><span class="header-section-number">18.13</span> Conclusions for the <code>bloodlead</code> study</h2>
+<p>Using any of these procedures, we would conclude that the null hypothesis (that the true mean of the paired Exposed - Control differences is 0 mg/dl) is not consonant with what we see in the 90% confidence interval.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Procedure</th>
+<th style="text-align: right;">Comparing</th>
+<th style="text-align: right;">90% CI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Paired t</td>
+<td style="text-align: right;">Means</td>
+<td style="text-align: right;">11.3, 20.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Wilcoxon signed rank</td>
+<td style="text-align: right;">Pseudo-medians</td>
+<td style="text-align: right;">11, 20.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Bootstrap CI</td>
+<td style="text-align: right;">Means</td>
+<td style="text-align: right;">11.6, 20.6</td>
+</tr>
+</tbody>
+</table>
+<p>Note that <strong>one-sided</strong> or <strong>one-tailed</strong> hypothesis testing procedures work the same way for paired samples as they did for a single sample.</p>
+</section>
+<section id="the-sign-test" class="level2" data-number="18.14">
+<h2 data-number="18.14" class="anchored" data-anchor-id="the-sign-test"><span class="header-section-number">18.14</span> The Sign test</h2>
+<p>The <strong>sign test</strong> is something we’ve skipped in our discussion so far. It is a test for consistent differences between pairs of observations, just as the paired t, Wilcoxon signed rank and bootstrap for paired samples can provide. It has the advantage that it is relatively easy to calculate by hand, and that it doesn’t require the paired differences to follow a Normal distribution. In fact, it will even work if the data are substantially skewed.</p>
+<ul>
+<li>Calculate the paired difference for each pair, and drop those with difference = 0.</li>
+<li>Let <em>N</em> be the number of pairs that remain, so there are 2N data points.</li>
+<li>Let <em>W</em>, the test statistic, be the number of pairs (out of N) in which the difference is positive.</li>
+<li>Assuming that H0 is true, then <em>W</em> follows a binomial distribution with probability 0.5 on <em>N</em> trials.</li>
+</ul>
+<p>For example, consider our data on blood lead content:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>bloodlead<span class="sc">$</span>lead_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 22  5 23 -6 18 25 13 47 15 16  6  1  2  7  0  4 -9 -3 36 25  1 16 42 30 25
+[26] 23 32 17  9 -3 60 14 14</code></pre>
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Difference</th>
+<th style="text-align: right;"># of Pairs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Greater than zero</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Equal to zero</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Less than zero</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
+<p>So we have <em>N</em> = 32 pairs, with <span class="math inline">\(W\)</span> = 28 that are positive. We then use the <code>binom.test</code> approach in R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="at">x =</span> <span class="dv">28</span>, <span class="at">n =</span> <span class="dv">32</span>, <span class="at">p =</span> <span class="fl">0.5</span>, </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Exact binomial test
+
+data:  28 and 32
+number of successes = 28, number of trials = 32, p-value = 1.93e-05
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.7100516 0.9648693
+sample estimates:
+probability of success 
+                 0.875 </code></pre>
+</div>
+</div>
+<ul>
+<li>A one-tailed test can be obtained by substituting in “less” or “greater” as the alternative of interest.</li>
+<li>The confidence interval provided doesn’t relate back to our original population means. It’s just showing the confidence interval around the probability of the exposed mean being greater than the control mean for a pair of children.</li>
+</ul>
+</section>
+<section id="paired-dependent-vs.-independent-samples" class="level2" data-number="18.15">
+<h2 data-number="18.15" class="anchored" data-anchor-id="paired-dependent-vs.-independent-samples"><span class="header-section-number">18.15</span> Paired (Dependent) vs.&nbsp;Independent Samples</h2>
+<p>One area that consistently trips students up in this course is the thought process involved in distinguishing studies comparing means that should be analyzed using <em>dependent</em> (i.e.&nbsp;paired or matched) samples and those which should be analyzed using <em>independent</em> samples. A dependent samples analysis uses additional information about the sample to pair/match subjects receiving the various exposures. That additional information is not part of an independent samples analysis (unpaired testing situation.) The reasons to do this are to (a) increase statistical power, and/or (b) reduce the effect of confounding. Here are a few thoughts on the subject.</p>
+<p>In the design of experiments, <strong>blocking</strong> is the term often used for the process of arranging subjects into groups (blocks) that are similar to one another. Typically, a blocking factor is a source of variability that is not of primary interest to the researcher An example of a blocking factor might be the sex of a patient; by blocking on sex, this source of variability is controlled for, thus leading to greater accuracy.</p>
+<ol type="1">
+<li><p>If the sample sizes are not balanced (not equal), the samples must be treated as independent, since there would be no way to precisely link all subjects. So, if we have 10 subjects receiving exposure A and 12 subjects receiving exposure B, a dependent samples analysis (such as a paired <em>t</em> test) is not correct.</p></li>
+<li><p>The key element is a meaningful link between each observation in one exposure group and a specific observation in the other exposure group. Given a balanced design, the most common strategy indicating dependent samples involves two or more <em>repeated measures</em> on the same subjects. For example, if we are comparing outcomes <em>before</em> and <em>after</em> the application of an exposure, and we have, say, 20 subjects who provide us data both <em>before</em> and <em>after</em> the exposure, then the comparison of results <em>before</em> and <em>after</em> exposure should use a dependent samples analysis. The link between the subjects is the subject itself - each exposed subject serves as its own control.</p></li>
+<li><p>The second most common strategy indicating dependent samples involves deliberate matching of subjects receiving the two exposures. A matched set of observations (often a pair, but it could be a trio or quartet, etc.) is determined using baseline information and then (if a pair is involved) one subject receives exposure A while the other member of the pair receives exposure B, so that by calculating the paired difference, we learn about the effect of the exposure, while controlling for the variables made similar across the two subjects by the matching process.</p></li>
+<li><p>In order for a dependent samples analysis to be used, we need (a) a link between each observation across the exposure groups based on the way the data were collected, <em>and</em> (b) a consistent measure (with the same units of measurement) so that paired differences can be calculated and interpreted sensibly.</p></li>
+<li><p>If the samples are collected to facilitate a dependent samples analysis, the correlation of the outcome measurements across the groups will often be moderately strong and positive. If that’s the case, then the use of a dependent samples analysis will reduce the effect of baseline differences between the exposure groups, and thus provide a more precise estimate. But even if the correlation is quite small, a dependent samples analysis should provide a more powerful estimate of the impact of the exposure on the outcome than would an independent samples analysis with the same number of observations.</p></li>
+</ol>
+<section id="three-tricky-examples" class="level3" data-number="18.15.1">
+<h3 data-number="18.15.1" class="anchored" data-anchor-id="three-tricky-examples"><span class="header-section-number">18.15.1</span> Three “Tricky” Examples</h3>
+<ol type="1">
+<li><p>Suppose we take a convenient sample of 200 patients from the population of patients who complete a blood test in April 2017 including a check of triglycerides, and who have a triglyceride level in the high category (200 to 499 mg/dl). Next, we select a patient at random from this group of 200 patients, and then identify another patient from the group of 200 who is the same age (to within 2 years) and also the same sex. We then randomly assign our intervention to one of these two patients and usual care without our intervention to the other patient. We then set these two patients aside and return to our original sample, repeating the process until we cannot find any more patients in the same age range and of the same gender. This generates a total of 77 patients who receive the intervention and 77 who do not. If we are trying to assess the effect of our intervention on triglyceride level in October 2017 using this sample of 154 people, should we use dependent (paired) or independent samples?</p></li>
+<li><p>Suppose we take a convenient sample of 77 patients from the population of patients who complete a blood test in April 2017 including a check of triglycerides, and who have a triglyceride level in the high category (200 to 499 mg/dl). Next, we take a convenient sample of 77 patients from the population of patients who complete a blood test in May 2017 including a check of triglycerides, and who have a triglyceride level in the high category (200 to 499 mg/dl). We flip a coin to determine whether the intervention will be given to each of the 77 patients from April 2017 (if the coin comes up “HEADS”) or instead to each of the 77 patients from May 2017 (if the coin comes up “TAILS”). Then, we assign our intervention to the patients seen in the month specified by the coin and assign usual care without our intervention to the patients seen in the other month. If we are trying to assess the effect of our intervention on triglyceride level in October 2017 using this sample of 154 people, should we use dependent (paired) or independent samples?</p></li>
+<li><p>Suppose we take a convenient sample of 200 patients from the population of patients who complete a blood test in April 2017 including a check of triglycerides, and who have a triglyceride level in the high category (200 to 499 mg/dl). For each patient, we re-measure them again in October 2017, again checking their triglyceride level. But in between, we take the first 77 of the patients in a randomly sorted list and assign them to our intervention (which takes place from June through September 2017) and take an additional group of 77 patients from the remaining part of the list and assign them to usual care without our intervention over the same time period. If we are trying to assess the effect of our intervention on each individual’s change in triglyceride level (from April/May to October) using this sample of 154 people, should we use dependent (paired) or independent samples?</p></li>
+</ol>
+<p>Answers to these “tricky” examples appear at the end of this Chapter.</p>
+</section>
+</section>
+<section id="a-more-complete-decision-support-tool-comparing-means" class="level2" data-number="18.16">
+<h2 data-number="18.16" class="anchored" data-anchor-id="a-more-complete-decision-support-tool-comparing-means"><span class="header-section-number">18.16</span> A More Complete Decision Support Tool: Comparing Means</h2>
+<ol type="1">
+<li><p>Are these paired or independent samples?</p></li>
+<li><p>If paired samples, then are the paired differences approximately Normally distributed?</p>
+<ol type="a">
+<li>If yes, then a paired t test or confidence interval is likely the best choice.</li>
+<li>If no, is the main concern outliers (with generally symmetric data), or skew?
+<ol type="1">
+<li>If the paired differences appear to be generally symmetric but with substantial outliers, a Wilcoxon signed rank test is an appropriate choice, as is a bootstrap confidence interval for the population mean of the paired differences.</li>
+<li>If the paired differences appear to be seriously skewed, then we’ll usually build a bootstrap confidence interval, although a sign test is another reasonable possibility, although it doesn’t provide a confidence interval for the population mean of the paired differences.</li>
+</ol></li>
+</ol></li>
+<li><p>If independent, is each sample Normally distributed?</p>
+<ol type="a">
+<li>No –&gt; use Wilcoxon-Mann-Whitney rank sum test or bootstrap via <code>bootdif</code>.</li>
+<li>Yes –&gt; are sample sizes equal?
+<ol type="1">
+<li>Balanced Design (equal sample sizes) - use pooled t test</li>
+<li>Unbalanced Design - use Welch test</li>
+</ol></li>
+</ol></li>
+</ol>
+<section id="answers-for-the-three-tricky-examples" class="level3" data-number="18.16.1">
+<h3 data-number="18.16.1" class="anchored" data-anchor-id="answers-for-the-three-tricky-examples"><span class="header-section-number">18.16.1</span> Answers for the Three “Tricky” Examples</h3>
+<p><em>Answer for 1.</em> Our first task is to identify the outcome and the exposure groups. Here, we are comparing the distribution of our outcome (triglyceride level in October) across two exposures: (a) receiving the intervention and (b) not receiving the intervention. We have a sample of 77 patients receiving the intervention, and a different sample of 77 patients receiving usual care. Each of the 77 subjects receiving the intervention is matched (on age and sex) to a specific subject not receiving the intervention. So, we can calculate paired differences by taking the triglyceride level for the exposed member of each pair and subtracting the triglyceride level for the usual care member of that same pair. Thus our comparison of the exposure groups should be accomplished using a <em>dependent</em> samples analysis, such as a paired t test.</p>
+<p><em>Answer for 2.</em> Again, we begin by identifying the outcome (triglyceride level in October) and the exposure groups. Here, we compare two exposures: (a) receiving the intervention and (b) receiving usual care. We have a sample of 77 patients receiving the intervention, and a different sample of 77 patients receiving usual care. But there is no pairing or matching involved. There is no connection implied by the way that the data were collected that implies that, for example, patient 1 in the intervention group is linked to any particular subject in the usual care group. So we need to analyze the data using independent samples.</p>
+<p><em>Answer for 3.</em> Once again, we identify the outcome (now it is the within-subject <em>change</em> in triglyceride level from April to October) and the exposure groups. Here again, we compare two exposures: (a) receiving the intervention and (b) receiving usual care. We have a sample of 77 patients receiving the intervention, and a different sample of 77 patients receiving usual care. But again, there is no pairing or matching between the patients receiving the intervention and the patients receiving usual care. While each outcome value is a difference (or change) in triglyceride levels, there’s no connection implied by the way that the data were collected that implies that, for example, patient 1 in the intervention group is linked to any particular subject in the usual care group. So, again, we need to analyze the data using independent samples.</p>
+<p>For more background and fundamental material, you might consider the Wikipedia pages on <a href="https://en.wikipedia.org/wiki/Paired_difference_test">Paired Difference Test</a> and on <a href="https://en.wikipedia.org/wiki/Blocking_(statistics)">Blocking (statistics)</a>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-BockVD" class="csl-entry" role="doc-biblioentry">
+Bock, David E., Paul F. Velleman, and Richard D. De Veaux. 2004. <em>Stats: Modelling the World</em>. Boston <span>MA</span>: Pearson Addison-Wesley.
+</div>
+<div id="ref-Good2005" class="csl-entry" role="doc-biblioentry">
+Good, Phillip I. 2005. <em>Introduction to Statistics Through Resampling Methods and r/s-PLUS</em>. Hoboken, NJ: Wiley.
+</div>
+<div id="ref-Morton1982" class="csl-entry" role="doc-biblioentry">
+Morton, D., A. Saah, S. Silberg, W. Owens, M. Roberts, and M. Saah. 1982. <span>“Lead Absorption in Children of Employees in a Lead Related Industry.”</span> <em>American Journal of Epidemiology</em> 115: 549–55.
+</div>
+<div id="ref-Pruzek2009" class="csl-entry" role="doc-biblioentry">
+Pruzek, Robert M., and James E. Helmreich. 2009. <span>“Enhancing Dependent Sample Analyses with Graphics.”</span> <em>Journal of Statistics Education</em> 17(1). <a href="http://ww2.amstat.org/publications/jse/v17n1/helmreich.html">http://ww2.amstat.org/publications/jse/v17n1/helmreich.html</a>.
+</div>
+<div id="ref-R4DS" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, and Garrett Grolemund. 2022. <em>R for Data Science</em>. Second. O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./17-ibuprofen_sepsis.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./19-samplesize.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
