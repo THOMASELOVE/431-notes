@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes for 431 - 1&nbsp; Data Science and 431</title>
+<title>Notes for 431 - 26&nbsp; Multiple Regression: Introduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -15,25 +15,6 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
 </style>
 
 
@@ -44,8 +25,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02-penguins.html" rel="next">
-<link href="./int_r_setup.html" rel="prev">
+<link href="./98_gettingdataintoR.html" rel="next">
+<link href="./25-anova.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -86,7 +67,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -124,7 +105,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -277,7 +258,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./26-mult_reg_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
+  <a href="./26-mult_reg_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
   </div>
 </li>
       </ul>
@@ -311,9 +292,8 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data-science-project-cycle" id="toc-data-science-project-cycle" class="nav-link active" data-scroll-target="#data-science-project-cycle"> <span class="header-section-number">1.1</span> Data Science Project Cycle</a></li>
-  <li><a href="#data-science-and-the-431-course" id="toc-data-science-and-the-431-course" class="nav-link" data-scroll-target="#data-science-and-the-431-course"> <span class="header-section-number">1.2</span> Data Science and the 431 Course</a></li>
-  <li><a href="#what-the-course-is-and-isnt" id="toc-what-the-course-is-and-isnt" class="nav-link" data-scroll-target="#what-the-course-is-and-isnt"> <span class="header-section-number">1.3</span> What The Course Is and Isn’t</a></li>
+  <li><a href="#reminders-of-a-few-key-concepts" id="toc-reminders-of-a-few-key-concepts" class="nav-link active" data-scroll-target="#reminders-of-a-few-key-concepts"> <span class="header-section-number">26.1</span> Reminders of a few Key Concepts</a></li>
+  <li><a href="#what-is-important-in-431" id="toc-what-is-important-in-431" class="nav-link" data-scroll-target="#what-is-important-in-431"> <span class="header-section-number">26.2</span> What is important in 431?</a></li>
   </ul>
 </nav>
     </div>
@@ -322,7 +302,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></h1>
 </div>
 
 
@@ -336,89 +316,42 @@ div.csl-indent {
 
 </header>
 
-<p>The definition of <strong>data science</strong> can be a little slippery. One current view of data science, is exemplified by Steven Geringer’s 2014 Venn diagram.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/data-science-venn20.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Data Science Venn Diagram from Steven Geringer</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
+<p>In Chapter @ref(Hydrate-Study) in working with a study of dehydration recovery in children, we discussed many of the fundamental ideas of multiple regression. There, we provided code and insight into the scatterplot and the scatterplot matrix, fit linear models and plotted the coefficients, analyzed summary output from <code>summary</code>, <code>tidy</code> and <code>glance</code> as well as the ANOVA table, and plotted residuals vs.&nbsp;fitted values.</p>
+<p>In the remaining chapters, we will build on that foundation in three additional examples.</p>
 <ul>
-<li>The field encompasses ideas from mathematics and statistics and from computer science, but with a heavy reliance on subject-matter knowledge. In our case, this includes clinical, health-related, medical or biological knowledge.</li>
-<li>As <span class="citation" data-cites="Gelman-Nolan">Gelman and Nolan (<a href="references.html#ref-Gelman-Nolan" role="doc-biblioref">2017</a>)</span> suggest, the experience and intuition necessary for good statistical practice are hard to obtain, and teaching data science provides an excellent opportunity to reinforce statistical thinking skills across the full cycle of a data analysis project.</li>
-<li>The principal form in which computer science (coding/programming) play a role in this course is to provide a form of communication. You’ll need to learn how to express your ideas not just orally and in writing, but also through your code.</li>
+<li>The <code>wcgs</code> data from the Western Collaborative Group Study, which we described and studied back in Chapter @ref(WCGS-Study).</li>
+<li>The <code>emp_bmi</code> data from a study published in <em>BMJ Open</em> of a nationally representative sample of over 7000 participants in the Korean Longitudinal Study of Aging.</li>
+<li>The <code>gala</code> data, which describe features of the 30 Galapagos Islands.</li>
 </ul>
-<p>Data Science is a <strong>team</strong> activity. Everyone working in data science brings some part of the necessary skill set, but no one person can cover all three areas alone for excellent projects.</p>
-<blockquote class="blockquote">
-<p>[The individual who is truly expert in all three key areas (mathematics/statistics, computer science and subject-matter knowledge) is] a mythical beast with magical powers who’s rumored to exist but is never actually seen in the wild.</p>
-<p>http://www.kdnuggets.com/2016/10/battle-data-science-venn-diagrams.html</p>
-</blockquote>
-<section id="data-science-project-cycle" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="data-science-project-cycle"><span class="header-section-number">1.1</span> Data Science Project Cycle</h2>
-<p>A typical data science project can be modeled as follows, which comes from the introduction to the amazing book <strong>R for Data Science</strong>, by Garrett Grolemund and Hadley Wickham, which is a key text for this course <span class="citation" data-cites="R4DS">(<a href="references.html#ref-R4DS" role="doc-biblioref">Wickham and Grolemund 2022</a>)</span>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/data-science-cycle.png" class="img-fluid figure-img" style="width:95.0%"></p>
-<p></p><figcaption class="figure-caption">Source: R for Data Science: Introduction</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This diagram is sometimes referred to as the Krebs Cycle of Data Science. For more on the steps of a data science project, we encourage you to read the Introduction of <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span>.</p>
-</section>
-<section id="data-science-and-the-431-course" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="data-science-and-the-431-course"><span class="header-section-number">1.2</span> Data Science and the 431 Course</h2>
-<p>We’ll discuss each of these elements in the 431 course, focusing at the start on understanding our data through transformation, modeling and (especially in the early stages) visualization. In 431, we learn how to get things done.</p>
+<section id="reminders-of-a-few-key-concepts" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="reminders-of-a-few-key-concepts"><span class="header-section-number">26.1</span> Reminders of a few Key Concepts</h2>
+<ol type="1">
+<li><p><strong>Scatterplots</strong> We have often accompanied our scatterplots with regression lines estimated by the method of least squares, and by loess smooths which permit local polynomial functions to display curved relationships, and occasionally presented in the form of a scatterplot matrix to enable simultaneous comparisons of multiple two-way associations.</p></li>
+<li><p><strong>Measures of Correlation/Association</strong> By far the most commonly used is the Pearson correlation, which is a unitless (scale-free) measure of bivariate linear association for the variables X and Y, symbolized by r, and ranging from -1 to +1. The Pearson correlation is a function of the slope of the least squares regression line, divided by the product of the standard deviations of X and Y. We have also mentioned the <em>Spearman</em> rank correlation coefficient, which is obtained by using the usual formula for a Pearson correlation, but on the ranks (1 = minimum, n = maximum, with average ranks are applied to the ties) of the X and Y values. This approach (running a correlation of the orderings of the data) substantially reduces the effect of outliers. The result still ranges from -1 to +1, with 0 indicating no linear association.</p></li>
+<li><p><strong>Fitting Linear Models</strong> We have fit several styles of linear model to date, including both <em>simple</em> regressions, where our outcome Y is modeled as a linear function of a single predictor X, and <em>multiple</em> regression models, where more than one predictor is used. Functions from the <code>broom</code> package can be used to yield several crucial results, in addition to those we can obtain with a <code>summary</code> of the model. These include:</p></li>
+</ol>
 <ul>
-<li>We get people working with R and R Studio and R Markdown, even if they are completely new to coding. A gentle introduction is provided at <span class="citation" data-cites="ModernDive">Ismay and Kim (<a href="references.html#ref-ModernDive" role="doc-biblioref">2022</a>)</span></li>
-<li>We learn how to use the <code>tidyverse</code> (http://www.tidyverse.org/), an array of tools in R (mostly developed by Hadley Wickham and his colleagues at R Studio) which share an underlying philosophy to make data science faster, easier, more reproducible and more fun. A critical text for understanding the tidyverse is <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span>. Tidyverse tools facilitate:
-<ul>
-<li><strong>importing</strong> data into R, which can be the source of intense pain for some things, but is really quite easy 95% of the time with the right tool.</li>
-<li><strong>tidying</strong> data, that is, storing it in a format that includes one row per observation and one column per variable. This is harder, and more important, than you might think.</li>
-<li><strong>transforming</strong> data, perhaps by identifying specific subgroups of interest, creating new variables based on existing ones, or calculating summaries.</li>
-<li><strong>visualizing</strong> data to generate actual knowledge and identify questions about the data - this is an area where R really shines, and we’ll start with it in class.</li>
-<li><strong>modeling</strong> data, taking the approach that modeling is complementary to visualization, and allows us to answer questions that visualization helps us identify.</li>
-<li>and last, but definitely not least, <strong>communicating</strong> results, models and visualizations to others, in a way that is reproducible and effective.</li>
-</ul></li>
-<li>Some programming/coding is an inevitable requirement to accomplish all of these aims. If you are leery of coding, you’ll need to get past that, with the help of this course and our stellar teaching assistants. Getting started is always the most challenging part, but our experience is that most of the pain of developing these new skills evaporates by early October.</li>
+<li>(from <code>tidy</code>) the estimated coefficients (intercept and slope(s)) of the fitted model, and</li>
+<li>(from <code>glance</code>) the <span class="math inline">\(R^2\)</span> or coefficient of determination, which specifies the proportion of variation in our outcome accounted for by the linear model, and various other summaries of the model’s quality of fit</li>
+<li>(from <code>augment</code>) fitted values, residuals and other summaries related to individual points used to fit the model, or individual predictions made by the model, which will be helpful for assessing predictive accuracy and for developing diagnostic tools for assessing the assumptions of multiple regression.</li>
 </ul>
 </section>
-<section id="what-the-course-is-and-isnt" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="what-the-course-is-and-isnt"><span class="header-section-number">1.3</span> What The Course Is and Isn’t</h2>
-<p>The 431 course is about <strong>getting things done</strong>. In developing this course, we adopt a modern approach that places data at the center of our work. Our goal is to teach you how to do truly reproducible research with modern tools. We want you to be able to collect and use data effectively to address questions of interest.</p>
-<p>The curriculum includes more on several topics than you might expect from a standard graduate introduction to biostatistics.</p>
-<ul>
-<li>data gathering</li>
-<li>data wrangling</li>
-<li>exploratory data analysis and visualization</li>
-<li>multivariate modeling</li>
-<li>communication</li>
-</ul>
-<p>It also nearly completely avoids formalism and is extremely applied - this is absolutely <strong>not</strong> a course in theoretical or mathematical statistics, and these Notes reflect that approach.</p>
-<p>There’s very little of the mathematical underpinnings here:</p>
-<p><span class="math display">\[
-f(x) = \frac{e^{-(x - \mu)^{2}/(2\sigma^{2})}}{\sigma{\sqrt{2 \pi }}}
-\]</span></p>
-<p>Instead, these notes (and the course) focus on how we get R to do the things we want to do, and how we interpret the results of our work. Our next Chapter provides a first example.</p>
+<section id="what-is-important-in-431" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="what-is-important-in-431"><span class="header-section-number">26.2</span> What is important in 431?</h2>
+<p>In 431, my primary goal is to immerse you in several cases, which will demonstrate good statistical practice in the analysis of data using multiple regression models. Often, we will leave gaps for 432, but the principal goal is to get you to the point where you can do a solid (if not quite complete) analysis of data for the modeling part (Study 2) of Project B.</p>
+<p>Key topics regarding multiple regression we cover in 431 include:</p>
+<ol type="1">
+<li>Describing the multivariate relationship - Scatterplots and smoothing - Correlation coefficients, Correlation matrices</li>
+<li>Transformations and Re-expression - The need for transformation - Using a Box-Cox method to help identify effective transformation choices - Measuring and addressing collinearity</li>
+<li>Testing the significance of a multiple regression model - T tests for individual predictors as last predictor in - Global F tests based on ANOVA to assess overall predictive significance - Incremental and Sequential testing of groups of predictors</li>
+<li>Interpreting the predictive value of a model - <span class="math inline">\(R^2\)</span> and Adjusted <span class="math inline">\(R^2\)</span>, along with AIC and BIC - Residual standard deviation and RMSE</li>
+<li>Checking model assumptions - Residual Analysis including studentized residuals, and the major plots - Identifying points with high Leverage - Assessing Influence numerically and graphically</li>
+<li>Model Selection - The importance of parsimony - Stepwise regression</li>
+<li>Assessing Predictive Accuracy through Cross-Validation - Summaries of predictive error - Plotting predictions across multiple models</li>
+<li>Summarizing the Key Findings of the Model, briefly and accurately - Making the distinction between causal findings and associations - The importance of logic, theory and empirical evidence. (LTE)</li>
+</ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Gelman-Nolan" class="csl-entry" role="doc-biblioentry">
-Gelman, Andrew, and Deborah Nolan. 2017. <em>Teaching Statistics: A Bag of Tricks</em>. Second Edition. Oxford, UK: Oxford University Press.
-</div>
-<div id="ref-ModernDive" class="csl-entry" role="doc-biblioentry">
-Ismay, Chester, and Albert Y. Kim. 2022. <em>ModernDive: Statistical Inference via Data Science</em>. <a href="http://moderndive.com/">http://moderndive.com/</a>.
-</div>
-<div id="ref-R4DS" class="csl-entry" role="doc-biblioentry">
-Wickham, Hadley, and Garrett Grolemund. 2022. <em>R for Data Science</em>. Second. O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -521,13 +454,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./int_r_setup.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Setting Up R</span>
+      <a href="./25-anova.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-penguins.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./98_gettingdataintoR.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

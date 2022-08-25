@@ -41,9 +41,9 @@ book:
         - 23-power_for_rates.qmd
         - 24-contingency_tables.qmd
         - 25-anova.qmd
-##    - part: "Part C. Building Models"
-##      chapters: 
-##        - 26-mult_reg_intro.qmd
+    - part: "Part C. Building Models"
+      chapters: 
+        - 26-mult_reg_intro.qmd
 ##        - 27-regr_diagnostics.qmd
 ##        - 28-prediction_wcgs.qmd
 ##        - 29-galapagos.qmd
