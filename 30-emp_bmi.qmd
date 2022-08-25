@@ -1,0 +1,316 @@
+# BMI and Employment Study
+
+This chapter was developed originally in 2018 and 2019, and has only been lightly revised since. In part, I have done this to let you see some other options. One appealing feature is that this chapter (eventually) uses the `mice` package to do some multiple imputation. While we'll have other approaches for this down the line (especially in 432), at least you'll see one possibility.
+
+## Setup: Packages Used Here
+
+```{r, message = FALSE}
+knitr::opts_chunk$set(comment = NA)
+
+library(GGally)
+library(mice)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+We'll also use a function from the `Hmisc` package.
+
+
+
+## The Data
+
+A 2016 study published in *BMJ Open* looked at the differential relationship between employment status and body-mass index among middle-aged and elderly adults living in South Korea\footnote{See Noh J, Kim J, Park J, Oh I, Kwon YD (2016) Age and gender differential relationship between employment status and body mass index among middle-aged and elderly adults: a cross-sectional study. BMJ Open 6(11): e012117. http://dx.doi.org/10.1136/bmjopen-2016-012117}. Data from this study were available online thanks to the Dryad data package\footnote{Noh J, Kim J, Park J, Oh I, Kwon YD (2016) Data from: Age and gender differential relationship between employment status and body mass index among middle aged and elderly adults: a cross-sectional study. Dryad Digital Repository. http://dx.doi.org/10.5061/dryad.ng8mn}. The original data came from a nationally representative sample of 7228 participants in the Korean Longitudinal Study of Aging. I sampled these data, and did some data "rectangling" (wrangling) to build the `emp_bmi.csv` file on our web site.
+
+The available data in `emp_bmi` describe 999 subjects, and included are 8 variables:
+
+```{r}
+emp_bmi <- read_csv("data/emp_bmi.csv")
+```
+
+
+Variable | Description | NA?
+-----------: | ----------------------------------------------- | ---
+`pid` | subject identification number (categorical) | 0
+`bmi` | our outcome, quantitative, body-mass index  | 0
+`age` | subject's age (between 51 and 95) | 1
+`gender` | subject's gender (male or female) | 0
+`employed` | employment status indicator (1/0) | 1
+`married` | marital status indicator (1/0) | 1
+`alcohol` | 3-level factor | 2
+`education` | 4-level factor  | 5
+
+```{r describe emp_bmi data}
+Hmisc::describe(emp_bmi)
+```
+
+### Specifying Outcome and Predictors for our Model
+
+In the original study, a key goal was to understand the relationship between employment and body-mass index. Our goal in this example will be to create a model to predict `bmi` focusing on employment status (so our key predictor is `employed`) while accounting for the additional predictors `age`, `gender`, `married`, `alcohol` and `education`. A natural thing to do would be to consider interactions of these predictor variables (for example, does the relationship between `bmi` and `employed` change when comparing men to women?) but we'll postpone that discussion until 432.
+
+### Dealing with Missing Predictor Values
+
+```{r md.pattern}
+md.pattern(emp_bmi)
+```
+
+We will eventually build a model to predict `bmi` using all of the other variables besides `pid`. So we'll eventually have to account for the 9 people with missing values (one of whom has two missing values, as we see above.) What I'm going to do in this example is to first build a complete-case analysis on the 990 subjects without missing values and then, later, do multiple imputation to account for the 9 subjects with missing values (and their 10 actual missing values) sensibly.
+
+I'll put the "complete cases" data set of 990 subjects in `emp_bmi_noNA`.
+
+```{r get complete cases}
+emp_bmi_noNA <- emp_bmi |> na.omit()
+emp_bmi_noNA
+colSums(is.na(emp_bmi_noNA))
+```
+
+## The "Kitchen Sink" Model
+
+A "kitchen sink" model includes all available predictors.
+
+```{r kitchen sink model 1}
+ebmodel.1 <- lm(bmi ~ age + gender + employed + married + 
+                    alcohol + education, data = emp_bmi_noNA)
+summary(ebmodel.1)
+```
+
+## Using Categorical Variables (Factors) as Predictors
+
+We have six predictors here, and five of them are categorical. Note that R recognizes each kind of variable in this case and models them appropriately. Let's look at the coefficients of our model.
+
+### `gender`: A binary variable represented by letters
+
+The `gender` variable contains the two categories: male and female, and R recognizes this as a factor. When building a regression model with such a variable, R assigns the first of the two levels of the factor to the baseline, and includes in the model an indicator variable for the second level. By default, R assigns each factor a level order alphabetically.
+
+So, in this case, we have:
+
+```{r is gender a factor and what are the levels}
+is.factor(emp_bmi_noNA$gender)
+levels(emp_bmi_noNA$gender)
+```
+
+As you see in the model, the `gender` information is captured by the indicator variable `gendermale`, which is 1 when `gender = male` and 0 otherwise.
+
+So, when our model includes:
+
+```
+Coefficients:     Estimate Std. Error t value Pr(>|t|)    
+gendermale         0.29811    0.20271   1.471   0.1417    
+```
+
+this means that a male subject is predicted to have an outcome that is 0.29811 points higher than a female subject, if they have the same values of all of the other predictors.
+
+Note that if we wanted to switch the levels so that "male" came first (and so that R would use "male" as the baseline category and "female" as the 1 value in an indicator), we could do so with the `forcats` package and the `fct_relevel` command. Building a model with this version of `gender` will simply reverse the sign of our indicator variable, but not change any of the other output.
+
+```{r kitchen sink model revised}
+emp_bmi_noNA$gender.2 <- fct_relevel(emp_bmi_noNA$gender, "male", "female")
+revised.model <- lm(bmi ~ age + gender.2 + employed + married + 
+                    alcohol + education, data = emp_bmi_noNA)
+summary(revised.model)
+```
+
+Note that the two categories here need to be both *mutually exclusive* (a subject cannot be in more than one category) and *collectively exhaustive* (all subjects must fit into this set of categories) in order to work properly as a regression predictor.
+
+### `employed`: A binary variable represented a 1/0 indicator
+
+The `employed` and `married` variables are each described using an indicator variable, which is 1 if the condition of interest holds and 0 if it does not. R doesn't recognize this as a factor, but rather as a quantitative variable. However, this is no problem for modeling, where we just need to remember that if `employed` = 1, the subject is employed, and if `employed` = 0, the subject is not employed, to interpret the results. The same approach is used for `married`.
+
+```
+Coefficients:    Estimate Std. Error t value Pr(>|t|)    
+employed         -0.45761    0.19153  -2.389   0.0171 *  
+married           0.09438    0.21280   0.444   0.6575    
+```
+
+So, in our model, if subject A is employed, they are expected to have an outcome that is 0.46 points lower (-0.46 points higher) than subject B who is not employed but otherwise identical to subject A.
+
+Similarly, if subject X is married, and subject Y is unmarried, but they otherwise have the same values of all predictors, then our model will predict a `bmi` for X that is 0.094 points higher than for Y.
+
+### `alcohol`: A three-category variable coded by names
+
+Our `alcohol` information divides subjects into three categories, which are: 
+
+- normal drinker or non-drinker
+- heavy drinker
+- alcohol dependent
+
+R builds a model using $k-1$ predictors to describe a variable with $k$ levels. As mentioned previously, R selects a baseline category when confronted with a factor variable, and it always selects the first level as the baseline. The levels are sorted alphabetically, unless we tell R to sort them some other way. So, we have 
+
+```
+Coefficients:                        Estimate Std. Error t value Pr(>|t|)    
+alcoholheavy drinker                  0.25317    0.40727   0.622   0.5343    
+alcoholnormal drinker or non-drinker  0.14121    0.40766   0.346   0.7291    
+```
+
+How do we interpret this?
+
+- Suppose subject A is alcohol dependent, B is a heavy drinker and C is a normal drinker or non-drinker, but subjects A-C have the same values of all other predictors.
+- Our model predicts that B would have a BMI that is 0.25 points higher than A.
+- Our model predicts that C would have a BMI that is 0.14 points higher than A.
+
+A good way to think about this...
+
+Subject | Status | alcoholheavy drinker | alcoholnormal drinker or non-drinker
+-----: | --------- | ---: | ----:
+A | alcohol dependent | 0 | 0
+B | heavy drinker | 1 | 0
+C | normal drinker or non-drinker | 0 | 1
+
+and so, with two variables, we cover each of these three possible `alcohol` levels.
+
+When we have an ordered variable like this one, we usually want the baseline category to be at either end of the scale (either the highest or the lowest, but not something in  the middle.) Another good idea in many settings is to use as the baseline category the most common category. Here, the baseline R chose was "alcohol dependent" which is the least common category, so I might want to use the `fct_relevel` function again to force R to choose, say, normal drinker/non-drinker as the baseline category.
+
+```{r}
+emp_bmi_noNA$alcohol.2 <- fct_relevel(emp_bmi_noNA$alcohol, 
+           "normal drinker or non-drinker", "heavy drinker")
+revised.model.2 <- lm(bmi ~ age + gender + employed + married + 
+                    alcohol.2 + education, data = emp_bmi_noNA)
+summary(revised.model.2)
+```
+
+How do we interpret this revised model?
+
+- Again, subject A is alcohol dependent, B is a heavy drinker and C is a normal drinker or non-drinker, but subjects A-C have the same values of all other predictors.
+- Our model predicts that B would have a BMI that is 0.11 points higher than C.
+- Our model predicts that A would have a BMI that is 0.14 points lower than C.
+
+So, those are the same conclusions, just rephrased.
+
+### t tests and multi-categorical variables
+
+The usual "last predictor in" t test works perfectly for binary factors, but suppose we have a factor like `alcohol` which is represented by two different indicator variables. If we want to know whether the `alcohol` information, as a group, adds statistically significant value to the model that includes all of the other predictors, then our best strategy is to compare two models - one with the alcohol information, and one without.
+
+```{r model needs alcohol}
+model.with.a <- lm(bmi ~ age + gender + alcohol + employed + married + education, 
+                   data = emp_bmi_noNA)
+model.no.a <- lm(bmi ~ age + gender + employed + married + education, 
+                 data = emp_bmi_noNA)
+anova(model.with.a, model.no.a)
+```
+
+The *p* value for both of the indicator variables associated with `alcohol` combined is 0.75, according to an ANOVA F test with 2 degrees of freedom.
+
+Note that we can get the same information from an ANOVA table of the larger model if we add the `alcohol` predictor to the model last.
+
+```{r anova for model.with.a}
+anova(lm(bmi ~ age + gender + employed + married + education + alcohol, 
+         data = emp_bmi_noNA))
+```
+
+Again, we see *p* for the two `alcohol` indicators is 0.75.
+
+### `education`: A four-category variable coded by names
+
+The `education` variable's codes are a little better designed. By preceding the text with a number for each code, we force R to attend to the level order we want to see.
+
+```
+Coefficients:                     Estimate Std. Error t value Pr(>|t|)    
+education2 middle school grad     -0.28862    0.24020  -1.202   0.2298    
+education3 high school grad       -0.50123    0.22192  -2.259   0.0241 *  
+education4 college grad or higher -0.79862    0.31068  -2.571   0.0103 *  
+```
+
+Since we have four education levels, we need those three indicator variables.
+
+- `education2 middle school grad` is 1 if the subject is a middle school graduate, and 0 if they have some other status
+- `education3 high school grad` is 1 if the subject is a high school graduate, and 0 if they have some other status
+- `education4 college grad or higher` is 1 if the subject is a college graduate or has more education, and 0 if they have some other status.
+- So the subjects with only elementary school or lower education are represented by zeros in all three indicators.
+
+Suppose we have four subjects now, with the same values of all other predictors, but different levels of education. 
+
+Subject | Education | Estimated BMI
+:------:| -------------------- | :------:
+A | elementary school or less | A
+B | middle school grad | A - 0.289
+C | high school grad | A - 0.501
+D | college grad | A - 0.799
+
+Note that the four categories are *mutually exclusive* (a subject cannot be in more than one category) and *collectively exhaustive* (all subjects must fit into this set of categories.) As we have seen, this is a requirement of categorical variables in a regression analysis.
+
+Let's run the ANOVA test for the `education` information captured in those three indicator variables...
+
+```{r anova for education}
+anova(lm(bmi ~ age + gender + employed + married + alcohol + education, 
+         data = emp_bmi_noNA))
+```
+
+So, as a group, the three indicator variables add statistically significant predictive value at the 5% significance level, since the F test for those three variables has *p* = 0.042
+
+### Interpreting the Kitchen Sink Model
+
+So, again, here's our model.
+
+```{r}
+ebmodel.1 <- lm(bmi ~ age + gender + employed + married + 
+                    alcohol + education, data = emp_bmi_noNA)
+ebmodel.1
+```
+
+If we wanted to predict a BMI level for a new subject like the ones used in the development of this model, that prediction would be:
+
+- 26.15
+- minus 0.426 times the subject's `age`
+- plus 0.298 if the subject's `gender` was `male`
+- minus 0.458 if the subject's employment status was `employed`
+- plus 0.253 if the subject's `alcohol` classification was `heavy drinker`
+- plus 0.141 if the subject's `alcohol` classification was `normal drinker or non-drinker`
+- minus 0.289 if the subject's `education` classification was `2 middle school grad`
+- minus 0.501 if the subject's `education` classification was `3 high school grad`
+- minus 0.799 if the subject's `education` classification was `4 college grad or higher`
+
+
+
+## Scatterplot Matrix with Categorical Predictors
+
+Let's look at a scatterplot matrix of a few key predictors, with my favorite approach (at least for quantitative predictors)...
+
+```{r, message = FALSE}
+ggpairs(emp_bmi_noNA |> select(age, gender, employed, education, bmi))
+```
+
+## Residual Plots when we have Categorical Predictors
+
+Here are the main residual plots from the kitchen sink model `ebmodel.1` defined previously.
+
+```{r resid_plot_ebmodel_1, fig.height = 6}
+par(mfrow=c(2,2))
+plot(ebmodel.1)
+par(mfrow=c(1,1))
+```
+
+Sometimes, in small samples, the categorical variables will make the regression residuals line up in somewhat strange patterns. But in this case, there's no real problem. The use of categorical variables also has some impact on leverage, as it's hard for a subject to be a serious outlier in terms of a predictor if that predictor only has a few possible levels.
+
+
+
+## Stepwise Regression and Categorical Predictors
+
+When R does backwards elimination for stepwise model selection, it makes decisions about each categorical variable as in/out across all of the indicator variables simultaneously, as you'd hope.
+
+```{r step_ebmodel.1}
+step(ebmodel.1)
+```
+
+Note that the stepwise approach first drops two degrees of freedom (two indicator variables) for `alcohol` and then drops the one degree of freedom for `married` before it settles on a model with `age`, `gender`, `education` and `employed`.
+
+## Pooling Results after Multiple Imputation
+
+As mentioned earlier, having built a model using complete cases, we should probably investigate the impact of multiple imputation on the missing observations. We'll fit 100 imputations using the `emp_bmi` data and then fit a pooled regression model across those imputations.
+
+```{r fit_100_imputations, cache = TRUE, warning = FALSE}
+emp_bmi_mi <- mice(emp_bmi, m = 100, maxit = 5, 
+                   printFlag = FALSE, seed = 4312021)
+```
+
+Now, we'll fit the pooled kitchen sink regression model to these imputed data sets and pool them.
+
+```{r fit_pooled_model, cache = TRUE}
+model.empbmi.mi <- 
+    with(emp_bmi_mi, lm(bmi ~ age + gender + employed + 
+                            married + alcohol + education))
+summary(pool(model.empbmi.mi))
+```
+
+OK. That's it for now.
+
+
+

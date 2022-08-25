@@ -1,0 +1,414 @@
+# Summarizing Quantities {#summarizing_quantities}
+
+Most numerical summaries that might be new to you are applied most appropriately to quantitative variables. The measures that will interest us relate to:
+
+- the **center** of our distribution,
+- the **spread** of our distribution, and
+- the **shape** of our distribution.
+
+## Setup: Packages Used Here
+
+```{r, message = FALSE}
+knitr::opts_chunk$set(comment = NA)
+
+library(patchwork)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+This chapter also requires that the `knitr`, `Hmisc`, `mosaic`, and `psych` packages are loaded on your machine, but are not included with `library()` above.
+
+## Working with the `nh_750` data
+
+To demonstrate key ideas in this Chapter, we will consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We'll load into the `nh_750` data frame the information from the `nh_adult750.Rds` file we created in Section \@ref(newNHANES).
+
+```{r c6_read}
+nh_750 <- read_rds("data/nh_adult750.Rds")
+```
+
+## The `summary` function for Quantitative data
+
+R provides a small sampling of numerical summaries with the `summary` function, for instance.
+
+```{r c6_nh750_s1}
+nh_750 |>
+  select(Age, BMI, SBP, DBP, Pulse) |>
+  summary()
+```
+
+This basic summary includes a set of five **quantiles**^[The quantiles (sometimes referred to as percentiles) can also be summarized with a boxplot.], plus the sample's **mean**.
+
+- `Min.` = the **minimum** value for each variable, so, for example, the youngest subject's Age was `r min(nh_750$Age)`.
+- `1st Qu.` = the **first quartile** (25^th^ percentile) for each variable - for example, 25% of the subjects were Age `r quantile(nh_750$Age, 0.25)` or younger.
+- `Median` = the **median** (50^th^ percentile) - half of the subjects were Age `r quantile(nh_750$Age, 0.5)` or younger.
+- `Mean` = the **mean**, usually what one means by an *average* - the sum of the Ages divided by `r nrow(nh_750)` is `r round(mean(nh_750$Age, ),1)`,
+- `3rd Qu.` = the **third quartile** (75^th^ percentile) - 25% of the subjects were Age `r quantile(nh_750$Age, 0.75)` or older.
+- `Max.` = the **maximum** value for each variable, so the oldest subject was Age `r max(nh_750$Age)`.
+
+The summary also specifies the number of missing values for each variable. Here, we are missing `r sum(is.na(nh_750$BMI))` of the BMI values, for example.
+
+## Measuring the Center of a Distribution
+
+### The Mean and The Median
+
+The **mean** and **median** are the most commonly used measures of the center of a distribution for a quantitative variable. The median is the more generally useful value, as it is relevant even if the data have a shape that is not symmetric. We might also collect the **sum** of the observations, and the **count** of the number of observations, usually symbolized with *n*. 
+
+For variables without missing values, like `Age`, this is pretty straightforward.
+
+```{r c6_nh750_s2}
+nh_750 |>
+    summarise(n = n(), Mean = mean(Age), Median = median(Age), Sum = sum(Age))
+```
+
+And again, the Mean is just the Sum (`r sum(nh_750$Age)`), divided by the number of non-missing values of Age (`r sum(!is.na(nh_750$Age))`), or `r mean(nh_750$Age)`.
+
+The Median is the middle value when the data are sorted in order. When we have an odd number of values, this is sufficient. When we have an even number, as in this case, we take the mean of the two middle values. We could sort and list all 500 Ages, if we wanted to do so.
+
+```{r c6_nh750_s3}
+nh_750 |> select(Age) |> 
+    arrange(Age)
+```
+
+But this data set figures we don't want to output more than 10 observations to a table like this.
+
+If we really want to see all of the data, we can use `View(nh_750)` to get a spreadsheet-style presentation, or use the `sort` command...
+
+```{r c6_nh750_s4}
+sort(nh_750$Age)
+```
+
+Again, to find the median, we would take the mean of the middle two observations in this sorted data set. That would be the 250^th^ and 251^st^ largest Ages.
+
+```{r c6_nh750_s5}
+sort(nh_750$Age)[250:251]
+```
+
+### Dealing with Missingness
+
+When calculating a mean, you may be tempted to try something like this...
+
+```{r c6_nh750_s6}
+nh_750 |>
+    summarise(mean(Pulse), median(Pulse))
+```
+
+This fails because we have some missing values in the Pulse data. We can address this by either omitting the data with missing values before we run the `summarise()` function, or tell the mean and median summary functions to remove missing values^[We could also use `!is.na` in place of `complete.cases` to accomplish the same thing.].
+
+```{r c6_nh750_s7}
+nh_750 |>
+    filter(complete.cases(Pulse)) |>
+    summarise(count = n(), mean(Pulse), median(Pulse))
+```
+
+Or, we could tell the summary functions themselves to remove NA values.
+
+```{r c6_nh750_s8}
+nh_750 |>
+    summarise(mean(Pulse, na.rm=TRUE), median(Pulse, na.rm=TRUE))
+```
+
+In Chapter \@ref(miss), we will discuss various assumptions we can make about missing data, and the importance of **imputation** when dealing with it in modeling or making inferences. For now, we will limit our descriptive summaries to observed values, in what are called complete case or available case analyses.
+
+### The Mode of a Quantitative Variable
+
+One other less common measure of the center of a quantitative variable's distribution is its most frequently observed value, referred to as the **mode**. This measure is only appropriate for discrete variables, be they quantitative or categorical. To find the mode, we usually tabulate the data, and then sort by the counts of the numbers of observations.
+
+```{r c6_nh750_s9}
+nh_750 |>
+    group_by(Age) |>
+    summarise(count = n()) |>
+    arrange(desc(count)) 
+```
+
+The mode is just the most common Age observed in the data.
+
+Note the use of three different "verbs" in our function there - for more explanation of this strategy, visit @R4DS. The `group_by` function here is very useful. It converts the nh_750 data frame into a new grouped tibble where operations are performed on the groups. Here, this means that it groups the data by Age before counting observations, and then sorting the groups (the Ages) by their frequencies.
+
+As an alternative, the `modeest` package's `mfv` function calculates the sample mode (or most frequent value) ^[See the documentation for the `modeest` package's `mlv` function to look at other definitions of the mode.].
+
+## Measuring the Spread of a Distribution
+
+Statistics is all about variation, so spread or dispersion is an important fundamental concept in statistics. Measures of spread like the inter-quartile range and range (maximum - minimum) can help us understand and compare data sets. If the values in the data are close to the center, the spread will be small. If many of the values in the data are scattered far away from the center, the spread will be large.
+
+### The Range and the Interquartile Range (IQR) {#rangeandiqr}
+
+The **range** of a quantitative variable is sometimes interpreted as the difference between the maximum and the minimum, even though R presents the actual minimum and maximum values when you ask for a range...
+
+```{r c6_nh750_s10}
+nh_750 |> 
+    select(Age) |> 
+    range()
+```
+
+And, for a variable with missing values, we can use...
+
+```{r c6_nh750_s11}
+nh_750 |> 
+    select(BMI) |> 
+    filter(complete.cases(BMI)) |>
+    range()
+```
+
+A more interesting and useful statistic is the **inter-quartile range**, or IQR, which is the range of the middle half of the distribution, calculated by subtracting the 25^th^ percentile value from the 75^th^ percentile value.
+
+```{r c6_nh750_s12}
+nh_750 |>
+    summarise(IQR(Age), quantile(Age, 0.25), quantile(Age, 0.75))
+```
+
+We can calculate the range and IQR nicely from the summary information on quantiles, of course:
+
+```{r c6_nh750_s13}
+nh_750 |>
+    select(Age, BMI, SBP, DBP, Pulse) |>
+    summary()
+```
+
+### The Variance and the Standard Deviation
+
+The IQR is always a reasonable summary of spread, just as the median is always a reasonable summary of the center of a distribution. Yet, most people are inclined to summarize a batch of data using two numbers: the **mean** and the **standard deviation**.  This is really only a sensible thing to do if you are willing to assume the data follow a Normal distribution: a bell-shaped, symmetric distribution without substantial outliers. 
+
+But **most data do not (even approximately) follow a Normal distribution**. Summarizing by the median and quartiles (25th and 75th percentiles) is much more robust, explaining R's emphasis on them.  
+
+### Obtaining the Variance and Standard Deviation in R
+
+Here are the variances of the quantitative variables in the `nh_750` data. Note the need to include `na.rm = TRUE` to deal with the missing values in some variables.
+
+```{r c6_nh750_s14}
+nh_750 |>
+    select(Age, BMI, SBP, DBP, Pulse) |>
+    summarise_all(var, na.rm = TRUE)
+```
+
+And here are the standard deviations of those same variables.
+
+```{r c6_nh750_s15}
+nh_750 |>
+    select(Age, BMI, SBP, DBP, Pulse) |>
+    summarise_all(sd, na.rm = TRUE)
+```
+
+### Defining the Variance and Standard Deviation
+
+@BockVD have lots of useful thoughts here, which are lightly edited here. 
+
+In thinking about spread, we might consider how far each data value is from the mean. Such a difference is called a *deviation*. We could just average the deviations, but the positive and negative differences always cancel out, leaving an average deviation of zero, so that's not helpful. Instead, we *square* each deviation to obtain non-negative values, and to emphasize larger differences. When we add up these squared deviations and find their mean (almost), this yields the **variance**.
+
+$$
+\mbox{Variance} = s^2 = \frac{\Sigma (y - \bar{y})^2}{n-1}
+$$
+
+Why almost? It would be the mean of the squared deviations only if we divided the sum by $n$, but instead we divide by $n-1$ because doing so produces an estimate of the true (population) variance that is *unbiased*^[When we divide by n-1 as we calculate the sample variance, the average of the sample variances for all possible samples is equal to the population variance. If we instead divided by n, the average sample variance across all possible samples would be a little smaller than the population variance.]. If you're looking for a more intuitive explanation, [this Stack Exchange link](http://stats.stackexchange.com/questions/3931/intuitive-explanation-for-dividing-by-n-1-when-calculating-standard-deviation) awaits your attention. 
+
+- To return to the original units of measurement, we take the square root of $s^2$, and instead work with $s$, the **standard deviation**, also abbreviated SD.
+
+$$
+\mbox{Standard Deviation} = s = \sqrt{\frac{\Sigma (y - \bar{y})^2}{n-1}}
+$$
+
+### Interpreting the SD when the data are Normally distributed
+
+For a set of measurements that follow a Normal distribution, the interval:
+
+* Mean $\pm$ Standard Deviation contains approximately 68% of the measurements;
+* Mean $\pm$ 2(Standard Deviation) contains approximately 95% of the measurements;
+* Mean $\pm$ 3(Standard Deviation) contains approximately all (99.7%) of the measurements.
+
+We often refer to the population or process mean of a distribution with $\mu$ and the standard deviation with $\sigma$, leading to the Figure below.
+
+```{r c6_Emp_Rule, echo = FALSE, out.width = '90%', fig.cap = "The Normal Distribution and the Empirical Rule"}
+knitr::include_graphics("figures/Empirical_Rule.PNG")
+```
+
+But if the data are not from an approximately Normal distribution, then this Empirical Rule is less helpful.
+
+### Chebyshev's Inequality: One Interpretation of the Standard Deviation
+
+Chebyshev's Inequality tells us that for any distribution, regardless of its relationship to a Normal distribution, no more than 1/k^2^ of the distribution's values can lie more than k standard deviations from the mean. This implies, for instance, that for **any** distribution, at least 75% of the values must lie within two standard deviations of the mean, and at least 89% must lie within three standard deviations of the mean.
+
+Again, most data sets do not follow a Normal distribution. We'll return to this notion soon. But first, let's try to draw some pictures that let us get a better understanding of the distribution of our data.
+
+## Measuring the Shape of a Distribution
+
+When considering the shape of a distribution, one is often interested in three key points.
+
+- The number of modes in the distribution, which I always assess through plotting the data.
+- The **skewness**, or symmetry that is present, which I typically assess by looking at a plot of the distribution of the data, but if required to, will summarize with a non-parametric measure of **skewness**.
+- The **kurtosis**, or heavy-tailedness (outlier-proneness) that is present, usually in comparison to a Normal distribution. Again, this is something I nearly inevitably assess graphically, but there are measures.  
+
+A Normal distribution has a single mode, is symmetric and, naturally, is neither heavy-tailed nor light-tailed as compared to a Normal distribution (we call this mesokurtic).
+
+### Multimodal vs. Unimodal distributions
+
+A unimodal distribution, on some level, is straightforward. It is a distribution with a single mode, or "peak" in the distribution. Such a distribution may be skewed or symmetric, light-tailed or heavy-tailed. We usually describe as multimodal distributions like the two on the right below, which have multiple local maxima, even though they have just a single global maximum peak.
+
+```{r c6_modality-fig, echo = FALSE, out.width = '90%', fig.cap = "Unimodal and Multimodal Sketches"}
+knitr::include_graphics("figures/modality.PNG")
+```
+
+Truly multimodal distributions are usually described that way in terms of shape. For unimodal distributions, skewness and kurtosis become useful ideas.
+
+### Skew
+
+Whether or not a distribution is approximately symmetric is an important consideration in describing its shape. Graphical assessments are always most useful in this setting, particularly for unimodal data. My favorite measure of skew, or skewness if the data have a single mode, is:
+
+$$
+skew_1 = \frac{\mbox{mean} - \mbox{median}}{\mbox{standard deviation}}
+$$
+
+- Symmetric distributions generally show values of $skew_1$ near zero. If the distribution is actually symmetric, the mean should be equal to the median.
+- Distributions with $skew_1$ values above 0.2 in absolute value generally indicate meaningful skew.
+- Positive skew (mean > median if the data are unimodal) is also referred to as *right skew*.
+- Negative skew (mean < median if the data are unimodal) is referred to as *left skew*.
+
+```{r c6_negandposskew-fig, echo = FALSE, out.width = '90%', fig.cap = "Negative (Left) Skew and Positive (Right) Skew"}
+knitr::include_graphics("figures/negandposskew.PNG")
+```
+
+
+### Kurtosis
+
+When we have a unimodal distribution that is symmetric, we will often be interested in the behavior of the tails of the distribution, as compared to a Normal distribution with the same mean and standard deviation. High values of kurtosis measures (and there are several) indicate data which has extreme outliers, or is heavy-tailed.
+
+- A mesokurtic distribution has similar tail behavior to what we would expect from a Normal distribution.
+- A leptokurtic distribution is a thinner, more slender distribution, with heavier tails than we'd expect from a Normal distribution. One example is the t distribution.
+- A platykurtic distribution is a broader, flatter distribution, with thinner tails than we'd expect from a Normal distribution. One example is a uniform distribution.
+
+```{r c6_sims_kurtosis, warning = FALSE}
+set.seed(431)
+sims_kurt <- tibble(meso = rnorm(n = 300, mean = 0, sd = 1),
+                    lepto = rt(n = 300, df = 4),
+                    platy = runif(n = 300, min = -2, max = 2))
+
+p1 <- ggplot(sims_kurt, aes(x = meso)) +
+  geom_histogram(aes(y = stat(density)), 
+                 bins = 25, fill = "royalblue", col = "white") +
+  stat_function(fun = dnorm, 
+                args = list(mean = mean(sims_kurt$meso), 
+                            sd = sd(sims_kurt$meso)),
+                col = "red") +
+  labs(title = "Normal (mesokurtic)")
+
+p1a <- ggplot(sims_kurt, aes(x = meso, y = "")) +
+  geom_violin() +
+  geom_boxplot(fill = "royalblue", outlier.color = "royalblue", width = 0.3) +
+  labs(y = "", x = "Normal (mesokurtic)")
+
+p2 <- ggplot(sims_kurt, aes(x = lepto)) +
+  geom_histogram(aes(y = stat(density)), 
+                 bins = 25, fill = "tomato", col = "white") +
+  stat_function(fun = dnorm, 
+                args = list(mean = mean(sims_kurt$lepto), 
+                            sd = sd(sims_kurt$lepto)),
+                col = "royalblue") +
+  labs(title = "t (leptokurtic)")
+
+p2a <- ggplot(sims_kurt, aes(x = lepto, y = "")) +
+  geom_violin() +
+  geom_boxplot(fill = "tomato", outlier.color = "tomato", width = 0.3) +
+  labs(y = "", x = "t (slender with heavy tails)")
+
+p3 <- ggplot(sims_kurt, aes(x = platy)) +
+  geom_histogram(aes(y = stat(density)), 
+                 bins = 25, fill = "yellow", col = "black") +
+  stat_function(fun = dnorm, 
+                args = list(mean = mean(sims_kurt$platy), 
+                            sd = sd(sims_kurt$platy)),
+                col = "royalblue", lwd = 1.5) +
+  xlim(-3, 3) +
+  labs(title = "Uniform (platykurtic)")
+
+p3a <- ggplot(sims_kurt, aes(x = platy, y = "")) +
+  geom_violin() +
+  geom_boxplot(fill = "yellow", width = 0.3) + 
+  xlim(-3, 3) +
+  labs(y = "", x = "Uniform (broad with thin tails)")
+
+
+(p1 + p2 + p3) / (p1a + p2a + p3a) + 
+  plot_layout(heights = c(3, 1))
+```
+
+Graphical tools are in most cases the best way to identify issues related to kurtosis. 
+
+## Numerical Summaries for Quantitative Variables
+
+### `favstats` in the `mosaic` package
+
+The `favstats` function adds the standard deviation, and counts of overall and missing observations to our usual `summary` for a continuous variable. Let's look at systolic blood pressure, because we haven't yet.
+
+```{r c6_nh750_fav1}
+mosaic::favstats(~ SBP, data = nh_750)
+```
+
+We could, of course, duplicate these results with several `summarise()` pieces...
+
+```{r c6_nh750_fav2}
+nh_750 |>
+    filter(complete.cases(SBP)) |>
+    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), 
+              median = median(SBP), Q3 = quantile(SBP, 0.75), 
+              max = max(SBP),  mean = mean(SBP), 
+              sd = sd(SBP), n = n(), miss = sum(is.na(SBP)))
+```
+
+The somewhat unusual structure of `favstats` (complete with an easy to forget `~`) is actually helpful. It allows you to look at some interesting grouping approaches, like this:
+
+```{r c6_nh750_fav3}
+mosaic::favstats(SBP ~ Education, data = nh_750)
+```
+
+Of course, we could accomplish the same comparison with `dplyr` commands, too, but the `favstats` approach has much to offer.
+
+```{r c6_nh750_fav4}
+nh_750 |>
+    filter(complete.cases(SBP, Education)) |>
+    group_by(Education) |>
+    summarise(min = min(SBP), Q1 = quantile(SBP, 0.25), 
+              median = median(SBP), Q3 = quantile(SBP, 0.75), 
+              max = max(SBP), mean = mean(SBP), 
+              sd = sd(SBP), n = n(), miss = sum(is.na(SBP)))
+```
+
+### `describe` in the `psych` package
+
+The `psych` package has a more detailed list of numerical summaries for quantitative variables that lets us look at a group of observations at once.
+
+```{r c6_psych_desc_nh_750_1}
+psych::describe(nh_750 |> select(Age, BMI, SBP, DBP, Pulse))
+```
+
+The additional statistics presented here are:
+
+- `trimmed` = a trimmed mean (by default in this function, this removes the top and bottom 10% from the data, then computes the mean of the remaining values - the middle 80% of the full data set.)
+- `mad` = the median absolute deviation (from the median), which can be used in a manner similar to the standard deviation or IQR to measure spread. 
+    + If the data are $Y_1, Y_2, ..., Y_n$, then the `mad` is defined as $median(|Y_i - median(Y_i)|)$. 
+    + To find the `mad` for a set of numbers, find the median, subtract the median from each value and find the absolute value of that difference, and then find the median of those absolute differences.
+    + For non-normal data with a skewed shape but tails well approximated by the Normal, the `mad` is likely to be a better (more robust) estimate of the spread than is the standard deviation.
+- a measure of `skew`, which refers to how much asymmetry is present in the shape of the distribution. The measure is not the same as the *nonparametric skew* measure that we will usually prefer. The [Wikipedia page on skewness][https://en.wikipedia.org/wiki/Skewness] is very detailed.
+- a measure of excess `kurtosis`, which refers to how outlier-prone, or heavy-tailed the shape of the distribution is, as compared to a Normal distribution. 
+- `se` = the standard error of the sample mean, equal to the sample sd divided by the square root of the sample size.
+
+### The `Hmisc` package's version of `describe`
+
+```{r c6_Hmisc-describe-nh_750}
+Hmisc::describe(nh_750 |> 
+                  select(Age, BMI, SBP, DBP, Pulse))
+```
+
+The `Hmisc` package's version of `describe` for a distribution of data presents three new ideas, in addition to a more comprehensive list of quartiles (the 5^th^, 10^th^, 25^th^, 50^th^, 75^th^, 90^th^ and 95^th^ are shown) and the lowest and highest few observations. These are:
+
+- `distinct` - the number of different values observed in the data. 
+- `Info` - a measure of how "continuous" the variable is, related to how many "ties" there are in the data, with Info taking a higher value (closer to its maximum of one) if the data are more continuous.
+- `Gmd` - the Gini mean difference - a robust measure of spread that is calculated as the mean absolute difference between any pairs of observations. Larger values of Gmd indicate more spread-out distributions. (Gini is pronounced as either "Genie" or "Ginny".)
+
+### Other options
+
+The package [`summarytools` has a function called `dfSummary`](https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html) which I like and Dominic Comtois has also published [Recommendations for Using summarytools with R Markdown](https://cran.r-project.org/web/packages/summarytools/vignettes/Recommendations-rmarkdown.html). Note that this isn't really for Word documents.
+
+[`DataExplorer`](https://boxuancui.github.io/DataExplorer/) can be used for more automated exploratory data analyses (and some people also like [`skimr`](https://github.com/ropensci/skimr)) and [`visdat`](http://visdat.njtierney.com/), as well.
+
+The `df_stats` function available when the `mosaic` package is loaded allows you to run `favstats` for multiple outcome variables simultaneously.
+
+

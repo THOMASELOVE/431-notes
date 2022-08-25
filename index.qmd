@@ -1,0 +1,33 @@
+# Working with These Notes {.unnumbered}
+
+1.  This document is broken down into multiple chapters. Use the table of contents on the left side of the screen to navigate between chapters, or use the right side to navigate within the current chapter.
+2.  You can also search the document, using an automated index.
+3.  Any of the code provided in the document can be copied to the clipboard using the Copy icon at the top right of the code block.
+4.  The document will be updated (unpredictably) throughout the semester.
+
+## What You'll Find Here {.unnumbered}
+
+These Notes provide a series of examples using R to work through issues that are likely to come up in PQHS/CRSP/MPHP 431. What you will mostly find are brief explanations of a key idea or summary, accompanied (most of the time) by R code and a demonstration of the results of applying that code.
+
+While these Notes share some of the features of a textbook, they are neither comprehensive nor completely original. The main purpose is to give 431 students a set of common materials on which to draw during the course. In class, we will sometimes:
+
+-   reiterate points made in this document,
+-   amplify what is here,
+-   simplify the presentation of things done here,
+-   use new examples to show some of the same techniques,
+-   refer to issues not mentioned in this document,
+
+but what we don't do is follow these notes very precisely. We assume instead that you will read the materials and try to learn from them, just as you will attend classes and try to learn from them. We welcome feedback of all kinds on this document or anything else.
+
+## The 431 Course online {.unnumbered}
+
+The **online home** for Dr. Love's 431 course in Fall 2022 is 
+
+[https://thomaselove.github.io/431-2022/](https://thomaselove.github.io/431-2022/). 
+
+Go there for all information related to the course.
+
+All of the code and text in these Notes is posted online as HTML, and it is also possible to download PDF and ePub versions of the document from the down arrow next to the title (Notes for 431) at the top left of this screen. All data and R code related to these notes are also available to you through [our course web site](https://thomaselove.github.io/431-2022/).
+
+By the end of the semester, you will also have access to the Quarto files which generate everything in the document, including all of the R results. [Quarto](https://quarto.org/) is a souped-up version of [R Markdown](https://rmarkdown.rstudio.com/), which you will use during the semester to complete your assignments, and which I used to develop previous versions of these notes. We will demonstrate the use of R Markdown and [RStudio](https://www.rstudio.com/products/rstudio/) (the "program" we use to interface with the R language) in class.
+

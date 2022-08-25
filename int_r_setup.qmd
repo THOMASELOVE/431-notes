@@ -1,0 +1,127 @@
+# Setting Up R {.unnumbered}
+
+These Notes make extensive use of
+
+-   the statistical [software language R](https://cran.case.edu/), and
+-   the development environment [RStudio](https://www.rstudio.com/products/rstudio/),
+
+both of which are free, and you'll need to install them on your machine. Instructions for doing so will be found on [the course website](https://thomaselove.github.io/431-2022/).
+
+If you need a gentle introduction, or if you're just new to R and RStudio and need to learn about them, we encourage you to take a look at [https://moderndive.com/](http://moderndive.com/), which provides an introduction to statistical and data sciences via R at @ModernDive.
+
+## R Markdown
+
+These notes were written using [Quarto](https://quarto.org/), which is an amplification of R Markdown (which we'll learn in 431.) [R Markdown](https://rmarkdown.rstudio.com/), like R and RStudio and Quarto, is free and open source.
+
+R Markdown is described as an *authoring framework* for data science, which lets you
+
+-   save and execute R code
+-   generate high-quality reports that can be shared with an audience
+
+This description comes from [RStudio's introduction to R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) which provides an overview and quick tour of what's possible with R Markdown.
+
+Another excellent resource to learn more about R Markdown tools is the Communicate section (especially the [R Markdown chapter](https://r4ds.hadley.nz/rmarkdown.html)) of @R4DS.
+
+## R Packages {.unnumbered}
+
+At the start of each chapter that involves R code, I'll present a series of commands I run to set up R to use several packages (libraries) of functions that expand its capabilities, make a specific change to how I want R output to be displayed (that's the `comment = NA` piece) and sets the theme for most graphs to `theme_bw()`. A chunk of code like this will occur near the top of any R Markdown work.
+
+For example, this is the setup for one of our early chapters that loads four packages.
+
+```{r setup, message=FALSE}
+knitr::opts_chunk$set(comment = NA)
+
+library(palmerpenguins)
+library(janitor)
+library(knitr)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+You only need to install a package once, but you need to reload it (using the `library()` function) every time you start a new session. I always load the package called `tidyverse` last, since doing so avoids some annoying problems.
+
+## The `Love-boost.R` script {.unnumbered}
+
+In October, when we start Part B of the course, we'll use some special R functions I've gathered for you in a script called `Love-boost`. I'll tell R about that code using the following command...
+
+```{r}
+source("data/Love-boost.R")
+```
+
+The `Love-boost.R` script includes four functions:
+
+- `bootdif`
+- `saifs.ci`
+- `twobytwo`
+- `retrodesign`
+
+## Packages Used in these Notes {.unnumbered}
+
+A complete list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at [our course web site](https://thomaselove.github.io/431-2022/).
+
+Package | Parts | Key functions in the Package
+:-------: | :---: | :---: 
+`arm` | C | --
+`boot` | B | --
+`broom` | A, B, C | `tidy`, `augment`, `glance`
+`car` | A, C |  `boxCox`, `powerTransform`, `testTransform`
+`Epi` | B | `twoby2`
+`fivethirtyeight` | Appendix | source of data
+`GGally` | A, C | `ggpairs`
+`ggrepel` | C | --
+`ggridges` | A, B | --
+`gt` | A | for presenting tables
+`Hmisc` | A, B, C | `describe` and others
+`janitor` | A, B, C | `tabyl` and others
+`knitr` | A, B, C | `kable`
+`mice` | C | --
+`mosaic` | A, B, C | `favstats`
+`naniar` | A | `n_miss`, `miss_case_table`, `gg_miss_var`
+`NHANES` | A | source of data
+`palmerpenguins` | A | source of data
+`patchwork` | A, B, C | for combining/annotating plots
+`psych` | A, B | `describe`
+`pwr` | B | --
+`rms` | C | --
+`simputation` | A | various impuation functions
+`tidyverse` | A, B, C, Appendix | dozens of functions
+`vcd` | B | --
+
+### The `tidyverse`
+
+The `tidyverse` package is actually a meta-package which includes the following core packages:
+
+- `ggplot2` for creating graphics
+- `dplyr` for data manipulation
+- `tidyr` for creating tidy data
+- `readr` for reading in rectangular data
+- `purrr` for working with functions and vectors
+- `tibble` for creating tibbles - lazy, surly data frames
+- `stringr` for working with data strings
+- `forcats` for solving problems with factors
+
+Loading the tidyverse with `library(tidyverse)` loads those eight packages.
+
+Installing the tidyverse also installs several other useful packages on your machine. Read more about the `tidyverse` at [https://www.tidyverse.org/](https://www.tidyverse.org/)
+
+
+### Packages Not Included in the Notes at Present
+
+- `devtools`
+- `equatiomatic`
+- `gapminder`
+- `here`
+- `kableExtra`
+- `magrittr`
+- `markdown`
+- `modelsummary`
+- `nhanesA`
+- `rmarkdown`
+- `rmdformats`
+- `rstanarm`
+- `sessioninfo`
+- `tableone`
+- `tidymodels`
+- `visdat`
+

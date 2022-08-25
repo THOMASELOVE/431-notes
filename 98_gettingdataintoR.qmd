@@ -1,0 +1,87 @@
+# Getting Data Into R
+
+## Using data from an R package {-}
+
+To use data from an R package, for instance, the `bechdel` data from the `fivethirtyeight` package, you can simply load the relevant package with `library` and then the data frame will be available
+
+```{r, message = FALSE}
+library(fivethirtyeight)
+library(tidyverse)
+
+bechdel
+```
+
+## Using `read_rds` to read in an R data set {-}
+
+We have provided the `nnyfs.Rds` data file on the course data page.
+
+Suppose you have downloaded this data file into a directory on your computer called `data` which is a sub-directory of the directory where you plan to do your work, perhaps called `431-nnyfs`.
+
+Open RStudio and create a new project into the `431-nnyfs` directory on your computer. You should see a `data` subdirectory in the Files window in RStudio after the project is created.
+
+Now, read in the `nnyfs.Rds` file to a new tibble in R called `nnyfs_new` with the following command:
+
+```{r}
+nnyfs_new <- read_rds("data/nnyfs.Rds")
+```
+ 
+Here are the results...
+
+```{r}
+nnyfs_new
+```
+
+## Using `read_csv` to read in a comma-separated version of a data file {-}
+
+We have provided the `nnyfs.csv` data file on the course data page.
+
+Suppose you have downloaded this data file into a directory on your computer called `data` which is a sub-directory of the directory where you plan to do your work, perhaps called `431-nnyfs`.
+
+Open RStudio and create a new project into the `431-nnyfs` directory on your computer. You should see a `data` subdirectory in the Files window in RStudio after the project is created.
+
+Now, read in the `nnyfs.csv` file to a new tibble in R called `nnyfs_new2` with the following command:
+
+```{r}
+nnyfs_new2 <- read_csv("data/nnyfs.csv")
+
+nnyfs_new2
+```
+ 
+If you also want to convert the `character` variables to `factors`, as you will often want to do before analyzing the results, you should instead use:
+
+```{r}
+nnyfs_new3 <- read_csv("data/nnyfs.csv") %>%
+    mutate(across(where(is.character), as_factor))
+
+nnyfs_new3
+```
+Note that, for example, `sex` and `race_eth` are now listed as factor (`fctr`) variables. One place where this distinction between `character` and `factor` variables matters is when you summarize the data.
+
+```{r}
+summary(nnyfs_new2$race_eth)
+```
+
+```{r}
+summary(nnyfs_new3$race_eth)
+```
+
+## Converting Character Variables into Factors {-}
+
+The command you want to create `newdata` from `olddata` is:
+
+```
+newdata <- olddata %>%
+    mutate(across(where(is.character), as_factor))
+```
+
+For more on factors, visit https://r4ds.had.co.nz/factors.html
+
+## Converting Data Frames to Tibbles {-}
+
+Use `as_tibble()` or simply `tibble()` to assign the attributes of a tibble to a data frame. Note that `read_rds` and `read_csv` automatically create tibbles.
+
+For more on tibbles, visit https://r4ds.had.co.nz/tibbles.html.
+
+## For more advice {-}
+
+Consider visiting the software tutorials page under the R and Data heading on our main web site.
