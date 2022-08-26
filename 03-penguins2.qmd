@@ -1,0 +1,248 @@
+# Summarizing Penguins
+
+We will again use the data contained in the `palmerpenguins` package in this chapter. Here, we present a few of the more appealing ways to obtain numerical and graphical summaries, without much explanation. We'll discuss these issues further in the rest of Part A of these Course Notes.
+
+## Setup: Packages Used Here
+
+Here, we'll add several new packages to allow us to display some additional summaries, and present our tables and plots in different ways.
+
+```{r}
+#| message = FALSE
+knitr::opts_chunk$set(comment = NA)
+
+library(palmerpenguins) 
+library(kableExtra)
+library(gtsummary)
+library(visdat)
+library(lvplot)
+library(tidyverse) 
+
+theme_set(theme_bw())
+```
+
+We will also use functions from the `mosaic` and `Hmisc` packages here, though I won't load them into our session at this time.
+
+## Our Data Set
+
+Let's look again at the `penguins` data contained in the `palmerpenguins` package.
+
+```{r}
+penguins
+```
+
+## Numerical Summaries for a Tibble
+
+### Using summary()
+
+We have several ways to obtain useful summaries of all variables in the `penguins` data.
+
+```{r}
+penguins |>
+  summary()
+```
+
+### Using inspect() from `mosaic`
+
+Some people like the `inspect()` function from the `mosaic` package.
+
+```{r}
+#| message: FALSE
+penguins |> 
+  mosaic::inspect()
+```
+
+### Using describe() from `psych`
+
+We can use the `describe()` function from the `psych` package to get some additional summaries, if we're interested, and here we also demonstrate the use of the `kbl()` and `kable_styling()` functions from the `kableExtra` package to make the table look appealing in HTML.
+
+```{r}
+penguins |>
+  psych::describe() |>
+  kbl() |>
+  kable_styling()
+```
+
+### Using describe() from `Hmisc`
+
+One approach Frank Harrell has developed that I find helpful is the `describe()` function within his `Hmisc` package, which produces these results.
+
+
+```{r}
+penguins |> 
+  Hmisc::describe() 
+```
+
+### Using tbl_summary() from `gtsummary`
+
+If you want to produce results which look like you might expect to see in a published paper, the `tbl_summary()` function from the `gtsummary` package has many nice features.
+
+```{r}
+penguins |> 
+  tbl_summary()
+```
+
+### Visualizing with `visdat` functions
+
+The `vis_dat()` function from the `visdat` package shows something about the types of variables, providing visual clues about what's inside. The picture below identifies variables types, and missing values.
+
+```{r}
+vis_dat(penguins)
+```
+
+We can explore the missing data further using the `vis_miss` function.
+
+```{r}
+vis_miss(penguins)
+```
+
+## Histograms for a Variable
+
+The most common tool we use in producing a graphical summary of a variable, like the penguin's flipper length, is a histogram. Here's one option.
+
+```{r}
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+  geom_histogram()
+```
+
+This approach produces two warning messages, and (candidly) a fairly unattractive plot.
+
+This time, we'll first exclude the two penguins without a measured flipper length, and then set the `binwidth` to be 10. How well does that work?
+
+```{r}
+penguins2 <- 
+  penguins |>
+  filter(complete.cases(flipper_length_mm))
+
+ggplot(data = penguins2, aes(x = flipper_length_mm)) +
+  geom_histogram(binwidth = 10)
+```
+
+Now we've eliminated the messages, but it would be nice to have some more granularity in the bars (so we'd like a smaller binwidth) and I'd also like to make the bars more clearly separated with colors. I'd also like to add a title. Like this:
+
+```{r}
+ggplot(data = penguins2, aes(x = flipper_length_mm)) +
+  geom_histogram(binwidth = 5, fill = "orange", col = "navy") +
+  labs(title = "Distribution of Flipper Length in 342 Palmer Penguins")
+```
+
+There are some other options for creating a graphical summary of a variable's distribution. For example, we might consider a density plot, as well as a rug plot running along the horizontal (X) axis:
+
+```{r}
+ggplot(data = penguins2, aes(x = flipper_length_mm)) +
+  geom_density(col = "navy") +
+  geom_rug(col = "red") +
+  labs(title = "Density and Rug Plot of Flipper Length in 342 Palmer Penguins")
+```
+
+Or a dotplot...
+
+```{r}
+ggplot(data = penguins2, aes(x = flipper_length_mm)) +
+  geom_dotplot(binwidth = 1, fill = "orange", col = "navy") +
+  labs(title = "Dot Plot of Flipper Length in 342 Palmer Penguins")
+```
+
+We'll learn about several other approaches to summarizing the distribution of a variable graphically later in the course.
+
+## Comparing Penguins by Species Numerically
+
+We have data from three different species of penguin. Can we compare their flipper lengths numerically, perhaps by calculating the mean flipper length within each species?
+
+```{r}
+penguins |>
+  group_by(species) |>
+  summarise(mean(flipper_length_mm))
+```
+
+Well, that's a problem. Looks like we have some missing values. Can we fix that, and also provide some additional summaries, like the sample size (*n*) and the median and standard deviation within each species? While we're at it, can we make it prettier?
+
+```{r}
+penguins |>
+  filter(complete.cases(species, flipper_length_mm)) |>
+  group_by(species) |>
+  summarise(n = n(), 
+            mean = mean(flipper_length_mm), 
+            sd = sd(flipper_length_mm), 
+            median = median(flipper_length_mm)) |>
+  kbl() |>
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
+
+### Using tbl_summary() again
+
+The `tbl_summary()` function from the `gtsummary` package can also do this job very nicely.
+
+```{r}
+penguins |> 
+  tbl_summary(by = species)
+```
+
+## Comparing Penguins by Species Graphically
+
+### Faceting Histograms
+
+We could compare the distributions of the flipper lengths across the three species, by creating a set of faceted histograms, like so...
+
+```{r}
+penguins3 <- 
+  penguins |>
+  filter(complete.cases(flipper_length_mm, species))
+
+ggplot(data = penguins3, aes(x = flipper_length_mm, fill = species)) +
+  geom_histogram(binwidth = 5, col = "white") +
+  facet_wrap(~ species) +
+  guides(fill = "none") +
+  labs(title = "Distribution of Flipper Length in Palmer Penguins, by Species")
+```
+
+### Using `facet_grid()`
+
+Or, we could plot the species vertically using `facet_grid()`, which clearly shows which species produces the penguins with the larger flipper lengths, especially if we reduce the width of the bins a bit.
+
+```{r}
+ggplot(data = penguins3, aes(x = flipper_length_mm, fill = species)) +
+  geom_histogram(binwidth = 2, col = "white") +
+  facet_grid(species ~ .) +
+  guides(fill = "none") +
+  labs(title = "Distribution of Flipper Length in Palmer Penguins, by Species")
+```
+
+We'll use facets like this all the time in what follows.
+
+### Boxplots
+
+Another very common tool we'll use for looking simultaneously at the distributions of a variable across two or more categories is a boxplot. More on this later, but here's one example of what this might look like.
+
+```{r}
+ggplot(data = penguins3, aes(x = flipper_length_mm, y = species, 
+                             fill = species)) +
+  geom_boxplot() +
+  guides(fill = "none") +
+  labs(title = "Distribution of Flipper Length in Palmer Penguins, by Species")
+```
+
+### Adding Violins
+
+And here's a somewhat fancier version, including a violin plot, and with the coordinates flipped so the plots are shown vertically rather than horizontally.
+
+```{r}
+ggplot(data = penguins3, aes(x = flipper_length_mm, y = species)) +
+  geom_violin(aes(col = species)) +
+  geom_boxplot(aes(fill = species), width = 0.3) +
+  guides(col = "none", fill = "none") +
+  coord_flip() +
+  labs(title = "Augmented Boxplot of Flipper Length in Penguins by Species")
+```
+
+
+### Letter-Value Plots (Boxplots for Large Data)
+
+We might also consider a letter-value plot, using the `geom_lv()` function from the `lvplot` package in R, although I rarely use such a plot unless I have at least 1000 observations to work with.
+
+```{r}
+ggplot(data = penguins3, aes(x = species, y = flipper_length_mm)) +
+  geom_lv(aes(fill=..LV..)) + scale_fill_brewer() +
+  labs(title = "Letter-Value Plot of Flipper Length in Penguins by Species")
+```
+
+You're probably tiring of the penguins now. Let's look at a larger data set next.

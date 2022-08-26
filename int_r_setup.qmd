@@ -62,7 +62,6 @@ A complete list of all R packages we want you to install this semester (which in
 
 Package | Parts | Key functions in the Package
 :-------: | :---: | :---: 
-`arm` | C | --
 `boot` | B | --
 `broom` | A, B, C | `tidy`, `augment`, `glance`
 `car` | A, C |  `boxCox`, `powerTransform`, `testTransform`
@@ -72,11 +71,14 @@ Package | Parts | Key functions in the Package
 `ggrepel` | C | --
 `ggridges` | A, B | --
 `gt` | A | for presenting tables
+`gtsummary` | A | `tbl_summary`
 `Hmisc` | A, B, C | `describe` and others
 `janitor` | A, B, C | `tabyl` and others
+`kableExtra` | A | `kbl`, `kable_stylings`
 `knitr` | A, B, C | `kable`
+`lvplot` | A | `geom_lv`
 `mice` | C | --
-`mosaic` | A, B, C | `favstats`
+`mosaic` | A, B, C | `favstats`, `inspect`
 `naniar` | A | `n_miss`, `miss_case_table`, `gg_miss_var`
 `NHANES` | A | source of data
 `palmerpenguins` | A | source of data
@@ -87,6 +89,7 @@ Package | Parts | Key functions in the Package
 `simputation` | A | various impuation functions
 `tidyverse` | A, B, C, Appendix | dozens of functions
 `vcd` | B | --
+`visdat` | A | `vis_dat`, `vis_miss`
 
 ### The `tidyverse`
 
@@ -104,24 +107,4 @@ The `tidyverse` package is actually a meta-package which includes the following 
 Loading the tidyverse with `library(tidyverse)` loads those eight packages.
 
 Installing the tidyverse also installs several other useful packages on your machine. Read more about the `tidyverse` at [https://www.tidyverse.org/](https://www.tidyverse.org/)
-
-
-### Packages Not Included in the Notes at Present
-
-- `devtools`
-- `equatiomatic`
-- `gapminder`
-- `here`
-- `kableExtra`
-- `magrittr`
-- `markdown`
-- `modelsummary`
-- `nhanesA`
-- `rmarkdown`
-- `rmdformats`
-- `rstanarm`
-- `sessioninfo`
-- `tableone`
-- `tidymodels`
-- `visdat`
 
