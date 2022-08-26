@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notes for 431 - 17&nbsp; Confidence Intervals for a Mean</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./18-ibuprofen_sepsis.html" rel="next">
+<link href="./16-wcgs.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES: A First Look</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Structures, Variable Types &amp; Sampling NHANES</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visualizing NHANES Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-assessingnormality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-ci_for_mean.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-pairedsamples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-anova.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-one_proportion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-comparing_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-power_for_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Power and Proportions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-contingency_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-mult_reg_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">17.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"> <span class="header-section-number">17.2</span> Introduction</a></li>
+  <li><a href="#this-chapters-goals" id="toc-this-chapters-goals" class="nav-link" data-scroll-target="#this-chapters-goals"> <span class="header-section-number">17.3</span> This Chapter’s Goals</a></li>
+  <li><a href="#serum-zinc-levels-in-462-teenage-males-serzinc" id="toc-serum-zinc-levels-in-462-teenage-males-serzinc" class="nav-link" data-scroll-target="#serum-zinc-levels-in-462-teenage-males-serzinc"> <span class="header-section-number">17.4</span> Serum Zinc Levels in 462 Teenage Males (<code>serzinc</code>)</a></li>
+  <li><a href="#our-goal-a-confidence-interval-for-the-population-mean" id="toc-our-goal-a-confidence-interval-for-the-population-mean" class="nav-link" data-scroll-target="#our-goal-a-confidence-interval-for-the-population-mean"> <span class="header-section-number">17.5</span> Our Goal: A Confidence Interval for the Population Mean</a></li>
+  <li><a href="#exploratory-data-analysis-for-serum-zinc" id="toc-exploratory-data-analysis-for-serum-zinc" class="nav-link" data-scroll-target="#exploratory-data-analysis-for-serum-zinc"> <span class="header-section-number">17.6</span> Exploratory Data Analysis for Serum Zinc</a>
+  <ul class="collapse">
+  <li><a href="#graphical-summaries" id="toc-graphical-summaries" class="nav-link" data-scroll-target="#graphical-summaries"> <span class="header-section-number">17.6.1</span> Graphical Summaries</a></li>
+  <li><a href="#numerical-summaries" id="toc-numerical-summaries" class="nav-link" data-scroll-target="#numerical-summaries"> <span class="header-section-number">17.6.2</span> Numerical Summaries</a></li>
+  </ul></li>
+  <li><a href="#defining-a-confidence-interval" id="toc-defining-a-confidence-interval" class="nav-link" data-scroll-target="#defining-a-confidence-interval"> <span class="header-section-number">17.7</span> Defining a Confidence Interval</a></li>
+  <li><a href="#estimating-the-population-mean-from-the-serum-zinc-data" id="toc-estimating-the-population-mean-from-the-serum-zinc-data" class="nav-link" data-scroll-target="#estimating-the-population-mean-from-the-serum-zinc-data"> <span class="header-section-number">17.8</span> Estimating the Population Mean from the Serum Zinc data</a></li>
+  <li><a href="#confidence-vs.-significance-level" id="toc-confidence-vs.-significance-level" class="nav-link" data-scroll-target="#confidence-vs.-significance-level"> <span class="header-section-number">17.9</span> Confidence vs.&nbsp;Significance Level</a></li>
+  <li><a href="#the-standard-error-of-a-sample-mean" id="toc-the-standard-error-of-a-sample-mean" class="nav-link" data-scroll-target="#the-standard-error-of-a-sample-mean"> <span class="header-section-number">17.10</span> The Standard Error of a Sample Mean</a></li>
+  <li><a href="#the-t-distribution-and-cis-for-a-mean" id="toc-the-t-distribution-and-cis-for-a-mean" class="nav-link" data-scroll-target="#the-t-distribution-and-cis-for-a-mean"> <span class="header-section-number">17.11</span> The t distribution and CIs for a Mean</a>
+  <ul class="collapse">
+  <li><a href="#the-formula" id="toc-the-formula" class="nav-link" data-scroll-target="#the-formula"> <span class="header-section-number">17.11.1</span> The Formula</a></li>
+  <li><a href="#students-t-distribution" id="toc-students-t-distribution" class="nav-link" data-scroll-target="#students-t-distribution"> <span class="header-section-number">17.11.2</span> Student’s t distribution</a></li>
+  </ul></li>
+  <li><a href="#building-the-ci-in-r" id="toc-building-the-ci-in-r" class="nav-link" data-scroll-target="#building-the-ci-in-r"> <span class="header-section-number">17.12</span> Building the CI in R</a></li>
+  <li><a href="#using-an-intercept-only-regression-model" id="toc-using-an-intercept-only-regression-model" class="nav-link" data-scroll-target="#using-an-intercept-only-regression-model"> <span class="header-section-number">17.13</span> Using an intercept-only regression model</a></li>
+  <li><a href="#interpreting-the-result" id="toc-interpreting-the-result" class="nav-link" data-scroll-target="#interpreting-the-result"> <span class="header-section-number">17.14</span> Interpreting the Result</a></li>
+  <li><a href="#what-if-we-want-a-95-or-99-confidence-interval-instead" id="toc-what-if-we-want-a-95-or-99-confidence-interval-instead" class="nav-link" data-scroll-target="#what-if-we-want-a-95-or-99-confidence-interval-instead"> <span class="header-section-number">17.15</span> What if we want a 95% or 99% confidence interval instead?</a></li>
+  <li><a href="#using-the-broom-package-with-the-t-test" id="toc-using-the-broom-package-with-the-t-test" class="nav-link" data-scroll-target="#using-the-broom-package-with-the-t-test"> <span class="header-section-number">17.16</span> Using the <code>broom</code> package with the t test</a>
+  <ul class="collapse">
+  <li><a href="#effect-of-changing-the-confidence-level" id="toc-effect-of-changing-the-confidence-level" class="nav-link" data-scroll-target="#effect-of-changing-the-confidence-level"> <span class="header-section-number">17.16.1</span> Effect of Changing the Confidence Level</a></li>
+  </ul></li>
+  <li><a href="#one-sided-vs.-two-sided-confidence-intervals" id="toc-one-sided-vs.-two-sided-confidence-intervals" class="nav-link" data-scroll-target="#one-sided-vs.-two-sided-confidence-intervals"> <span class="header-section-number">17.17</span> One-sided vs.&nbsp;Two-sided Confidence Intervals</a></li>
+  <li><a href="#bootstrap-confidence-intervals" id="toc-bootstrap-confidence-intervals" class="nav-link" data-scroll-target="#bootstrap-confidence-intervals"> <span class="header-section-number">17.18</span> Bootstrap Confidence Intervals</a></li>
+  <li><a href="#resampling-is-a-big-idea" id="toc-resampling-is-a-big-idea" class="nav-link" data-scroll-target="#resampling-is-a-big-idea"> <span class="header-section-number">17.19</span> Resampling is A Big Idea</a></li>
+  <li><a href="#when-is-a-bootstrap-confidence-interval-reasonable" id="toc-when-is-a-bootstrap-confidence-interval-reasonable" class="nav-link" data-scroll-target="#when-is-a-bootstrap-confidence-interval-reasonable"> <span class="header-section-number">17.20</span> When is a Bootstrap Confidence Interval Reasonable?</a></li>
+  <li><a href="#bootstrap-confidence-interval-for-the-mean-process" id="toc-bootstrap-confidence-interval-for-the-mean-process" class="nav-link" data-scroll-target="#bootstrap-confidence-interval-for-the-mean-process"> <span class="header-section-number">17.21</span> Bootstrap confidence interval for the mean: Process</a></li>
+  <li><a href="#using-r-to-estimate-a-bootstrap-ci" id="toc-using-r-to-estimate-a-bootstrap-ci" class="nav-link" data-scroll-target="#using-r-to-estimate-a-bootstrap-ci"> <span class="header-section-number">17.22</span> Using R to estimate a bootstrap CI</a></li>
+  <li><a href="#comparing-bootstrap-and-t-based-confidence-intervals" id="toc-comparing-bootstrap-and-t-based-confidence-intervals" class="nav-link" data-scroll-target="#comparing-bootstrap-and-t-based-confidence-intervals"> <span class="header-section-number">17.23</span> Comparing Bootstrap and T-Based Confidence Intervals</a>
+  <ul class="collapse">
+  <li><a href="#bootstrap-resampling-advantages-and-caveats" id="toc-bootstrap-resampling-advantages-and-caveats" class="nav-link" data-scroll-target="#bootstrap-resampling-advantages-and-caveats"> <span class="header-section-number">17.23.1</span> Bootstrap Resampling: Advantages and Caveats</a></li>
+  </ul></li>
+  <li><a href="#using-the-bootstrap-to-develop-other-cis" id="toc-using-the-bootstrap-to-develop-other-cis" class="nav-link" data-scroll-target="#using-the-bootstrap-to-develop-other-cis"> <span class="header-section-number">17.24</span> Using the Bootstrap to develop other CIs</a>
+  <ul class="collapse">
+  <li><a href="#changing-the-confidence-level" id="toc-changing-the-confidence-level" class="nav-link" data-scroll-target="#changing-the-confidence-level"> <span class="header-section-number">17.24.1</span> Changing the Confidence Level</a></li>
+  </ul></li>
+  <li><a href="#one-tailed-bootstrap-confidence-intervals" id="toc-one-tailed-bootstrap-confidence-intervals" class="nav-link" data-scroll-target="#one-tailed-bootstrap-confidence-intervals"> <span class="header-section-number">17.25</span> One-Tailed Bootstrap Confidence Intervals</a>
+  <ul class="collapse">
+  <li><a href="#bootstrap-ci-for-the-population-median" id="toc-bootstrap-ci-for-the-population-median" class="nav-link" data-scroll-target="#bootstrap-ci-for-the-population-median"> <span class="header-section-number">17.25.1</span> Bootstrap CI for the Population Median</a></li>
+  <li><a href="#bootstrap-ci-for-the-iqr" id="toc-bootstrap-ci-for-the-iqr" class="nav-link" data-scroll-target="#bootstrap-ci-for-the-iqr"> <span class="header-section-number">17.25.2</span> Bootstrap CI for the IQR</a></li>
+  </ul></li>
+  <li><a href="#wilcoxon-signed-rank-procedure-for-cis" id="toc-wilcoxon-signed-rank-procedure-for-cis" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-procedure-for-cis"> <span class="header-section-number">17.26</span> Wilcoxon Signed Rank Procedure for CIs</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-pseudo-median" id="toc-what-is-a-pseudo-median" class="nav-link" data-scroll-target="#what-is-a-pseudo-median"> <span class="header-section-number">17.26.1</span> What is a Pseudo-Median?</a></li>
+  </ul></li>
+  <li><a href="#wilcoxon-signed-rank-based-ci-in-r" id="toc-wilcoxon-signed-rank-based-ci-in-r" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-based-ci-in-r"> <span class="header-section-number">17.27</span> Wilcoxon Signed Rank-based CI in R</a>
+  <ul class="collapse">
+  <li><a href="#interpreting-the-wilcoxon-ci-for-the-population-median" id="toc-interpreting-the-wilcoxon-ci-for-the-population-median" class="nav-link" data-scroll-target="#interpreting-the-wilcoxon-ci-for-the-population-median"> <span class="header-section-number">17.27.1</span> Interpreting the Wilcoxon CI for the Population Median</a></li>
+  <li><a href="#using-the-broom-package-with-the-wilcoxon-test" id="toc-using-the-broom-package-with-the-wilcoxon-test" class="nav-link" data-scroll-target="#using-the-broom-package-with-the-wilcoxon-test"> <span class="header-section-number">17.27.2</span> Using the <code>broom</code> package with the Wilcoxon test</a></li>
+  </ul></li>
+  <li><a href="#general-advice" id="toc-general-advice" class="nav-link" data-scroll-target="#general-advice"> <span class="header-section-number">17.28</span> General Advice</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="setup-packages-used-here" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">17.1</span> Setup: Packages Used Here</h2>
+<p>In this part of the course, we’ll make use of a few scripts I’ve gathered for you, in the Love-boost R script.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"data/Love-boost.R"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We will also use the <code>favstats</code> function from the <code>mosaic</code> package, the <code>describe</code> function from the <code>psych</code> package, and several functions from the <code>Hmisc</code> package, and from the <code>boot</code> package.</p>
+</section>
+<section id="introduction" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">17.2</span> Introduction</h2>
+<p>The basic theory of estimation can be used to indicate the probable accuracy and potential for bias in estimating based on limited samples. A point estimate provides a single best guess as to the value of a population or process parameter.</p>
+<p>A confidence interval is a particularly useful way to convey to people just how much error one must allow for in a given estimate. In particular, a confidence interval allows us to quantify just how close we expect, for instance, the sample mean to be to the population or process mean. The computer will do the calculations; we need to interpret the results.</p>
+<p>The key things that we will need to trade off are cost vs.&nbsp;precision, and precision vs.&nbsp;confidence in the correctness of the statement. Often, if we are dissatisfied with the width of the confidence interval and want to make it smaller, we have little choice but to reconsider the sample – larger samples produce shorter intervals.</p>
+</section>
+<section id="this-chapters-goals" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="this-chapters-goals"><span class="header-section-number">17.3</span> This Chapter’s Goals</h2>
+<p>Suppose that we are interested in learning something about a population or process, from which we can obtain a sample that consists of a subset of potential results from that population or process. The main goal for many of the parametric models that are a large part of statistics is to estimate population parameters, like a population mean, or regression coefficient, on the basis of a sample. When we do this, we want to describe not only our best guess at the parameter (referred to as a <em>point estimate</em>) but also say something useful about the uncertainty in our estimate, to let us more completely assess what the data have to tell us. A key tool for doing this is a <strong>confidence interval</strong>.</p>
+<p>Essentially every textbook on introductory statistics describes the development of a confidence interval, at least for a mean. Good supplemental resources are highlighted in the references I’ve provided in the course syllabus.</p>
+<p>We’ll develop confidence intervals to compare parameters about two populations (either through matched pairs or independent samples) with confidence intervals soon. Here, we’ll consider the problem of estimating a confidence interval to describe the mean (or median) of the population represented by a single sample of quantitative data.</p>
+</section>
+<section id="serum-zinc-levels-in-462-teenage-males-serzinc" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="serum-zinc-levels-in-462-teenage-males-serzinc"><span class="header-section-number">17.4</span> Serum Zinc Levels in 462 Teenage Males (<code>serzinc</code>)</h2>
+<p>The <code>serzinc</code> data include serum zinc levels in micrograms per deciliter that have been gathered for a sample of 462 males aged 15-17, My source for these data is Appendix B1 of <span class="citation" data-cites="PaganoGauvreau">Pagano and Gauvreau (<a href="references.html#ref-PaganoGauvreau" role="doc-biblioref">2000</a>)</span>. Serum zinc deficiency has been associated with anemia, loss of strength and endurance, and it is thought that 25% of the world’s population is at risk of zinc deficiency. Such a deficiency can indicate poor nutrition, and can affect growth and vision, for instance. “Typical” values<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> are said to be 0.66-1.10 mcg/ml, which is 66 - 110 micrograms per deciliter.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>serzinc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/serzinc.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 462 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): ID
+dbl (1): zinc
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(serzinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ID                 zinc       
+ Length:462         Min.   : 50.00  
+ Class :character   1st Qu.: 76.00  
+ Mode  :character   Median : 86.00  
+                    Mean   : 87.94  
+                    3rd Qu.: 98.00  
+                    Max.   :153.00  </code></pre>
+</div>
+</div>
+</section>
+<section id="our-goal-a-confidence-interval-for-the-population-mean" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="our-goal-a-confidence-interval-for-the-population-mean"><span class="header-section-number">17.5</span> Our Goal: A Confidence Interval for the Population Mean</h2>
+<p>After we assess the data a bit, and are satisfied that we understand it, our first inferential goal will be to produce a <strong>confidence interval for the true (population) mean</strong> of males age 15-17 based on this sample, assuming that these 462 males are a random sample from the population of interest, that each serum zinc level is drawn independently from an identical distribution describing that population.</p>
+<p>To do this, we will have several different procedures available, including:</p>
+<ol type="1">
+<li>A confidence interval for the population mean based on a t distribution, when we assume that the data are drawn from an approximately Normal distribution, using the sample standard deviation. (Interval corresponding to a t test, and it will be a good choice when the data really are approximately Normally distributed.)</li>
+<li>A resampling approach to generate a bootstrap confidence interval for the population mean, which does not require that we assume either that the population standard deviation is known, nor that the data are drawn from an approximately Normal distribution, but which has some other weaknesses.</li>
+<li>A rank-based procedure called the Wilcoxon signed rank test can also be used to yield a confidence interval statement about the population pseudo-median, a measure of the population distribution’s center (but not the population’s mean).</li>
+</ol>
+</section>
+<section id="exploratory-data-analysis-for-serum-zinc" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="exploratory-data-analysis-for-serum-zinc"><span class="header-section-number">17.6</span> Exploratory Data Analysis for Serum Zinc</h2>
+<section id="graphical-summaries" class="level3" data-number="17.6.1">
+<h3 data-number="17.6.1" class="anchored" data-anchor-id="graphical-summaries"><span class="header-section-number">17.6.1</span> Graphical Summaries</h3>
+<p>The code presented below builds:</p>
+<ul>
+<li>a histogram (with Normal model superimposed),</li>
+<li>a boxplot (with median notch) and</li>
+<li>a Normal Q-Q plot (with guiding straight line through the quartiles)</li>
+</ul>
+<p>for the <code>zinc</code> results from the <code>serzinc</code> tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(serzinc, <span class="fu">aes</span>(<span class="at">sample =</span> zinc)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="at">col =</span> <span class="st">"dodgerblue"</span>) <span class="sc">+</span> <span class="fu">geom_qq_line</span>(<span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Normal Q-Q plot"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(serzinc, <span class="fu">aes</span>(<span class="at">x =</span> zinc)) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">stat</span>(density)), </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">10</span>, <span class="at">fill =</span> <span class="st">"dodgerblue"</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(serzinc<span class="sc">$</span>zinc), </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(serzinc<span class="sc">$</span>zinc)),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">"navy"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram and Normal Density"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(serzinc, <span class="fu">aes</span>(<span class="at">x =</span> zinc, <span class="at">y =</span> <span class="st">""</span>)) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"dodgerblue"</span>, <span class="at">outlier.color =</span> <span class="st">"dodgerblue"</span>) <span class="sc">+</span> </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> (p2 <span class="sc">/</span> p3 <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>))) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Serum Zinc (micrograms per deciliter) for 462 Teenage Males"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-ci_for_mean_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>These results include some of the more useful plots and numerical summaries when assessing shape, center and spread. The <code>zinc</code> data in the <code>serzinc</code> data frame appear to be slightly right skewed, with five outlier values on the high end of the scale, in particular.</p>
+</section>
+<section id="numerical-summaries" class="level3" data-number="17.6.2">
+<h3 data-number="17.6.2" class="anchored" data-anchor-id="numerical-summaries"><span class="header-section-number">17.6.2</span> Numerical Summaries</h3>
+<p>This section describes some numerical summaries of interest to augment the plots in summarizing the center, spread and shape of the distribution of serum zinc among these 462 teenage males.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> zinc, <span class="at">data =</span> serzinc) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">Q1</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">Q3</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">missing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">153</td>
+<td style="text-align: right;">87.937</td>
+<td style="text-align: right;">16.005</td>
+<td style="text-align: right;">462</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>serzinc <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>(zinc), <span class="fu">median</span>(zinc), <span class="fu">sd</span>(zinc),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">skew1 =</span> (<span class="fu">mean</span>(zinc) <span class="sc">-</span> <span class="fu">median</span>(zinc))<span class="sc">/</span><span class="fu">sd</span>(zinc)) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">mean(zinc)</th>
+<th style="text-align: right;">median(zinc)</th>
+<th style="text-align: right;">sd(zinc)</th>
+<th style="text-align: right;">skew1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">87.937</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">16.005</td>
+<td style="text-align: right;">0.121</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The skew1 value here (mean - median divided by the standard deviation) backs up our graphical assessment, that the data are slightly right skewed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(serzinc<span class="sc">$</span>zinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars   n  mean sd median trimmed   mad min max range skew kurtosis   se
+X1    1 462 87.94 16     86   87.17 16.31  50 153   103 0.62     0.87 0.74</code></pre>
+</div>
+</div>
+<p>Rounded to two decimal places, the standard deviation of the serum zinc data turns out to be 16, and so the standard error of the mean, shown as <code>se</code> in the <code>psych::describe</code> output, is 16 divided by the square root of the sample size, <em>n</em> = 462. This standard error is about to become quite important to us in building statistical inferences about the mean of the entire population of teenage males based on this sample.</p>
+</section>
+</section>
+<section id="defining-a-confidence-interval" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="defining-a-confidence-interval"><span class="header-section-number">17.7</span> Defining a Confidence Interval</h2>
+<p>A confidence interval for a population or process mean uses data from a sample (and perhaps some additional information) to identify a range of potential values for the population mean, which, if certain assumptions hold, can be assumed to provide a reasonable estimate for the true population mean. A confidence interval consists of:</p>
+<ol type="1">
+<li>An interval estimate describing the population parameter of interest (here the population mean), and</li>
+<li>A probability statement, expressed in terms of a confidence level.</li>
+</ol>
+</section>
+<section id="estimating-the-population-mean-from-the-serum-zinc-data" class="level2" data-number="17.8">
+<h2 data-number="17.8" class="anchored" data-anchor-id="estimating-the-population-mean-from-the-serum-zinc-data"><span class="header-section-number">17.8</span> Estimating the Population Mean from the Serum Zinc data</h2>
+<p>As an example, suppose that we are willing to assume that the mean serum zinc level across the entire population of teenage males, <span class="math inline">\(\mu\)</span>, follows a Normal distribution (and so, summarizing it with a mean is a rational thing to do.) Suppose that we are also willing to assume that the 462 teenage males contained in the <code>serzinc</code> tibble are a random sample from that complete population. While we know the mean of the sample of 462 boys, we don’t know <span class="math inline">\(\mu\)</span>, the mean across all teenage males. So we need to estimate it.</p>
+<p>Earlier we estimated that a 90% confidence interval for the mean serum zinc level (<span class="math inline">\(\mu\)</span>) across the entire population of teenage males was (86.71, 89.16) micrograms per deciliter. How should we interpret this result?</p>
+<ul>
+<li>Some people think this means that there is a 90% chance that the true mean of the population, <span class="math inline">\(\mu\)</span>, falls between 86.71 and 89.16 micrograms per deciliter. That’s not correct.</li>
+<li>The population mean is a constant <strong>parameter</strong> of the population of interest. That constant is not a random variable, and does not change. So the actual probability of the population mean falling inside that range is either 0 or 1.</li>
+<li>Our confidence is in our process.
+<ul>
+<li>It’s in the sampling method (random sampling) used to generate the data, and in the assumption that the population follows a Normal distribution.</li>
+<li>It’s captured in our accounting for one particular type of error (called <em>sampling error</em>) in developing our interval estimate, while assuming all other potential sources of error are negligible.</li>
+</ul></li>
+</ul>
+<p>So, what’s closer to the truth is:</p>
+<ul>
+<li>If we used this same method to sample data from the true population of teenage males, and built 100 such 90% confidence intervals, then about 90 of them would contain the true population mean.</li>
+</ul>
+</section>
+<section id="confidence-vs.-significance-level" class="level2" data-number="17.9">
+<h2 data-number="17.9" class="anchored" data-anchor-id="confidence-vs.-significance-level"><span class="header-section-number">17.9</span> Confidence vs.&nbsp;Significance Level</h2>
+<p>We’ve estimated a 90% confidence interval for the population mean serum zinc level among teenage boys using the <code>serzinc</code> data.</p>
+<ul>
+<li>We call 100(1-<span class="math inline">\(\alpha\)</span>)%, here, 90%, or 0.90, the <em>confidence</em> level, and</li>
+<li><span class="math inline">\(\alpha\)</span> = 10%, or 0.10 is called the <em>significance</em> level.</li>
+</ul>
+<p>If we had instead built a series of 100 different 95% confidence intervals, then about 95 of them would contain the true value of <span class="math inline">\(\mu\)</span>.</p>
+<p>Let’s look more closely at the issue of estimating a population <strong>mean</strong> based on a sample of observations. We will need three critical pieces - the sample, the confidence level, and the margin of error, which is based on the standard error of a sample mean, when we are estimating a population mean.</p>
+</section>
+<section id="the-standard-error-of-a-sample-mean" class="level2" data-number="17.10">
+<h2 data-number="17.10" class="anchored" data-anchor-id="the-standard-error-of-a-sample-mean"><span class="header-section-number">17.10</span> The Standard Error of a Sample Mean</h2>
+<p>The standard error, generally, is the name we give to the standard deviation associated with any particular parameter estimate.</p>
+<ul>
+<li><p>If we are using a sample mean based on a sample of size <span class="math inline">\(n\)</span> to estimate a population mean, the <strong>standard error of that sample mean</strong> is the standard deviation of the measurements in the population, divided by the square root of the sample size.</p></li>
+<li><p>We often estimate this particular standard error with <span class="math inline">\(s\)</span> (the sample standard deviation) divided by the square root of the sample size.</p></li>
+<li><p>Other statistics have different standard errors.</p>
+<ul>
+<li><span class="math inline">\(\sqrt{p (1-p) / n}\)</span> is the standard error of the sample proportion <span class="math inline">\(p\)</span> estimated using a sample of size <span class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(\sqrt{\frac{1-r^2}{n-2}}\)</span> is the standard error of the sample Pearson correlation <span class="math inline">\(r\)</span> estimated using <span class="math inline">\(n\)</span> pairs of observations.</li>
+<li><span class="math inline">\(\sqrt{\frac{SD_1^2}{n_1} + \frac{SD_2^2}{n_2}}\)</span> is the standard error of the difference between two means <span class="math inline">\(\bar{x}_1\)</span> and <span class="math inline">\(\bar{x}_2\)</span>, estimated using samples of sizes <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span> with sample standard devistions <span class="math inline">\(SD_1\)</span> and <span class="math inline">\(SD_2\)</span>, respectively.</li>
+</ul></li>
+</ul>
+<p>In developing a confidence interval for a population mean, we may be willing to assume that the data in our sample are drawn from a Normally distributed population. If so, the most common and useful means of building a confidence interval makes use of the t distribution (sometimes called Student’s t) and the notion of a <em>standard error</em>.</p>
+</section>
+<section id="the-t-distribution-and-cis-for-a-mean" class="level2" data-number="17.11">
+<h2 data-number="17.11" class="anchored" data-anchor-id="the-t-distribution-and-cis-for-a-mean"><span class="header-section-number">17.11</span> The t distribution and CIs for a Mean</h2>
+<p>In practical settings, we will use the t distribution to estimate a confidence interval from a population mean whenever we:</p>
+<ul>
+<li>are willing to assume that the sample is drawn at random from a population or process with a Normal distribution,</li>
+<li>are using our sample to estimate both the mean and standard deviation, and</li>
+<li>have a small sample size.</li>
+</ul>
+<section id="the-formula" class="level3" data-number="17.11.1">
+<h3 data-number="17.11.1" class="anchored" data-anchor-id="the-formula"><span class="header-section-number">17.11.1</span> The Formula</h3>
+<p>The two-sided <span class="math inline">\(100(1-\alpha)\)</span>% confidence interval (based on a <span class="math inline">\(t\)</span> test) is:</p>
+<p><span class="math display">\[\bar{x} \pm t_{\alpha/2, n-1}(s / \sqrt{n})\]</span></p>
+<p>where <span class="math inline">\(t_{\alpha/2, n-1}\)</span> is the value that cuts off the top <span class="math inline">\(\alpha/2\)</span> percent of the <span class="math inline">\(t\)</span> distribution, with <span class="math inline">\(n - 1\)</span> degrees of freedom.</p>
+<p>We obtain the relevant cutoff value in R by substituting in values for <code>alphaover2</code> and <code>n-1</code> into the following line of R code:</p>
+<p><code>qt(alphaover2, df = n-1, lower.tail=FALSE)</code></p>
+</section>
+<section id="students-t-distribution" class="level3" data-number="17.11.2">
+<h3 data-number="17.11.2" class="anchored" data-anchor-id="students-t-distribution"><span class="header-section-number">17.11.2</span> Student’s t distribution</h3>
+<p>Student’s t distribution looks a lot like a Normal distribution, when the sample size is large. Unlike the normal distribution, which is specified by two parameters, the mean and the standard deviation, the t distribution is specified by one parameter, the degrees of freedom.</p>
+<ul>
+<li>t distributions with large numbers of degrees of freedom are more or less indistinguishable from the standard Normal distribution.</li>
+<li>t distributions with smaller degrees of freedom (say, with df &lt; 30, in particular) are still symmetric, but are more outlier-prone than a Normal distribution</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="17-ci_for_mean_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="building-the-ci-in-r" class="level2" data-number="17.12">
+<h2 data-number="17.12" class="anchored" data-anchor-id="building-the-ci-in-r"><span class="header-section-number">17.12</span> Building the CI in R</h2>
+<p>Suppose we wish to build a 90% confidence interval for the true mean serum zinc level across the entire population of teenage males. The confidence level will be 90%, or 0.90, and so the <span class="math inline">\(\alpha\)</span> value, which is 1 - confidence = 0.10.</p>
+<p>So what we know going in is that:</p>
+<ul>
+<li>We want <span class="math inline">\(\alpha\)</span> = 0.10, because we’re creating a 90% confidence interval.</li>
+<li>The sample size <em>n</em> = 462 serum zinc measurements.</li>
+<li>The sample mean of those measurements, <span class="math inline">\(\bar{x}\)</span> = 87.937 micrograms per deciliter.</li>
+<li>The sample standard deviation of those measurements, <em>s</em> = 16.005 micrograms per deciliter.</li>
+</ul>
+</section>
+<section id="using-an-intercept-only-regression-model" class="level2" data-number="17.13">
+<h2 data-number="17.13" class="anchored" data-anchor-id="using-an-intercept-only-regression-model"><span class="header-section-number">17.13</span> Using an intercept-only regression model</h2>
+<p>in the context of fitting an intercept-only linear regression model. An intercept-only model is fitted by putting the number 1 on the right hand side of our linear model. The resulting model simply fits the overall mean of the data as a prediction for all subjects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model_zinc <span class="ot">&lt;-</span> <span class="fu">lm</span>(zinc <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> serzinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_zinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = zinc ~ 1, data = serzinc)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-37.937 -11.937  -1.937  10.063  65.063 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  87.9372     0.7446   118.1   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 16 on 461 degrees of freedom</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model_zinc, <span class="at">level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              5 %     95 %
+(Intercept) 86.71 89.16446</code></pre>
+</div>
+</div>
+<p>Generally, though, I’ll use the <code>tidy()</code> function in <code>broom</code> to obtain the key information from a model like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_zinc, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf =</span> <span class="fl">0.90</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">87.94</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">118.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">86.71</td>
+<td style="text-align: right;">89.16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>As an alternative, we could also use the <code>t.test</code> function, which can build (in this case) a two-sided confidence interval for the zinc levels like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">t.test</span>(serzinc<span class="sc">$</span>zinc, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">conf.level =</span> <span class="fl">0.90</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>tt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  serzinc$zinc
+t = 118.1, df = 461, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+90 percent confidence interval:
+ 86.71000 89.16446
+sample estimates:
+mean of x 
+ 87.93723 </code></pre>
+</div>
+</div>
+<p>and the <code>tidy()</code> function from the <code>broom</code> package works here, too.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># requires library(broom)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(tt, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf =</span> <span class="fl">0.90</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">parameter</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+<th style="text-align: left;">method</th>
+<th style="text-align: left;">alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">87.94</td>
+<td style="text-align: right;">118.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">461</td>
+<td style="text-align: right;">86.71</td>
+<td style="text-align: right;">89.16</td>
+<td style="text-align: left;">One Sample t-test</td>
+<td style="text-align: left;">two.sided</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>And again, our 90% confidence interval for the true population mean serum zinc level, based on our sample of 462 patients, is (86.71, 89.16) micrograms per deciliter<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+</section>
+<section id="interpreting-the-result" class="level2" data-number="17.14">
+<h2 data-number="17.14" class="anchored" data-anchor-id="interpreting-the-result"><span class="header-section-number">17.14</span> Interpreting the Result</h2>
+<p>An appropriate interpretation of the 90% two-sided confidence interval above follows:</p>
+<ul>
+<li>(86.71, 89.16) micrograms per deciliter is a 90% two-sided confidence interval for the population mean serum zinc level among teenage males.</li>
+<li>Our point estimate for the true population mean serum zinc level is 87.94. The values in the interval (86.71, 89.16) represent a reasonable range of estimates for the true population mean serum zinc level, and we are 90% confident that this method of creating a confidence interval will produce a result containing the true population mean serum zinc level.</li>
+<li>Were we to draw 100 samples of size 462 from the population described by this sample, and use each such sample to produce a confidence interval in this manner, approximately 90 of those confidence intervals would cover the true population mean serum zinc level.</li>
+</ul>
+</section>
+<section id="what-if-we-want-a-95-or-99-confidence-interval-instead" class="level2" data-number="17.15">
+<h2 data-number="17.15" class="anchored" data-anchor-id="what-if-we-want-a-95-or-99-confidence-interval-instead"><span class="header-section-number">17.15</span> What if we want a 95% or 99% confidence interval instead?</h2>
+<p>We can obtain them using <code>tidy</code> and the same modeling approach.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_zinc, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  term        estimate std.error statistic p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)     87.9     0.745      118.       0     86.5      89.4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model_zinc, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  term        estimate std.error statistic p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)     87.9     0.745      118.       0     86.0      89.9</code></pre>
+</div>
+</div>
+</section>
+<section id="using-the-broom-package-with-the-t-test" class="level2" data-number="17.16">
+<h2 data-number="17.16" class="anchored" data-anchor-id="using-the-broom-package-with-the-t-test"><span class="header-section-number">17.16</span> Using the <code>broom</code> package with the t test</h2>
+<p>The <code>broom</code> package takes the messy output of built-in functions in R, such as <code>lm</code>, <code>t.test</code> or <code>wilcox.test</code>, and turns them into tidy data frames. A detailed description of the package and three of its key functions is found at https://github.com/tidyverse/broom.</p>
+<p>For example, we can use the <code>tidy</code> function within <code>broom</code> to create a single-row tibble of the key results from a t test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">t.test</span>(serzinc<span class="sc">$</span>zinc, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(tt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 8
+  estimate statistic p.value parameter conf.low conf.high method         alter…¹
+     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;  
+1     87.9      118.       0       461     86.5      89.4 One Sample t-… two.si…
+# … with abbreviated variable name ¹​alternative</code></pre>
+</div>
+</div>
+<p>We can thus pull the endpoints of a 95% confidence interval directly from this output. <code>broom</code> also has a <code>glance</code> function, which returns the same information as <code>tidy</code> in the case of a t-test.</p>
+<section id="effect-of-changing-the-confidence-level" class="level3" data-number="17.16.1">
+<h3 data-number="17.16.1" class="anchored" data-anchor-id="effect-of-changing-the-confidence-level"><span class="header-section-number">17.16.1</span> Effect of Changing the Confidence Level</h3>
+<p>Below, we see two-sided confidence intervals for various levels of <span class="math inline">\(\alpha\)</span>.</p>
+<table class="table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 8%">
+<col style="width: 33%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Confidence Level</th>
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;">Two-Sided Interval Estimate for Zinc Level Population Mean, <span class="math inline">\(\mu\)</span></th>
+<th style="text-align: center;">Point Estimate of <span class="math inline">\(\mu\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">80% or 0.80</td>
+<td style="text-align: center;">0.20</td>
+<td style="text-align: center;">(87, 88.9)</td>
+<td style="text-align: center;">87.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">90% or 0.90</td>
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">(86.7, 89.2)</td>
+<td style="text-align: center;">87.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">95% or 0.95</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">(86.5, 89.4)</td>
+<td style="text-align: center;">87.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">99% or 0.99</td>
+<td style="text-align: center;">0.01</td>
+<td style="text-align: center;">(86, 89.9)</td>
+<td style="text-align: center;">87.9</td>
+</tr>
+</tbody>
+</table>
+<p>What happens to the width of the confidence interval in this table as the confidence level changes?</p>
+</section>
+</section>
+<section id="one-sided-vs.-two-sided-confidence-intervals" class="level2" data-number="17.17">
+<h2 data-number="17.17" class="anchored" data-anchor-id="one-sided-vs.-two-sided-confidence-intervals"><span class="header-section-number">17.17</span> One-sided vs.&nbsp;Two-sided Confidence Intervals</h2>
+<p>Occasionally, we want to estimate either an upper limit for the population mean <span class="math inline">\(\mu\)</span>, or a lower limit for <span class="math inline">\(\mu\)</span>, but not both.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(serzinc<span class="sc">$</span>zinc, <span class="at">conf.level =</span> <span class="fl">0.90</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  serzinc$zinc
+t = 118.1, df = 461, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is greater than 0
+90 percent confidence interval:
+ 86.98161      Inf
+sample estimates:
+mean of x 
+ 87.93723 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(serzinc<span class="sc">$</span>zinc, <span class="at">conf.level =</span> <span class="fl">0.90</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  serzinc$zinc
+t = 118.1, df = 461, p-value = 1
+alternative hypothesis: true mean is less than 0
+90 percent confidence interval:
+     -Inf 88.89285
+sample estimates:
+mean of x 
+ 87.93723 </code></pre>
+</div>
+</div>
+<p>Note the relationship between the <em>two-sided</em> 80% confidence interval, and the <em>one-sided</em> 90% confidence intervals.</p>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 36%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Confidence</th>
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;">Type of Interval</th>
+<th style="text-align: center;">Interval Estimate for Zinc Level Population Mean, <span class="math inline">\(\mu\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">80% (.80)</td>
+<td style="text-align: center;">0.20</td>
+<td style="text-align: center;">Two-Sided</td>
+<td style="text-align: center;">(86.98, 88.89)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">90% (.90)</td>
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">One-Sided (Less Than)</td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span> &lt; 88.89.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">90% (.90)</td>
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">One-Sided (Greater Than)</td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span> &gt; 86.98.</td>
+</tr>
+</tbody>
+</table>
+<p>Why does this happen? The 80% two-sided interval is placed so as to cut off the top 10% of the distribution with its upper bound, and the bottom 10% of the distribution with its lower bound. The 90% “less than” one-sided interval is placed so as to have its lower bound cut off the top 10% of the distribution.</p>
+<p>The same issue appears when we consider two-sided 90% and one-sided 95% confidence intervals.</p>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 36%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Confidence</th>
+<th style="text-align: center;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: center;">Type of Interval</th>
+<th style="text-align: center;">Interval Estimate for Zinc Level Population Mean, <span class="math inline">\(\mu\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">90% (.90)</td>
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">Two-Sided</td>
+<td style="text-align: center;">(86.71, 89.16)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">95% (.95)</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">One-Sided (Less Than)</td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span> &lt; 89.16.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">95% (.95)</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">One-Sided (Greater Than)</td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span> &gt; 86.71.</td>
+</tr>
+</tbody>
+</table>
+<p>Again, the 90% two-sided interval cuts off the top 5% and bottom 5% of the distribution with its bounds. The 95% “less than” one-sided interval also has its lower bound cut off the top 5% of the distribution.</p>
+</section>
+<section id="bootstrap-confidence-intervals" class="level2" data-number="17.18">
+<h2 data-number="17.18" class="anchored" data-anchor-id="bootstrap-confidence-intervals"><span class="header-section-number">17.18</span> Bootstrap Confidence Intervals</h2>
+<p>The bootstrap (and in particular, what’s known as bootstrap resampling) is a really good idea that you should know a little bit about.</p>
+<p>If we want to know how accurately a sample mean estimates the population mean, we would ideally like to take a very, very large sample, because if we did so, we could conclude with something that would eventually approach mathematical certainty that the sample mean would be very close to the population mean.</p>
+<p>But we can rarely draw enormous samples. So what can we do?</p>
+</section>
+<section id="resampling-is-a-big-idea" class="level2" data-number="17.19">
+<h2 data-number="17.19" class="anchored" data-anchor-id="resampling-is-a-big-idea"><span class="header-section-number">17.19</span> Resampling is A Big Idea</h2>
+<p>One way to find out how precise our estimates are is to run them on multiple samples of the same size. This <em>resampling</em> approach was codified originally by Brad Efron in 1979.</p>
+<p>Oversimplifying a lot, the idea is that if we sample (with replacement) from our current sample, we can draw a new sample of the same size as our original.</p>
+<ul>
+<li>And if we repeat this many times, we can generate as many samples of, say, 462 zinc levels, as we like.</li>
+<li>Then we take these thousands of samples and calculate (for instance) the sample mean for each, and plot a histogram of those means.</li>
+<li>If we then cut off the top and bottom 5% of these sample means, we obtain a reasonable 90% confidence interval for the population mean.</li>
+</ul>
+</section>
+<section id="when-is-a-bootstrap-confidence-interval-reasonable" class="level2" data-number="17.20">
+<h2 data-number="17.20" class="anchored" data-anchor-id="when-is-a-bootstrap-confidence-interval-reasonable"><span class="header-section-number">17.20</span> When is a Bootstrap Confidence Interval Reasonable?</h2>
+<p>A bootstrapped interval estimate for the population mean, <span class="math inline">\(\mu\)</span>, will be reasonable as long as we’re willing to believe that:</p>
+<ul>
+<li>the original sample was a random sample (or at least a completely representative sample) from a population,</li>
+<li>and that the samples are independent of each other,</li>
+</ul>
+<p>even if the population of interest doesn’t follow a Normal, or even a symmetric distribution.</p>
+<p>A downside of the bootstrap is that you and I will get (somewhat) different answers if we resample from the same data without setting the same random seed.</p>
+</section>
+<section id="bootstrap-confidence-interval-for-the-mean-process" class="level2" data-number="17.21">
+<h2 data-number="17.21" class="anchored" data-anchor-id="bootstrap-confidence-interval-for-the-mean-process"><span class="header-section-number">17.21</span> Bootstrap confidence interval for the mean: Process</h2>
+<p>To avoid the Normality assumption, and take advantage of modern computing power, we use R to obtain a bootstrap confidence interval for the population mean based on a sample.</p>
+<p>What the computer does:</p>
+<ol type="1">
+<li>Re-sample the data with replacement, until it obtains a new sample that is equal in size to the original data set.</li>
+<li>Calculates the statistic of interest (here, a sample mean.)</li>
+<li>Repeat the steps above many times (the default is 1,000 using our approach) to obtain a set of 1,000 sample means.</li>
+<li>Sort those 1,000 sample means in order, and estimate the 95% confidence interval for the population mean based on the middle 95% of the 1,000 bootstrap samples.</li>
+<li>Send us a result, containing the sample mean, and a 95% confidence interval for the population mean</li>
+</ol>
+</section>
+<section id="using-r-to-estimate-a-bootstrap-ci" class="level2" data-number="17.22">
+<h2 data-number="17.22" class="anchored" data-anchor-id="using-r-to-estimate-a-bootstrap-ci"><span class="header-section-number">17.22</span> Using R to estimate a bootstrap CI</h2>
+<p>The command that we use to obtain a Confidence Interval for <span class="math inline">\(\mu\)</span> using the basic nonparametric bootstrap and without assuming a Normally distributed population, is <code>smean.cl.boot</code>, a part of the <code>Hmisc</code> package in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.boot</span>(serzinc<span class="sc">$</span>zinc, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">conf.int =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+87.93723 86.76775 89.20617 </code></pre>
+</div>
+</div>
+<ul>
+<li>Remember that the t-based 90% CI for <span class="math inline">\(\mu\)</span> was (86.71, 89.16), according to the following output…</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">lm</span>(zinc <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> serzinc), <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  term        estimate std.error statistic p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)     87.9     0.745      118.       0     86.7      89.2</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-bootstrap-and-t-based-confidence-intervals" class="level2" data-number="17.23">
+<h2 data-number="17.23" class="anchored" data-anchor-id="comparing-bootstrap-and-t-based-confidence-intervals"><span class="header-section-number">17.23</span> Comparing Bootstrap and T-Based Confidence Intervals</h2>
+<ul>
+<li>The <code>smean.cl.boot</code> function (unlike most R functions) deletes missing data automatically, as does the <code>smean.cl.normal</code> function, which can also be used to produce the t-based confidence interval.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.boot</span>(serzinc<span class="sc">$</span>zinc, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">conf.int =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+87.93723 86.76775 89.20617 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.normal</span>(serzinc<span class="sc">$</span>zinc, <span class="at">conf.int =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+87.93723 86.71000 89.16446 </code></pre>
+</div>
+</div>
+<p>Bootstrap resampling confidence intervals do not follow the general confidence interval strategy using a point estimate plus or minus a margin for error.</p>
+<ul>
+<li>A bootstrap interval is often asymmetric, and while it will generally have the point estimate (the sample mean) near its center, for highly skewed data, this will not necessarily be the case.</li>
+<li>We will usually use either 1,000 (the default) or 10,000 bootstrap replications for building confidence intervals – practically, it makes little difference.</li>
+</ul>
+<section id="bootstrap-resampling-advantages-and-caveats" class="level3" data-number="17.23.1">
+<h3 data-number="17.23.1" class="anchored" data-anchor-id="bootstrap-resampling-advantages-and-caveats"><span class="header-section-number">17.23.1</span> Bootstrap Resampling: Advantages and Caveats</h3>
+<p>The bootstrap may seem like the solution to all estimation problems. In theory, we could use the same approach to find a confidence interval for any other parameter – it’s not perfect, but it is very useful. Bootstrap procedures exist for virtually any statistical comparison - the t-test analog is just one of many possibilities, and bootstrap methods are rapidly gaining on more traditional approaches in the literature thanks mostly to faster computers.</p>
+<p>The great advantage of the bootstrap is its relative simplicity, but don’t forget that many of the original assumptions of the t-based confidence interval still hold.</p>
+<ul>
+<li>Using a bootstrap does eliminate the need to worry about the Normality assumption in small sample size settings, but it still requires independent and identically distributed samples from the population of interest.</li>
+</ul>
+<p>The bootstrap produces clean and robust inferences (such as confidence intervals) in many tricky situations. It is still possible that the results can be both:</p>
+<ul>
+<li><strong>inaccurate</strong> (i.e.&nbsp;they can include the true value of the unknown population mean less often than the stated confidence probability) and</li>
+<li><strong>imprecise</strong> (i.e., they can include more extraneous values of the unknown population mean than is desirable).</li>
+</ul>
+</section>
+</section>
+<section id="using-the-bootstrap-to-develop-other-cis" class="level2" data-number="17.24">
+<h2 data-number="17.24" class="anchored" data-anchor-id="using-the-bootstrap-to-develop-other-cis"><span class="header-section-number">17.24</span> Using the Bootstrap to develop other CIs</h2>
+<section id="changing-the-confidence-level" class="level3" data-number="17.24.1">
+<h3 data-number="17.24.1" class="anchored" data-anchor-id="changing-the-confidence-level"><span class="header-section-number">17.24.1</span> Changing the Confidence Level</h3>
+<p>What if we wanted to change the confidence level?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431654</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.boot</span>(serzinc<span class="sc">$</span>zinc, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">conf.int =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+87.93723 86.51066 89.42002 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431321</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.boot</span>(serzinc<span class="sc">$</span>zinc, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">conf.int =</span> <span class="fl">0.99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+87.93723 86.20657 89.68619 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="one-tailed-bootstrap-confidence-intervals" class="level2" data-number="17.25">
+<h2 data-number="17.25" class="anchored" data-anchor-id="one-tailed-bootstrap-confidence-intervals"><span class="header-section-number">17.25</span> One-Tailed Bootstrap Confidence Intervals</h2>
+<p>If you want to estimate a one tailed confidence interval for the population mean using the bootstrap, then the procedure is as follows:</p>
+<ol type="1">
+<li>Determine <span class="math inline">\(\alpha\)</span>, the significance level you want to use in your one-sided confidence interval. Remember that <span class="math inline">\(\alpha\)</span> is 1 minus the confidence level. Let’s assume we want a 90% one-sided interval, so <span class="math inline">\(\alpha\)</span> = 0.10.</li>
+<li>Double <span class="math inline">\(\alpha\)</span> to determine the significance level we will use in the next step to fit a two-sided confidence interval.</li>
+<li>Fit a two-sided confidence interval with confidence level <span class="math inline">\(100(1 - 2*\alpha)\)</span>. Let the bounds of this interval be (<em>a</em>, <em>b</em>).</li>
+<li>The one-sided (greater than) confidence interval will have <em>a</em> as its lower bound.</li>
+<li>The one-sided (less than) confidence interval will have <em>b</em> as its upper bound.</li>
+</ol>
+<p>Suppose that we want to find a 95% one-sided upper bound for the population mean serum zinc level among teenage males, <span class="math inline">\(\mu\)</span>, using the bootstrap.</p>
+<p>Since we want a 95% confidence interval, we have <span class="math inline">\(\alpha\)</span> = 0.05. We double that to get <span class="math inline">\(\alpha\)</span> = 0.10, which implies we need to instead fit a two-sided 90% confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">43101</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">smean.cl.boot</span>(serzinc<span class="sc">$</span>zinc, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">conf.int =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Mean    Lower    Upper 
+87.93723 86.70509 89.11266 </code></pre>
+</div>
+</div>
+<p>The upper bound of this two-sided 90% CI will also be the upper bound for a 95% one-sided CI.</p>
+<section id="bootstrap-ci-for-the-population-median" class="level3" data-number="17.25.1">
+<h3 data-number="17.25.1" class="anchored" data-anchor-id="bootstrap-ci-for-the-population-median"><span class="header-section-number">17.25.1</span> Bootstrap CI for the Population Median</h3>
+<p>If we are willing to do a small amount of programming work in R, we can obtain bootstrap confidence intervals for other population parameters besides the mean. One statistic of common interest is the median. How do we find a confidence interval for the population median using a bootstrap approach? The easiest way I know of makes use of the <code>boot</code> package, as follows.</p>
+<p>In step 1, we specify a new function to capture the medians from our sample.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>f.median <span class="ot">&lt;-</span> <span class="cf">function</span>(y, id) </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>{    <span class="fu">median</span> ( y[id])  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In step 2, we summon the <code>boot</code> package and call the <code>boot.ci</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431787</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>boot<span class="sc">::</span><span class="fu">boot.ci</span>(boot<span class="sc">::</span><span class="fu">boot</span> (serzinc<span class="sc">$</span>zinc, f.median, <span class="dv">1000</span>), <span class="at">conf=</span><span class="fl">0.90</span>, <span class="at">type=</span><span class="st">"basic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 1000 bootstrap replicates
+
+CALL : 
+boot::boot.ci(boot.out = boot::boot(serzinc$zinc, f.median, 1000), 
+    conf = 0.9, type = "basic")
+
+Intervals : 
+Level      Basic         
+90%   (84, 87 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+</div>
+<p>This yields a 90% confidence interval for the population median serum zinc level. Recall that the sample median for the serum zinc levels in our sample of 462 teenage males was 86 micrograms per deciliter.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> zinc, <span class="at">data =</span> serzinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> min Q1 median Q3 max     mean       sd   n missing
+  50 76     86 98 153 87.93723 16.00469 462       0</code></pre>
+</div>
+</div>
+<p>Actually, the <code>boot.ci</code> function can provide up to five different types of confidence interval (see the help file) if we change to <code>type="all"</code>, and some of those other versions have attractive properties. However, we’ll stick with the basic approach in 431.</p>
+</section>
+<section id="bootstrap-ci-for-the-iqr" class="level3" data-number="17.25.2">
+<h3 data-number="17.25.2" class="anchored" data-anchor-id="bootstrap-ci-for-the-iqr"><span class="header-section-number">17.25.2</span> Bootstrap CI for the IQR</h3>
+<p>If for some reason, we want to find a 95% confidence interval for the population value of the inter-quartile range via the bootstrap, we can do it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(serzinc<span class="sc">$</span>zinc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>f.IQR <span class="ot">&lt;-</span> <span class="cf">function</span>(y, id) </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>{    <span class="fu">IQR</span> (y[id]) }</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431207</span>)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>boot<span class="sc">::</span><span class="fu">boot.ci</span>(boot<span class="sc">::</span><span class="fu">boot</span> (serzinc<span class="sc">$</span>zinc, f.IQR, <span class="dv">1000</span>), </span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">conf=</span><span class="fl">0.95</span>, <span class="at">type=</span><span class="st">"basic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 1000 bootstrap replicates
+
+CALL : 
+boot::boot.ci(boot.out = boot::boot(serzinc$zinc, f.IQR, 1000), 
+    conf = 0.95, type = "basic")
+
+Intervals : 
+Level      Basic         
+95%   (20.00, 24.24 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="wilcoxon-signed-rank-procedure-for-cis" class="level2" data-number="17.26">
+<h2 data-number="17.26" class="anchored" data-anchor-id="wilcoxon-signed-rank-procedure-for-cis"><span class="header-section-number">17.26</span> Wilcoxon Signed Rank Procedure for CIs</h2>
+<p>It turns out to be difficult, without the bootstrap, to estimate an appropriate confidence interval for the median of a population, which might be an appealing thing to do, particularly if the sample data are clearly not Normally distributed, so that a median seems like a better summary of the center of the data. Bootstrap procedures are available to perform the task.</p>
+<p>The Wilcoxon signed rank approach can be used as an alternative to t-based procedures to build interval estimates for the population <em>pseudo-median</em> when the population cannot be assumed to follow a Normal distribution.</p>
+<p>As it turns out, if you’re willing to assume the population is <strong>symmetric</strong> (but not necessarily Normally distributed) then the pseudo-median is actually equal to the population median.</p>
+<section id="what-is-a-pseudo-median" class="level3" data-number="17.26.1">
+<h3 data-number="17.26.1" class="anchored" data-anchor-id="what-is-a-pseudo-median"><span class="header-section-number">17.26.1</span> What is a Pseudo-Median?</h3>
+<p>The pseudo-median of a particular distribution G is the median of the distribution of (u + v)/2, where both u and v have the same distribution (G).</p>
+<ul>
+<li>If the distribution G is symmetric, then the pseudomedian is equal to the median.</li>
+<li>If the distribution is skewed, then the pseudomedian is not the same as the median.</li>
+<li>For any sample, the pseudomedian is defined as the median of all of the midpoints of pairs of observations in the sample.</li>
+</ul>
+</section>
+</section>
+<section id="wilcoxon-signed-rank-based-ci-in-r" class="level2" data-number="17.27">
+<h2 data-number="17.27" class="anchored" data-anchor-id="wilcoxon-signed-rank-based-ci-in-r"><span class="header-section-number">17.27</span> Wilcoxon Signed Rank-based CI in R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(serzinc<span class="sc">$</span>zinc, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  serzinc$zinc
+V = 106953, p-value &lt; 2.2e-16
+alternative hypothesis: true location is not equal to 0
+95 percent confidence interval:
+ 85.99997 88.50002
+sample estimates:
+(pseudo)median 
+      87.49996 </code></pre>
+</div>
+</div>
+<section id="interpreting-the-wilcoxon-ci-for-the-population-median" class="level3" data-number="17.27.1">
+<h3 data-number="17.27.1" class="anchored" data-anchor-id="interpreting-the-wilcoxon-ci-for-the-population-median"><span class="header-section-number">17.27.1</span> Interpreting the Wilcoxon CI for the Population Median</h3>
+<p>If we’re willing to believe the <code>zinc</code> levels come from a population with a symmetric distribution, the 95% Confidence Interval for the population median would be (86, 88.5)</p>
+<p>For a non-symmetric population, this only applies to the <em>pseudo-median</em>.</p>
+<p>Note that the pseudo-median (87.5) is actually closer here to the sample mean (87.9) than it is to the sample median (86).</p>
+</section>
+<section id="using-the-broom-package-with-the-wilcoxon-test" class="level3" data-number="17.27.2">
+<h3 data-number="17.27.2" class="anchored" data-anchor-id="using-the-broom-package-with-the-wilcoxon-test"><span class="header-section-number">17.27.2</span> Using the <code>broom</code> package with the Wilcoxon test</h3>
+<p>We can also use the <code>tidy</code> function within <code>broom</code> to create a single-row tibble of the key results from a Wilcoxon test, so long as we run <code>wilcox.test</code> specifying that we want a confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>wt <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(serzinc<span class="sc">$</span>zinc, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  estimate statistic  p.value conf.low conf.high method                  alter…¹
+     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;  
+1     87.5    106953 2.00e-77     86.0      88.5 Wilcoxon signed rank t… two.si…
+# … with abbreviated variable name ¹​alternative</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="general-advice" class="level2" data-number="17.28">
+<h2 data-number="17.28" class="anchored" data-anchor-id="general-advice"><span class="header-section-number">17.28</span> General Advice</h2>
+<p>We have described several approaches to estimating a confidence interval for the center of a distribution of quantitative data.</p>
+<ol type="1">
+<li>The most commonly used approach uses the <em>t</em> distribution to estimate a confidence interval for a population/process mean. This requires some extra assumptions, most particularly that the underlying distribution of the population values is at least approximately Normally distributed. This is identical to the result we get from an intercept-only linear regression model.</li>
+<li>A more modern and very general approach uses the idea of the bootstrap to estimate a confidence for a population/process parameter, which could be a mean, median or other summary statistic. The bootstrap, and the underlying notion of <em>resampling</em> is an important idea that lets us avoid some of the assumptions (in particular Normality) that are required by other methods. Bootstrap confidence intervals involve random sampling, so that the actual values obtained will differ a bit across replications.</li>
+<li>Finally, the Wilcoxon signed-rank method is one of a number of inferential tools which transform the data to their <em>ranks</em> before estimating a confidence interval. This avoids some assumptions, but yields inferences about a less-familiar parameter - the pseudo-median.</li>
+</ol>
+<p>Most of the time, the <strong>bootstrap</strong> provides a reasonably adequate confidence interval estimate of the population value of a parameter (mean or median, most commonly) from a distribution when our data consists of a single sample of quantitative information.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-PaganoGauvreau" class="csl-entry" role="doc-biblioentry">
+Pagano, Marcello, and Kimberlee Gauvreau. 2000. <em>Principles of Biostatistics</em>. Second. Duxbury Press.
+</div>
+</div>
+</section>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>Reference values for those over the age of 10 years at http://www.mayomedicallaboratories.com/test-catalog/Clinical+and+Interpretive/8620 , visited 2019-09-17.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Since the measured zinc levels appear as integers, we should probably be rounding even further in our confidence interval, down to perhaps one decimal place.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./16-wcgs.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">The WCGS</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./18-ibuprofen_sepsis.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
