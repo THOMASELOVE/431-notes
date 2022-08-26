@@ -86,6 +86,7 @@ penguins |>
 The `vis_dat()` function from the `visdat` package shows something about the types of variables, providing visual clues about what's inside. The picture below identifies variables types, and missing values.
 
 ```{r}
+#| warning = FALSE
 vis_dat(penguins)
 ```
 
@@ -104,7 +105,7 @@ ggplot(data = penguins, aes(x = flipper_length_mm)) +
   geom_histogram()
 ```
 
-This approach produces two warning messages, and (candidly) a fairly unattractive plot.
+This approach produces two messages that alert us to potential concerns, and a fairly unattractive plot.
 
 This time, we'll first exclude the two penguins without a measured flipper length, and then set the `binwidth` to be 10. How well does that work?
 
@@ -125,7 +126,7 @@ ggplot(data = penguins2, aes(x = flipper_length_mm)) +
   labs(title = "Distribution of Flipper Length in 342 Palmer Penguins")
 ```
 
-There are some other options for creating a graphical summary of a variable's distribution. For example, we might consider a density plot, as well as a rug plot running along the horizontal (X) axis:
+There are some other options for creating a graphical summary of a variable's distribution. For example, we might consider a density plot, as well as a rug plot along the horizontal (X) axis:
 
 ```{r}
 ggplot(data = penguins2, aes(x = flipper_length_mm)) +
@@ -134,7 +135,7 @@ ggplot(data = penguins2, aes(x = flipper_length_mm)) +
   labs(title = "Density and Rug Plot of Flipper Length in 342 Palmer Penguins")
 ```
 
-Or a dotplot...
+Or perhaps a dotplot would provide a useful look...
 
 ```{r}
 ggplot(data = penguins2, aes(x = flipper_length_mm)) +
@@ -154,7 +155,7 @@ penguins |>
   summarise(mean(flipper_length_mm))
 ```
 
-Well, that's a problem. Looks like we have some missing values. Can we fix that, and also provide some additional summaries, like the sample size (*n*) and the median and standard deviation within each species? While we're at it, can we make it prettier?
+Well, that's a problem. Looks like we have some missing values. Can we fix that, and also provide some additional summaries, like the sample size (*n*) and the median and standard deviation within each species? While we're at it, can we make it prettier, with `kbl()` and `kable_styling()`?
 
 ```{r}
 penguins |>
@@ -168,9 +169,9 @@ penguins |>
   kable_styling(bootstrap_options = "striped", full_width = FALSE)
 ```
 
-### Using tbl_summary() again
+### Using tbl_summary() to summarize the tibble
 
-The `tbl_summary()` function from the `gtsummary` package can also do this job very nicely.
+The `tbl_summary()` function from the `gtsummary` package can also do the job of summarizing all of the other variables in the tibble, broken down by species, very nicely.
 
 ```{r}
 penguins |> 
@@ -191,13 +192,20 @@ penguins3 <-
 ggplot(data = penguins3, aes(x = flipper_length_mm, fill = species)) +
   geom_histogram(binwidth = 5, col = "white") +
   facet_wrap(~ species) +
-  guides(fill = "none") +
   labs(title = "Distribution of Flipper Length in Palmer Penguins, by Species")
 ```
 
+We might add in the command
+
+```
+  guides(fill = "none") +
+```
+
+to eliminate the redundant legend on the right-hand side of the plot.
+
 ### Using `facet_grid()`
 
-Or, we could plot the species vertically using `facet_grid()`, which clearly shows which species produces the penguins with the larger flipper lengths, especially if we reduce the width of the bins a bit.
+The `facet_wrap()` approach has created three histograms, spread horizontally. Alternatively, we could plot the species vertically using `facet_grid()`, which clearly shows which species produces the penguins with the larger flipper lengths, especially if we reduce the width of the bins a bit.
 
 ```{r}
 ggplot(data = penguins3, aes(x = flipper_length_mm, fill = species)) +

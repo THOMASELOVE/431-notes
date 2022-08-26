@@ -1,4 +1,4 @@
-# Visualizing NHANES Data
+# More NHANES Summaries
 
 ## Setup: Packages Used Here
 
@@ -6,43 +6,41 @@
 knitr::opts_chunk$set(comment = NA)
 
 library(janitor)
-library(knitr) ## for kable
+library(kableExtra)
+library(patchwork)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
+## Re-Loading the "Complete Cases" Sample
 
-## Loading in the "Complete Cases" Sample
-
-Let's begin by loading into the `nh_500cc` data frame the information from the `nh_adult500cc.Rds` file we created in Section \@ref(nh_cc).
+In this chapter, we'll build on the summaries we've illustrated previously. Let's begin by again loading into the `nh_500cc` tibble the information from the `nh_adult500cc.Rds` file we created in @sec-nh_cc.
 
 ```{r}
 nh_500cc <- read_rds("data/nh_adult500cc.Rds")
 ```
 
-One obvious hurdle we'll avoid for the moment is what to do about missing data, since the `nh_500cc` data are specifically drawn from complete responses. Working with complete cases only can introduce bias to our estimates and visualizations, so it will be necessary in time to address what we should do when a complete-case analysis isn't a good choice. We'll return to this issue in a few chapters.
-
 ## Distribution of Heights
 
 What is the distribution of height in this new sample?
 
-```{r c5_htfig1}
+```{r}
 ggplot(data = nh_500cc, aes(x = Height)) + 
     geom_histogram() 
 ```
 
-We can do several things to clean this up. 
+We can do several things to clean this up.
 
-1. We'll change the color of the lines for each bar of the histogram.
-2. We'll change the fill inside each bar to make them stand out a bit more.
-3. We'll add a title and relabel the horizontal (x) axis to include the units of measurement.
-4. We'll avoid the warning by selecting a number of bins (we'll use 25 here) into which we'll group the heights before drawing the histogram.
+1.  We'll change the color of the lines for each bar of the histogram.
+2.  We'll change the fill inside each bar to make them stand out a bit more.
+3.  We'll add a title and relabel the horizontal (x) axis to include the units of measurement.
+4.  We'll avoid the warning by selecting a number of bins (we'll use 25 here) into which we'll group the heights before drawing the histogram.
 
-```{r c5_htfig2}
+```{r}
 ggplot(data = nh_500cc, aes(x = Height)) + 
     geom_histogram(bins = 25, col = "yellow", fill = "blue") + 
-    labs(title = "Height of NHANES subjects ages 21-64",
+    labs(title = "Height of 500 NHANES Adults",
          x = "Height in cm.")
 ```
 
@@ -50,14 +48,14 @@ ggplot(data = nh_500cc, aes(x = Height)) +
 
 The CWRU color guide (https://case.edu/umc/our-brand/visual-guidelines/) lists the HTML color schemes for CWRU blue and CWRU gray. Let's match that color scheme. We will also change the bins for the histogram, to gather observations into groups of 2 cm. each, by specifying the width of the bins, rather than the number of bins.
 
-```{r nh_500cc_fig3}
+```{r}
 cwru.blue <- '#0a304e'
 cwru.gray <- '#626262'
 
 ggplot(data = nh_500cc, aes(x = Height)) + 
     geom_histogram(binwidth = 2, 
                    col = cwru.gray, fill = cwru.blue) + 
-    labs(title = "Height of NHANES subjects ages 21-64",
+    labs(title = "Height of 500 NHANES Adults",
          x = "Height in cm.") 
 ```
 
@@ -68,7 +66,7 @@ A frequency polygon essentially smooths out the top of the histogram, and can al
 ```{r}
 ggplot(data = nh_500cc, aes(x = Height)) +
     geom_freqpoly(bins = 20) +
-    labs(title = "Height of NHANES subjects ages 21-64",
+    labs(title = "Height of 500 NHANES Adults",
          x = "Height in cm.")
 ```
 
@@ -80,7 +78,7 @@ A dotplot can also be used to show the distribution of a variable like `Height`,
 ggplot(data = nh_500cc, aes(x = Height)) +
     geom_dotplot(dotsize = 0.75, binwidth = 1) +
     scale_y_continuous(NULL, breaks = NULL) + # hide y axis
-    labs(title = "Height of NHANES subjects ages 21-64",
+    labs(title = "Height of 500 NHANES Adults",
          x = "Height in cm.")
 ```
 
@@ -88,31 +86,31 @@ ggplot(data = nh_500cc, aes(x = Height)) +
 
 Let's look again at the impact of a respondent's sex on their height, but now within our sample of adults.
 
-```{r nh_500cc_fig4}
+```{r}
 ggplot(data = nh_500cc, 
        aes(x = Sex, y = Height, color = Sex)) + 
     geom_point() + 
-    labs(title = "Height by Sex for NHANES subjects ages 21-64",
+    labs(title = "Height by Sex for 500 NHANES Adults",
          y = "Height in cm.")
 ```
 
 This plot isn't so useful. We can improve things a little by jittering the points horizontally, so that the overlap is reduced.
 
-```{r nh_500cc_fig5}
+```{r}
 ggplot(data = nh_500cc, aes(x = Sex, y = Height, color = Sex)) + 
     geom_jitter(width = 0.2) + 
-    labs(title = "Height by Sex (jittered) for NHANES subjects ages 21-64",
+    labs(title = "Height by Sex (jittered) for 500 NHANES Adults",
          y = "Height in cm.")
 ```
 
-Perhaps it might be better to summarise the distribution in a different way. We might consider a boxplot of the data.
+Perhaps it might be better to summarize the distribution in a different way. We might consider a boxplot of the data.
 
 ### A Boxplot of Height by Sex
 
-```{r nh_500cc_fig6}
+```{r}
 ggplot(data = nh_500cc, aes(x = Sex, y = Height, fill = Sex)) + 
     geom_boxplot() + 
-    labs(title = "Boxplot of Height by Sex for NHANES subjects ages 21-64",
+    labs(title = "Boxplot of Height by Sex for 500 NHANES Adults",
          y = "Height in cm.")
 ```
 
@@ -122,33 +120,33 @@ The boxplot shows some summary statistics based on percentiles. The boxes in the
 
 A boxplot is often supplemented with a *violin plot* to better show the shape of the distribution.
 
-```{r nh_500cc_fig62}
+```{r}
 ggplot(data = nh_500cc, aes(x = Sex, y = Height, fill = Sex)) +
     geom_violin() +
     geom_boxplot(width = 0.3) +
-    labs(title = "Boxplot of Height by Sex for NHANES subjects ages 21-64",
+    labs(title = "Boxplot of Height by Sex for 500 NHANES Adults",
          y = "Height in cm.")
 
 ```
 
 This usually works better if the boxes are given a different fill than the violins, as shown in the following figure.
 
-```{r nh_500cc_fig64}
+```{r}
 ggplot(data = nh_500cc, aes(x = Sex, y = Height)) +
     geom_violin(aes(fill = Sex)) +
     geom_boxplot(width = 0.3) +
-    labs(title = "Boxplot of Height by Sex for NHANES subjects ages 21-64",
+    labs(title = "Boxplot of Height by Sex for 500 NHANES Adults",
          y = "Height in cm.")
 
 ```
 
 We can also flip the boxplots on their side, using `coord_flip()`.
 
-```{r nh_500cc_fig66}
+```{r}
 ggplot(data = nh_500cc, aes(x = Sex, y = Height)) +
     geom_violin() +
     geom_boxplot(aes(fill = Sex), width = 0.3) +
-    labs(title = "Boxplot of Height by Sex for NHANES subjects ages 21-64",
+    labs(title = "Boxplot of Height by Sex for 500 NHANES Adults",
          y = "Height in cm.") +
     coord_flip()
 
@@ -156,26 +154,119 @@ ggplot(data = nh_500cc, aes(x = Sex, y = Height)) +
 
 ### Histograms of Height by Sex
 
-Or perhaps we'd like to see a pair of histograms?
+Or perhaps we'd like to see a pair of faceted histograms?
 
-```{r nh_500cc_fig7}
+```{r}
 ggplot(data = nh_500cc, aes(x = Height, fill = Sex)) + 
     geom_histogram(color = "white", bins = 20) + 
-    labs(title = "Histogram of Height by Sex for NHANES subjects ages 21-64",
+    labs(title = "Histogram of Height by Sex for 500 NHANES Adults",
          x = "Height in cm.") + 
     facet_wrap(~ Sex)
 ```
 
 Can we redraw these histograms so that they are a little more comparable, and to get rid of the unnecessary legend?
 
-```{r nh_500cc_fig8}
+```{r}
 ggplot(data = nh_500cc, aes(x = Height, fill = Sex)) + 
     geom_histogram(color = "white", bins = 20) + 
-    labs(title = "Histogram of Height by Sex for NHANES subjects ages 21-64 (Revised)",
+    labs(title = "Histogram of Height by Sex for 500 NHANES Adults",
          x = "Height in cm.") + 
     guides(fill = "none") +
     facet_grid(Sex ~ .)
 ```
+
+## Visualizing Age and Height's Relationship, by Sex
+
+We can start with a simple scatterplot of the Height (y-axis) and Age (x-axis) relationship across the subjects in our `nh_500cc` tibble.
+
+```{r}
+ggplot(data = nh_500cc, aes(x = Age, y = Height)) +
+  geom_point() +
+  labs(title = "Height-Age Relationship in 500 NHANES adults")
+```
+
+Is there a meaningful difference in what this relationship looks like, depending on Sex?
+
+### Adding Color to the plot
+
+Let's add Sex to the plot using color, and also adjust the y axis label to incorporate the units of measurement.
+
+```{r}
+ggplot(data = nh_500cc, aes(x = Age, y = Height, color = Sex)) +
+    geom_point() +
+    labs(title = "Height-Age Relationship in 500 NHANES adults, by Sex", 
+         y = "Height in cm.")
+```
+
+### Can we show the Female and Male relationships in separate panels?
+
+Sure. We can facet the scatterplot into a panel for each Sex, as follows.
+
+```{r}
+ggplot(data = nh_500cc, aes(x = Age, y = Height, color = Sex)) +
+    geom_point() + 
+    labs(title = "Height-Age Relationship in 500 NHANES adults", 
+         y = "Height in cm.") +
+    facet_wrap(~ Sex)
+```
+
+### Can we add a smooth curve to show the relationship in each plot?
+
+Yes, by adding a call to the `geom_smooth()` function. Is there any indication of a strong relationship between Age and Height in this sample?
+
+```{r}
+ggplot(data = nh_500cc, aes(x = Age, y = Height, color = Sex)) +
+    geom_point() + 
+    geom_smooth(method = "loess", formula = y ~ x) +
+    labs(title = "Height-Age Relationship in NHANES sample", 
+         y = "Height in cm.") +
+    facet_wrap(~ Sex)
+```
+
+### What if we want to assume straight line relationships?
+
+We could look at a linear model in each part of the plot instead, and this time, we'll also get rid of the redundant legend, using the `guides()` command. Does assuming a straight line make much of a difference here?
+
+```{r}
+ggplot(data = nh_500cc, aes(x = Age, y = Height, color = Sex)) +
+    geom_point() + 
+    geom_smooth(method = "lm", formula = y ~ x) +
+    guides(color = "none") +
+    labs(title = "Height-Age Relationship in NHANES sample", 
+         y = "Height in cm.") +
+    facet_wrap(~ Sex)
+```
+
+## Combining Plots with `patchwork`
+
+The `patchwork` package in R allows us to use some simple commands to put two plots together.
+
+Suppose we create two separate plots, which we'll name `p1` and `p2`, as follows.
+
+```{r}
+p1 <- ggplot(data = nh_500cc, aes(x = Age, y = Height)) +
+    geom_point() + 
+    labs(title = "Height and Age")
+
+p2 <- ggplot(data = nh_500cc, aes(x = Sex, y = Height)) +
+    geom_boxplot() +
+    labs(title = "Height, by Sex")
+```
+
+Now, suppose we want to put them together in a single figure. Thanks to `patchwork`, we can simply type in the following.
+
+```{r}
+p1 / p2
+```
+
+or we can place the images next to each other, and add an annotation, like this:
+
+```{r}
+p1 + p2 +
+    plot_annotation(title = "Our Combined Plots")
+```
+
+The `patchwork` [package website](https://patchwork.data-imaginist.com/) provides lots of great examples and guides to make it very easy to combine separate ggplots into the same graphic. While there are other packages (`gridExtra` and `cowplot` are very nice, for instance) to do this task, I think `patchwork` is the most user-friendly, so that's the focus of these notes.
 
 ## Looking at Pulse Rate
 
@@ -183,21 +274,21 @@ Let's look at a different outcome, the *pulse rate* for our subjects.
 
 Here's a histogram, again with CWRU colors, for the pulse rates in our sample.
 
-```{r nh_500cc_fig9}
+```{r}
 ggplot(data = nh_500cc, aes(x = Pulse)) + 
     geom_histogram(binwidth = 1, 
                    fill = cwru.blue, col = cwru.gray) + 
-    labs(title = "Histogram of Pulse Rate: NHANES subjects ages 21-64",
+    labs(title = "Histogram of Pulse Rate: NHANES Adults",
          x = "Pulse Rate (beats per minute)")
 ```
 
-Suppose we instead bin up groups of 5 beats per minute together as we plot the Pulse rates. 
+Suppose we instead bin up groups of 5 beats per minute together as we plot the Pulse rates.
 
-```{r nh_500cc_fig10}
+```{r}
 ggplot(data = nh_500cc, aes(x = Pulse)) + 
     geom_histogram(binwidth = 5, 
                    fill = cwru.blue, col = cwru.gray) + 
-    labs(title = "Histogram of Pulse Rate: NHANES subjects ages 21-64",
+    labs(title = "Histogram of Pulse Rate: NHANES Adults",
          x = "Pulse Rate (beats per minute)")
 ```
 
@@ -207,11 +298,12 @@ Which is the more useful representation will depend a lot on what questions you'
 
 We can also split up our data into groups based on whether the subjects are physically active. Let's try a boxplot.
 
-```{r nh_500cc_fig11}
+```{r}
 ggplot(data = nh_500cc, 
        aes(y = Pulse, x = PhysActive, fill = PhysActive)) + 
     geom_boxplot() + 
-    labs(title = "Pulse Rate by Physical Activity Status for NHANES ages 21-64")
+    guides(fill = "none") +
+    labs(title = "Pulse Rate by Physical Activity Status in NHANES Adults")
 ```
 
 As an accompanying numerical summary, we might ask how many people fall into each of these `PhysActive` categories, and what is their "average" `Pulse` rate.
@@ -220,22 +312,22 @@ As an accompanying numerical summary, we might ask how many people fall into eac
 nh_500cc |>
     group_by(PhysActive) |>
     summarise(count = n(), mean(Pulse), median(Pulse)) |>
-    kable(digits = 2) 
+    kbl(digits = 2) |>
+    kable_styling(full_width = FALSE)
 ```
 
-The `kable(digits = 2)` piece of this command tells R Markdown to generate a table with some attractive formatting, and rounding any decimals to two figures.
+The end of this chunk of code tells R Markdown to generate a table with some attractive formatting, and rounding any decimals to two figures.
 
 ### Pulse by Sleeping Trouble
 
-```{r nh_500cc_fig12}
+```{r}
 ggplot(data = nh_500cc, aes(x = Pulse, fill = SleepTrouble)) + 
     geom_histogram(color = "white", bins = 20) + 
-    labs(title = "Histogram of Pulse Rate by Sleep Trouble for NHANES subjects ages 21-64",
+    labs(title = "Histogram of Pulse Rate by Sleep Trouble for NHANES Adults",
          x = "Pulse Rate (beats per minute)") + 
     guides(fill = "none") +
     facet_grid(SleepTrouble ~ ., labeller = "label_both")
 ```
-
 
 How many people fall into each of these `SleepTrouble` categories, and what is their "average" Pulse rate?
 
@@ -243,21 +335,21 @@ How many people fall into each of these `SleepTrouble` categories, and what is t
 nh_500cc |>
     group_by(SleepTrouble) |>
     summarise(count = n(), mean(Pulse), median(Pulse)) |>
-    kable(digits = 2) 
+    kbl(digits = 2) |>
+    kable_styling(full_width = F)
 ```
-
 
 ### Pulse and HealthGen
 
 We can compare the distribution of Pulse rate across groups by the subject's self-reported overall health (`HealthGen`), as well.
 
-```{r nh_500cc_fig13}
+```{r}
 ggplot(data = nh_500cc, aes(x = HealthGen, y = Pulse, fill = HealthGen)) + 
     geom_boxplot() +
-    labs(title = "Pulse by Self-Reported Overall Health for NHANES ages 21-64",
+    labs(title = "Pulse by Self-Reported Overall Health for NHANES Adults",
          x = "Self-Reported Overall Health", y = "Pulse Rate") + 
     guides(fill = "none") 
-```    
+```
 
 How many people fall into each of these `HealthGen` categories, and what is their "average" Pulse rate?
 
@@ -265,60 +357,60 @@ How many people fall into each of these `HealthGen` categories, and what is thei
 nh_500cc |>
     group_by(HealthGen) |>
     summarise(count = n(), mean(Pulse), median(Pulse)) |>
-    kable(digits = 2) 
+    kbl(digits = 2) |>
+    kable_styling(full_width = F)
 ```
 
 ### Pulse Rate and Systolic Blood Pressure
 
-```{r nh_500cc_fig14}
+```{r}
 ggplot(data = nh_500cc, aes(x = SBP, y = Pulse)) +
     geom_point() +
     geom_smooth(method = "loess", formula = y ~ x) +
-    labs(title = "Pulse Rate vs. SBP for NHANES subjects, ages 21-64")
+    labs(title = "Pulse Rate vs. SBP for NHANES Adults")
 ```
-
 
 ### Sleep Trouble vs. No Sleep Trouble?
 
-Could we see whether subjects who have described `SleepTrouble` show different SBP-pulse rate patterns than the subjects who haven't? 
+Could we see whether subjects who have described `SleepTrouble` show different SBP-pulse rate patterns than the subjects who haven't?
 
-- Let's try doing this by changing the shape *and* the color of the points based on `SleepTrouble`.
+-   Let's try doing this by changing the shape *and* the color of the points based on `SleepTrouble`.
 
-```{r nh_500cc_fig15}
+```{r}
 ggplot(data = nh_500cc, 
        aes(x = SBP, y = Pulse, 
            color = SleepTrouble, shape = SleepTrouble)) +
     geom_point() +
     geom_smooth(method = "loess", formula = y ~ x) +
-    labs(title = "Pulse Rate vs. SBP for NHANES subjects, ages 21-64")
+    labs(title = "Pulse Rate vs. SBP for NHANES Adults")
 ```
 
 This plot might be easier to interpret if we faceted by `SleepTrouble`, as well.
 
-```{r nh_500cc_fig16}
+```{r}
 ggplot(data = nh_500cc, 
        aes(x = SBP, y = Pulse, 
            color = SleepTrouble, shape = SleepTrouble)) +
     geom_point() +
     geom_smooth(method = "loess", formula = y ~ x) +
-    labs(title = "Pulse Rate vs. SBP for NHANES subjects, ages 21-64") +
+    labs(title = "Pulse Rate vs. SBP for NHANES Adults") +
     facet_wrap(~ SleepTrouble, labeller = "label_both")
 ```
 
 ## General Health Status
 
-Here's a Table of the General Health Status results. Again, this is a self-reported rating of each subject's health on a five point scale (Excellent, Very Good, Good, Fair, Poor.) 
+Here's a Table of the General Health Status results. Again, this is a self-reported rating of each subject's health on a five point scale (Excellent, Very Good, Good, Fair, Poor.)
 
-```{r c5_Health_tab1}
+```{r}
 nh_500cc |>
     tabyl(HealthGen) 
 ```
 
 The HealthGen data are categorical, which means that summarizing them with averages isn't as appealing as looking at percentages, proportions and rates. The `tabyl` function comes from the `janitor` package in R.
 
-- I don't actually like the title of `percent` here, as it's really a proportion, but that can be adjusted, and we can add a total.
+-   I don't actually like the title of `percent` here, as it's really a proportion, but that can be adjusted, and we can add a total.
 
-```{r c5_Health_tab2}
+```{r}
 nh_500cc |>
     tabyl(HealthGen) |>
     adorn_totals() |>
@@ -327,7 +419,7 @@ nh_500cc |>
 
 When working with an unordered categorical variable, like `MaritalStatus`, the same approach can work.
 
-```{r c5_Marital_tab1}
+```{r}
 nh_500cc |>
     tabyl(MaritalStatus) |>
     adorn_totals() |>
@@ -338,25 +430,25 @@ nh_500cc |>
 
 Usually, a **bar chart** is the best choice for graphing a variable made up of categories.
 
-```{r c5_Health_fig1}
+```{r}
 ggplot(data = nh_500cc, aes(x = HealthGen)) + 
     geom_bar()
 ```
 
 There are lots of things we can do to make this plot fancier.
 
-```{r c5_Health_fig2}
+```{r}
 ggplot(data = nh_500cc, aes(x = HealthGen, fill = HealthGen)) + 
     geom_bar() + 
     guides(fill = "none") +
     labs(x = "Self-Reported Health Status",
          y = "Number of NHANES subjects",
-         title = "Self-Reported Health Status in NHANES subjects ages 21-64")
+         title = "Self-Reported Health Status in NHANES Adults")
 ```
 
 Or, we can really go crazy...
 
-```{r c5_Health_fig3}
+```{r}
 nh_500cc |>
     count(HealthGen) |>
     mutate(pct = round_half_up(prop.table(n) * 100, 1)) |>
@@ -369,64 +461,69 @@ nh_500cc |>
               position = position_dodge(width = .9), 
               size = 4) +
     labs(x = "Self-Reported Health Status",
-         y = "Percentage of NHANES subjects",
-         title = "Self-Reported Health Status in NHANES subjects ages 21-64") +
-    theme_bw()
+         y = "Percentage of Subjects",
+         title = "Self-Reported Health Status in NHANES Adults") 
 ```
 
-
-### Two-Way Tables
+## Two-Way Tables
 
 We can create cross-classifications of two categorical variables (for example HealthGen and Smoke100), adding both row and column marginal totals, and compare subjects by Sex, as follows...
 
-```{r c5_SmokeHealth_tab1}
-nh_500cc |>
-    tabyl(Smoke100, HealthGen) |>
-    adorn_totals(c("row", "col")) 
-```
-
-If we like, we can make this look a little more polished with the `knitr::kable` function...
-
-```{r c5_SmokeHealth_tab2}
+```{r}
 nh_500cc |>
     tabyl(Smoke100, HealthGen) |>
     adorn_totals(c("row", "col")) |>
-    knitr::kable()
+    adorn_title()
+```
+
+If we like, we can make this look a little more polished with the `kbl()` and `kable_styling()` functions from the `kableExtra` package.
+
+```{r}
+nh_500cc |>
+    tabyl(Smoke100, HealthGen) |>
+    adorn_totals(c("row", "col")) |>
+    adorn_title() |>
+    kbl() |>
+    kable_styling(position = "center", full_width = FALSE)
 ```
 
 Or, we can get a complete cross-tabulation, including (in this case) the percentages of people within each of the two categories of `Smoke100` that fall in each `HealthGen` category (percentages within each row) like this.
 
-```{r c5_SmokeHealth_tab3}
+```{r}
 nh_500cc |>
     tabyl(Smoke100, HealthGen) |>
     adorn_totals("row") |>
     adorn_percentages("row") |>
     adorn_pct_formatting() |>
     adorn_ns() |>
-    knitr::kable()
+    adorn_title() |>
+    kbl() |>
+    kable_styling(position = "center", full_width = FALSE)
 ```
 
 And, if we wanted the column percentages, to determine which sex had the higher rate of each HealthGen status level, we can get that by changing the adorn_percentages to describe results at the column level:
 
-```{r c5_SmokeHealth_tab4}
+```{r}
 nh_500cc |>
     tabyl(Sex, HealthGen) |>
     adorn_totals("col") |>
     adorn_percentages("col") |>
     adorn_pct_formatting() |>
     adorn_ns() |>
-    knitr::kable()
+    adorn_title() |>
+    kbl() |>
+    kable_styling(position = "center", full_width = FALSE)
 ```
 
-### SBP by General Health Status
+## SBP by General Health Status
 
 Let's consider now the relationship between self-reported overall health and systolic blood pressure.
 
-```{r nh_500cc_sbphealth_fig1}
+```{r}
 ggplot(data = nh_500cc, aes(x = HealthGen, y = SBP, 
                             fill = HealthGen)) + 
     geom_boxplot() + 
-    labs(title = "SBP by Health Status, Overall Health for NHANES ages 21-64",
+    labs(title = "SBP by Health Status, Overall Health for NHANES Adults",
          y = "Systolic Blood Pressure", 
          x = "Self-Reported Overall Health") + 
     guides(fill = "none") 
@@ -438,17 +535,18 @@ We can see that not too many people self-identify with the "Poor" health categor
 nh_500cc |>
     group_by(HealthGen) |>
     summarise(count = n(), mean(SBP), median(SBP)) |>
-    knitr::kable() 
+    kbl() |>
+    kable_styling(position = "center", full_width = FALSE)
 ```
 
 ### SBP by Physical Activity and General Health Status
 
 We'll build a panel of boxplots to try to understand the relationships between Systolic Blood Pressure, General Health Status and Physical Activity. Note the use of `coord_flip` to rotate the graph 90 degrees, and the use of `labeller` within `facet_wrap` to include both the name of the (Physical Activity) variable and its value.
 
-```{r nh_500cc_sbphealth_fig2}
+```{r}
 ggplot(data = nh_500cc, aes(x = HealthGen, y = SBP, fill = HealthGen)) + 
     geom_boxplot() + 
-    labs(title = "SBP by Health Status, Overall Health for NHANES ages 21-64",
+    labs(title = "SBP by Health Status, Overall Health for NHANES Adults",
          y = "Systolic BP", x = "Self-Reported Overall Health") + 
     guides(fill = "none") +
     facet_wrap(~ PhysActive, labeller = "label_both") + 
@@ -459,10 +557,10 @@ ggplot(data = nh_500cc, aes(x = HealthGen, y = SBP, fill = HealthGen)) +
 
 Here's a plot of faceted histograms, which might be used to address similar questions related to the relationship between Overall Health, Systolic Blood Pressure and whether someone has trouble sleeping.
 
-```{r nh_500cc_sbphealthsleep_fig1}
+```{r}
 ggplot(data = nh_500cc, aes(x = SBP, fill = HealthGen)) + 
     geom_histogram(color = "white", bins = 20) + 
-    labs(title = "SBP by Overall Health and Sleep Trouble for NHANES ages 21-64",
+    labs(title = "SBP by Overall Health and Sleep Trouble for NHANES Adults",
          x = "Systolic BP") + 
     guides(fill = "none") +
     facet_grid(SleepTrouble ~ HealthGen, labeller = "label_both")
@@ -472,10 +570,9 @@ ggplot(data = nh_500cc, aes(x = SBP, fill = HealthGen)) +
 
 This is just a small piece of the toolbox for visualizations that we'll create in this class. Many additional tools are on the way, but the main idea won't change. Using the `ggplot2` package, we can accomplish several critical tasks in creating a visualization, including:
 
-- Identifying (and labeling) the axes and titles
-- Identifying a type of `geom` to use, like a point, bar or histogram
-- Changing fill, color, shape, size to facilitate comparisons
-- Building "small multiples" of plots with faceting
+-   Identifying (and labeling) the axes and titles
+-   Identifying a type of `geom` to use, like a point, bar or histogram
+-   Changing fill, color, shape, size to facilitate comparisons
+-   Building "small multiples" of plots with faceting
 
 Good data visualizations make it easy to see the data, and `ggplot2`'s tools make it relatively difficult to make a really bad graph.
-

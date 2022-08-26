@@ -32,19 +32,21 @@ book:
         - 16-wcgs.qmd
     - part: "Part B. Comparing Summaries"
       chapters:
-        - 17-ci_for_mean.qmd
-        - 18-ibuprofen_sepsis.qmd
-        - 19-pairedsamples.qmd
-        - 20-samplesize.qmd
-        - 21-examples_2means.qmd
-        - 22-anova.qmd
-        - 23-one_proportion.qmd
-        - 24-comparing_rates.qmd
-        - 25-power_for_rates.qmd
-        - 26-contingency_tables.qmd
+        - partBhold.qmd
+    ##    - 17-ci_for_mean.qmd
+    ##    - 18-ibuprofen_sepsis.qmd
+    ##    - 19-pairedsamples.qmd
+    ##    - 20-samplesize.qmd
+    ##    - 21-examples_2means.qmd
+    ##    - 22-anova.qmd
+    ##    - 23-one_proportion.qmd
+    ##    - 24-comparing_rates.qmd
+    ##    - 25-power_for_rates.qmd
+    ##    - 26-contingency_tables.qmd
     - part: "Part C. Building Models"
       chapters: 
-        - 27-mult_reg_intro.qmd
+        - partChold.qmd
+##        - 27-mult_reg_intro.qmd
 ##        - 28-regr_diagnostics.qmd
 ##        - 29-prediction_wcgs.qmd
 ##        - 30-galapagos.qmd
