@@ -2,10 +2,11 @@
 
 Almost all serious statistical analyses have to deal with missing data. Data values that are missing are indicated in R, and to R, by the symbol `NA`.
 
-
 ## Setup: Packages Used Here
 
-```{r, message = FALSE}
+```{r}
+#| message:  FALSE
+
 knitr::opts_chunk$set(comment = NA)
 
 library(janitor)
@@ -15,10 +16,10 @@ library(tidyverse)
 
 theme_set(theme_bw())
 ```
+a
+We'll focus on tools from the `naniar` and `simputation` packages in this chapter. This chapter also requires that the `mosaic` package is loaded on your machine so we can use the `favstats()` function, but I won't load that here.
 
-We'll focus on tools from the `naniar` and `simputation` packages in this chapter. This chapter also requires that the `mosaic` package is loaded on your machine, but that package is not included with `library()` above.
-
-## A Simulated Example with 15 subjects
+## A Toy Example (n = 15)
 
 In the following tiny data set called `sbp_example`, we have four variables for a set of 15 subjects. In addition to a subject id, we have:
 
@@ -27,7 +28,7 @@ In the following tiny data set called `sbp_example`, we have four variables for 
 - the subject's systolic blood pressure at baseline
 - the subject's systolic blood pressure after the application of the treatment
 
-```{r c8_sbpex}
+```{r}
 # create some temporary variables
 subject <- 101:115
 x1 <- c("A", "B", "C", "A", "C", "A", "A", NA, "B", "C", "A", "B", "C", "A", "B")
@@ -123,7 +124,7 @@ My source for this description of mechanisms is Chapter 25 of @Gelman-Hill, and 
 
 Essentially, situations 3 and 4 are referred to collectively as **non-random missingness**, and cause more trouble for us than 1 and 2.
 
-## Options for Dealing with Missingness
+## Dealing with Missingness: Three Approaches
 
 There are several available methods for dealing with missing data that are MCAR or MAR, but they basically boil down to:
 
@@ -141,19 +142,6 @@ In **Complete Case** analyses, rows containing NA values are omitted from the da
     2. If many variables are included in a model, there may be very few complete cases, so that most of the data would be discarded for the sake of a straightforward analysis.
 - A related approach is *available-case* analysis where different aspects of a problem are studied with different subsets of the data, perhaps identified on the basis of what is missing in them.
 
-## Single Imputation
-
-In **single imputation** analyses, NA values are estimated/replaced *one time* with *one particular data value* for the purpose of obtaining more complete samples, at the expense of creating some potential bias in the eventual conclusions or obtaining slightly *less* accurate estimates than would be available if there were no missing values in the data.
-
-- A single imputation can be just a replacement with the mean or median (for a quantity) or the mode (for a categorical variable.) However, such an approach, though easy to understand, underestimates variance and ignores the relationship of missing values to other variables.
-- Single imputation can also be done using a variety of models to try to capture information about the NA values that are available in other variables within the data set.
-- The `simputation` package can help us execute single imputations using a wide variety of techniques, within the pipe approach used by the `tidyverse`. Another approach I have used in the past is the `mice` package, which can also perform single imputations.
-
-## Multiple Imputation
-
-**Multiple imputation**, where NA values are repeatedly estimated/replaced with multiple data values, for the purpose of obtaining mode complete samples *and* capturing details of the variation inherent in the fact that the data have missingness, so as to obtain *more* accurate estimates than are possible with single imputation.
-
-- We'll postpone further discussion of multiple imputation to later in the semester.
 
 ## Building a Complete Case Analysis
 
@@ -165,15 +153,25 @@ cc.2 <- sbp_example |> drop_na()
 cc.3 <- sbp_example |> filter(complete.cases(sbp_example))
 ```
 
+## Single Imputation
+
+In **single imputation** analyses, NA values are estimated/replaced *one time* with *one particular data value* for the purpose of obtaining more complete samples, at the expense of creating some potential bias in the eventual conclusions or obtaining slightly *less* accurate estimates than would be available if there were no missing values in the data.
+
+- A single imputation can be just a replacement with the mean or median (for a quantity) or the mode (for a categorical variable.) However, such an approach, though easy to understand, underestimates variance and ignores the relationship of missing values to other variables.
+- Single imputation can also be done using a variety of models to try to capture information about the NA values that are available in other variables within the data set.
+- The `simputation` package can help us execute single imputations using a wide variety of techniques, within the pipe approach used by the `tidyverse`. Another approach I have used in the past is the `mice` package, which can also perform single imputations.
+
 ## Single Imputation with the Mean or Mode
 
 The most straightforward approach to single imputation is to impute a single summary of the variable, such as the mean, median or mode. 
 
-```{r, message = FALSE}
+```{r}
+#| message: FALSE
+
 mosaic::favstats(~ sbp.before, data = sbp_example)
 ```
 
-```{r c8_sbpex_t1}
+```{r}
 sbp_example |> tabyl(diabetes, treat) |>
   adorn_totals(where = c("row", "col"))
 ```
@@ -184,7 +182,7 @@ Here, suppose we decide to impute
 - `diabetes` with its more common value, 1, and
 - `treat` with its more common value, or mode (A)
 
-```{r c8_sbpex_t2}
+```{r}
 si.1 <- sbp_example |>
     replace_na(list(sbp.before = 143.33,
                     diabetes = 1,
@@ -205,8 +203,8 @@ Suppose we wanted to use:
 - a predictive mean matching approach (which, unlike the robust linear model, will ensure that only values of `diabetes` that we've seen before will be imputed) to predict `diabetes` status, on the basis of `sbp.after`, and 
 - a decision tree approach to predict `treat` status, using all other variables in the data
 
-```{r c8_sbpex_t3}
-set.seed(50001)
+```{r}
+set.seed(432009)
 
 imp.2 <- sbp_example |>
     impute_rlm(sbp.before ~ sbp.after + diabetes) |>
@@ -224,3 +222,12 @@ Details on the many available methods in `simputation` are provided [in its manu
 
 The `simputation` package can also do EM-based multivariate imputation, and multivariate random forest imputation, and several other approaches.
 
+## Multiple Imputation
+
+**Multiple imputation**, where NA values are repeatedly estimated/replaced with multiple data values, for the purpose of obtaining mode complete samples *and* capturing details of the variation inherent in the fact that the data have missingness, so as to obtain *more* accurate estimates than are possible with single imputation.
+
+- We'll postpone further discussion of multiple imputation to later in the semester, when we're building models for relationships in our data.
+
+## Coming Up
+
+Next, we'll look an even more detailed look at how we might summarize results from another large data set, this time from the [National Youth Fitness Survey](http://www.cdc.gov/Nchs/Nnyfs.htm).

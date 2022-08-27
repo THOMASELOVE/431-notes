@@ -138,6 +138,9 @@ div.csl-indent {
   }
 }</script>
 
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -347,7 +350,7 @@ div.csl-indent {
   <li><a href="#from-the-nnyfs-examination-component" id="toc-from-the-nnyfs-examination-component" class="nav-link" data-scroll-target="#from-the-nnyfs-examination-component"> <span class="header-section-number">10.3.3</span> From the <span>NNYFS Examination Component</span></a></li>
   <li><a href="#from-the-nnyfs-questionnaire-component" id="toc-from-the-nnyfs-questionnaire-component" class="nav-link" data-scroll-target="#from-the-nnyfs-questionnaire-component"> <span class="header-section-number">10.3.4</span> From the <span>NNYFS Questionnaire Component</span></a></li>
   </ul></li>
-  <li><a href="#looking-over-a-few-variables" id="toc-looking-over-a-few-variables" class="nav-link" data-scroll-target="#looking-over-a-few-variables"> <span class="header-section-number">10.4</span> Looking over A Few Variables</a>
+  <li><a href="#reading-in-the-data" id="toc-reading-in-the-data" class="nav-link" data-scroll-target="#reading-in-the-data"> <span class="header-section-number">10.4</span> Reading in the Data</a>
   <ul class="collapse">
   <li><a href="#seqn" id="toc-seqn" class="nav-link" data-scroll-target="#seqn"> <span class="header-section-number">10.4.1</span> <code>SEQN</code></a></li>
   <li><a href="#sex" id="toc-sex" class="nav-link" data-scroll-target="#sex"> <span class="header-section-number">10.4.2</span> <code>sex</code></a></li>
@@ -369,7 +372,7 @@ div.csl-indent {
   <li><a href="#freedman-diaconis-rule-to-select-bin-width" id="toc-freedman-diaconis-rule-to-select-bin-width" class="nav-link" data-scroll-target="#freedman-diaconis-rule-to-select-bin-width"> <span class="header-section-number">10.7.1</span> Freedman-Diaconis Rule to select bin width</a></li>
   <li><a href="#a-note-on-colors" id="toc-a-note-on-colors" class="nav-link" data-scroll-target="#a-note-on-colors"> <span class="header-section-number">10.7.2</span> A Note on Colors</a></li>
   </ul></li>
-  <li><a href="#the-frequency-polygon" id="toc-the-frequency-polygon" class="nav-link" data-scroll-target="#the-frequency-polygon"> <span class="header-section-number">10.8</span> The Frequency Polygon</a></li>
+  <li><a href="#the-frequency-polygon-with-rug-plot" id="toc-the-frequency-polygon-with-rug-plot" class="nav-link" data-scroll-target="#the-frequency-polygon-with-rug-plot"> <span class="header-section-number">10.8</span> The Frequency Polygon with Rug Plot</a></li>
   <li><a href="#plotting-the-probability-density-function" id="toc-plotting-the-probability-density-function" class="nav-link" data-scroll-target="#plotting-the-probability-density-function"> <span class="header-section-number">10.9</span> Plotting the Probability Density Function</a></li>
   <li><a href="#the-boxplot" id="toc-the-boxplot" class="nav-link" data-scroll-target="#the-boxplot"> <span class="header-section-number">10.10</span> The Boxplot</a>
   <ul class="collapse">
@@ -382,7 +385,7 @@ div.csl-indent {
   <li><a href="#the-trimmed-mean" id="toc-the-trimmed-mean" class="nav-link" data-scroll-target="#the-trimmed-mean"> <span class="header-section-number">10.12.1</span> The Trimmed Mean</a></li>
   <li><a href="#the-median-absolute-deviation" id="toc-the-median-absolute-deviation" class="nav-link" data-scroll-target="#the-median-absolute-deviation"> <span class="header-section-number">10.12.2</span> The Median Absolute Deviation</a></li>
   </ul></li>
-  <li><a href="#assessing-skew" id="toc-assessing-skew" class="nav-link" data-scroll-target="#assessing-skew"> <span class="header-section-number">10.13</span> Assessing Skew</a>
+  <li><a href="#sec-skew" id="toc-sec-skew" class="nav-link" data-scroll-target="#sec-skew"> <span class="header-section-number">10.13</span> Assessing Skew</a>
   <ul class="collapse">
   <li><a href="#non-parametric-skewness" id="toc-non-parametric-skewness" class="nav-link" data-scroll-target="#non-parametric-skewness"> <span class="header-section-number">10.13.1</span> Non-parametric Skewness</a></li>
   </ul></li>
@@ -405,6 +408,7 @@ div.csl-indent {
   <li><a href="#using-multiple-density-plots-to-make-comparisons" id="toc-using-multiple-density-plots-to-make-comparisons" class="nav-link" data-scroll-target="#using-multiple-density-plots-to-make-comparisons"> <span class="header-section-number">10.21</span> Using Multiple Density Plots to Make Comparisons</a></li>
   <li><a href="#a-ridgeline-plot" id="toc-a-ridgeline-plot" class="nav-link" data-scroll-target="#a-ridgeline-plot"> <span class="header-section-number">10.22</span> A Ridgeline Plot</a></li>
   <li><a href="#what-summaries-to-report" id="toc-what-summaries-to-report" class="nav-link" data-scroll-target="#what-summaries-to-report"> <span class="header-section-number">10.23</span> What Summaries to Report</a></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">10.24</span> Coming Up</a></li>
   </ul>
 </nav>
     </div>
@@ -432,12 +436,13 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We also use functions from the <code>Hmisc</code> and <code>mosaic</code> packages in this chapter, but do not load the whole packages.</p>
 </section>
@@ -833,8 +838,8 @@ div.csl-indent {
 </table>
 </section>
 </section>
-<section id="looking-over-a-few-variables" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="looking-over-a-few-variables"><span class="header-section-number">10.4</span> Looking over A Few Variables</h2>
+<section id="reading-in-the-data" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="reading-in-the-data"><span class="header-section-number">10.4</span> Reading in the Data</h2>
 <p>Now, I’ll take a look at the <code>nnyfs</code> data, which I’ve made available in a comma-separated version (<code>nnyfs.csv</code>), if you prefer, as well as in an R data set (<code>nnyfs.Rds</code>) which loads a bit faster. After loading the file, let’s get a handle on its size and contents. In my R Project for these notes, the data are contained in a separate <code>data</code> subdirectory.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/nnyfs.Rds"</span>)</span>
@@ -847,7 +852,7 @@ div.csl-indent {
 </div>
 <p>There are 1518 rows (subjects) and 45 columns (variables), by which I mean that there are 1518 kids in the <code>nnyfs</code> data frame, and we have 45 pieces of information on each subject. So, what do we have, exactly?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="co"># this is a tibble, has some nice features in a print-out like this</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nnyfs </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,518 × 45
     SEQN sex    age_ch…¹ race_…² educ_…³ langu…⁴ sampl…⁵ incom…⁶ age_a…⁷ educ_…⁸
@@ -871,7 +876,7 @@ div.csl-indent {
 #   computer_hours &lt;dbl&gt;, physical_last_week &lt;fct&gt;, enjoy_recess &lt;fct&gt;, …</code></pre>
 </div>
 </div>
-<p>Tibbles are a modern reimagining of the main way in which people have stored data in R, called a data frame. Tibbles were developed to keep what time has proven to be effective, and throwing out what is not. We can learn something about the structure of the tibble from such functions as <code>str</code> or <code>glimpse</code>.</p>
+<p>We can learn something about the structure of the tibble from such functions as <code>str</code> or <code>glimpse</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(nnyfs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -948,8 +953,9 @@ div.csl-indent {
 <h3 data-number="10.4.3" class="anchored" data-anchor-id="age_child"><span class="header-section-number">10.4.3</span> <code>age_child</code></h3>
 <p>The third variable, <code>age_child</code>, is the age of the child at the time of their screening to be in the study, measured in years. Note that age is a continuous concept, but the measure used here (number of full years alive) is a common discrete approach to measurement. Age, of course, has a meaningful zero point, so this can be thought of as a ratio variable; a child who is 6 is half as old as one who is 12. We can tabulate the observed values, since there are only a dozen or so.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(age_child) <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(age_child) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> age_child   n percent
          3 110    7.2%
@@ -969,8 +975,9 @@ div.csl-indent {
 </div>
 <p>At the time of initial screening, these children should have been between 3 and 15 years of age, so things look reasonable. Since this is a meaningful quantitative variable, we may be interested in a more descriptive summary.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">select</span>(age_child) <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age_child) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   age_child     
  Min.   : 3.000  
@@ -989,46 +996,48 @@ div.csl-indent {
 <li><code>3rd Qu.</code> = the third quartile (75th percentile) of the ages was 12</li>
 <li><code>Max.</code> = the maximum, or oldest age at the examination was 15 years.</li>
 </ul>
-<p>We could get the standard deviation and a count of missing and non-missing observations with <code>favstats</code> from the <code>mosaic</code> package.</p>
+<p>We could get the standard deviation and a count of missing and non-missing observations with <code>favstats</code> from the <code>mosaic</code> package, among many other options (see <a href="03-penguins2.html"><span>Chapter&nbsp;3</span></a> and @#sec-summ_quant for examples.)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> age_child, <span class="at">data =</span> nnyfs) <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'mosaic':
   method                           from   
   fortify.SpatialPolygonsDataFrame ggplot2</code></pre>
 </div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">Q1</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">Q3</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">missing</th>
-</tr>
-</thead>
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> Q1 </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> Q3 </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> missing </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">3.7</td>
-<td style="text-align: right;">1518</td>
-<td style="text-align: right;">0</td>
-</tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 3.7 </td>
+   <td style="text-align:right;"> 1518 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 </section>
@@ -1038,39 +1047,41 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(race_eth) <span class="sc">|&gt;</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;">race_eth</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: left;">percent</th>
-</tr>
-</thead>
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> race_eth </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:left;"> percent </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">1_Hispanic</td>
-<td style="text-align: right;">450</td>
-<td style="text-align: left;">29.6%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2_White Non-Hispanic</td>
-<td style="text-align: right;">610</td>
-<td style="text-align: left;">40.2%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3_Black Non-Hispanic</td>
-<td style="text-align: right;">338</td>
-<td style="text-align: left;">22.3%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4_Other Race/Ethnicity</td>
-<td style="text-align: right;">120</td>
-<td style="text-align: left;">7.9%</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> 1_Hispanic </td>
+   <td style="text-align:right;"> 450 </td>
+   <td style="text-align:left;"> 29.6% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2_White Non-Hispanic </td>
+   <td style="text-align:right;"> 610 </td>
+   <td style="text-align:left;"> 40.2% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 3_Black Non-Hispanic </td>
+   <td style="text-align:right;"> 338 </td>
+   <td style="text-align:left;"> 22.3% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4_Other Race/Ethnicity </td>
+   <td style="text-align:right;"> 120 </td>
+   <td style="text-align:left;"> 7.9% </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 <p>And now, we get the idea of looking at whether our numerical summaries of the children’s ages varies by their race/ethnicity…</p>
@@ -1089,7 +1100,9 @@ div.csl-indent {
 <h3 data-number="10.4.5" class="anchored" data-anchor-id="income_pov"><span class="header-section-number">10.4.5</span> <code>income_pov</code></h3>
 <p>Skipping down a bit, let’s look at the family income as a multiple of the poverty level. Here’s the summary.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">select</span>(income_pov) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(income_pov) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   income_pov   
  Min.   :0.000  
@@ -1109,93 +1122,84 @@ div.csl-indent {
 <pre><code>Warning: Removed 89 rows containing non-finite values (stat_bin).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_inc2-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The histogram shows us that the values are truncated at 5, so that children whose actual family income is above 5 times the poverty line are listed as 5. We also see a message reminding us that some of the data are missing for this variable.</p>
 <p>Is there a relationship between <code>income_pov</code> and <code>race_eth</code> in these data?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(income_pov <span class="sc">~</span> race_eth, <span class="at">data =</span> nnyfs) <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 34%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 10%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 7%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">race_eth</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">Q1</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">Q3</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">missing</th>
-</tr>
-</thead>
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> race_eth </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> Q1 </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> Q3 </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> missing </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">1_Hispanic</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">1.7</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">1.3</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">409</td>
-<td style="text-align: right;">41</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2_White Non-Hispanic</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.5</td>
-<td style="text-align: right;">3.0</td>
-<td style="text-align: right;">4.5</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">2.9</td>
-<td style="text-align: right;">1.6</td>
-<td style="text-align: right;">588</td>
-<td style="text-align: right;">22</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3_Black Non-Hispanic</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.8</td>
-<td style="text-align: right;">1.6</td>
-<td style="text-align: right;">2.8</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">2.0</td>
-<td style="text-align: right;">1.5</td>
-<td style="text-align: right;">328</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4_Other Race/Ethnicity</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.2</td>
-<td style="text-align: right;">2.7</td>
-<td style="text-align: right;">4.6</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">2.8</td>
-<td style="text-align: right;">1.7</td>
-<td style="text-align: right;">104</td>
-<td style="text-align: right;">16</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> 1_Hispanic </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.6 </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 1.3 </td>
+   <td style="text-align:right;"> 1.1 </td>
+   <td style="text-align:right;"> 409 </td>
+   <td style="text-align:right;"> 41 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2_White Non-Hispanic </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1.5 </td>
+   <td style="text-align:right;"> 3.0 </td>
+   <td style="text-align:right;"> 4.5 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.9 </td>
+   <td style="text-align:right;"> 1.6 </td>
+   <td style="text-align:right;"> 588 </td>
+   <td style="text-align:right;"> 22 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 3_Black Non-Hispanic </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.8 </td>
+   <td style="text-align:right;"> 1.6 </td>
+   <td style="text-align:right;"> 2.8 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.0 </td>
+   <td style="text-align:right;"> 1.5 </td>
+   <td style="text-align:right;"> 328 </td>
+   <td style="text-align:right;"> 10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4_Other Race/Ethnicity </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1.2 </td>
+   <td style="text-align:right;"> 2.7 </td>
+   <td style="text-align:right;"> 4.6 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2.8 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 104 </td>
+   <td style="text-align:right;"> 16 </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 <p>This deserves a picture. Let’s try a boxplot.</p>
@@ -1206,15 +1210,18 @@ div.csl-indent {
 <pre><code>Warning: Removed 89 rows containing non-finite values (stat_boxplot).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_inc4-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>We’re reminded here that several of our subjects are not included in this plot, since they have some missing information.</p>
 </section>
 <section id="bmi" class="level3" data-number="10.4.6">
 <h3 data-number="10.4.6" class="anchored" data-anchor-id="bmi"><span class="header-section-number">10.4.6</span> <code>bmi</code></h3>
 <p>Moving into the body measurement data, <code>bmi</code> is the body-mass index of the child. The BMI is a person’s weight in kilograms divided by his or her height in meters squared. Symbolically, BMI = weight in kg / (height in m)<sup>2</sup>. This is a continuous concept, measured to as many decimal places as you like, and it has a meaningful zero point, so it’s a ratio variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">select</span>(bmi) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(bmi) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      bmi       
  Min.   :11.90  
@@ -1228,9 +1235,10 @@ div.csl-indent {
 </div>
 <p>Why would a table of these BMI values not be a great idea, for these data? A hint is that R represents this variable as <code>num</code> or numeric in its depiction of the data structure, and this implies that R has some decimal values stored. Here, I’ll use the <code>head()</code> function and the <code>tail()</code> function to show the first few and the last few values of what would prove to be a very long table of <code>bmi</code> values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(bmi) <span class="sc">|&gt;</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(bmi) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  bmi n percent valid_percent
  11.9 1    0.1%          0.1%
@@ -1242,9 +1250,10 @@ div.csl-indent {
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(bmi) <span class="sc">|&gt;</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tail</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(bmi) <span class="sc">|&gt;</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tail</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  bmi n percent valid_percent
  42.8 1    0.1%          0.1%
@@ -1260,7 +1269,9 @@ div.csl-indent {
 <h3 data-number="10.4.7" class="anchored" data-anchor-id="bmi_cat"><span class="header-section-number">10.4.7</span> <code>bmi_cat</code></h3>
 <p>Next I’ll look at the <code>bmi_cat</code> information. This is a four-category ordinal variable, which divides the sample according to BMI into four groups. The BMI categories use sex-specific 2000 BMI-for-age (in months) growth charts prepared by the Centers for Disease Control for the US. We can get the breakdown from a table of the variable’s values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(bmi_cat) <span class="sc">|&gt;</span> <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(bmi_cat) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       bmi_cat   n percent valid_percent
  1_Underweight  41    2.7%          2.7%
@@ -1281,86 +1292,77 @@ div.csl-indent {
 <p>Note that the <code>bmi_cat</code> data don’t completely separate out the raw <code>bmi</code> data, because the calculation of percentiles requires different tables for each combination of <code>age</code> and <code>sex</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(bmi <span class="sc">~</span> bmi_cat, <span class="at">data =</span> nnyfs) <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 11%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">bmi_cat</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">Q1</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">Q3</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">missing</th>
-</tr>
-</thead>
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> bmi_cat </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> Q1 </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> Q3 </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> missing </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">1_Underweight</td>
-<td style="text-align: right;">11.9</td>
-<td style="text-align: right;">13.4</td>
-<td style="text-align: right;">13.7</td>
-<td style="text-align: right;">15.0</td>
-<td style="text-align: right;">16.5</td>
-<td style="text-align: right;">14.1</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2_Normal</td>
-<td style="text-align: right;">13.5</td>
-<td style="text-align: right;">15.4</td>
-<td style="text-align: right;">16.5</td>
-<td style="text-align: right;">18.7</td>
-<td style="text-align: right;">24.0</td>
-<td style="text-align: right;">17.2</td>
-<td style="text-align: right;">2.3</td>
-<td style="text-align: right;">920</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3_Overweight</td>
-<td style="text-align: right;">16.9</td>
-<td style="text-align: right;">18.3</td>
-<td style="text-align: right;">21.4</td>
-<td style="text-align: right;">23.4</td>
-<td style="text-align: right;">27.9</td>
-<td style="text-align: right;">21.2</td>
-<td style="text-align: right;">2.9</td>
-<td style="text-align: right;">258</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4_Obese</td>
-<td style="text-align: right;">17.9</td>
-<td style="text-align: right;">22.3</td>
-<td style="text-align: right;">26.2</td>
-<td style="text-align: right;">30.2</td>
-<td style="text-align: right;">48.3</td>
-<td style="text-align: right;">26.7</td>
-<td style="text-align: right;">5.7</td>
-<td style="text-align: right;">295</td>
-<td style="text-align: right;">0</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> 1_Underweight </td>
+   <td style="text-align:right;"> 11.9 </td>
+   <td style="text-align:right;"> 13.4 </td>
+   <td style="text-align:right;"> 13.7 </td>
+   <td style="text-align:right;"> 15.0 </td>
+   <td style="text-align:right;"> 16.5 </td>
+   <td style="text-align:right;"> 14.1 </td>
+   <td style="text-align:right;"> 1.1 </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2_Normal </td>
+   <td style="text-align:right;"> 13.5 </td>
+   <td style="text-align:right;"> 15.4 </td>
+   <td style="text-align:right;"> 16.5 </td>
+   <td style="text-align:right;"> 18.7 </td>
+   <td style="text-align:right;"> 24.0 </td>
+   <td style="text-align:right;"> 17.2 </td>
+   <td style="text-align:right;"> 2.3 </td>
+   <td style="text-align:right;"> 920 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 3_Overweight </td>
+   <td style="text-align:right;"> 16.9 </td>
+   <td style="text-align:right;"> 18.3 </td>
+   <td style="text-align:right;"> 21.4 </td>
+   <td style="text-align:right;"> 23.4 </td>
+   <td style="text-align:right;"> 27.9 </td>
+   <td style="text-align:right;"> 21.2 </td>
+   <td style="text-align:right;"> 2.9 </td>
+   <td style="text-align:right;"> 258 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4_Obese </td>
+   <td style="text-align:right;"> 17.9 </td>
+   <td style="text-align:right;"> 22.3 </td>
+   <td style="text-align:right;"> 26.2 </td>
+   <td style="text-align:right;"> 30.2 </td>
+   <td style="text-align:right;"> 48.3 </td>
+   <td style="text-align:right;"> 26.7 </td>
+   <td style="text-align:right;"> 5.7 </td>
+   <td style="text-align:right;"> 295 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 </section>
@@ -1382,7 +1384,7 @@ div.csl-indent {
 <pre><code>Warning: Removed 6 rows containing non-finite values (stat_bin).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_waist2-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1404,7 +1406,7 @@ div.csl-indent {
 <pre><code>Warning: Removed 21 rows containing non-finite values (stat_bin).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_tri2-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>OK. We’ve seen a few variables, and we’ll move on now to look more seriously at the data.</p>
@@ -1475,7 +1477,7 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> energy)) <span class="sc">+</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">100</span>, <span class="at">col =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist1-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <section id="freedman-diaconis-rule-to-select-bin-width" class="level3" data-number="10.7.1">
@@ -1497,7 +1499,7 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> energy)) <span class="sc">+</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth=</span>bw, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">fill =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist2-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This is a nice start, but it is by no means a finished graph.</p>
@@ -1508,7 +1510,7 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Body-Mass Index Results in the nnyfs data"</span>,</span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Energy Consumed (kcal)"</span>, <span class="at">y =</span> <span class="st">"# of Subjects"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist3-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1523,29 +1525,30 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> diet_yesterday)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist4-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We don’t really need the legend here, and perhaps we should restrict the plot to participants who responded to the <code>diet_yesterday</code> question, and put in a title and better axis labels?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(energy), <span class="sc">!</span><span class="fu">is.na</span>(diet_yesterday)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> ., <span class="fu">aes</span>(<span class="at">x =</span> energy, <span class="at">fill =</span> diet_yesterday)) <span class="sc">+</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> diet_yesterday) <span class="sc">+</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Energy consumed, in kcal"</span>,</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Energy Consumption and How Typical Was Yesterday's Eating"</span>,</span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"NHANES National Youth Fitness Survey, no survey weighting"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(energy), <span class="sc">!</span><span class="fu">is.na</span>(diet_yesterday))</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs_temp, <span class="fu">aes</span>(<span class="at">x =</span> energy, <span class="at">fill =</span> diet_yesterday)) <span class="sc">+</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> diet_yesterday) <span class="sc">+</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Energy consumed, in kcal"</span>,</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Energy Consumption and How Typical Was Yesterday's Eating"</span>,</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"NHANES National Youth Fitness Survey, no survey weighting"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_hist5-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Note the use of the <code>%&gt;%</code> pipe here. I need to write more about this.</p>
 </section>
 </section>
-<section id="the-frequency-polygon" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="the-frequency-polygon"><span class="header-section-number">10.8</span> The Frequency Polygon</h2>
+<section id="the-frequency-polygon-with-rug-plot" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="the-frequency-polygon-with-rug-plot"><span class="header-section-number">10.8</span> The Frequency Polygon with Rug Plot</h2>
 <p>As we’ve seen, we can also plot the distribution of a single continuous variable using the <code>freqpoly</code> geom. We can also add a <em>rug plot</em>, which places a small vertical line on the horizontal axis everywhere where an observation appears in the data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> energy)) <span class="sc">+</span></span>
@@ -1554,7 +1557,7 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Frequency Polygon of nnyfs Energy data"</span>,</span>
 <span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Energy (kcal)"</span>, <span class="at">y =</span> <span class="st">"# of Patients"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_freqpoly-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1567,7 +1570,7 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Density of nnyfs Energy data"</span>,</span>
 <span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Energy (kcal)"</span>, <span class="at">y =</span> <span class="st">"Probability Density function"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_density-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So, what’s a density function?</p>
@@ -1592,7 +1595,7 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_box1-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1623,14 +1626,14 @@ h = \frac{2*IQR}{n^{1/3}}
 </section>
 <section id="a-simple-comparison-boxplot" class="level2" data-number="10.11">
 <h2 data-number="10.11" class="anchored" data-anchor-id="a-simple-comparison-boxplot"><span class="header-section-number">10.11</span> A Simple Comparison Boxplot</h2>
-<p>Boxplots are most often used for comparison. We can build boxplots using <code>ggplot2</code>, as well, and we’ll discuss that in detail later. For now, here’s a boxplot built to compare the <code>energy</code> results by the subject’s race/ethnicity.</p>
+<p>Boxplots are most often used for comparison, as we’ve seen (for example) in <a href="03-penguins2.html"><span>Chapter&nbsp;3</span></a> and @#sec-summ_quant. We can build boxplots using <code>ggplot2</code>, as well, and we’ll discuss that in detail later. For now, here’s a boxplot built to compare the <code>energy</code> results by the subject’s race/ethnicity.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(race_eth), <span class="at">y =</span> energy, <span class="at">fill=</span><span class="fu">factor</span>(race_eth))) <span class="sc">+</span></span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Energy consumed (kcal)"</span>, <span class="at">x =</span> <span class="st">"Race/Ethnicity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_box2-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Let’s look at the comparison of observed <code>energy</code> levels across the five categories in our <code>phys_health</code> variable, now making use of the <code>viridis</code> color scheme.</p>
@@ -1640,7 +1643,7 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span> </span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Energy by Self-Reported Physical Health, in nnyfs data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_box3-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>As a graph, that’s not bad, but what if we want to improve it further?</p>
@@ -1655,7 +1658,7 @@ h = \frac{2*IQR}{n^{1/3}}
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"NHANES National Youth Fitness Survey, unweighted"</span>, </span>
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_nnyfs_en_box4-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1688,7 +1691,7 @@ X1 18.54</code></pre>
 </ul>
 <section id="the-trimmed-mean" class="level3" data-number="10.12.1">
 <h3 data-number="10.12.1" class="anchored" data-anchor-id="the-trimmed-mean"><span class="header-section-number">10.12.1</span> The Trimmed Mean</h3>
-<p>The <strong>trimmed mean</strong> trim value in R indicates proportion of observations to be trimmed from each end of the outcome distribution before the mean is calculated. The <code>trimmed</code> value provided by the <code>psych::describe</code> package describes what this particular package calls a 20% trimmed mean (bottom and top 10% of <code>energy</code> values are removed before taking the mean - it’s the mean of the middle 80% of the data.) I might call that a 10% trimmed mean in some settings, but that’s just me.</p>
+<p>The <strong>trimmed mean</strong> trim value in R indicates proportion of observations to be trimmed from each end of the outcome distribution before the mean is calculated. The <code>trimmed</code> value provided by the <code>psych::describe</code> package describes what this particular package calls a 20% trimmed mean (bottom and top 10% of <code>energy</code> values are removed before taking the mean - it’s the mean of the middle 80% of the data.) I might call that a 80% trimmed mean sometimes, but that’s just me.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(nnyfs<span class="sc">$</span>energy, <span class="at">trim=</span>.<span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1707,8 +1710,8 @@ X1 18.54</code></pre>
 </div>
 </section>
 </section>
-<section id="assessing-skew" class="level2" data-number="10.13">
-<h2 data-number="10.13" class="anchored" data-anchor-id="assessing-skew"><span class="header-section-number">10.13</span> Assessing Skew</h2>
+<section id="sec-skew" class="level2" data-number="10.13">
+<h2 data-number="10.13" class="anchored" data-anchor-id="sec-skew"><span class="header-section-number">10.13</span> Assessing Skew</h2>
 <p>A relatively common idea is to assess <strong>skewness</strong>, several measures of which are available. Many models assume a Normal distribution, where, among other things, the data are symmetric around the mean.</p>
 <p>Skewness measures asymmetry in the distribution, where left skew (mean &lt; median) is indicated by negative skewness values, while right skew (mean &gt; median) is indicated by positive values. The skew value will be near zero for data that follow a symmetric distribution.</p>
 <section id="non-parametric-skewness" class="level3" data-number="10.13.1">
@@ -1907,7 +1910,7 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <span id="cb82-39"><a href="#cb82-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb82-40"><a href="#cb82-40" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_3-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can see that there is considerable overlap in these distributions, regardless of what we’re measuring.</p>
@@ -1955,104 +1958,95 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <p>Or, we could use something like <code>favstats</code> from the <code>mosaic</code> package, which automatically accounts for missing data, and omits it when calculating summary statistics within each group.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(waist <span class="sc">~</span> bmi_cat, <span class="at">data =</span> nnyfs) <span class="sc">|&gt;</span></span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 10%">
-<col style="width: 7%">
-<col style="width: 9%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 6%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">bmi_cat</th>
-<th style="text-align: right;">min</th>
-<th style="text-align: right;">Q1</th>
-<th style="text-align: right;">median</th>
-<th style="text-align: right;">Q3</th>
-<th style="text-align: right;">max</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">missing</th>
-</tr>
-</thead>
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> bmi_cat </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> Q1 </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> Q3 </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> missing </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">1_Underweight</td>
-<td style="text-align: right;">42.5</td>
-<td style="text-align: right;">49.3</td>
-<td style="text-align: right;">54.5</td>
-<td style="text-align: right;">62.4</td>
-<td style="text-align: right;">68.5</td>
-<td style="text-align: right;">55.2</td>
-<td style="text-align: right;">7.6</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2_Normal</td>
-<td style="text-align: right;">44.1</td>
-<td style="text-align: right;">53.9</td>
-<td style="text-align: right;">59.5</td>
-<td style="text-align: right;">68.4</td>
-<td style="text-align: right;">89.2</td>
-<td style="text-align: right;">61.2</td>
-<td style="text-align: right;">9.4</td>
-<td style="text-align: right;">917</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3_Overweight</td>
-<td style="text-align: right;">49.3</td>
-<td style="text-align: right;">62.3</td>
-<td style="text-align: right;">74.0</td>
-<td style="text-align: right;">81.2</td>
-<td style="text-align: right;">105.3</td>
-<td style="text-align: right;">72.3</td>
-<td style="text-align: right;">11.9</td>
-<td style="text-align: right;">258</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4_Obese</td>
-<td style="text-align: right;">52.1</td>
-<td style="text-align: right;">72.7</td>
-<td style="text-align: right;">86.8</td>
-<td style="text-align: right;">96.8</td>
-<td style="text-align: right;">144.7</td>
-<td style="text-align: right;">85.6</td>
-<td style="text-align: right;">17.1</td>
-<td style="text-align: right;">294</td>
-<td style="text-align: right;">1</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> 1_Underweight </td>
+   <td style="text-align:right;"> 42.5 </td>
+   <td style="text-align:right;"> 49.3 </td>
+   <td style="text-align:right;"> 54.5 </td>
+   <td style="text-align:right;"> 62.4 </td>
+   <td style="text-align:right;"> 68.5 </td>
+   <td style="text-align:right;"> 55.2 </td>
+   <td style="text-align:right;"> 7.6 </td>
+   <td style="text-align:right;"> 41 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2_Normal </td>
+   <td style="text-align:right;"> 44.1 </td>
+   <td style="text-align:right;"> 53.9 </td>
+   <td style="text-align:right;"> 59.5 </td>
+   <td style="text-align:right;"> 68.4 </td>
+   <td style="text-align:right;"> 89.2 </td>
+   <td style="text-align:right;"> 61.2 </td>
+   <td style="text-align:right;"> 9.4 </td>
+   <td style="text-align:right;"> 917 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 3_Overweight </td>
+   <td style="text-align:right;"> 49.3 </td>
+   <td style="text-align:right;"> 62.3 </td>
+   <td style="text-align:right;"> 74.0 </td>
+   <td style="text-align:right;"> 81.2 </td>
+   <td style="text-align:right;"> 105.3 </td>
+   <td style="text-align:right;"> 72.3 </td>
+   <td style="text-align:right;"> 11.9 </td>
+   <td style="text-align:right;"> 258 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4_Obese </td>
+   <td style="text-align:right;"> 52.1 </td>
+   <td style="text-align:right;"> 72.7 </td>
+   <td style="text-align:right;"> 86.8 </td>
+   <td style="text-align:right;"> 96.8 </td>
+   <td style="text-align:right;"> 144.7 </td>
+   <td style="text-align:right;"> 85.6 </td>
+   <td style="text-align:right;"> 17.1 </td>
+   <td style="text-align:right;"> 294 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 <p>While patients in the heavier groups generally had higher waist circumferences, the standard deviations suggest there may be some meaningful overlap. Let’s draw the picture, in this case a comparison boxplot accompanying a violin plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span></span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, waist)) <span class="sc">%&gt;%</span></span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> waist)) <span class="sc">+</span></span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
-<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Waist Circumference by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp2 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, waist))</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp2, <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> waist)) <span class="sc">+</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span> </span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Waist Circumference by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_7-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Note the use of the %&gt;% pipe here. I need to write more about this.</p>
 <p>The data transformation with dplyr cheat sheet found under the Help menu in RStudio is a great resource. And, of course, for more details, visit <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span>.</p>
 </section>
 <section id="boxplots-to-relate-an-outcome-to-a-categorical-predictor" class="level2" data-number="10.18">
@@ -2068,24 +2062,25 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <pre><code>Warning: Removed 21 rows containing non-finite values (stat_boxplot).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_8-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Again, we probably want to omit those missing values (both in <code>bmi_cat</code> and <code>triceps_skinfold</code>) and also eliminate the repetitive legend (guides) on the right.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) <span class="sc">%&gt;%</span></span>
-<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> triceps_skinfold,</span>
-<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
-<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI Category"</span>, <span class="at">y =</span> <span class="st">"Triceps Skinfold in mm"</span>,</span>
-<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Triceps Skinfold increases with BMI category"</span>,</span>
-<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"NNYFS children"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) </span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, </span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI Category"</span>, <span class="at">y =</span> <span class="st">"Triceps Skinfold in mm"</span>,</span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Triceps Skinfold increases with BMI category"</span>,</span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"NNYFS children"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_9-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>As always, the boxplot shows the five-number summary (minimum, 25th percentile, median, 75th percentile and maximum) in addition to highlighting candidate outliers.</p>
@@ -2093,21 +2088,22 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <h3 data-number="10.18.1" class="anchored" data-anchor-id="augmenting-the-boxplot-with-the-sample-mean"><span class="header-section-number">10.18.1</span> Augmenting the Boxplot with the Sample Mean</h3>
 <p>Often, we want to augment such a plot, perhaps by adding a little diamond to show the <strong>sample mean</strong> within each category, so as to highlight skew (in terms of whether the mean is meaningfully different from the median.)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) <span class="sc">%&gt;%</span></span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> triceps_skinfold,</span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
-<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, </span>
-<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape=</span><span class="dv">23</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">fill=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb92-11"><a href="#cb92-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI Category"</span>, <span class="at">y =</span> <span class="st">"Triceps Skinfold in mm"</span>,</span>
-<span id="cb92-12"><a href="#cb92-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Triceps Skinfold increases with BMI category"</span>,</span>
-<span id="cb92-13"><a href="#cb92-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"NNYFS children"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) </span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, </span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun=</span><span class="st">"mean"</span>, <span class="at">geom=</span><span class="st">"point"</span>, </span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape=</span><span class="dv">23</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">fill=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb92-11"><a href="#cb92-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb92-12"><a href="#cb92-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI Category"</span>, <span class="at">y =</span> <span class="st">"Triceps Skinfold in mm"</span>,</span>
+<span id="cb92-13"><a href="#cb92-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Triceps Skinfold increases with BMI category"</span>,</span>
+<span id="cb92-14"><a href="#cb92-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"NNYFS children"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_10-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2116,24 +2112,24 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <h2 data-number="10.19" class="anchored" data-anchor-id="building-a-violin-plot"><span class="header-section-number">10.19</span> Building a Violin Plot</h2>
 <p>There are a number of other plots which compare distributions of data sets. An interesting one is called a <strong>violin plot</strong>. A violin plot is a kernel density estimate, mirrored to form a symmetrical shape.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span></span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(triceps_skinfold, bmi_cat)) <span class="sc">%&gt;%</span></span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>bmi_cat, <span class="at">y=</span>triceps_skinfold, </span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span> </span>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) </span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, <span class="fu">aes</span>(<span class="at">x=</span>bmi_cat, <span class="at">y=</span>triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span> </span>
 <span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">trim=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
 <span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_11-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Traditionally, these plots are shown with overlaid boxplots and a white dot at the median, like this example, now looking at waist circumference again.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span></span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(waist, bmi_cat)) <span class="sc">%&gt;%</span></span>
-<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> waist, </span>
-<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span> </span>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp2 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, waist))</span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp2, <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> waist, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span> </span>
 <span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">trim=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span>.<span class="dv">1</span>, <span class="at">outlier.colour=</span><span class="cn">NA</span>, </span>
 <span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"white"</span>,<span class="dv">2</span>), <span class="fu">rep</span>(<span class="st">"black"</span>,<span class="dv">2</span>))) <span class="sc">+</span></span>
@@ -2143,60 +2139,63 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <span id="cb94-11"><a href="#cb94-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
 <span id="cb94-12"><a href="#cb94-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Waist Circumference by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_12-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <section id="adding-notches-to-a-boxplot" class="level3" data-number="10.19.1">
 <h3 data-number="10.19.1" class="anchored" data-anchor-id="adding-notches-to-a-boxplot"><span class="header-section-number">10.19.1</span> Adding Notches to a Boxplot</h3>
 <p><strong>Notches</strong> are used in boxplots to help visually assess whether the medians of the distributions across the various groups actually differ to a statistically detectable extent. Think of them as confidence regions around the medians. If the notches do not overlap, as in this situation, this provides some evidence that the medians in the populations represented by these samples may be different.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) <span class="sc">%&gt;%</span></span>
-<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> triceps_skinfold)) <span class="sc">+</span></span>
-<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat), <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI Category"</span>, <span class="at">y =</span> <span class="st">"Triceps Skinfold in mm"</span>,</span>
-<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Triceps Skinfold increases with BMI category"</span>,</span>
-<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"NNYFS children"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) </span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, <span class="fu">aes</span>(<span class="at">x =</span> bmi_cat, <span class="at">y =</span> triceps_skinfold)) <span class="sc">+</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat), <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI Category"</span>, <span class="at">y =</span> <span class="st">"Triceps Skinfold in mm"</span>,</span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Triceps Skinfold increases with BMI category"</span>,</span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"NNYFS children"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_13-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>There is no overlap between the notches for each of the four categories, so we might reasonably conclude that the true median triceps skinfold values across the four categories are statistically significantly different.</p>
 <p>For an example where the notches do overlap, consider the comparison of plank times by BMI category.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, plank_time)) <span class="sc">%&gt;%</span></span>
-<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>bmi_cat, <span class="at">y=</span>plank_time)) <span class="sc">+</span></span>
-<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
-<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">notch=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
-<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plank Times by BMI category"</span>, </span>
-<span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Plank Time (in seconds)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp4 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, plank_time)) </span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp4, <span class="fu">aes</span>(<span class="at">x=</span>bmi_cat, <span class="at">y=</span>plank_time)) <span class="sc">+</span></span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">notch=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plank Times by BMI category"</span>, </span>
+<span id="cb96-11"><a href="#cb96-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Plank Time (in seconds)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_14-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The overlap in the notches (for instance between Underweight and Normal) suggests that the median plank times in the population of interest don’t necessarily differ in a meaningful way by BMI category, other than perhaps the Obese group which may have a shorter time.</p>
 <p>These data are somewhat right skewed. Would a logarithmic transformation in the plot help us see the patterns more clearly?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, plank_time)) <span class="sc">%&gt;%</span></span>
-<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>bmi_cat, <span class="at">y =</span> <span class="fu">log</span>(plank_time))) <span class="sc">+</span></span>
-<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat), <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">notch=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
-<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"log(Plank Times) by BMI category"</span>, </span>
-<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Natural Log of Plank Time"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp4 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, plank_time)) </span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp4, <span class="fu">aes</span>(<span class="at">x=</span>bmi_cat, <span class="at">y =</span> <span class="fu">log</span>(plank_time))) <span class="sc">+</span></span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bmi_cat), <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">notch=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"log(Plank Times) by BMI category"</span>, </span>
+<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Natural Log of Plank Time"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_15-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2205,16 +2204,17 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <h2 data-number="10.20" class="anchored" data-anchor-id="using-multiple-histograms-to-make-comparisons"><span class="header-section-number">10.20</span> Using Multiple Histograms to Make Comparisons</h2>
 <p>We can make an array of histograms to describe multiple groups of data, using <code>ggplot2</code> and the notion of <strong>faceting</strong> our plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(triceps_skinfold, bmi_cat)) <span class="sc">%&gt;%</span></span>
-<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
-<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
-<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> bmi_cat) <span class="sc">+</span></span>
-<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) </span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> bmi_cat) <span class="sc">+</span></span>
+<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb98-9"><a href="#cb98-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_16-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2222,39 +2222,42 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <h2 data-number="10.21" class="anchored" data-anchor-id="using-multiple-density-plots-to-make-comparisons"><span class="header-section-number">10.21</span> Using Multiple Density Plots to Make Comparisons</h2>
 <p>Or, we can make a series of density plots to describe multiple groups of data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(triceps_skinfold, bmi_cat)) <span class="sc">%&gt;%</span></span>
-<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
-<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
-<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> bmi_cat) <span class="sc">+</span></span>
-<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) </span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span> </span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> bmi_cat) <span class="sc">+</span></span>
+<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_17-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Or, we can plot all of the densities on top of each other with semi-transparent fills.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(triceps_skinfold, bmi_cat)) <span class="sc">%&gt;%</span></span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span> </span>
-<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span> </span>
-<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) </span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> bmi_cat)) <span class="sc">+</span></span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span> </span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This really works better when we are comparing only two groups, like females to males.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(triceps_skinfold, sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by Sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp5 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(sex, triceps_skinfold)) </span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp5, <span class="fu">aes</span>(<span class="at">x=</span>triceps_skinfold, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by Sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_19-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2262,59 +2265,63 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <h2 data-number="10.22" class="anchored" data-anchor-id="a-ridgeline-plot"><span class="header-section-number">10.22</span> A Ridgeline Plot</h2>
 <p>Some people don’t like violin plots - for example, see https://simplystatistics.org/2017/07/13/the-joy-of-no-more-violin-plots/. An alternative plot is available as part of the <code>ggridges</code> package. This shows the distribution of several groups simultaneously, especially when you have lots of subgroup categories, and is called a <strong>ridgeline plot</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> </span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(waist, bmi_cat)) <span class="sc">%&gt;%</span></span>
-<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> waist, <span class="at">y =</span> bmi_cat, <span class="at">height =</span> ..density..)) <span class="sc">+</span></span>
-<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
-<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
-<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ridgeline Plot of Waist Circumference by BMI category (nnyfs)"</span>,</span>
-<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Waist Circumference"</span>, <span class="at">y =</span> <span class="st">"BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp6 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(waist, bmi_cat)) </span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp6, <span class="fu">aes</span>(<span class="at">x =</span> waist, <span class="at">y =</span> bmi_cat, <span class="at">height =</span> ..density..)) <span class="sc">+</span></span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ridgeline Plot: Waist Circumference by BMI category (nnyfs)"</span>,</span>
+<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Waist Circumference"</span>, <span class="at">y =</span> <span class="st">"BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Picking joint bandwidth of 3.47</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_20-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>And here’s a ridgeline plot for the triceps skinfolds. We’ll start by sorting the subgroups by the median value of our outcome (triceps skinfold) in this case, though it turns out not to matter. We’ll also add some color.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span></span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) <span class="sc">|&gt;</span></span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">bmi_cat =</span> <span class="fu">fct_reorder</span>(bmi_cat,</span>
-<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>                                 triceps_skinfold, </span>
-<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">.fun =</span> median)) <span class="sc">%&gt;%</span></span>
-<span id="cb104-6"><a href="#cb104-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> triceps_skinfold, <span class="at">y =</span> bmi_cat, </span>
-<span id="cb104-7"><a href="#cb104-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> bmi_cat, <span class="at">height =</span> ..density..)) <span class="sc">+</span></span>
-<span id="cb104-8"><a href="#cb104-8" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
-<span id="cb104-9"><a href="#cb104-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"magma"</span>) <span class="sc">+</span></span>
-<span id="cb104-10"><a href="#cb104-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb104-11"><a href="#cb104-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ridgeline Plot of Triceps Skinfold by BMI Category (nnyfs)"</span>,</span>
-<span id="cb104-12"><a href="#cb104-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Triceps Skinfold"</span>, <span class="at">y =</span> <span class="st">"BMI Category"</span>) <span class="sc">+</span></span>
-<span id="cb104-13"><a href="#cb104-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp3 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, triceps_skinfold)) <span class="sc">|&gt;</span></span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi_cat =</span> <span class="fu">fct_reorder</span>(bmi_cat,</span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>                               triceps_skinfold, </span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">.fun =</span> median))</span>
+<span id="cb104-6"><a href="#cb104-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-7"><a href="#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp3, <span class="fu">aes</span>(<span class="at">x =</span> triceps_skinfold, <span class="at">y =</span> bmi_cat, </span>
+<span id="cb104-8"><a href="#cb104-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> bmi_cat, <span class="at">height =</span> ..density..)) <span class="sc">+</span></span>
+<span id="cb104-9"><a href="#cb104-9" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb104-10"><a href="#cb104-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"magma"</span>) <span class="sc">+</span></span>
+<span id="cb104-11"><a href="#cb104-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb104-12"><a href="#cb104-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ridgeline Plot of Triceps Skinfold by BMI Category (nnyfs)"</span>,</span>
+<span id="cb104-13"><a href="#cb104-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Triceps Skinfold"</span>, <span class="at">y =</span> <span class="st">"BMI Category"</span>) <span class="sc">+</span></span>
+<span id="cb104-14"><a href="#cb104-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Picking joint bandwidth of 1.37</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_21-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>For one last example, we’ll look at age by BMI category, so that sorting the BMI subgroups by the median matters, and we’ll try an alternate color scheme, and a theme specially designed for the ridgeline plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span></span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, age_child)) <span class="sc">|&gt;</span></span>
-<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">bmi_cat =</span> <span class="fu">reorder</span>(bmi_cat, age_child, median)) <span class="sc">%&gt;%</span></span>
-<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age_child, <span class="at">y =</span> bmi_cat, <span class="at">fill =</span> bmi_cat, <span class="at">height =</span> ..density..)) <span class="sc">+</span></span>
-<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
-<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="sc">+</span></span>
-<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ridgeline Plot of Age at Exam by BMI category (nnyfs)"</span>,</span>
-<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Age of Child at Exam"</span>, <span class="at">y =</span> <span class="st">"BMI Category"</span>) <span class="sc">+</span></span>
-<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">theme_ridges</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp7 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span> </span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(bmi_cat, age_child)) <span class="sc">|&gt;</span></span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi_cat =</span> <span class="fu">reorder</span>(bmi_cat, age_child, median))</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nnyfs_temp7, <span class="fu">aes</span>(<span class="at">x =</span> age_child, <span class="at">y =</span> bmi_cat, </span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fill =</span> bmi_cat, <span class="at">height =</span> ..density..)) <span class="sc">+</span></span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="sc">+</span></span>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ridgeline Plot of Age at Exam by BMI category (nnyfs)"</span>,</span>
+<span id="cb106-11"><a href="#cb106-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Age of Child at Exam"</span>, <span class="at">y =</span> <span class="st">"BMI Category"</span>) <span class="sc">+</span></span>
+<span id="cb106-12"><a href="#cb106-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_ridges</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Picking joint bandwidth of 1.15</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_22-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2326,6 +2333,10 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <li>If the data are symmetric, report the mean and standard deviation, and possibly the median and IQR as well.</li>
 <li>If there are clear outliers and you are reporting the mean and standard deviation, report them with the outliers present and with the outliers removed. The differences may be revealing. The median and IQR are not likely to be seriously affected by outliers.</li>
 </ul>
+</section>
+<section id="coming-up" class="level2" data-number="10.24">
+<h2 data-number="10.24" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">10.24</span> Coming Up</h2>
+<p>Next, we’ll look at the issue of Normalilty, and in particular how to assess whether a particular batch of data is well-approximated by the Normal distribution.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

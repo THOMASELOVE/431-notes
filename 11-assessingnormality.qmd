@@ -11,9 +11,7 @@ library(tidyverse)
 theme_set(theme_bw())
 ```
 
-We also use the `favstat` function from the `mosaic` package in this chapter, but do not load the whole packages.
-
-
+We also use the `favstat` function from the `mosaic` package in this chapter, but do not load the whole package.
 
 ## Introduction
 
@@ -42,11 +40,12 @@ Again, most data sets do not follow a Normal distribution. We will occasionally 
 
 For the energy data we have been studying, here again are some summary statistics...
 
-```{r c11_readrds}
+```{r}
 nnyfs <- read_rds("data/nnyfs.Rds")
 ```
 
-```{r c11_sum1, message=FALSE}
+```{r}
+#| message: FALSE
 mosaic::favstats(nnyfs$energy)
 ```
 
@@ -80,7 +79,7 @@ Most of the time, when we want to understand whether our data are well approxima
 
 One option is to build a histogram with a Normal density function (with the same mean and standard deviation as our data) superimposed. This is one way to help visualize deviations between our data and what might be expected from a Normal distribution.
 
-```{r c11_sum2}
+```{r}
 res <- mosaic::favstats(~ energy, data = nnyfs)
 bin_w <- 50 # specify binwidth
 
@@ -109,7 +108,7 @@ We'll return shortly to the questions:
 
 But first, we'll demonstrate an approach to building a histogram of counts (rather than a probability density) and then superimposing a Normal model.
 
-```{r c11_sum3}
+```{r}
 res <- mosaic::favstats(~ energy, data = nnyfs)
 bin_w <- 50 # specify binwidth
 
@@ -117,7 +116,6 @@ ggplot(nnyfs, aes(x = energy)) +
   geom_histogram(binwidth = bin_w, 
                  fill = "papayawhip", 
                  col = "navy") +
-  theme_bw() +
   stat_function(
     fun = function(x) dnorm(x, mean = res$mean, 
                             sd = res$sd) * res$n * bin_w,
@@ -134,16 +132,17 @@ ggplot(nnyfs, aes(x = energy)) +
                                           
 Now, suppose we instead look at the `waist` data, remembering to filter the data to the complete cases before plotting. Do these data appear to follow a Normal distribution?
 
-```{r c11_sum4}
+```{r}
 res <- mosaic::favstats(~ waist, data = nnyfs)
 bin_w <- 5 # specify binwidth
 
-nnyfs |> filter(complete.cases(waist)) %>%
-    ggplot(., aes(x = waist)) +
+nnyfs_ccw <- nnyfs |> 
+  filter(complete.cases(waist))
+
+ggplot(nnyfs_ccw, aes(x = waist)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "antiquewhite", 
                    col = "navy") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -157,21 +156,23 @@ nnyfs |> filter(complete.cases(waist)) %>%
          x = "Waist Circumference (cm)", y = "# of subjects")
 ```
 
-```{r c11_sum5}
+```{r}
 mosaic::favstats(~ waist, data = nnyfs)
 ```
 
-```{r c11_sum6, echo = FALSE}
-nnyfs_noNA <- nnyfs |> filter(complete.cases(waist))
+If we rerun this after excluding the missing values, only the last column changes.
+
+```{r}
+mosaic::favstats(~ waist, data = nnyfs_ccw)
 ```
-                                          
-The mean is `r round(mean(nnyfs_noNA$waist),2)` and the standard deviation is `r round(sd(nnyfs_noNA$waist),2)` so if the `waist` data really were Normally distributed, we'd expect to see:
 
-- About 68\% of the data in the range (`r round(mean(nnyfs_noNA$waist) - sd(nnyfs_noNA$waist),2)`, `r round(mean(nnyfs_noNA$waist) + sd(nnyfs_noNA$waist),2)`). In fact, `r length(nnyfs_noNA$waist[nnyfs_noNA$waist > mean(nnyfs_noNA$waist) - sd(nnyfs_noNA$waist) & nnyfs_noNA$waist < mean (nnyfs_noNA$waist) + sd(nnyfs_noNA$waist)])` of the `r length(nnyfs_noNA$waist)` Age values are in this range, or `r round(100*length(nnyfs_noNA$waist[nnyfs_noNA$waist > mean(nnyfs_noNA$waist) - sd(nnyfs_noNA$waist) & nnyfs_noNA$waist < mean (nnyfs_noNA$waist) + sd(nnyfs_noNA$waist)])/length(nnyfs_noNA$waist),1)`\%.
+The mean is `r round(mean(nnyfs_ccw$waist),2)` and the standard deviation is `r round(sd(nnyfs_ccw$waist),2)` so if the `waist` data really were Normally distributed, we'd expect to see:
 
-- About 95\% of the data in the range (`r round(mean(nnyfs_noNA$waist) - 2*sd(nnyfs_noNA$waist),2)`, `r round(mean(nnyfs_noNA$waist) + 2*sd(nnyfs_noNA$waist),2)`). In fact, `r length(nnyfs_noNA$waist[nnyfs_noNA$waist > mean(nnyfs_noNA$waist) - 2*sd(nnyfs_noNA$waist) & nnyfs_noNA$waist < mean (nnyfs_noNA$waist) + 2*sd(nnyfs_noNA$waist)])` of the `r length(nnyfs_noNA$waist)` Age values are in this range, or `r round(100*length(nnyfs_noNA$waist[nnyfs_noNA$waist > mean(nnyfs_noNA$waist) - 2*sd(nnyfs_noNA$waist) & nnyfs_noNA$waist < mean (nnyfs_noNA$waist) + 2*sd(nnyfs_noNA$waist)]) / length(nnyfs_noNA$waist),1)`\%.
+- About 68\% of the data in the range (`r round(mean(nnyfs_ccw$waist) - sd(nnyfs_ccw$waist),2)`, `r round(mean(nnyfs_ccw$waist) + sd(nnyfs_ccw$waist),2)`). In fact, `r length(nnyfs_ccw$waist[nnyfs_ccw$waist > mean(nnyfs_ccw$waist) - sd(nnyfs_ccw$waist) & nnyfs_ccw$waist < mean (nnyfs_ccw$waist) + sd(nnyfs_ccw$waist)])` of the `r length(nnyfs_ccw$waist)` Age values are in this range, or `r round(100*length(nnyfs_ccw$waist[nnyfs_ccw$waist > mean(nnyfs_ccw$waist) - sd(nnyfs_ccw$waist) & nnyfs_ccw$waist < mean (nnyfs_ccw$waist) + sd(nnyfs_ccw$waist)])/length(nnyfs_ccw$waist),1)`\%.
 
-- About 99.7\% of the data in the range (`r round(mean(nnyfs_noNA$waist) - 3*sd(nnyfs_noNA$waist),2)`, `r round(mean(nnyfs_noNA$waist) + 3*sd(nnyfs_noNA$waist),2)`). In fact, `r length(nnyfs_noNA$waist[nnyfs_noNA$waist > mean(nnyfs_noNA$waist) - 3*sd(nnyfs_noNA$waist) & nnyfs_noNA$waist < mean (nnyfs_noNA$waist) + 3*sd(nnyfs_noNA$waist)])` of the `r length(nnyfs_noNA$waist)` Age values are in this range, or `r round(100*length(nnyfs_noNA$waist[nnyfs_noNA$waist > mean(nnyfs_noNA$waist) - 3*sd(nnyfs_noNA$waist) & nnyfs_noNA$waist < mean (nnyfs_noNA$waist) + 3*sd(nnyfs_noNA$waist)]) / length(nnyfs_noNA$waist),1)`\%.
+- About 95\% of the data in the range (`r round(mean(nnyfs_ccw$waist) - 2*sd(nnyfs_ccw$waist),2)`, `r round(mean(nnyfs_ccw$waist) + 2*sd(nnyfs_ccw$waist),2)`). In fact, `r length(nnyfs_ccw$waist[nnyfs_ccw$waist > mean(nnyfs_ccw$waist) - 2*sd(nnyfs_ccw$waist) & nnyfs_ccw$waist < mean (nnyfs_ccw$waist) + 2*sd(nnyfs_ccw$waist)])` of the `r length(nnyfs_ccw$waist)` Age values are in this range, or `r round(100*length(nnyfs_ccw$waist[nnyfs_ccw$waist > mean(nnyfs_ccw$waist) - 2*sd(nnyfs_ccw$waist) & nnyfs_ccw$waist < mean (nnyfs_ccw$waist) + 2*sd(nnyfs_ccw$waist)]) / length(nnyfs_ccw$waist),1)`\%.
+
+- About 99.7\% of the data in the range (`r round(mean(nnyfs_ccw$waist) - 3*sd(nnyfs_ccw$waist),2)`, `r round(mean(nnyfs_ccw$waist) + 3*sd(nnyfs_ccw$waist),2)`). In fact, `r length(nnyfs_ccw$waist[nnyfs_ccw$waist > mean(nnyfs_ccw$waist) - 3*sd(nnyfs_ccw$waist) & nnyfs_ccw$waist < mean (nnyfs_ccw$waist) + 3*sd(nnyfs_ccw$waist)])` of the `r length(nnyfs_ccw$waist)` Age values are in this range, or `r round(100*length(nnyfs_ccw$waist[nnyfs_ccw$waist > mean(nnyfs_ccw$waist) - 3*sd(nnyfs_ccw$waist) & nnyfs_ccw$waist < mean (nnyfs_ccw$waist) + 3*sd(nnyfs_ccw$waist)]) / length(nnyfs_ccw$waist),1)`\%.
                                           
 How does the Normal approximation work for waist circumference, according to the Empirical Rule?
 
@@ -203,24 +204,23 @@ We'll demonstrate the looks that we can obtain from a Normal Q-Q plot in some si
 set.seed(123431) # so the results can be replicated
                                           
 # simulate 200 observations from a Normal(20, 5) distribution and place them 
-# in the d variable within the temp.1 data frame
-temp.1 <- data.frame(d = rnorm(200, mean = 20, sd = 5)) 
+# in the d variable within the temp_1 tibble
+temp_1 <- tibble(d = rnorm(200, mean = 20, sd = 5)) 
                                           
 # left plot - basic Normal Q-Q plot of simulated data
-p1 <- ggplot(temp.1, aes(sample = d)) +
+p1 <- ggplot(temp_1, aes(sample = d)) +
     geom_qq() + geom_qq_line(col = "red") +
     theme_light() +
     labs(y = "Ordered Simulated Sample Data")
 
 # right plot - histogram with superimposed normal distribution
-res <- mosaic::favstats(~ d, data = temp.1)
+res <- mosaic::favstats(~ d, data = temp_1)
 bin_w <- 2 # specify binwidth
 
-p2 <- ggplot(temp.1, aes(x = d)) +
+p2 <- ggplot(temp_1, aes(x = d)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "papayawhip", 
                    col = "seagreen") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -233,7 +233,7 @@ p2 <- ggplot(temp.1, aes(x = d)) +
     labs(x = "Simulated Sample Data", y = "")
 
 p1 + p2 + 
-  plot_annotation(title = "200 observations from a simulated Normal distribution") 
+  plot_annotation(title = "200 observations from a simulated Normal") 
 
 # uses patchwork package to combine plots
 ```
@@ -252,35 +252,34 @@ set.seed(123431) # so the results can be replicated
 
 # simulate 200 observations from a beta(5, 2) distribution into the e1 variable
 # simulate 200 observations from a beta(1, 5) distribution into the e2 variable
-temp.2 <- data.frame(e1 = rbeta(200, 5, 2), e2 = rbeta(200, 1, 5)) 
+temp_2 <- tibble(e1 = rbeta(200, 5, 2), e2 = rbeta(200, 1, 5)) 
 
-p1 <- ggplot(temp.2, aes(sample = e1)) +
+p1 <- ggplot(temp_2, aes(sample = e1)) +
     geom_qq(col = "orchid") + geom_qq_line(col = "blue") +
     theme_light() +
     labs(y = "Ordered Sample e1",
          title = "Beta(5, 2) sample: Left Skewed")
 
-p2 <- ggplot(temp.2, aes(sample = e2)) +
+p2 <- ggplot(temp_2, aes(sample = e2)) +
     geom_qq(col = "darkorange") + geom_qq_line(col = "blue") +
     theme_light() +
     labs(y = "Ordered Sample e2",
          title = "Beta(1, 5) sample: Right Skewed")
 
-p1 + p2 + plot_annotation(title = "200 observations from simulated Beta distributions")
+p1 + p2 + plot_annotation(title = "200 observations from simulated Betas")
 ```
 
 Note the bends away from a straight line in each sample. The non-Normality may be easier to see in a histogram.
 
 ```{r c11_sum10}
 
-res1 <- mosaic::favstats(~ e1, data = temp.2)
+res1 <- mosaic::favstats(~ e1, data = temp_2)
 bin_w1 <- 0.025 # specify binwidth
 
-p1 <- ggplot(temp.2, aes(x = e1)) +
+p1 <- ggplot(temp_2, aes(x = e1)) +
     geom_histogram(binwidth = bin_w1, 
                    fill = "orchid", 
                    col = "black") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res1$mean, 
                                 sd = res1$sd) * 
@@ -289,14 +288,13 @@ p1 <- ggplot(temp.2, aes(x = e1)) +
 labs(x = "Sample e1", y = "",
      title = "Beta(5,2) sample: Left Skew")
 
-res2 <- mosaic::favstats(~ e2, data = temp.2)
+res2 <- mosaic::favstats(~ e2, data = temp_2)
 bin_w2 <- 0.025 # specify binwidth
 
-p2 <- ggplot(temp.2, aes(x = e2)) +
+p2 <- ggplot(temp_2, aes(x = e2)) +
     geom_histogram(binwidth = bin_w2, 
                    fill = "darkorange", 
                    col = "black") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res2$mean, 
                                 sd = res2$sd) * 
@@ -320,20 +318,20 @@ In each of these pairs of plots, we see the same basic result.
 - Heavy-tailed but symmetric distributions are indicated by reverse "S"-shapes, as shown on the left below.
 - Light-tailed but symmetric distributions are indicated by "S" shapes in the plot, as shown on the right below.
 
-```{r c11_sum11}
+```{r}
 set.seed(4311) # so the results can be replicated
 
 # sample 200 observations from each of two probability distributions
-temp.3 <- data.frame(s1 = rcauchy(200, location=10, scale = 1),
+temp_3 <- tibble(s1 = rcauchy(200, location=10, scale = 1),
                      s2 = runif(200, -30, 30)) 
 
-p1 <- ggplot(temp.3, aes(sample = s1)) +
+p1 <- ggplot(temp_3, aes(sample = s1)) +
     geom_qq(col = "slateblue") + geom_qq_line(col = "black") +
     theme_light() +
     labs(y = "Ordered Sample s1",
          title = "Heavy-Tailed Symmetric Sample s1")
 
-p2 <- ggplot(temp.3, aes(sample = s2)) +
+p2 <- ggplot(temp_3, aes(sample = s2)) +
     geom_qq(col = "dodgerblue") + geom_qq_line(col = "black") +
     theme_light() +
     labs(y = "Ordered Sample s2",
@@ -344,15 +342,14 @@ p1 + p2 + plot_annotation(title = "200 observations from simulated distributions
 
 And, we can also visualize these simulations with histograms, although they're less helpful for understanding tail behavior than they are for skew.
 
-```{r c11_sum12}
-res1 <- mosaic::favstats(~ s1, data = temp.3)
+```{r}
+res1 <- mosaic::favstats(~ s1, data = temp_3)
 bin_w1 <- 20 # specify binwidth
 
-p1 <- ggplot(temp.3, aes(x = s1)) +
+p1 <- ggplot(temp_3, aes(x = s1)) +
     geom_histogram(binwidth = bin_w1, 
                    fill = "slateblue", 
                    col = "white") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res1$mean, 
                                 sd = res1$sd) * 
@@ -361,14 +358,13 @@ p1 <- ggplot(temp.3, aes(x = s1)) +
 labs(x = "Sample s1", y = "",
      title = "Cauchy sample: Heavy Tails")
 
-res2 <- mosaic::favstats(~ s2, data = temp.3)
+res2 <- mosaic::favstats(~ s2, data = temp_3)
 bin_w2 <- 2 # specify binwidth
 
-p2 <- ggplot(temp.3, aes(x = s2)) +
+p2 <- ggplot(temp_3, aes(x = s2)) +
     geom_histogram(binwidth = bin_w2, 
                    fill = "dodgerblue", 
                    col = "white") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res2$mean, 
                                 sd = res2$sd) * 
@@ -382,8 +378,8 @@ p1 + p2 + plot_annotation(caption = "Histograms with Normal curve superimposed")
 
 Instead, boxplots (here augmented with violin plots) can be more helpful when thinking about light-tailed vs. heavy-tailed distributions.
 
-```{r c11_sum13}
-p1 <- ggplot(temp.3, aes(x = "s1", y = s1)) +
+```{r}
+p1 <- ggplot(temp_3, aes(x = "s1", y = s1)) +
     geom_violin(col = "slateblue") + 
     geom_boxplot(fill = "slateblue", width = 0.2) +
     theme_light() +
@@ -391,7 +387,7 @@ p1 <- ggplot(temp.3, aes(x = "s1", y = s1)) +
     labs(y = "Ordered Sample s1", x = "",
          title = "Heavy-Tailed Symmetric Sample s1")
 
-p2 <- ggplot(temp.3, aes(x = "s2", y = s2)) +
+p2 <- ggplot(temp_3, aes(x = "s2", y = s2)) +
     geom_violin(col = "dodgerblue") + 
     geom_boxplot(fill = "dodgerblue", width = 0.2) +
     theme_light() +
@@ -403,14 +399,15 @@ p1 + p2 + plot_annotation(title = "200 observations from simulated distributions
 ```
 
 ```{r}
-rm(temp.1, temp.2, temp.3, p1, p2, res, res1, res2, bin_w, bin_w1, bin_w2) # cleaning up
+rm(temp_1, temp_2, temp_3, p1, p2, 
+   res, res1, res2, bin_w, bin_w1, bin_w2) # cleaning up
 ```
 
 ## Can a Normal Distribution Fit the `nnyfs` `energy` data Well?
 
 The `energy` data we've been studying shows meaningful signs of right skew.
 
-```{r c11_sum14}
+```{r}
 p1 <- ggplot(nnyfs, aes(sample = energy)) +
     geom_qq(col = "coral", size = 2) + 
     geom_qq_line(col = "blue") +
@@ -425,7 +422,6 @@ p2 <- ggplot(nnyfs, aes(x = energy)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "coral", 
                    col = "white") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -446,7 +442,7 @@ What if we plotted not the original `energy` values (all of which are positive) 
 
 - Compare these two plots - the left describes the distribution of the original energy data from the NNYFS data frame, and the right plot shows the distribution of the square root of those values. 
 
-```{r c11_sum15}
+```{r}
 p1 <- ggplot(nnyfs, aes(sample = energy)) +
     geom_qq(col = "coral", size = 2) + 
     geom_qq_line(col = "blue") +
@@ -472,7 +468,7 @@ Our conclusion is that a Normal model is a far better fit to the square root of 
 
 The effect of taking the square root may be clearer from the histograms below, with Normal models superimposed.
 
-```{r c11_sum16}
+```{r}
 res <- mosaic::favstats(~ energy, data = nnyfs)
 bin_w <- 250 # specify binwidth
 
@@ -480,7 +476,6 @@ p1 <- ggplot(nnyfs, aes(x = energy)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "coral", 
                    col = "white") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res$mean, 
                                 sd = res$sd) * 
@@ -497,7 +492,6 @@ p2 <- ggplot(nnyfs, aes(x = sqrt(energy))) +
     geom_histogram(binwidth = bin_w2, 
                    fill = "darkcyan", 
                    col = "white") +
-    theme_bw() +
     stat_function(
         fun = function(x) dnorm(x, mean = res2$mean, 
                                 sd = res2$sd) * 
@@ -719,7 +713,10 @@ In this course, we will assume the use of natural logarithms unless we specify o
 
 ## What if we considered all 9 available transformations?
 
-```{r, fig.height = 7}
+```{r}
+#| fig.height: 7
+
+
 p1 <- ggplot(nnyfs, aes(sample = protein^3)) +
     geom_qq(col = "salmon") + 
     geom_qq_line(col = "black") +
@@ -788,17 +785,17 @@ The square root still appears to be the best choice of transformation here, even
 
 ```{r}
 set.seed(431); 
-data2 <- 
-    data_frame(sample2 = 100*rbeta(n = 125, shape1 = 5, shape2 = 2))
+sim_2 <- 
+    tibble(sample2 = 100*rbeta(n = 125, shape1 = 5, shape2 = 2))
 ```
 
 If we'd like to transform these data so as to better approximate a Normal distribution, where should we start? What transformation do you suggest?
 
 ```{r}
-res <- mosaic::favstats(~ sample2, data = data2)
+res <- mosaic::favstats(~ sample2, data = sim_2)
 bin_w <- 4 # specify binwidth
 
-p1 <- ggplot(data2, aes(x = sample2)) +
+p1 <- ggplot(sim_2, aes(x = sample2)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "royalblue", 
                    col = "white") +
@@ -811,13 +808,13 @@ p1 <- ggplot(data2, aes(x = sample2)) +
          x = "Simulated Data", y = "# of subjects")
 
 
-p2 <- ggplot(data2, aes(sample = sample2)) +
+p2 <- ggplot(sim_2, aes(sample = sample2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "Normal Q-Q plot",
          y = "Simulated Data")
 
-p3 <- ggplot(data2, aes(x = "", y = sample2)) +
+p3 <- ggplot(sim_2, aes(x = "", y = sample2)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "royalblue", 
                  outlier.color = "royalblue") +
@@ -832,10 +829,10 @@ p1 + p2 - p3 + plot_layout(ncol = 1, height = c(3, 1)) +
 Given the left skew in the data, it looks like a step up in the ladder is warranted, perhaps by looking at the square of the data?
 
 ```{r}
-res <- mosaic::favstats(~ sample2^2, data = data2)
+res <- mosaic::favstats(~ sample2^2, data = sim_2)
 bin_w <- 600 # specify binwidth
 
-p1 <- ggplot(data2, aes(x = sample2^2)) +
+p1 <- ggplot(sim_2, aes(x = sample2^2)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "royalblue", 
                    col = "white") +
@@ -848,13 +845,13 @@ p1 <- ggplot(data2, aes(x = sample2^2)) +
          x = "Squared Simulated Data", y = "# of subjects")
 
 
-p2 <- ggplot(data2, aes(sample = sample2^2)) +
+p2 <- ggplot(sim_2, aes(sample = sample2^2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "Normal Q-Q plot",
          y = "Squared Simulated Data")
 
-p3 <- ggplot(data2, aes(x = "", y = sample2^2)) +
+p3 <- ggplot(sim_2, aes(x = "", y = sample2^2)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "royalblue", 
                  outlier.color = "royalblue") +
@@ -869,10 +866,10 @@ p1 + p2 - p3 + plot_layout(ncol = 1, height = c(3, 1)) +
 Looks like at best a modest improvement. How about cubing the data, instead?
 
 ```{r}
-res <- mosaic::favstats(~ sample2^3, data = data2)
+res <- mosaic::favstats(~ sample2^3, data = sim_2)
 bin_w <- 100000 # specify binwidth
 
-p1 <- ggplot(data2, aes(x = sample2^3)) +
+p1 <- ggplot(sim_2, aes(x = sample2^3)) +
     geom_histogram(binwidth = bin_w, 
                    fill = "royalblue", 
                    col = "white") +
@@ -885,13 +882,13 @@ p1 <- ggplot(data2, aes(x = sample2^3)) +
          x = "Cubed Simulated Data", y = "# of subjects")
 
 
-p2 <- ggplot(data2, aes(sample = sample2^3)) +
+p2 <- ggplot(sim_2, aes(sample = sample2^3)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "Normal Q-Q plot",
          y = "Cubed Simulated Data")
 
-p3 <- ggplot(data2, aes(x = "", y = sample2^3)) +
+p3 <- ggplot(sim_2, aes(x = "", y = sample2^3)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "royalblue", 
                  outlier.color = "royalblue") +
@@ -908,47 +905,47 @@ The newly transformed (cube of the) data appears more symmetric, although somewh
 ## What if we considered all 9 available transformations?
 
 ```{r, fig.height = 7}
-p1 <- ggplot(data2, aes(sample = sample2^3)) +
+p1 <- ggplot(sim_2, aes(sample = sample2^3)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "Cube (power 3)")
 
-p2 <- ggplot(data2, aes(sample = sample2^2)) +
+p2 <- ggplot(sim_2, aes(sample = sample2^2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "Square (power 2)")
 
-p3 <- ggplot(data2, aes(sample = sample2)) +
+p3 <- ggplot(sim_2, aes(sample = sample2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "Original Data")
 
-p4 <- ggplot(data2, aes(sample = sqrt(sample2))) +
+p4 <- ggplot(sim_2, aes(sample = sqrt(sample2))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "sqrt (power 0.5)")
 
-p5 <- ggplot(data2, aes(sample = log(sample2))) +
+p5 <- ggplot(sim_2, aes(sample = log(sample2))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "log (power 0)")
 
-p6 <- ggplot(data2, aes(sample = sample2^(0.5))) +
+p6 <- ggplot(sim_2, aes(sample = sample2^(0.5))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "1/sqrt (power -0.5)")
 
-p7 <- ggplot(data2, aes(sample = 1/sample2)) +
+p7 <- ggplot(sim_2, aes(sample = 1/sample2)) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "Inverse (power -1)")
 
-p8 <- ggplot(data2, aes(sample = 1/(sample2^2))) +
+p8 <- ggplot(sim_2, aes(sample = 1/(sample2^2))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "1/Square (power -2)")
 
-p9 <- ggplot(data2, aes(sample = 1/(sample2^3))) +
+p9 <- ggplot(sim_2, aes(sample = 1/(sample2^3))) +
     geom_qq(col = "royalblue") + 
     geom_qq_line(col = "black") +
     labs(title = "1/Cube (power -3)")
@@ -959,3 +956,7 @@ p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9 +
 ```
 
 Again, either the cube or the square looks like best choice here, in terms of creating a more symmetric (albeit light-tailed) distribution.
+
+## Coming Up
+
+Next, we'll spend some time thinking about scatterplots, correlation and straight line regression models.

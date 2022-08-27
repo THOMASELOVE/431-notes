@@ -338,16 +338,17 @@ div.csl-indent {
    
   <ul>
   <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">9.1</span> Setup: Packages Used Here</a></li>
-  <li><a href="#a-simulated-example-with-15-subjects" id="toc-a-simulated-example-with-15-subjects" class="nav-link" data-scroll-target="#a-simulated-example-with-15-subjects"> <span class="header-section-number">9.2</span> A Simulated Example with 15 subjects</a></li>
+  <li><a href="#a-toy-example-n-15" id="toc-a-toy-example-n-15" class="nav-link" data-scroll-target="#a-toy-example-n-15"> <span class="header-section-number">9.2</span> A Toy Example (n = 15)</a></li>
   <li><a href="#identifying-missingness-with-naniar-functions" id="toc-identifying-missingness-with-naniar-functions" class="nav-link" data-scroll-target="#identifying-missingness-with-naniar-functions"> <span class="header-section-number">9.3</span> Identifying missingness with <code>naniar</code> functions</a></li>
   <li><a href="#missing-data-mechanisms" id="toc-missing-data-mechanisms" class="nav-link" data-scroll-target="#missing-data-mechanisms"> <span class="header-section-number">9.4</span> Missing-data mechanisms</a></li>
-  <li><a href="#options-for-dealing-with-missingness" id="toc-options-for-dealing-with-missingness" class="nav-link" data-scroll-target="#options-for-dealing-with-missingness"> <span class="header-section-number">9.5</span> Options for Dealing with Missingness</a></li>
+  <li><a href="#dealing-with-missingness-three-approaches" id="toc-dealing-with-missingness-three-approaches" class="nav-link" data-scroll-target="#dealing-with-missingness-three-approaches"> <span class="header-section-number">9.5</span> Dealing with Missingness: Three Approaches</a></li>
   <li><a href="#complete-case-and-available-case-analyses" id="toc-complete-case-and-available-case-analyses" class="nav-link" data-scroll-target="#complete-case-and-available-case-analyses"> <span class="header-section-number">9.6</span> Complete Case (and Available Case) analyses</a></li>
-  <li><a href="#single-imputation" id="toc-single-imputation" class="nav-link" data-scroll-target="#single-imputation"> <span class="header-section-number">9.7</span> Single Imputation</a></li>
-  <li><a href="#multiple-imputation" id="toc-multiple-imputation" class="nav-link" data-scroll-target="#multiple-imputation"> <span class="header-section-number">9.8</span> Multiple Imputation</a></li>
-  <li><a href="#building-a-complete-case-analysis" id="toc-building-a-complete-case-analysis" class="nav-link" data-scroll-target="#building-a-complete-case-analysis"> <span class="header-section-number">9.9</span> Building a Complete Case Analysis</a></li>
-  <li><a href="#single-imputation-with-the-mean-or-mode" id="toc-single-imputation-with-the-mean-or-mode" class="nav-link" data-scroll-target="#single-imputation-with-the-mean-or-mode"> <span class="header-section-number">9.10</span> Single Imputation with the Mean or Mode</a></li>
-  <li><a href="#doing-single-imputation-with-simputation" id="toc-doing-single-imputation-with-simputation" class="nav-link" data-scroll-target="#doing-single-imputation-with-simputation"> <span class="header-section-number">9.11</span> Doing Single Imputation with <code>simputation</code></a></li>
+  <li><a href="#building-a-complete-case-analysis" id="toc-building-a-complete-case-analysis" class="nav-link" data-scroll-target="#building-a-complete-case-analysis"> <span class="header-section-number">9.7</span> Building a Complete Case Analysis</a></li>
+  <li><a href="#single-imputation" id="toc-single-imputation" class="nav-link" data-scroll-target="#single-imputation"> <span class="header-section-number">9.8</span> Single Imputation</a></li>
+  <li><a href="#single-imputation-with-the-mean-or-mode" id="toc-single-imputation-with-the-mean-or-mode" class="nav-link" data-scroll-target="#single-imputation-with-the-mean-or-mode"> <span class="header-section-number">9.9</span> Single Imputation with the Mean or Mode</a></li>
+  <li><a href="#doing-single-imputation-with-simputation" id="toc-doing-single-imputation-with-simputation" class="nav-link" data-scroll-target="#doing-single-imputation-with-simputation"> <span class="header-section-number">9.10</span> Doing Single Imputation with <code>simputation</code></a></li>
+  <li><a href="#multiple-imputation" id="toc-multiple-imputation" class="nav-link" data-scroll-target="#multiple-imputation"> <span class="header-section-number">9.11</span> Multiple Imputation</a></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">9.12</span> Coming Up</a></li>
   </ul>
 </nav>
     </div>
@@ -383,10 +384,10 @@ div.csl-indent {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We’ll focus on tools from the <code>naniar</code> and <code>simputation</code> packages in this chapter. This chapter also requires that the <code>mosaic</code> package is loaded on your machine, but that package is not included with <code>library()</code> above.</p>
+<p>a We’ll focus on tools from the <code>naniar</code> and <code>simputation</code> packages in this chapter. This chapter also requires that the <code>mosaic</code> package is loaded on your machine so we can use the <code>favstats()</code> function, but I won’t load that here.</p>
 </section>
-<section id="a-simulated-example-with-15-subjects" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="a-simulated-example-with-15-subjects"><span class="header-section-number">9.2</span> A Simulated Example with 15 subjects</h2>
+<section id="a-toy-example-n-15" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="a-toy-example-n-15"><span class="header-section-number">9.2</span> A Toy Example (n = 15)</h2>
 <p>In the following tiny data set called <code>sbp_example</code>, we have four variables for a set of 15 subjects. In addition to a subject id, we have:</p>
 <ul>
 <li>the treatment this subject received (A, B or C are the treatments),</li>
@@ -484,7 +485,7 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="09-missing_data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="09-missing_data_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol start="6" type="1">
@@ -575,8 +576,8 @@ div.csl-indent {
 </ol>
 <p>Essentially, situations 3 and 4 are referred to collectively as <strong>non-random missingness</strong>, and cause more trouble for us than 1 and 2.</p>
 </section>
-<section id="options-for-dealing-with-missingness" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="options-for-dealing-with-missingness"><span class="header-section-number">9.5</span> Options for Dealing with Missingness</h2>
+<section id="dealing-with-missingness-three-approaches" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="dealing-with-missingness-three-approaches"><span class="header-section-number">9.5</span> Dealing with Missingness: Three Approaches</h2>
 <p>There are several available methods for dealing with missing data that are MCAR or MAR, but they basically boil down to:</p>
 <ul>
 <li>Complete Case (or Available Case) analyses</li>
@@ -597,24 +598,8 @@ div.csl-indent {
 <li>A related approach is <em>available-case</em> analysis where different aspects of a problem are studied with different subsets of the data, perhaps identified on the basis of what is missing in them.</li>
 </ul>
 </section>
-<section id="single-imputation" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="single-imputation"><span class="header-section-number">9.7</span> Single Imputation</h2>
-<p>In <strong>single imputation</strong> analyses, NA values are estimated/replaced <em>one time</em> with <em>one particular data value</em> for the purpose of obtaining more complete samples, at the expense of creating some potential bias in the eventual conclusions or obtaining slightly <em>less</em> accurate estimates than would be available if there were no missing values in the data.</p>
-<ul>
-<li>A single imputation can be just a replacement with the mean or median (for a quantity) or the mode (for a categorical variable.) However, such an approach, though easy to understand, underestimates variance and ignores the relationship of missing values to other variables.</li>
-<li>Single imputation can also be done using a variety of models to try to capture information about the NA values that are available in other variables within the data set.</li>
-<li>The <code>simputation</code> package can help us execute single imputations using a wide variety of techniques, within the pipe approach used by the <code>tidyverse</code>. Another approach I have used in the past is the <code>mice</code> package, which can also perform single imputations.</li>
-</ul>
-</section>
-<section id="multiple-imputation" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="multiple-imputation"><span class="header-section-number">9.8</span> Multiple Imputation</h2>
-<p><strong>Multiple imputation</strong>, where NA values are repeatedly estimated/replaced with multiple data values, for the purpose of obtaining mode complete samples <em>and</em> capturing details of the variation inherent in the fact that the data have missingness, so as to obtain <em>more</em> accurate estimates than are possible with single imputation.</p>
-<ul>
-<li>We’ll postpone further discussion of multiple imputation to later in the semester.</li>
-</ul>
-</section>
-<section id="building-a-complete-case-analysis" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="building-a-complete-case-analysis"><span class="header-section-number">9.9</span> Building a Complete Case Analysis</h2>
+<section id="building-a-complete-case-analysis" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="building-a-complete-case-analysis"><span class="header-section-number">9.7</span> Building a Complete Case Analysis</h2>
 <p>We can drop all of the missing values from a data set with <code>drop_na</code> or with <code>na.omit</code> or by filtering for <code>complete.cases</code>. Any of these approaches produces the same result - a new data set with 9 rows (after dropping the six subjects with any NA values) and 5 columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cc<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(sbp_example)</span>
@@ -622,8 +607,17 @@ div.csl-indent {
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>cc<span class="fl">.3</span> <span class="ot">&lt;-</span> sbp_example <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">complete.cases</span>(sbp_example))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="single-imputation-with-the-mean-or-mode" class="level2" data-number="9.10">
-<h2 data-number="9.10" class="anchored" data-anchor-id="single-imputation-with-the-mean-or-mode"><span class="header-section-number">9.10</span> Single Imputation with the Mean or Mode</h2>
+<section id="single-imputation" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="single-imputation"><span class="header-section-number">9.8</span> Single Imputation</h2>
+<p>In <strong>single imputation</strong> analyses, NA values are estimated/replaced <em>one time</em> with <em>one particular data value</em> for the purpose of obtaining more complete samples, at the expense of creating some potential bias in the eventual conclusions or obtaining slightly <em>less</em> accurate estimates than would be available if there were no missing values in the data.</p>
+<ul>
+<li>A single imputation can be just a replacement with the mean or median (for a quantity) or the mode (for a categorical variable.) However, such an approach, though easy to understand, underestimates variance and ignores the relationship of missing values to other variables.</li>
+<li>Single imputation can also be done using a variety of models to try to capture information about the NA values that are available in other variables within the data set.</li>
+<li>The <code>simputation</code> package can help us execute single imputations using a wide variety of techniques, within the pipe approach used by the <code>tidyverse</code>. Another approach I have used in the past is the <code>mice</code> package, which can also perform single imputations.</li>
+</ul>
+</section>
+<section id="single-imputation-with-the-mean-or-mode" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="single-imputation-with-the-mean-or-mode"><span class="header-section-number">9.9</span> Single Imputation with the Mean or Mode</h2>
 <p>The most straightforward approach to single imputation is to impute a single summary of the variable, such as the mean, median or mode.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> sbp.before, <span class="at">data =</span> sbp_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -677,8 +671,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="doing-single-imputation-with-simputation" class="level2" data-number="9.11">
-<h2 data-number="9.11" class="anchored" data-anchor-id="doing-single-imputation-with-simputation"><span class="header-section-number">9.11</span> Doing Single Imputation with <code>simputation</code></h2>
+<section id="doing-single-imputation-with-simputation" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="doing-single-imputation-with-simputation"><span class="header-section-number">9.10</span> Doing Single Imputation with <code>simputation</code></h2>
 <p>Single imputation is a potentially appropriate method when missingness can be assumed to be either completely at random (MCAR) or dependent only on observed predictors (MAR). We’ll use the <code>simputation</code> package to accomplish it.</p>
 <ul>
 <li>The <code>simputation</code> vignette is available at https://cran.r-project.org/web/packages/simputation/vignettes/intro.html</li>
@@ -691,7 +685,7 @@ div.csl-indent {
 <li>a decision tree approach to predict <code>treat</code> status, using all other variables in the data</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">50001</span>)</span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">432009</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>imp<span class="fl">.2</span> <span class="ot">&lt;-</span> sbp_example <span class="sc">|&gt;</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">impute_rlm</span>(sbp.before <span class="sc">~</span> sbp.after <span class="sc">+</span> diabetes) <span class="sc">|&gt;</span></span>
@@ -727,6 +721,17 @@ div.csl-indent {
 <li><code>impute_rlm</code> is one of several regression imputation methods, including linear models, robust linear models (which use what is called M-estimation to impute numerical variables) and lasso/elastic net/ridge regression models.</li>
 </ul>
 <p>The <code>simputation</code> package can also do EM-based multivariate imputation, and multivariate random forest imputation, and several other approaches.</p>
+</section>
+<section id="multiple-imputation" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="multiple-imputation"><span class="header-section-number">9.11</span> Multiple Imputation</h2>
+<p><strong>Multiple imputation</strong>, where NA values are repeatedly estimated/replaced with multiple data values, for the purpose of obtaining mode complete samples <em>and</em> capturing details of the variation inherent in the fact that the data have missingness, so as to obtain <em>more</em> accurate estimates than are possible with single imputation.</p>
+<ul>
+<li>We’ll postpone further discussion of multiple imputation to later in the semester, when we’re building models for relationships in our data.</li>
+</ul>
+</section>
+<section id="coming-up" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">9.12</span> Coming Up</h2>
+<p>Next, we’ll look an even more detailed look at how we might summarize results from another large data set, this time from the <a href="http://www.cdc.gov/Nchs/Nnyfs.htm">National Youth Fitness Survey</a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

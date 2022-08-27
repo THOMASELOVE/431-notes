@@ -751,7 +751,7 @@ div.csl-indent {
 <p>When considering the shape of a distribution, one is often interested in three key points.</p>
 <ul>
 <li>The number of modes in the distribution, which I always assess through plotting the data.</li>
-<li>The <strong>skewness</strong>, or symmetry that is present, which I typically assess by looking at a plot of the distribution of the data, but if required to, will summarize with a non-parametric measure of <strong>skewness</strong>.</li>
+<li>The <strong>skewness</strong>, or symmetry that is present, which I typically assess by looking at a plot of the distribution of the data, but if required to, will summarize with a non-parametric measure of <strong>skewness</strong>, that we will discuss in <a href="10-nnyfs_foundations.html#sec-skew"><span>Section&nbsp;10.13</span></a>.</li>
 <li>The <strong>kurtosis</strong>, or heavy-tailedness (outlier-proneness) that is present, usually in comparison to a Normal distribution. Again, this is something I nearly inevitably assess graphically, but there are measures.</li>
 </ul>
 <p>A Normal distribution has a single mode, is symmetric and, naturally, is neither heavy-tailed nor light-tailed as compared to a Normal distribution (we call this mesokurtic).</p>
@@ -1179,7 +1179,9 @@ skew_1 = \frac{\mbox{mean} - \mbox{median}}{\mbox{standard deviation}}
 <li>For non-normal data with a skewed shape but tails well approximated by the Normal, the <code>MAD</code> is likely to be a better (more robust) estimate of the spread than is the standard deviation.</li>
 </ul></li>
 <li><code>CV</code> = the coefficient of variation, or the standard deviation divided by the mean</li>
-<li>a measure of <code>Skewness</code> and its standard error. This Skewness measure refers to how much asymmetry is present in the shape of the distribution. The measure is not the same as the <em>nonparametric skew</em> measure that we will usually prefer. The <a href="https://en.wikipedia.org/wiki/Skewness">Wikipedia page on skewness</a> is very detailed.</li>
+<li>a measure of <code>Skewness</code> and its standard error. This Skewness measure refers to how much asymmetry is present in the shape of the distribution. The measure is not the same as the <em>nonparametric skew</em> measure that we will usually prefer and that we discuss further in <a href="10-nnyfs_foundations.html#sec-skew"><span>Section&nbsp;10.13</span></a>.</li>
+<li>Our nonparametric skew measure is just the difference between the mean and the median, divided by the standard deviation.</li>
+<li>The <a href="https://en.wikipedia.org/wiki/Skewness">Wikipedia page on skewness</a> is very detailed.</li>
 <li>a measure of <code>Kurtosis</code>, which refers to how outlier-prone, or heavy-tailed the shape of the distribution is, as compared to a Normal distribution.</li>
 <li>the number of valid (non-missing) observations in each variable.</li>
 </ul>
