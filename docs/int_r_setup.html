@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes for 431 - Setting Up R</title>
+<title>Course Notes for 431 - Setting Up R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,7 +160,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notes for 431</a> 
+      <a href="./">Course Notes for 431</a> 
         <div class="sidebar-tools-main">
     <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
 </div>
@@ -283,7 +283,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B placeholder</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -298,7 +298,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C placeholder</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -318,7 +318,12 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
   </div>
 </li>
       </ul>
@@ -411,7 +416,7 @@ div.csl-indent {
 </section>
 <section id="packages-used-in-these-notes" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="packages-used-in-these-notes">Packages Used in these Notes</h2>
-<p>A complete list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at <a href="https://thomaselove.github.io/431-2022/">our course web site</a>.</p>
+<p>A list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at <a href="https://thomaselove.github.io/431-2022/">our course web site</a>.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -422,43 +427,53 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><code>boot</code></td>
-<td style="text-align: center;">B</td>
-<td style="text-align: center;">–</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>broom</code></td>
-<td style="text-align: center;">A, B, C</td>
-<td style="text-align: center;"><code>tidy</code>, <code>augment</code>, <code>glance</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>car</code></td>
-<td style="text-align: center;">A, C</td>
-<td style="text-align: center;"><code>boxCox</code>, <code>powerTransform</code>, <code>testTransform</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Epi</code></td>
-<td style="text-align: center;">B</td>
-<td style="text-align: center;"><code>twoby2</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>fivethirtyeight</code></td>
-<td style="text-align: center;">Appendix</td>
-<td style="text-align: center;">source of data</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>GGally</code></td>
-<td style="text-align: center;">A, C</td>
-<td style="text-align: center;"><code>ggpairs</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>ggrepel</code></td>
+<td style="text-align: center;"><code>arm</code></td>
 <td style="text-align: center;">C</td>
 <td style="text-align: center;">–</td>
 </tr>
 <tr class="even">
+<td style="text-align: center;"><code>boot</code></td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>broom</code></td>
+<td style="text-align: center;">A, B, C</td>
+<td style="text-align: center;"><code>tidy</code>, <code>augment</code>, <code>glance</code> (part of <code>tidymodels</code>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>car</code></td>
+<td style="text-align: center;">A, C</td>
+<td style="text-align: center;"><code>boxCox</code>, <code>powerTransform</code>, <code>testTransform</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Epi</code></td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;"><code>twoby2</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>fivethirtyeight</code></td>
+<td style="text-align: center;">Appendix</td>
+<td style="text-align: center;">source of data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>GGally</code></td>
+<td style="text-align: center;">A, C</td>
+<td style="text-align: center;"><code>ggpairs</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>ggrepel</code></td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="odd">
 <td style="text-align: center;"><code>ggridges</code></td>
 <td style="text-align: center;">A, B</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>ggstance</code></td>
+<td style="text-align: center;">A</td>
 <td style="text-align: center;">–</td>
 </tr>
 <tr class="odd">
@@ -542,9 +557,19 @@ div.csl-indent {
 <td style="text-align: center;">–</td>
 </tr>
 <tr class="odd">
+<td style="text-align: center;"><code>sessioninfo</code></td>
+<td style="text-align: center;">Appendix</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="even">
 <td style="text-align: center;"><code>simputation</code></td>
 <td style="text-align: center;">A</td>
-<td style="text-align: center;">various impuation functions</td>
+<td style="text-align: center;">various imputation functions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>summarytools</code></td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;"><code>descr</code>, <code>dfSummary</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><code>tidyverse</code></td>
@@ -577,7 +602,7 @@ div.csl-indent {
 <li><code>forcats</code> for solving problems with factors</li>
 </ul>
 <p>Loading the tidyverse with <code>library(tidyverse)</code> loads those eight packages.</p>
-<p>Installing the tidyverse also installs several other useful packages on your machine. Read more about the <code>tidyverse</code> at <a href="https://www.tidyverse.org/">https://www.tidyverse.org/</a></p>
+<p>Installing the tidyverse also installs several other useful packages on your machine, like <code>glue</code> and <code>lubridate</code>, for example. Read more about the <code>tidyverse</code> at <a href="https://www.tidyverse.org/">https://www.tidyverse.org/</a></p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

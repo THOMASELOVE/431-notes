@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes for 431 - 4&nbsp; NHANES Data</title>
+<title>Course Notes for 431 - 4&nbsp; NHANES Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,6 +78,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -144,7 +163,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notes for 431</a> 
+      <a href="./">Course Notes for 431</a> 
         <div class="sidebar-tools-main">
     <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
 </div>
@@ -267,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B placeholder</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -282,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C placeholder</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -302,7 +321,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
   </div>
 </li>
       </ul>
@@ -320,8 +344,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#the-nhanes-data-a-first-sample" id="toc-the-nhanes-data-a-first-sample" class="nav-link" data-scroll-target="#the-nhanes-data-a-first-sample"> <span class="header-section-number">4.2</span> The NHANES data: A First Sample</a></li>
   <li><a href="#newNHANES" id="toc-newNHANES" class="nav-link" data-scroll-target="#newNHANES"> <span class="header-section-number">4.3</span> Sampling NHANES Adults</a>
   <ul class="collapse">
-  <li><a href="#creating-a-temporary-cleaner-data-frame" id="toc-creating-a-temporary-cleaner-data-frame" class="nav-link" data-scroll-target="#creating-a-temporary-cleaner-data-frame"> <span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Data Frame</a></li>
-  <li><a href="#sampling-nh_temp-to-obtain-our-nh_adult750-sample" id="toc-sampling-nh_temp-to-obtain-our-nh_adult750-sample" class="nav-link" data-scroll-target="#sampling-nh_temp-to-obtain-our-nh_adult750-sample"> <span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</a></li>
+  <li><a href="#creating-a-temporary-cleaner-tibble" id="toc-creating-a-temporary-cleaner-tibble" class="nav-link" data-scroll-target="#creating-a-temporary-cleaner-tibble"> <span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Tibble</a></li>
+  <li><a href="#sec-nh750" id="toc-sec-nh750" class="nav-link" data-scroll-target="#sec-nh750"> <span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</a></li>
   <li><a href="#summarizing-the-datas-structure" id="toc-summarizing-the-datas-structure" class="nav-link" data-scroll-target="#summarizing-the-datas-structure"> <span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</a></li>
   <li><a href="#what-are-the-variables" id="toc-what-are-the-variables" class="nav-link" data-scroll-target="#what-are-the-variables"> <span class="header-section-number">4.3.4</span> What are the variables?</a></li>
   </ul></li>
@@ -367,7 +391,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="the-nhanes-data-a-first-sample" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="the-nhanes-data-a-first-sample"><span class="header-section-number">4.2</span> The NHANES data: A First Sample</h2>
-<p>The <code>NHANES</code> package provides a sample of 10,000 NHANES responses from the 2009-10 and 2011-12 administrations, in a data frame also called <code>NHANES</code>. We can obtain the dimensions of this data frame (think of it as a rectangle of data) with the <code>dim()</code> function.</p>
+<p>The <code>NHANES</code> package provides a sample of 10,000 NHANES responses from the 2009-10 and 2011-12 administrations, in a tibble also called <code>NHANES</code>. We can obtain the dimensions of this tibble with the <code>dim()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>NHANES</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -390,27 +414,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #   BMICatUnder20yrs &lt;fct&gt;, BMI_WHO &lt;fct&gt;, Pulse &lt;int&gt;, BPSysAve &lt;int&gt;,
 #   BPDiaAve &lt;int&gt;, BPSys1 &lt;int&gt;, BPDia1 &lt;int&gt;, BPSys2 &lt;int&gt;, BPDia2 &lt;int&gt;,
 #   BPSys3 &lt;int&gt;, BPDia3 &lt;int&gt;, Testosterone &lt;dbl&gt;, DirectChol &lt;dbl&gt;,
-#   TotChol &lt;dbl&gt;, UrineVol1 &lt;int&gt;, UrineFlow1 &lt;dbl&gt;, UrineVol2 &lt;int&gt;, …
-# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+#   TotChol &lt;dbl&gt;, UrineVol1 &lt;int&gt;, UrineFlow1 &lt;dbl&gt;, UrineVol2 &lt;int&gt;, …</code></pre>
 </div>
 </div>
-<p>We see that we have 10000 rows and 76 columns in the <code>NHANES</code> tibble.</p>
+<p>We see that we have 10000 rows and 76 columns in the <code>NHANES</code> tibble. For more on what makes a particular data frame into a tibble, and why we’d want such a thing, you might be interested in the Tibbles section of <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span>. Essentially, tibbles are data frames that are easier and more predictable to work with.</p>
 </section>
 <section id="newNHANES" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="newNHANES"><span class="header-section-number">4.3</span> Sampling NHANES Adults</h2>
 <p>Suppose we want to take this NHANES tibble, and use it to generate a sample describing 750 unique (distinct) adult subjects who completed the 2011-12 version of the survey when they were between the ages of 21 and 64.</p>
-<section id="creating-a-temporary-cleaner-data-frame" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="creating-a-temporary-cleaner-data-frame"><span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Data Frame</h3>
-<p>I’ll start by describing the plan we will use to create a new tibble called <code>nh_temp</code> from which we will eventually build our final sample. In particular, let me lay out the steps I will use to create the <code>nh_temp</code> frame from the original <code>NHANES</code> data frame available in the R package called <code>NHANES</code>.</p>
+<section id="creating-a-temporary-cleaner-tibble" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="creating-a-temporary-cleaner-tibble"><span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Tibble</h3>
+<p>I’ll start by describing the plan we will use to create a new tibble called <code>nh_temp</code> from which we will eventually build our final sample. In particular, let me lay out the steps I will use to create the <code>nh_temp</code> frame from the original <code>NHANES</code> tibble available in the R package called <code>NHANES</code>.</p>
 <ol type="1">
-<li><p>We’ll <strong>filter</strong> the original NHANES data frame to include only the responses from the 2011-12 administration of the survey. This will cut the sample in half, from 10,000 rows to 5,000.</p></li>
+<li><p>We’ll <strong>filter</strong> the original NHANES tibble to include only the responses from the 2011-12 administration of the survey. This will cut the sample in half, from 10,000 rows to 5,000.</p></li>
 <li><p>We’ll then <strong>filter</strong> again to restrict the sample to adults whose age is at least 21 and also less than 65. I’ll do this because I want to avoid problems with including both children and adults in my sample, and because I also want to focus on the population of people in the US who are usually covered by private insurance from their job, or by Medicaid insurance from the government, rather than those covered by Medicare.</p></li>
-<li><p>What is listed in the NHANES data frame as <code>Gender</code> should be more correctly referred to as <code>Sex</code>. <code>Sex</code> is a biological feature of an individual, while <code>Gender</code> is a social construct. This is an important distinction, so I’ll change the name of the variable.</p></li>
-<li><p>We’ll also rename three other variables, specifically we’ll use <code>Race</code> to describe the <code>Race3</code> variable in the original NHANES data frame, as well as <code>SBP</code> to refer to the average systolic blood pressure, which is specified as <code>BPSysAve</code>, and <code>DBP</code> to refer to the average diastolic blood pressure, which is specified as <code>BPDiaAve</code>.</p></li>
-<li><p>Having accomplished the previous four steps, we’ll then <em>select</em> the variables we want to keep in the sample. (We use <em>select</em> for choosing variables or columns in the data frame, and <em>filter</em> for selecting subjects or rows.) The sixteen variables we will select are: ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, Pulse, PhysActive, Smoke100, SleepTrouble, MaritalStatus and HealthGen.</p></li>
-<li><p>The original NHANES data frame includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we’d like to only include each subject one time. We use the <code>distinct()</code> function to limit the data frame to completely unique subjects (so that, for example, we don’t wind up with two or more rows that have the same ID number.)</p></li>
+<li><p>What is listed in the NHANES tibble as <code>Gender</code> should be more correctly referred to as <code>Sex</code>. <code>Sex</code> is a biological feature of an individual, while <code>Gender</code> is a social construct. This is an important distinction, so I’ll change the name of the variable.</p></li>
+<li><p>We’ll also rename three other variables, specifically we’ll use <code>Race</code> to describe the <code>Race3</code> variable in the original NHANES tibble, as well as <code>SBP</code> to refer to the average systolic blood pressure, which is specified as <code>BPSysAve</code>, and <code>DBP</code> to refer to the average diastolic blood pressure, which is specified as <code>BPDiaAve</code>.</p></li>
+<li><p>Having accomplished the previous four steps, we’ll then <em>select</em> the variables we want to keep in the sample. (We use <em>select</em> for choosing variables or columns in the tibble, and <em>filter</em> for selecting subjects or rows.) The sixteen variables we will select are: ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, Pulse, PhysActive, Smoke100, SleepTrouble, MaritalStatus and HealthGen.</p></li>
+<li><p>The original NHANES tibble includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we’d like to only include each subject one time. We use the <code>distinct()</code> function to limit the tibble to completely unique subjects (so that, for example, we don’t wind up with two or more rows that have the same ID number.)</p></li>
 </ol>
-<p>Here is the code I used to complete the six steps listed above and create the <code>nh_temp</code> data frame.</p>
+<p>Here is the code I used to complete the six steps listed above and create the <code>nh_temp</code> tibble.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nh_temp <span class="ot">&lt;-</span> NHANES <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(SurveyYr <span class="sc">==</span> <span class="st">"2011_12"</span>) <span class="sc">|&gt;</span></span>
@@ -421,7 +444,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>           MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The resulting <code>nh_temp</code> data frame has 1700 rows and 16 columns.</p>
+<p>The resulting <code>nh_temp</code> tibble has 1700 rows and 16 columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nh_temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -440,18 +463,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 10 62222 male     32   179    80.1 White Colleg…  25     104    73    78 No     
 # … with 1,690 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
 #   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive
-# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+#   ¹​Education, ²​PhysActive</code></pre>
 </div>
 </div>
 </section>
-<section id="sampling-nh_temp-to-obtain-our-nh_adult750-sample" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="sampling-nh_temp-to-obtain-our-nh_adult750-sample"><span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</h3>
-<p>Having established the <code>nh_temp</code> sampling frame, we now select a random sample of 750 adults from the 1700 available responses.</p>
+<section id="sec-nh750" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-nh750"><span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</h3>
+<p>Having established the <code>nh_temp</code> tibble, we now select a random sample of 750 adults from the 1700 available responses.</p>
 <ul>
 <li>We will use the <code>set.seed()</code> function in R to set a random numerical seed to ensure that if you redo this work, you will obtain the same sample.
 <ul>
-<li>Setting a seed is an important part of being able to replicate the work later when sampling is involved.</li>
+<li>Setting a seed is an important part of being able to replicate the work later when sampling is involved. If you and I use the same seed, we should get the same sample.</li>
 </ul></li>
 <li>Then we will use the <code>slice_sample()</code> function to actually draw the random sample, without replacement.
 <ul>
@@ -481,11 +503,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 10 64720 male     29   174.   62.3 Black Colleg…  20.6   127    60    84 Yes    
 # … with 740 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
 #   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive
-# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+#   ¹​Education, ²​PhysActive</code></pre>
 </div>
 </div>
-<p>The <code>nh_adult750</code> data frame now includes 750 rows (observations) on 16 variables (columns). Essentially, we have 16 pieces of information on each of 750 adult NHANES subjects who were included in the 2011-12 panel.</p>
+<p>The <code>nh_adult750</code> tibble now includes 750 rows (observations) on 16 variables (columns). Essentially, we have 16 pieces of information on each of 750 adult NHANES subjects who were included in the 2011-12 panel.</p>
 </section>
 <section id="summarizing-the-datas-structure" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="summarizing-the-datas-structure"><span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</h3>
@@ -533,8 +554,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 5 64048 female    54   161.   67.5 White Some C…  26.2   121    87    72 No     
 # … with 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
 #   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive
-# ℹ Use `colnames()` to see all variable names</code></pre>
+#   ¹​Education, ²​PhysActive</code></pre>
 </div>
 </div>
 </section>
@@ -728,7 +748,7 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 </div>
 </div>
 <p>So, for instance, we have 9 variables with no missing data, and that constitutes 56.25% of the 16 variables in our <code>nh_adult750</code> data.</p>
-<p>The <code>miss_var_summary()</code> function tabulates the number, percent missing, and cumulative sum of missing of each variable in our data frame, in order of most to least missing values.</p>
+<p>The <code>miss_var_summary()</code> function tabulates the number, percent missing, and cumulative sum of missing of each variable in our tibble, in order of most to least missing values.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_summary</span>(nh_adult750) <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
@@ -829,7 +849,7 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 
 </div>
 </div>
-<p>So, for example, the HealthGen variable is the one missing more of our data than anything else within the <code>nh_adult750</code> data frame.</p>
+<p>So, for example, the HealthGen variable is the one missing more of our data than anything else within the <code>nh_adult750</code> tibble.</p>
 <p>A graph of this information is available, as well.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -870,14 +890,13 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
  8   415      4     25  
  9   478      4     25  
 10   483      4     25  
-# … with 740 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 740 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="sec-nh_cc" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="sec-nh_cc"><span class="header-section-number">4.5</span> Sampling 500 Complete Cases</h2>
-<p>If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our <code>nh_temp</code> sampling frame to filter for complete cases.</p>
+<p>If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our <code>nh_temp</code> tibble to filter for complete cases.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nh_temp2 <span class="ot">&lt;-</span> NHANES <span class="sc">|&gt;</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(SurveyYr <span class="sc">==</span> <span class="st">"2011_12"</span>) <span class="sc">|&gt;</span></span>
@@ -889,7 +908,7 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s check that this new sampling frame has no missing data.</p>
+<p>Let’s check that this new tibble has no missing data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_table</span>(nh_temp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -923,25 +942,29 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 10 67930 male     59   172.   91.7 Mexi… Colleg…  31     127    85    66 No     
 # … with 490 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
 #   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive
-# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+#   ¹​Education, ²​PhysActive</code></pre>
 </div>
 </div>
 </section>
 <section id="saving-our-samples-in-.rds-files" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="saving-our-samples-in-.rds-files"><span class="header-section-number">4.6</span> Saving our Samples in <code>.Rds</code> files</h2>
-<p>We’ll save the <code>nh_adult750</code> and <code>nh_adult500cc</code> samples to use in later parts of the notes. To do this, we’ll save them as <code>.Rds</code> files, which will have some advantages for us later on.</p>
+<p>We’ll save the <code>nh_adult750</code> and <code>nh_adult500cc</code> samples to use in later parts of the notes. To do this, we’ll save them as <code>.Rds</code> files, which are files we can read directly into R with the <code>read_rds</code> command, and which will have some advantages for us later on.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(nh_adult750, <span class="at">file =</span> <span class="st">"data/nh_adult750.Rds"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(nh_adult500cc, <span class="at">file =</span> <span class="st">"data/nh_adult500cc.Rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You will also find these <code>.Rds</code> files as part of the <a href="https://github.com/THOMASELOVE/431-data"><code>431-data</code> repository</a> for the course.</p>
+<p>You will also find these <code>.Rds</code> files as part of the <a href="https://github.com/THOMASELOVE/431-data">431-data repository</a> for the course.</p>
 </section>
 <section id="coming-up" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">4.7</span> Coming Up</h2>
-<p>Next, we’ll introduce some new ways of thinking about data and variables as we load, explore and learn about some of the variables in these two NHANES samples.</p>
+<p>Next, we’ll introduce some new ways of thinking about data and variables as we load, explore and learn about some of the variables in our two NHANES samples.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-R4DS" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, and Garrett Grolemund. 2022. <em>R for Data Science</em>. Second. O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
+</div>
+</div>
 </section>
 <section class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

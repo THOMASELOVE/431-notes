@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes for 431 - 6&nbsp; More NHANES Summaries</title>
+<title>Course Notes for 431 - 6&nbsp; More NHANES Summaries</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notes for 431</a> 
+      <a href="./">Course Notes for 431</a> 
         <div class="sidebar-tools-main">
     <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
 </div>
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B placeholder</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -282,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C placeholder</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -302,7 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
   </div>
 </li>
       </ul>
@@ -1031,58 +1036,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Smoke100, HealthGen) <span class="sc">|&gt;</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>() <span class="sc">|&gt;</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'crrrrr'</span>) <span class="sc">|&gt;</span></span>
 <span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;"> HealthGen </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
+   <th style="text-align:center;">  </th>
+   <th style="text-align:right;"> HealthGen </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:center;">  </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Smoke100 </td>
-   <td style="text-align:left;"> Excellent </td>
-   <td style="text-align:left;"> Vgood </td>
-   <td style="text-align:left;"> Good </td>
-   <td style="text-align:left;"> Fair </td>
-   <td style="text-align:left;"> Poor </td>
-   <td style="text-align:left;"> Total </td>
+   <td style="text-align:center;"> Smoke100 </td>
+   <td style="text-align:right;"> Excellent </td>
+   <td style="text-align:right;"> Vgood </td>
+   <td style="text-align:right;"> Good </td>
+   <td style="text-align:right;"> Fair </td>
+   <td style="text-align:right;"> Poor </td>
+   <td style="text-align:center;"> Total </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> 44 </td>
-   <td style="text-align:left;"> 108 </td>
-   <td style="text-align:left;"> 105 </td>
-   <td style="text-align:left;"> 29 </td>
-   <td style="text-align:left;"> 5 </td>
-   <td style="text-align:left;"> 291 </td>
+   <td style="text-align:center;"> No </td>
+   <td style="text-align:right;"> 44 </td>
+   <td style="text-align:right;"> 108 </td>
+   <td style="text-align:right;"> 105 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:center;"> 291 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> 8 </td>
-   <td style="text-align:left;"> 59 </td>
-   <td style="text-align:left;"> 99 </td>
-   <td style="text-align:left;"> 36 </td>
-   <td style="text-align:left;"> 7 </td>
-   <td style="text-align:left;"> 209 </td>
+   <td style="text-align:center;"> Yes </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 59 </td>
+   <td style="text-align:right;"> 99 </td>
+   <td style="text-align:right;"> 36 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:center;"> 209 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:left;"> 52 </td>
-   <td style="text-align:left;"> 167 </td>
-   <td style="text-align:left;"> 204 </td>
-   <td style="text-align:left;"> 65 </td>
-   <td style="text-align:left;"> 12 </td>
-   <td style="text-align:left;"> 500 </td>
+   <td style="text-align:center;"> Total </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 167 </td>
+   <td style="text-align:right;"> 204 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:center;"> 500 </td>
   </tr>
 </tbody>
 </table>
@@ -1098,53 +1103,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
 <span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>() <span class="sc">|&gt;</span></span>
 <span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>() <span class="sc">|&gt;</span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'crrrrr'</span>) <span class="sc">|&gt;</span></span>
 <span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;"> HealthGen </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
+   <th style="text-align:center;">  </th>
+   <th style="text-align:right;"> HealthGen </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Smoke100 </td>
-   <td style="text-align:left;"> Excellent </td>
-   <td style="text-align:left;"> Vgood </td>
-   <td style="text-align:left;"> Good </td>
-   <td style="text-align:left;"> Fair </td>
-   <td style="text-align:left;"> Poor </td>
+   <td style="text-align:center;"> Smoke100 </td>
+   <td style="text-align:right;"> Excellent </td>
+   <td style="text-align:right;"> Vgood </td>
+   <td style="text-align:right;"> Good </td>
+   <td style="text-align:right;"> Fair </td>
+   <td style="text-align:right;"> Poor </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:left;"> 15.1% (44) </td>
-   <td style="text-align:left;"> 37.1% (108) </td>
-   <td style="text-align:left;"> 36.1% (105) </td>
-   <td style="text-align:left;"> 10.0% (29) </td>
-   <td style="text-align:left;"> 1.7%  (5) </td>
+   <td style="text-align:center;"> No </td>
+   <td style="text-align:right;"> 15.1% (44) </td>
+   <td style="text-align:right;"> 37.1% (108) </td>
+   <td style="text-align:right;"> 36.1% (105) </td>
+   <td style="text-align:right;"> 10.0% (29) </td>
+   <td style="text-align:right;"> 1.7%  (5) </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Yes </td>
-   <td style="text-align:left;"> 3.8%  (8) </td>
-   <td style="text-align:left;"> 28.2%  (59) </td>
-   <td style="text-align:left;"> 47.4%  (99) </td>
-   <td style="text-align:left;"> 17.2% (36) </td>
-   <td style="text-align:left;"> 3.3%  (7) </td>
+   <td style="text-align:center;"> Yes </td>
+   <td style="text-align:right;"> 3.8%  (8) </td>
+   <td style="text-align:right;"> 28.2%  (59) </td>
+   <td style="text-align:right;"> 47.4%  (99) </td>
+   <td style="text-align:right;"> 17.2% (36) </td>
+   <td style="text-align:right;"> 3.3%  (7) </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:left;"> 10.4% (52) </td>
-   <td style="text-align:left;"> 33.4% (167) </td>
-   <td style="text-align:left;"> 40.8% (204) </td>
-   <td style="text-align:left;"> 13.0% (65) </td>
-   <td style="text-align:left;"> 2.4% (12) </td>
+   <td style="text-align:center;"> Total </td>
+   <td style="text-align:right;"> 10.4% (52) </td>
+   <td style="text-align:right;"> 33.4% (167) </td>
+   <td style="text-align:right;"> 40.8% (204) </td>
+   <td style="text-align:right;"> 13.0% (65) </td>
+   <td style="text-align:right;"> 2.4% (12) </td>
   </tr>
 </tbody>
 </table>
@@ -1160,49 +1165,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
 <span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>() <span class="sc">|&gt;</span></span>
 <span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>() <span class="sc">|&gt;</span></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'crrrrr'</span>) <span class="sc">|&gt;</span></span>
 <span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">"center"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;"> HealthGen </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;">  </th>
+   <th style="text-align:center;">  </th>
+   <th style="text-align:right;"> HealthGen </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:right;">  </th>
+   <th style="text-align:center;">  </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Sex </td>
-   <td style="text-align:left;"> Excellent </td>
-   <td style="text-align:left;"> Vgood </td>
-   <td style="text-align:left;"> Good </td>
-   <td style="text-align:left;"> Fair </td>
-   <td style="text-align:left;"> Poor </td>
-   <td style="text-align:left;"> Total </td>
+   <td style="text-align:center;"> Sex </td>
+   <td style="text-align:right;"> Excellent </td>
+   <td style="text-align:right;"> Vgood </td>
+   <td style="text-align:right;"> Good </td>
+   <td style="text-align:right;"> Fair </td>
+   <td style="text-align:right;"> Poor </td>
+   <td style="text-align:center;"> Total </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:left;"> 63.5% (33) </td>
-   <td style="text-align:left;"> 44.3% (74) </td>
-   <td style="text-align:left;"> 43.6%  (89) </td>
-   <td style="text-align:left;"> 47.7% (31) </td>
-   <td style="text-align:left;"> 75.0% (9) </td>
-   <td style="text-align:left;"> 47.2% (236) </td>
+   <td style="text-align:center;"> female </td>
+   <td style="text-align:right;"> 63.5% (33) </td>
+   <td style="text-align:right;"> 44.3% (74) </td>
+   <td style="text-align:right;"> 43.6%  (89) </td>
+   <td style="text-align:right;"> 47.7% (31) </td>
+   <td style="text-align:right;"> 75.0% (9) </td>
+   <td style="text-align:center;"> 47.2% (236) </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:left;"> 36.5% (19) </td>
-   <td style="text-align:left;"> 55.7% (93) </td>
-   <td style="text-align:left;"> 56.4% (115) </td>
-   <td style="text-align:left;"> 52.3% (34) </td>
-   <td style="text-align:left;"> 25.0% (3) </td>
-   <td style="text-align:left;"> 52.8% (264) </td>
+   <td style="text-align:center;"> male </td>
+   <td style="text-align:right;"> 36.5% (19) </td>
+   <td style="text-align:right;"> 55.7% (93) </td>
+   <td style="text-align:right;"> 56.4% (115) </td>
+   <td style="text-align:right;"> 52.3% (34) </td>
+   <td style="text-align:right;"> 25.0% (3) </td>
+   <td style="text-align:center;"> 52.8% (264) </td>
   </tr>
 </tbody>
 </table>

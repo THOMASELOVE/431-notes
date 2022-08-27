@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes for 431 - 3&nbsp; Summarizing Penguins</title>
+<title>Course Notes for 431 - 3&nbsp; Summarizing Penguins</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notes for 431</a> 
+      <a href="./">Course Notes for 431</a> 
         <div class="sidebar-tools-main">
     <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
 </div>
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B placeholder</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -282,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C placeholder</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -302,7 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
   </div>
 </li>
       </ul>
@@ -325,21 +330,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#using-describe-from-psych" id="toc-using-describe-from-psych" class="nav-link" data-scroll-target="#using-describe-from-psych"> <span class="header-section-number">3.3.3</span> Using describe() from <code>psych</code></a></li>
   <li><a href="#using-describe-from-hmisc" id="toc-using-describe-from-hmisc" class="nav-link" data-scroll-target="#using-describe-from-hmisc"> <span class="header-section-number">3.3.4</span> Using describe() from <code>Hmisc</code></a></li>
   <li><a href="#using-tbl_summary-from-gtsummary" id="toc-using-tbl_summary-from-gtsummary" class="nav-link" data-scroll-target="#using-tbl_summary-from-gtsummary"> <span class="header-section-number">3.3.5</span> Using tbl_summary() from <code>gtsummary</code></a></li>
-  <li><a href="#visualizing-with-visdat-functions" id="toc-visualizing-with-visdat-functions" class="nav-link" data-scroll-target="#visualizing-with-visdat-functions"> <span class="header-section-number">3.3.6</span> Visualizing with <code>visdat</code> functions</a></li>
+  <li><a href="#using-dfsummary-from-summarytools" id="toc-using-dfsummary-from-summarytools" class="nav-link" data-scroll-target="#using-dfsummary-from-summarytools"> <span class="header-section-number">3.3.6</span> Using dfSummary from <code>summarytools</code></a></li>
+  <li><a href="#visualizing-with-visdat-functions" id="toc-visualizing-with-visdat-functions" class="nav-link" data-scroll-target="#visualizing-with-visdat-functions"> <span class="header-section-number">3.3.7</span> Visualizing with <code>visdat</code> functions</a></li>
   </ul></li>
   <li><a href="#histograms-for-a-variable" id="toc-histograms-for-a-variable" class="nav-link" data-scroll-target="#histograms-for-a-variable"> <span class="header-section-number">3.4</span> Histograms for a Variable</a></li>
-  <li><a href="#comparing-penguins-by-species-numerically" id="toc-comparing-penguins-by-species-numerically" class="nav-link" data-scroll-target="#comparing-penguins-by-species-numerically"> <span class="header-section-number">3.5</span> Comparing Penguins by Species Numerically</a>
+  <li><a href="#comparing-penguins-by-species-numerically" id="toc-comparing-penguins-by-species-numerically" class="nav-link" data-scroll-target="#comparing-penguins-by-species-numerically"> <span class="header-section-number">3.5</span> Comparing Penguins by Species Numerically</a></li>
+  <li><a href="#using-favstats-from-the-mosaic-package" id="toc-using-favstats-from-the-mosaic-package" class="nav-link" data-scroll-target="#using-favstats-from-the-mosaic-package"> <span class="header-section-number">3.6</span> Using favstats() from the mosaic package</a>
   <ul class="collapse">
-  <li><a href="#using-tbl_summary-to-summarize-the-tibble" id="toc-using-tbl_summary-to-summarize-the-tibble" class="nav-link" data-scroll-target="#using-tbl_summary-to-summarize-the-tibble"> <span class="header-section-number">3.5.1</span> Using tbl_summary() to summarize the tibble</a></li>
+  <li><a href="#using-tbl_summary-to-summarize-the-tibble" id="toc-using-tbl_summary-to-summarize-the-tibble" class="nav-link" data-scroll-target="#using-tbl_summary-to-summarize-the-tibble"> <span class="header-section-number">3.6.1</span> Using tbl_summary() to summarize the tibble</a></li>
   </ul></li>
-  <li><a href="#comparing-penguins-by-species-graphically" id="toc-comparing-penguins-by-species-graphically" class="nav-link" data-scroll-target="#comparing-penguins-by-species-graphically"> <span class="header-section-number">3.6</span> Comparing Penguins by Species Graphically</a>
+  <li><a href="#comparing-penguins-by-species-graphically" id="toc-comparing-penguins-by-species-graphically" class="nav-link" data-scroll-target="#comparing-penguins-by-species-graphically"> <span class="header-section-number">3.7</span> Comparing Penguins by Species Graphically</a>
   <ul class="collapse">
-  <li><a href="#faceting-histograms" id="toc-faceting-histograms" class="nav-link" data-scroll-target="#faceting-histograms"> <span class="header-section-number">3.6.1</span> Faceting Histograms</a></li>
-  <li><a href="#using-facet_grid" id="toc-using-facet_grid" class="nav-link" data-scroll-target="#using-facet_grid"> <span class="header-section-number">3.6.2</span> Using <code>facet_grid()</code></a></li>
-  <li><a href="#boxplots" id="toc-boxplots" class="nav-link" data-scroll-target="#boxplots"> <span class="header-section-number">3.6.3</span> Boxplots</a></li>
-  <li><a href="#adding-violins" id="toc-adding-violins" class="nav-link" data-scroll-target="#adding-violins"> <span class="header-section-number">3.6.4</span> Adding Violins</a></li>
-  <li><a href="#letter-value-plots-boxplots-for-large-data" id="toc-letter-value-plots-boxplots-for-large-data" class="nav-link" data-scroll-target="#letter-value-plots-boxplots-for-large-data"> <span class="header-section-number">3.6.5</span> Letter-Value Plots (Boxplots for Large Data)</a></li>
+  <li><a href="#faceting-histograms-with-facet_wrap" id="toc-faceting-histograms-with-facet_wrap" class="nav-link" data-scroll-target="#faceting-histograms-with-facet_wrap"> <span class="header-section-number">3.7.1</span> Faceting Histograms with facet_wrap()</a></li>
+  <li><a href="#using-facet_grid-instead" id="toc-using-facet_grid-instead" class="nav-link" data-scroll-target="#using-facet_grid-instead"> <span class="header-section-number">3.7.2</span> Using facet_grid() instead</a></li>
+  <li><a href="#boxplots" id="toc-boxplots" class="nav-link" data-scroll-target="#boxplots"> <span class="header-section-number">3.7.3</span> Boxplots</a></li>
+  <li><a href="#adding-violins" id="toc-adding-violins" class="nav-link" data-scroll-target="#adding-violins"> <span class="header-section-number">3.7.4</span> Adding Violins</a></li>
+  <li><a href="#letter-value-plots-boxplots-for-large-data" id="toc-letter-value-plots-boxplots-for-large-data" class="nav-link" data-scroll-target="#letter-value-plots-boxplots-for-large-data"> <span class="header-section-number">3.7.5</span> Letter-Value Plots (Boxplots for Large Data)</a></li>
   </ul></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">3.8</span> Coming Up</a></li>
   </ul>
 </nav>
     </div>
@@ -372,11 +380,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lvplot)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(summarytools)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lvplot)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will also use functions from the <code>mosaic</code> and <code>Hmisc</code> packages here, though I won’t load them into our session at this time.</p>
 </section>
@@ -400,8 +409,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  9 Adelie  Torgersen           34.1          18.1        193    3475 &lt;NA&gt;   2007
 10 Adelie  Torgersen           42            20.2        190    4250 &lt;NA&gt;   2007
 # … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,
-#   ²​body_mass_g
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+#   ²​body_mass_g</code></pre>
 </div>
 </div>
 </section>
@@ -466,15 +474,118 @@ quantitative variables:
 5   0.8183559 344       0</code></pre>
 </div>
 </div>
+<p>Daniel Kaplan’s <a href="https://dtkaplan.github.io/SM2-bookdown/">Statistical Modeling, 2nd edition</a> provides an entire course which coordinates nicely with the tools available in the <code>mosaic</code> package. In our course, we’ll just make use of two - this <code>inspect()</code> tool, and a related tool called <code>favstats</code> which lets us look at some common summaries for a single variable, or for one variable divided into groups by another.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> bill_length_mm, <span class="at">data =</span> penguins) <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> Q1 </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> Q3 </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> missing </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> 32.1 </td>
+   <td style="text-align:right;"> 39.225 </td>
+   <td style="text-align:right;"> 44.45 </td>
+   <td style="text-align:right;"> 48.5 </td>
+   <td style="text-align:right;"> 59.6 </td>
+   <td style="text-align:right;"> 43.92193 </td>
+   <td style="text-align:right;"> 5.459584 </td>
+   <td style="text-align:right;"> 342 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(bill_length_mm <span class="sc">~</span> species, <span class="at">data =</span> penguins) <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> species </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> Q1 </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> Q3 </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> missing </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Adelie </td>
+   <td style="text-align:right;"> 32.1 </td>
+   <td style="text-align:right;"> 36.75 </td>
+   <td style="text-align:right;"> 38.80 </td>
+   <td style="text-align:right;"> 40.750 </td>
+   <td style="text-align:right;"> 46.0 </td>
+   <td style="text-align:right;"> 38.79139 </td>
+   <td style="text-align:right;"> 2.663405 </td>
+   <td style="text-align:right;"> 151 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chinstrap </td>
+   <td style="text-align:right;"> 40.9 </td>
+   <td style="text-align:right;"> 46.35 </td>
+   <td style="text-align:right;"> 49.55 </td>
+   <td style="text-align:right;"> 51.075 </td>
+   <td style="text-align:right;"> 58.0 </td>
+   <td style="text-align:right;"> 48.83382 </td>
+   <td style="text-align:right;"> 3.339256 </td>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Gentoo </td>
+   <td style="text-align:right;"> 40.9 </td>
+   <td style="text-align:right;"> 45.30 </td>
+   <td style="text-align:right;"> 47.30 </td>
+   <td style="text-align:right;"> 49.550 </td>
+   <td style="text-align:right;"> 59.6 </td>
+   <td style="text-align:right;"> 47.50488 </td>
+   <td style="text-align:right;"> 3.081857 </td>
+   <td style="text-align:right;"> 123 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </section>
 <section id="using-describe-from-psych" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="using-describe-from-psych"><span class="header-section-number">3.3.3</span> Using describe() from <code>psych</code></h3>
-<p>We can use the <code>describe()</code> function from the <code>psych</code> package to get some additional summaries, if we’re interested, and here we also demonstrate the use of the <code>kbl()</code> and <code>kable_styling()</code> functions from the <code>kableExtra</code> package to make the table look appealing in HTML.</p>
+<p>We can use the <code>describe()</code> function from the <code>psych</code> package to get some additional summaries, if we’re interested, and here we also demonstrate the use of the <code>kbl()</code> and <code>kable_styling()</code> functions from the <code>kableExtra</code> package to make the table look appealing in HTML. More on the use of the <code>kableExtra</code> package <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">is available here</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>() <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -635,8 +746,8 @@ quantitative variables:
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="using-describe-from-hmisc"><span class="header-section-number">3.3.4</span> Using describe() from <code>Hmisc</code></h3>
 <p>One approach Frank Harrell has developed that I find helpful is the <code>describe()</code> function within his <code>Hmisc</code> package, which produces these results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  Hmisc<span class="sc">::</span><span class="fu">describe</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  Hmisc<span class="sc">::</span><span class="fu">describe</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>penguins 
 
@@ -713,16 +824,16 @@ Proportion 0.320 0.331 0.349
 <h3 data-number="3.3.5" class="anchored" data-anchor-id="using-tbl_summary-from-gtsummary"><span class="header-section-number">3.3.5</span> Using tbl_summary() from <code>gtsummary</code></h3>
 <p>If you want to produce results which look like you might expect to see in a published paper, the <code>tbl_summary()</code> function from the <code>gtsummary</code> package has many nice features.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="suhdeqmjec" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="atjaebgwyq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#suhdeqmjec .gt_table {
+#atjaebgwyq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -747,7 +858,7 @@ Proportion 0.320 0.331 0.349
   border-left-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_heading {
+#atjaebgwyq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -759,7 +870,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_title {
+#atjaebgwyq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -771,7 +882,7 @@ Proportion 0.320 0.331 0.349
   border-bottom-width: 0;
 }
 
-#suhdeqmjec .gt_subtitle {
+#atjaebgwyq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -783,13 +894,13 @@ Proportion 0.320 0.331 0.349
   border-top-width: 0;
 }
 
-#suhdeqmjec .gt_bottom_border {
+#atjaebgwyq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_col_headings {
+#atjaebgwyq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -804,7 +915,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_col_heading {
+#atjaebgwyq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -824,7 +935,7 @@ Proportion 0.320 0.331 0.349
   overflow-x: hidden;
 }
 
-#suhdeqmjec .gt_column_spanner_outer {
+#atjaebgwyq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -836,15 +947,15 @@ Proportion 0.320 0.331 0.349
   padding-right: 4px;
 }
 
-#suhdeqmjec .gt_column_spanner_outer:first-child {
+#atjaebgwyq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#suhdeqmjec .gt_column_spanner_outer:last-child {
+#atjaebgwyq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#suhdeqmjec .gt_column_spanner {
+#atjaebgwyq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -856,7 +967,7 @@ Proportion 0.320 0.331 0.349
   width: 100%;
 }
 
-#suhdeqmjec .gt_group_heading {
+#atjaebgwyq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -881,7 +992,7 @@ Proportion 0.320 0.331 0.349
   vertical-align: middle;
 }
 
-#suhdeqmjec .gt_empty_group_heading {
+#atjaebgwyq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -896,15 +1007,15 @@ Proportion 0.320 0.331 0.349
   vertical-align: middle;
 }
 
-#suhdeqmjec .gt_from_md > :first-child {
+#atjaebgwyq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#suhdeqmjec .gt_from_md > :last-child {
+#atjaebgwyq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#suhdeqmjec .gt_row {
+#atjaebgwyq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -923,7 +1034,7 @@ Proportion 0.320 0.331 0.349
   overflow-x: hidden;
 }
 
-#suhdeqmjec .gt_stub {
+#atjaebgwyq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -936,7 +1047,7 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#suhdeqmjec .gt_stub_row_group {
+#atjaebgwyq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -950,11 +1061,11 @@ Proportion 0.320 0.331 0.349
   vertical-align: top;
 }
 
-#suhdeqmjec .gt_row_group_first td {
+#atjaebgwyq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#suhdeqmjec .gt_summary_row {
+#atjaebgwyq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -964,16 +1075,16 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#suhdeqmjec .gt_first_summary_row {
+#atjaebgwyq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_first_summary_row.thick {
+#atjaebgwyq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#suhdeqmjec .gt_last_summary_row {
+#atjaebgwyq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -983,7 +1094,7 @@ Proportion 0.320 0.331 0.349
   border-bottom-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_grand_summary_row {
+#atjaebgwyq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -993,7 +1104,7 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#suhdeqmjec .gt_first_grand_summary_row {
+#atjaebgwyq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1003,11 +1114,11 @@ Proportion 0.320 0.331 0.349
   border-top-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_striped {
+#atjaebgwyq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#suhdeqmjec .gt_table_body {
+#atjaebgwyq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1016,7 +1127,7 @@ Proportion 0.320 0.331 0.349
   border-bottom-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_footnotes {
+#atjaebgwyq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1030,7 +1141,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_footnote {
+#atjaebgwyq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1039,7 +1150,7 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#suhdeqmjec .gt_sourcenotes {
+#atjaebgwyq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1053,7 +1164,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#suhdeqmjec .gt_sourcenote {
+#atjaebgwyq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1061,80 +1172,73 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#suhdeqmjec .gt_left {
+#atjaebgwyq .gt_left {
   text-align: left;
 }
 
-#suhdeqmjec .gt_center {
+#atjaebgwyq .gt_center {
   text-align: center;
 }
 
-#suhdeqmjec .gt_right {
+#atjaebgwyq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#suhdeqmjec .gt_font_normal {
+#atjaebgwyq .gt_font_normal {
   font-weight: normal;
 }
 
-#suhdeqmjec .gt_font_bold {
+#atjaebgwyq .gt_font_bold {
   font-weight: bold;
 }
 
-#suhdeqmjec .gt_font_italic {
+#atjaebgwyq .gt_font_italic {
   font-style: italic;
 }
 
-#suhdeqmjec .gt_super {
+#atjaebgwyq .gt_super {
   font-size: 65%;
 }
 
-#suhdeqmjec .gt_two_val_uncert {
-  display: inline-block;
-  line-height: 1em;
-  text-align: right;
-  font-size: 60%;
-  vertical-align: -0.25em;
-  margin-left: 0.1em;
-}
-
-#suhdeqmjec .gt_footnote_marks {
+#atjaebgwyq .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#suhdeqmjec .gt_asterisk {
+#atjaebgwyq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#suhdeqmjec .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
+#atjaebgwyq .gt_indent_1 {
+  text-indent: 5px;
 }
 
-#suhdeqmjec .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
+#atjaebgwyq .gt_indent_2 {
+  text-indent: 10px;
 }
 
-#suhdeqmjec .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
+#atjaebgwyq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#atjaebgwyq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#atjaebgwyq .gt_indent_5 {
+  text-indent: 25px;
 }
 </style>
 <table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>N = 344</strong><sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>N = 344</strong><sup class="gt_footnote_marks">1</sup></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
@@ -1197,31 +1301,118 @@ Proportion 0.320 0.331 0.349
 </div>
 </div>
 </div>
+<p>A vignette explaining the use of the <code>gtsummary</code> package <a href="https://www.danieldsjoberg.com/gtsummary/">is available here</a>.</p>
+<section id="using-descr-from-summarytools" class="level4" data-number="3.3.5.1">
+<h4 data-number="3.3.5.1" class="anchored" data-anchor-id="using-descr-from-summarytools"><span class="header-section-number">3.3.5.1</span> Using descr from <code>summarytools</code></h4>
+<p>The <code>dfSummary()</code> function from the <code>summarytools</code> package can also be used to provide numerical descriptions of all of the numerical variables contained within a tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">descr</span>(<span class="at">stats =</span> <span class="st">"common"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Non-numerical variable(s) ignored: species, island, sex</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Descriptive Statistics  
+penguins  
+N: 344  
+
+                  bill_depth_mm   bill_length_mm   body_mass_g   flipper_length_mm      year
+--------------- --------------- ---------------- ------------- ------------------- ---------
+           Mean           17.15            43.92       4201.75              200.92   2008.03
+        Std.Dev            1.97             5.46        801.95               14.06      0.82
+            Min           13.10            32.10       2700.00              172.00   2007.00
+         Median           17.30            44.45       4050.00              197.00   2008.00
+            Max           21.50            59.60       6300.00              231.00   2009.00
+        N.Valid          342.00           342.00        342.00              342.00    344.00
+      Pct.Valid           99.42            99.42         99.42               99.42    100.00</code></pre>
+</div>
+</div>
+<p>An introduction to the summarytools package <a href="https://cran.r-project.org/web/packages/summarytools/vignettes/introduction.html">is available here</a>, and illustrates some other ways to modify this output to suit your needs.</p>
 </section>
-<section id="visualizing-with-visdat-functions" class="level3" data-number="3.3.6">
-<h3 data-number="3.3.6" class="anchored" data-anchor-id="visualizing-with-visdat-functions"><span class="header-section-number">3.3.6</span> Visualizing with <code>visdat</code> functions</h3>
+</section>
+<section id="using-dfsummary-from-summarytools" class="level3" data-number="3.3.6">
+<h3 data-number="3.3.6" class="anchored" data-anchor-id="using-dfsummary-from-summarytools"><span class="header-section-number">3.3.6</span> Using dfSummary from <code>summarytools</code></h3>
+<p>The <code>dfSummary()</code> function from the <code>summarytools</code> package can be used to provide some additional descriptions of all variables within a tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfSummary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data Frame Summary  
+penguins  
+Dimensions: 344 x 8  
+Duplicates: 0  
+
+--------------------------------------------------------------------------------------------------------------------
+No   Variable            Stats / Values             Freqs (% of Valid)    Graph                 Valid      Missing  
+---- ------------------- -------------------------- --------------------- --------------------- ---------- ---------
+1    species             1. Adelie                  152 (44.2%)           IIIIIIII              344        0        
+     [factor]            2. Chinstrap                68 (19.8%)           III                   (100.0%)   (0.0%)   
+                         3. Gentoo                  124 (36.0%)           IIIIIII                                   
+
+2    island              1. Biscoe                  168 (48.8%)           IIIIIIIII             344        0        
+     [factor]            2. Dream                   124 (36.0%)           IIIIIII               (100.0%)   (0.0%)   
+                         3. Torgersen                52 (15.1%)           III                                       
+
+3    bill_length_mm      Mean (sd) : 43.9 (5.5)     164 distinct values       .     . :         342        2        
+     [numeric]           min &lt; med &lt; max:                                   . : : : : :         (99.4%)    (0.6%)   
+                         32.1 &lt; 44.5 &lt; 59.6                                 : : : : : :                             
+                         IQR (CV) : 9.3 (0.1)                               : : : : : : .                           
+                                                                          : : : : : : : : .                         
+
+4    bill_depth_mm       Mean (sd) : 17.2 (2)       80 distinct values              :           342        2        
+     [numeric]           min &lt; med &lt; max:                                         : :           (99.4%)    (0.6%)   
+                         13.1 &lt; 17.3 &lt; 21.5                                 : . : : : .                             
+                         IQR (CV) : 3.1 (0.1)                             . : : : : : :                             
+                                                                          : : : : : : : . .                         
+
+5    flipper_length_mm   Mean (sd) : 200.9 (14.1)   55 distinct values          :               342        2        
+     [integer]           min &lt; med &lt; max:                                     . :               (99.4%)    (0.6%)   
+                         172 &lt; 197 &lt; 231                                      : : :   . .                           
+                         IQR (CV) : 23 (0.1)                                . : : :   : : :                         
+                                                                            : : : : : : : : :                       
+
+6    body_mass_g         Mean (sd) : 4201.8 (802)   94 distinct values        :                 342        2        
+     [integer]           min &lt; med &lt; max:                                   . :                 (99.4%)    (0.6%)   
+                         2700 &lt; 4050 &lt; 6300                                 : : : :                                 
+                         IQR (CV) : 1200 (0.2)                              : : : : : .                             
+                                                                          . : : : : : :                             
+
+7    sex                 1. female                  165 (49.5%)           IIIIIIIII             333        11       
+     [factor]            2. male                    168 (50.5%)           IIIIIIIIII            (96.8%)    (3.2%)   
+
+8    year                Mean (sd) : 2008 (0.8)     2007 : 110 (32.0%)    IIIIII                344        0        
+     [integer]           min &lt; med &lt; max:           2008 : 114 (33.1%)    IIIIII                (100.0%)   (0.0%)   
+                         2007 &lt; 2008 &lt; 2009         2009 : 120 (34.9%)    IIIIII                                    
+                         IQR (CV) : 2 (0)                                                                           
+--------------------------------------------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-with-visdat-functions" class="level3" data-number="3.3.7">
+<h3 data-number="3.3.7" class="anchored" data-anchor-id="visualizing-with-visdat-functions"><span class="header-section-number">3.3.7</span> Visualizing with <code>visdat</code> functions</h3>
 <p>The <code>vis_dat()</code> function from the <code>visdat</code> package shows something about the types of variables, providing visual clues about what’s inside. The picture below identifies variables types, and missing values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_dat</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_dat</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can explore the missing data further using the <code>vis_miss</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>A vignette explaining the use of the <code>visdat</code> package <a href="https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html">is available here</a>.</p>
 </section>
 </section>
 <section id="histograms-for-a-variable" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="histograms-for-a-variable"><span class="header-section-number">3.4</span> Histograms for a Variable</h2>
 <p>The most common tool we use in producing a graphical summary of a variable, like the penguin’s flipper length, is a histogram. Here’s one option.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1229,48 +1420,48 @@ Proportion 0.320 0.331 0.349
 <pre><code>Warning: Removed 2 rows containing non-finite values (stat_bin).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This approach produces two messages that alert us to potential concerns, and a fairly unattractive plot.</p>
 <p>This time, we’ll first exclude the two penguins without a measured flipper length, and then set the <code>binwidth</code> to be 10. How well does that work?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>penguins2 <span class="ot">&lt;-</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(flipper_length_mm))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>penguins2 <span class="ot">&lt;-</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(flipper_length_mm))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Now we’ve eliminated the messages, but it would be nice to have some more granularity in the bars (so we’d like a smaller binwidth) and I’d also like to make the bars more clearly separated with colors. I’d also like to add a title. Like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">"orange"</span>, <span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in 342 Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">"orange"</span>, <span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in 342 Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>There are some other options for creating a graphical summary of a variable’s distribution. For example, we might consider a density plot, as well as a rug plot along the horizontal (X) axis:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Density and Rug Plot of Flipper Length in 342 Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Density and Rug Plot of Flipper Length in 342 Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Or perhaps a dotplot would provide a useful look…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"orange"</span>, <span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dot Plot of Flipper Length in 342 Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins2, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"orange"</span>, <span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dot Plot of Flipper Length in 342 Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We’ll learn about several other approaches to summarizing the distribution of a variable graphically later in the course.</p>
@@ -1279,9 +1470,9 @@ Proportion 0.320 0.331 0.349
 <h2 data-number="3.5" class="anchored" data-anchor-id="comparing-penguins-by-species-numerically"><span class="header-section-number">3.5</span> Comparing Penguins by Species Numerically</h2>
 <p>We have data from three different species of penguin. Can we compare their flipper lengths numerically, perhaps by calculating the mean flipper length within each species?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   species   `mean(flipper_length_mm)`
@@ -1293,15 +1484,15 @@ Proportion 0.320 0.331 0.349
 </div>
 <p>Well, that’s a problem. Looks like we have some missing values. Can we fix that, and also provide some additional summaries, like the sample size (<em>n</em>) and the median and standard deviation within each species? While we’re at it, can we make it prettier, with <code>kbl()</code> and <code>kable_styling()</code>?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(species, flipper_length_mm)) <span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(flipper_length_mm), </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(flipper_length_mm), </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(flipper_length_mm)) <span class="sc">|&gt;</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(species, flipper_length_mm)) <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(flipper_length_mm), </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(flipper_length_mm), </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(flipper_length_mm)) <span class="sc">|&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -1341,20 +1532,88 @@ Proportion 0.320 0.331 0.349
 
 </div>
 </div>
-<section id="using-tbl_summary-to-summarize-the-tibble" class="level3" data-number="3.5.1">
-<h3 data-number="3.5.1" class="anchored" data-anchor-id="using-tbl_summary-to-summarize-the-tibble"><span class="header-section-number">3.5.1</span> Using tbl_summary() to summarize the tibble</h3>
-<p>The <code>tbl_summary()</code> function from the <code>gtsummary</code> package can also do the job of summarizing all of the other variables in the tibble, broken down by species, very nicely.</p>
+</section>
+<section id="using-favstats-from-the-mosaic-package" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="using-favstats-from-the-mosaic-package"><span class="header-section-number">3.6</span> Using favstats() from the mosaic package</h2>
+<p>As we noted previously, we can also use <code>favstats()</code> from the <code>mosaic</code> package to help us look at the results for a single variable, split into groups by another, like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(bill_length_mm <span class="sc">~</span> species, <span class="at">data =</span> penguins) <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="nhgvfgqswl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> species </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> Q1 </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> Q3 </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> missing </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Adelie </td>
+   <td style="text-align:right;"> 32.1 </td>
+   <td style="text-align:right;"> 36.75 </td>
+   <td style="text-align:right;"> 38.80 </td>
+   <td style="text-align:right;"> 40.750 </td>
+   <td style="text-align:right;"> 46.0 </td>
+   <td style="text-align:right;"> 38.79139 </td>
+   <td style="text-align:right;"> 2.663405 </td>
+   <td style="text-align:right;"> 151 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Chinstrap </td>
+   <td style="text-align:right;"> 40.9 </td>
+   <td style="text-align:right;"> 46.35 </td>
+   <td style="text-align:right;"> 49.55 </td>
+   <td style="text-align:right;"> 51.075 </td>
+   <td style="text-align:right;"> 58.0 </td>
+   <td style="text-align:right;"> 48.83382 </td>
+   <td style="text-align:right;"> 3.339256 </td>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Gentoo </td>
+   <td style="text-align:right;"> 40.9 </td>
+   <td style="text-align:right;"> 45.30 </td>
+   <td style="text-align:right;"> 47.30 </td>
+   <td style="text-align:right;"> 49.550 </td>
+   <td style="text-align:right;"> 59.6 </td>
+   <td style="text-align:right;"> 47.50488 </td>
+   <td style="text-align:right;"> 3.081857 </td>
+   <td style="text-align:right;"> 123 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>One advantage of this approach is that (as you’ll note) it handles the missing data in the way we’d probably expect, by restricting the summaries to the complete cases.</p>
+<section id="using-tbl_summary-to-summarize-the-tibble" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="using-tbl_summary-to-summarize-the-tibble"><span class="header-section-number">3.6.1</span> Using tbl_summary() to summarize the tibble</h3>
+<p>The <code>tbl_summary()</code> function from the <code>gtsummary</code> package can also do the job of summarizing all of the other variables in the tibble, broken down by species, very nicely.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="grpmyturju" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#nhgvfgqswl .gt_table {
+#grpmyturju .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1379,7 +1638,7 @@ Proportion 0.320 0.331 0.349
   border-left-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_heading {
+#grpmyturju .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1391,7 +1650,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_title {
+#grpmyturju .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1403,7 +1662,7 @@ Proportion 0.320 0.331 0.349
   border-bottom-width: 0;
 }
 
-#nhgvfgqswl .gt_subtitle {
+#grpmyturju .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1415,13 +1674,13 @@ Proportion 0.320 0.331 0.349
   border-top-width: 0;
 }
 
-#nhgvfgqswl .gt_bottom_border {
+#grpmyturju .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_col_headings {
+#grpmyturju .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1436,7 +1695,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_col_heading {
+#grpmyturju .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1456,7 +1715,7 @@ Proportion 0.320 0.331 0.349
   overflow-x: hidden;
 }
 
-#nhgvfgqswl .gt_column_spanner_outer {
+#grpmyturju .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1468,15 +1727,15 @@ Proportion 0.320 0.331 0.349
   padding-right: 4px;
 }
 
-#nhgvfgqswl .gt_column_spanner_outer:first-child {
+#grpmyturju .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nhgvfgqswl .gt_column_spanner_outer:last-child {
+#grpmyturju .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nhgvfgqswl .gt_column_spanner {
+#grpmyturju .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1488,7 +1747,7 @@ Proportion 0.320 0.331 0.349
   width: 100%;
 }
 
-#nhgvfgqswl .gt_group_heading {
+#grpmyturju .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1513,7 +1772,7 @@ Proportion 0.320 0.331 0.349
   vertical-align: middle;
 }
 
-#nhgvfgqswl .gt_empty_group_heading {
+#grpmyturju .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1528,15 +1787,15 @@ Proportion 0.320 0.331 0.349
   vertical-align: middle;
 }
 
-#nhgvfgqswl .gt_from_md > :first-child {
+#grpmyturju .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nhgvfgqswl .gt_from_md > :last-child {
+#grpmyturju .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nhgvfgqswl .gt_row {
+#grpmyturju .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1555,7 +1814,7 @@ Proportion 0.320 0.331 0.349
   overflow-x: hidden;
 }
 
-#nhgvfgqswl .gt_stub {
+#grpmyturju .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1568,7 +1827,7 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#nhgvfgqswl .gt_stub_row_group {
+#grpmyturju .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1582,11 +1841,11 @@ Proportion 0.320 0.331 0.349
   vertical-align: top;
 }
 
-#nhgvfgqswl .gt_row_group_first td {
+#grpmyturju .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nhgvfgqswl .gt_summary_row {
+#grpmyturju .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1596,16 +1855,16 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#nhgvfgqswl .gt_first_summary_row {
+#grpmyturju .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_first_summary_row.thick {
+#grpmyturju .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nhgvfgqswl .gt_last_summary_row {
+#grpmyturju .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1615,7 +1874,7 @@ Proportion 0.320 0.331 0.349
   border-bottom-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_grand_summary_row {
+#grpmyturju .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1625,7 +1884,7 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#nhgvfgqswl .gt_first_grand_summary_row {
+#grpmyturju .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1635,11 +1894,11 @@ Proportion 0.320 0.331 0.349
   border-top-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_striped {
+#grpmyturju .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nhgvfgqswl .gt_table_body {
+#grpmyturju .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1648,7 +1907,7 @@ Proportion 0.320 0.331 0.349
   border-bottom-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_footnotes {
+#grpmyturju .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1662,7 +1921,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_footnote {
+#grpmyturju .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1671,7 +1930,7 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#nhgvfgqswl .gt_sourcenotes {
+#grpmyturju .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1685,7 +1944,7 @@ Proportion 0.320 0.331 0.349
   border-right-color: #D3D3D3;
 }
 
-#nhgvfgqswl .gt_sourcenote {
+#grpmyturju .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1693,82 +1952,75 @@ Proportion 0.320 0.331 0.349
   padding-right: 5px;
 }
 
-#nhgvfgqswl .gt_left {
+#grpmyturju .gt_left {
   text-align: left;
 }
 
-#nhgvfgqswl .gt_center {
+#grpmyturju .gt_center {
   text-align: center;
 }
 
-#nhgvfgqswl .gt_right {
+#grpmyturju .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nhgvfgqswl .gt_font_normal {
+#grpmyturju .gt_font_normal {
   font-weight: normal;
 }
 
-#nhgvfgqswl .gt_font_bold {
+#grpmyturju .gt_font_bold {
   font-weight: bold;
 }
 
-#nhgvfgqswl .gt_font_italic {
+#grpmyturju .gt_font_italic {
   font-style: italic;
 }
 
-#nhgvfgqswl .gt_super {
+#grpmyturju .gt_super {
   font-size: 65%;
 }
 
-#nhgvfgqswl .gt_two_val_uncert {
-  display: inline-block;
-  line-height: 1em;
-  text-align: right;
-  font-size: 60%;
-  vertical-align: -0.25em;
-  margin-left: 0.1em;
-}
-
-#nhgvfgqswl .gt_footnote_marks {
+#grpmyturju .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#nhgvfgqswl .gt_asterisk {
+#grpmyturju .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nhgvfgqswl .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
+#grpmyturju .gt_indent_1 {
+  text-indent: 5px;
 }
 
-#nhgvfgqswl .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
+#grpmyturju .gt_indent_2 {
+  text-indent: 10px;
 }
 
-#nhgvfgqswl .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
+#grpmyturju .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#grpmyturju .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#grpmyturju .gt_indent_5 {
+  text-indent: 25px;
 }
 </style>
 <table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Adelie</strong>, N = 152<sup class="gt_footnote_marks">1</sup></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Chinstrap</strong>, N = 68<sup class="gt_footnote_marks">1</sup></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Gentoo</strong>, N = 124<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>Adelie</strong>, N = 152<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>Chinstrap</strong>, N = 68<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>Gentoo</strong>, N = 124<sup class="gt_footnote_marks">1</sup></th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
@@ -1865,87 +2117,90 @@ Proportion 0.320 0.331 0.349
 </div>
 </section>
 </section>
-<section id="comparing-penguins-by-species-graphically" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="comparing-penguins-by-species-graphically"><span class="header-section-number">3.6</span> Comparing Penguins by Species Graphically</h2>
-<section id="faceting-histograms" class="level3" data-number="3.6.1">
-<h3 data-number="3.6.1" class="anchored" data-anchor-id="faceting-histograms"><span class="header-section-number">3.6.1</span> Faceting Histograms</h3>
+<section id="comparing-penguins-by-species-graphically" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="comparing-penguins-by-species-graphically"><span class="header-section-number">3.7</span> Comparing Penguins by Species Graphically</h2>
+<section id="faceting-histograms-with-facet_wrap" class="level3" data-number="3.7.1">
+<h3 data-number="3.7.1" class="anchored" data-anchor-id="faceting-histograms-with-facet_wrap"><span class="header-section-number">3.7.1</span> Faceting Histograms with facet_wrap()</h3>
 <p>We could compare the distributions of the flipper lengths across the three species, by creating a set of faceted histograms, like so…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>penguins3 <span class="ot">&lt;-</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(flipper_length_mm, species))</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in Palmer Penguins, by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>penguins3 <span class="ot">&lt;-</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">complete.cases</span>(flipper_length_mm, species))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in Palmer Penguins, by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We might add in the command</p>
 <pre><code>  guides(fill = "none") +</code></pre>
 <p>to eliminate the redundant legend on the right-hand side of the plot.</p>
 </section>
-<section id="using-facet_grid" class="level3" data-number="3.6.2">
-<h3 data-number="3.6.2" class="anchored" data-anchor-id="using-facet_grid"><span class="header-section-number">3.6.2</span> Using <code>facet_grid()</code></h3>
+<section id="using-facet_grid-instead" class="level3" data-number="3.7.2">
+<h3 data-number="3.7.2" class="anchored" data-anchor-id="using-facet_grid-instead"><span class="header-section-number">3.7.2</span> Using facet_grid() instead</h3>
 <p>The <code>facet_wrap()</code> approach has created three histograms, spread horizontally. Alternatively, we could plot the species vertically using <code>facet_grid()</code>, which clearly shows which species produces the penguins with the larger flipper lengths, especially if we reduce the width of the bins a bit.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> .) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in Palmer Penguins, by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> .) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in Palmer Penguins, by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We’ll use facets like this all the time in what follows.</p>
 </section>
-<section id="boxplots" class="level3" data-number="3.6.3">
-<h3 data-number="3.6.3" class="anchored" data-anchor-id="boxplots"><span class="header-section-number">3.6.3</span> Boxplots</h3>
+<section id="boxplots" class="level3" data-number="3.7.3">
+<h3 data-number="3.7.3" class="anchored" data-anchor-id="boxplots"><span class="header-section-number">3.7.3</span> Boxplots</h3>
 <p>Another very common tool we’ll use for looking simultaneously at the distributions of a variable across two or more categories is a boxplot. More on this later, but here’s one example of what this might look like.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> species, </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in Palmer Penguins, by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> species, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Flipper Length in Palmer Penguins, by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="adding-violins" class="level3" data-number="3.6.4">
-<h3 data-number="3.6.4" class="anchored" data-anchor-id="adding-violins"><span class="header-section-number">3.6.4</span> Adding Violins</h3>
+<section id="adding-violins" class="level3" data-number="3.7.4">
+<h3 data-number="3.7.4" class="anchored" data-anchor-id="adding-violins"><span class="header-section-number">3.7.4</span> Adding Violins</h3>
 <p>And here’s a somewhat fancier version, including a violin plot, and with the coordinates flipped so the plots are shown vertically rather than horizontally.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> species)) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">col =</span> species)) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> species), <span class="at">width =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">col =</span> <span class="st">"none"</span>, <span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Augmented Boxplot of Flipper Length in Penguins by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> species)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">col =</span> species)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> species), <span class="at">width =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">col =</span> <span class="st">"none"</span>, <span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Augmented Boxplot of Flipper Length in Penguins by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="letter-value-plots-boxplots-for-large-data" class="level3" data-number="3.6.5">
-<h3 data-number="3.6.5" class="anchored" data-anchor-id="letter-value-plots-boxplots-for-large-data"><span class="header-section-number">3.6.5</span> Letter-Value Plots (Boxplots for Large Data)</h3>
+<section id="letter-value-plots-boxplots-for-large-data" class="level3" data-number="3.7.5">
+<h3 data-number="3.7.5" class="anchored" data-anchor-id="letter-value-plots-boxplots-for-large-data"><span class="header-section-number">3.7.5</span> Letter-Value Plots (Boxplots for Large Data)</h3>
 <p>We might also consider a letter-value plot, using the <code>geom_lv()</code> function from the <code>lvplot</code> package in R, although I rarely use such a plot unless I have at least 1000 observations to work with.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lv</span>(<span class="fu">aes</span>(<span class="at">fill=</span>..LV..)) <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>() <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Letter-Value Plot of Flipper Length in Penguins by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins3, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lv</span>(<span class="fu">aes</span>(<span class="at">fill=</span>..LV..)) <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>() <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Letter-Value Plot of Flipper Length in Penguins by Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="03-penguins2_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<p><img src="03-penguins2_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>You’re probably tiring of the penguins now. Let’s look at a larger data set next.</p>
-
-
 </section>
+</section>
+<section id="coming-up" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">3.8</span> Coming Up</h2>
+<p>You’re probably tiring of the penguins now. Next, we’ll look at some data on people, taken from the National Health and Nutrition Examination Survey, or NHANES.</p>
+
+
 </section>
 
 </main> <!-- /main -->

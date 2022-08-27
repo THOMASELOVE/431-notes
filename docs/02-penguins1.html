@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes for 431 - 2&nbsp; The Palmer Penguins</title>
+<title>Course Notes for 431 - 2&nbsp; The Palmer Penguins</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -119,6 +119,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 </head>
 
@@ -141,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notes for 431</a> 
+      <a href="./">Course Notes for 431</a> 
         <div class="sidebar-tools-main">
     <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
 </div>
@@ -264,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B placeholder</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -279,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C placeholder</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -299,7 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
   </div>
 </li>
       </ul>
@@ -315,11 +323,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">2.1</span> Setup: Packages Used Here</a></li>
   <li><a href="#viewing-a-data-set" id="toc-viewing-a-data-set" class="nav-link" data-scroll-target="#viewing-a-data-set"> <span class="header-section-number">2.2</span> Viewing a Data Set</a></li>
-  <li><a href="#create-newpenguins-eliminating-missing-data" id="toc-create-newpenguins-eliminating-missing-data" class="nav-link" data-scroll-target="#create-newpenguins-eliminating-missing-data"> <span class="header-section-number">2.3</span> Create <code>newpenguins</code>: Eliminating Missing Data</a></li>
+  <li><a href="#create-new_penguins-eliminating-missing-data" id="toc-create-new_penguins-eliminating-missing-data" class="nav-link" data-scroll-target="#create-new_penguins-eliminating-missing-data"> <span class="header-section-number">2.3</span> Create <code>new_penguins</code>: Eliminating Missing Data</a></li>
   <li><a href="#counting-things-and-making-tables" id="toc-counting-things-and-making-tables" class="nav-link" data-scroll-target="#counting-things-and-making-tables"> <span class="header-section-number">2.4</span> Counting Things and Making Tables</a></li>
   <li><a href="#creating-a-scatterplot" id="toc-creating-a-scatterplot" class="nav-link" data-scroll-target="#creating-a-scatterplot"> <span class="header-section-number">2.5</span> Creating a Scatterplot</a></li>
   <li><a href="#six-ways-to-improve-this-graph" id="toc-six-ways-to-improve-this-graph" class="nav-link" data-scroll-target="#six-ways-to-improve-this-graph"> <span class="header-section-number">2.6</span> Six Ways To “Improve” This Graph</a></li>
   <li><a href="#a-little-reflection" id="toc-a-little-reflection" class="nav-link" data-scroll-target="#a-little-reflection"> <span class="header-section-number">2.7</span> A Little Reflection</a></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">2.8</span> Coming Up</a></li>
   </ul>
 </nav>
     </div>
@@ -354,10 +363,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins) </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor) </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="viewing-a-data-set" class="level2" data-number="2.2">
@@ -380,15 +390,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  9 Adelie  Torgersen           34.1          18.1        193    3475 &lt;NA&gt;   2007
 10 Adelie  Torgersen           42            20.2        190    4250 &lt;NA&gt;   2007
 # … with 334 more rows, and abbreviated variable names ¹​flipper_length_mm,
-#   ²​body_mass_g
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+#   ²​body_mass_g</code></pre>
 </div>
 </div>
-<p>For instance, the first penguin in the data is of the species Adelie (the three species included in the data are Adelie, Chinstrap and Gentoo), and was observed on the island called Torgeson. The remaining data for that penguin include measures of its bill length and depth, its flipper length and body mass, its sex and the year in which it was observed.</p>
-<p>Note that though there are 344 rows in the tibble of data called <code>penguins</code>, only the first ten rows (penguins) are shown in the table above. Note also that the symbol <code>&lt;NA&gt;</code> is used to indicate a missing (not available) value.</p>
+<p>For instance, the first penguin in the data is of the species Adelie, and was observed on the island called Torgeson. The remaining data for that penguin include measures of its bill length and depth, its flipper length and body mass, its sex and the year in which it was observed.</p>
+<p>Note that though there are 344 rows in the tibble of data called <code>penguins</code>, only the first ten rows (penguins) are shown in the table above. Note also that the symbol <code>NA</code> or <code>&lt;NA&gt;</code> is used to indicate a missing (not available) value.</p>
 </section>
-<section id="create-newpenguins-eliminating-missing-data" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="create-newpenguins-eliminating-missing-data"><span class="header-section-number">2.3</span> Create <code>newpenguins</code>: Eliminating Missing Data</h2>
+<section id="create-new_penguins-eliminating-missing-data" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="create-new_penguins-eliminating-missing-data"><span class="header-section-number">2.3</span> Create <code>new_penguins</code>: Eliminating Missing Data</h2>
 <p>Next, let’s take the <code>penguins</code> data from the <code>palmerpenguins</code> package, and identify those observations which have complete data (so, no missing values) in four variables of interest. We’ll store that result in a new tibble (data set) called <code>new_penguins</code> and then take a look at that result using the following code.</p>
 <p>Note that the code below:</p>
 <ul>
@@ -416,8 +425,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  9 Adelie  Torgersen           38.6          21.2        191    3800 male   2007
 10 Adelie  Torgersen           34.6          21.1        198    4400 male   2007
 # … with 323 more rows, and abbreviated variable names ¹​flipper_length_mm,
-#   ²​body_mass_g
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+#   ²​body_mass_g</code></pre>
 </div>
 </div>
 </section>
@@ -447,61 +455,116 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span> <span class="co"># add row, column totals</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()  <span class="co"># one convenient way to make the table prettier</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;">sex</th>
-<th style="text-align: right;">Adelie</th>
-<th style="text-align: right;">Chinstrap</th>
-<th style="text-align: right;">Gentoo</th>
-<th style="text-align: right;">Total</th>
-</tr>
-</thead>
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> sex </th>
+   <th style="text-align:right;"> Adelie </th>
+   <th style="text-align:right;"> Chinstrap </th>
+   <th style="text-align:right;"> Gentoo </th>
+   <th style="text-align:right;"> Total </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">female</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">58</td>
-<td style="text-align: right;">165</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">male</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">168</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Total</td>
-<td style="text-align: right;">146</td>
-<td style="text-align: right;">68</td>
-<td style="text-align: right;">119</td>
-<td style="text-align: right;">333</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 73 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 58 </td>
+   <td style="text-align:right;"> 165 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> male </td>
+   <td style="text-align:right;"> 73 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 168 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:right;"> 146 </td>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:right;"> 119 </td>
+   <td style="text-align:right;"> 333 </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 <p>The <code>kable()</code> function comes from the <code>knitr</code> package we loaded earlier. Notice that we added some comments to the code here with the prefix <code>#</code>. These comments are ignored by R in processing the data.</p>
-<p>We can switch the rows and columns, and add some additional features, using the code below, which makes use of the <code>gt()</code> and <code>tab_header()</code> functions from the <code>gt</code> package, which is designed to help build complex tables. More on the incredibly versatile <code>gt()</code> package is available at <a href="https://gt.rstudio.com/" class="uri">https://gt.rstudio.com/</a>.</p>
+<p>Another approach we could have used here is aided by the <code>kableExtra</code> package’s function called <code>kbl()</code>, which lets us set up the alignment of our columns. We’ll also add the species name using <code>adorn_title()</code> from the <code>janitor</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>new_penguins <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(species, sex) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(sex, species) <span class="sc">|&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tab_header</span>(</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"Palmer Penguins in **newpenguins**"</span>),</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"Comparing sexes by species"</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="fu">c</span>(<span class="st">'lcccr'</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="woguvbguqn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:center;"> species </th>
+   <th style="text-align:center;">  </th>
+   <th style="text-align:center;">  </th>
+   <th style="text-align:right;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> sex </td>
+   <td style="text-align:center;"> Adelie </td>
+   <td style="text-align:center;"> Chinstrap </td>
+   <td style="text-align:center;"> Gentoo </td>
+   <td style="text-align:right;"> Total </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:center;"> 73 </td>
+   <td style="text-align:center;"> 34 </td>
+   <td style="text-align:center;"> 58 </td>
+   <td style="text-align:right;"> 165 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> male </td>
+   <td style="text-align:center;"> 73 </td>
+   <td style="text-align:center;"> 34 </td>
+   <td style="text-align:center;"> 61 </td>
+   <td style="text-align:right;"> 168 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:center;"> 146 </td>
+   <td style="text-align:center;"> 68 </td>
+   <td style="text-align:center;"> 119 </td>
+   <td style="text-align:right;"> 333 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>We can switch the rows and columns, and add some additional features, using the code below, which makes use of the <code>gt()</code> and <code>tab_header()</code> functions from the <code>gt</code> package, which is designed to help build complex tables. More on the incredibly versatile <code>gt()</code> package is available at <a href="https://gt.rstudio.com/" class="uri">https://gt.rstudio.com/</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>new_penguins <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(species, sex) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tab_header</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">md</span>(<span class="st">"Palmer Penguins in **newpenguins**"</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"Comparing sexes by species"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="sdhbamkdif" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#woguvbguqn .gt_table {
+#sdhbamkdif .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -526,7 +589,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_heading {
+#sdhbamkdif .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -538,7 +601,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_title {
+#sdhbamkdif .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -550,7 +613,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#woguvbguqn .gt_subtitle {
+#sdhbamkdif .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -562,13 +625,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#woguvbguqn .gt_bottom_border {
+#sdhbamkdif .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_col_headings {
+#sdhbamkdif .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -583,7 +646,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_col_heading {
+#sdhbamkdif .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -603,7 +666,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#woguvbguqn .gt_column_spanner_outer {
+#sdhbamkdif .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -615,15 +678,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#woguvbguqn .gt_column_spanner_outer:first-child {
+#sdhbamkdif .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#woguvbguqn .gt_column_spanner_outer:last-child {
+#sdhbamkdif .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#woguvbguqn .gt_column_spanner {
+#sdhbamkdif .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -635,7 +698,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#woguvbguqn .gt_group_heading {
+#sdhbamkdif .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -660,7 +723,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#woguvbguqn .gt_empty_group_heading {
+#sdhbamkdif .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -675,15 +738,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#woguvbguqn .gt_from_md > :first-child {
+#sdhbamkdif .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#woguvbguqn .gt_from_md > :last-child {
+#sdhbamkdif .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#woguvbguqn .gt_row {
+#sdhbamkdif .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -702,7 +765,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#woguvbguqn .gt_stub {
+#sdhbamkdif .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -715,7 +778,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#woguvbguqn .gt_stub_row_group {
+#sdhbamkdif .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -729,11 +792,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#woguvbguqn .gt_row_group_first td {
+#sdhbamkdif .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#woguvbguqn .gt_summary_row {
+#sdhbamkdif .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -743,16 +806,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#woguvbguqn .gt_first_summary_row {
+#sdhbamkdif .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_first_summary_row.thick {
+#sdhbamkdif .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#woguvbguqn .gt_last_summary_row {
+#sdhbamkdif .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -762,7 +825,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_grand_summary_row {
+#sdhbamkdif .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -772,7 +835,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#woguvbguqn .gt_first_grand_summary_row {
+#sdhbamkdif .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -782,11 +845,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_striped {
+#sdhbamkdif .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#woguvbguqn .gt_table_body {
+#sdhbamkdif .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -795,7 +858,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_footnotes {
+#sdhbamkdif .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -809,7 +872,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_footnote {
+#sdhbamkdif .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -818,7 +881,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#woguvbguqn .gt_sourcenotes {
+#sdhbamkdif .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -832,7 +895,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#woguvbguqn .gt_sourcenote {
+#sdhbamkdif .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -840,89 +903,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#woguvbguqn .gt_left {
+#sdhbamkdif .gt_left {
   text-align: left;
 }
 
-#woguvbguqn .gt_center {
+#sdhbamkdif .gt_center {
   text-align: center;
 }
 
-#woguvbguqn .gt_right {
+#sdhbamkdif .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#woguvbguqn .gt_font_normal {
+#sdhbamkdif .gt_font_normal {
   font-weight: normal;
 }
 
-#woguvbguqn .gt_font_bold {
+#sdhbamkdif .gt_font_bold {
   font-weight: bold;
 }
 
-#woguvbguqn .gt_font_italic {
+#sdhbamkdif .gt_font_italic {
   font-style: italic;
 }
 
-#woguvbguqn .gt_super {
+#sdhbamkdif .gt_super {
   font-size: 65%;
 }
 
-#woguvbguqn .gt_two_val_uncert {
-  display: inline-block;
-  line-height: 1em;
-  text-align: right;
-  font-size: 60%;
-  vertical-align: -0.25em;
-  margin-left: 0.1em;
-}
-
-#woguvbguqn .gt_footnote_marks {
+#sdhbamkdif .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#woguvbguqn .gt_asterisk {
+#sdhbamkdif .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#woguvbguqn .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
+#sdhbamkdif .gt_indent_1 {
+  text-indent: 5px;
 }
 
-#woguvbguqn .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
+#sdhbamkdif .gt_indent_2 {
+  text-indent: 10px;
 }
 
-#woguvbguqn .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
+#sdhbamkdif .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#sdhbamkdif .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#sdhbamkdif .gt_indent_5 {
+  text-indent: 25px;
 }
 </style>
 <table class="gt_table">
   <thead class="gt_header">
     <tr>
-      <th colspan="4" class="gt_heading gt_title gt_font_normal" style="">Palmer Penguins in <strong>newpenguins</strong></th>
+      <td colspan="4" class="gt_heading gt_title gt_font_normal" style="">Palmer Penguins in <strong>newpenguins</strong></td>
     </tr>
     <tr>
-      <th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="">Comparing sexes by species</th>
+      <td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="">Comparing sexes by species</td>
     </tr>
   </thead>
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">species</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">female</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">male</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Total</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">species</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">female</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">male</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">Total</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
@@ -954,29 +1010,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="2.5" class="anchored" data-anchor-id="creating-a-scatterplot"><span class="header-section-number">2.5</span> Creating a Scatterplot</h2>
 <p>Now, let’s look at the other two variables of interest. Let’s create a graph showing the association of body mass with flipper length across the complete set of 333 penguins.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="02-penguins1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Some of you may want to include a straight-line model (fit by a classical linear regression) to this plot. One way to do that in R involves the addition of a single line of code, like this:</p>
-<div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="02-penguins1_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Whenever we build a graph for ourselves, these default choices may be sufficient. But I’d like to see a prettier version if I was going to show it to someone else. So, I might use a different color for each species, and I might add a title, like this.</p>
+<p>Some of you may want to include a straight-line model (fit by a classical linear regression) to this plot. One way to do that in R involves the addition of a single line of code, like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">col =</span> species)) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flipper Length and Body Mass for 333 of the Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="02-penguins1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Whenever we build a graph for ourselves, these default choices may be sufficient. But I’d like to see a prettier version if I was going to show it to someone else. So, I might use a different color for each species, and I might add a title, like this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">col =</span> species)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flipper Length and Body Mass for 333 of the Palmer Penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02-penguins1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -992,18 +1048,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>improve the titles by adding a subtitle, and also adding in some code to count the penguins (rather than hard-coding in the total number.)</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">col =</span> species)) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span> sex) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flipper Length and Body Mass, by Sex &amp; Species"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">str_glue</span>(<span class="fu">nrow</span>(new_penguins), <span class="st">" of the Palmer Penguins"</span>),</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Body Mass (g)"</span>, </span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Flipper Length (mm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_penguins, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">col =</span> species)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span> sex) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Flipper Length and Body Mass, by Sex &amp; Species"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">str_glue</span>(<span class="fu">nrow</span>(new_penguins), <span class="st">" of the Palmer Penguins"</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Body Mass (g)"</span>, </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Flipper Length (mm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="02-penguins1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="02-penguins1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1018,6 +1074,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Do you think it would be helpful to plot a straight-line relationship (rather than a smooth curve) within each combination of Sex and Species in the final plot? Why or why not? (Also, what would we have to do to the code to accomplish this?)</li>
 <li>How was the R code for the plot revised to accomplish each of the six “wants” specified above?</li>
 </ul>
+</section>
+<section id="coming-up" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">2.8</span> Coming Up</h2>
+<p>Next, we’ll introduce and demonstrate some more of the many available tools for creating summaries (both graphical and numerical) in R, again working with the Palmer Penguins data.</p>
 
 
 </section>

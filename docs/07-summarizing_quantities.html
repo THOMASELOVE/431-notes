@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes for 431 - 7&nbsp; Summarizing Quantities</title>
+<title>Course Notes for 431 - 7&nbsp; Summarizing Quantities</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -161,7 +161,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notes for 431</a> 
+      <a href="./">Course Notes for 431</a> 
         <div class="sidebar-tools-main">
     <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
 </div>
@@ -284,7 +284,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B placeholder</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -299,7 +299,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C placeholder</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -319,7 +319,12 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
   </div>
 </li>
       </ul>
@@ -402,11 +407,11 @@ div.csl-indent {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This chapter also requires that the <code>knitr</code>, <code>Hmisc</code>, <code>mosaic</code>, and <code>psych</code> packages are loaded on your machine, but are not included with <code>library()</code> above.</p>
+<p>This chapter also requires that the <code>knitr</code>, <code>Hmisc</code>, <code>mosaic</code>, and <code>psych</code> packages are loaded on your machine, but these packages are not loaded with <code>library()</code> above.</p>
 </section>
 <section id="working-with-the-nh_750-data" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="working-with-the-nh_750-data"><span class="header-section-number">7.2</span> Working with the <code>nh_750</code> data</h2>
-<p>To demonstrate key ideas in this Chapter, we will consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the <code>nh_750</code> data frame the information from the <code>nh_adult750.Rds</code> file we created in Section @ref(newNHANES).</p>
+<p>To demonstrate key ideas in this Chapter, we will consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the <code>nh_750</code> data frame the information from the <code>nh_adult750.Rds</code> file we created in <a href="04-nhanes.html#sec-nh750"><span>Section&nbsp;4.3.2</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/nh_adult750.Rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -483,8 +488,7 @@ div.csl-indent {
  8    21
  9    21
 10    21
-# … with 740 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 740 more rows</code></pre>
 </div>
 </div>
 <p>But this data set figures we don’t want to output more than 10 observations to a table like this.</p>
@@ -592,8 +596,7 @@ div.csl-indent {
  8    22    22
  9    23    22
 10    28    20
-# … with 34 more rows
-# ℹ Use `print(n = ...)` to see more rows</code></pre>
+# … with 34 more rows</code></pre>
 </div>
 </div>
 <p>The mode is just the most common Age observed in the data.</p>
