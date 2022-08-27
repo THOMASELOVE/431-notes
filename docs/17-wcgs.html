@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Course Notes for 431 - 17&nbsp; The WCGS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./partBhold.html" rel="next">
+<link href="./16-hydrate.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Course Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">17.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#the-western-collaborative-group-study-wcgs-data-set" id="toc-the-western-collaborative-group-study-wcgs-data-set" class="nav-link" data-scroll-target="#the-western-collaborative-group-study-wcgs-data-set"> <span class="header-section-number">17.2</span> The Western Collaborative Group Study (<code>wcgs</code>) data set</a>
+  <ul class="collapse">
+  <li><a href="#structure-of-wcgs" id="toc-structure-of-wcgs" class="nav-link" data-scroll-target="#structure-of-wcgs"> <span class="header-section-number">17.2.1</span> Structure of <code>wcgs</code></a></li>
+  <li><a href="#codebook-for-wcgs" id="toc-codebook-for-wcgs" class="nav-link" data-scroll-target="#codebook-for-wcgs"> <span class="header-section-number">17.2.2</span> Codebook for <code>wcgs</code></a></li>
+  <li><a href="#quick-summary" id="toc-quick-summary" class="nav-link" data-scroll-target="#quick-summary"> <span class="header-section-number">17.2.3</span> Quick Summary</a></li>
+  </ul></li>
+  <li><a href="#are-the-sbps-normally-distributed" id="toc-are-the-sbps-normally-distributed" class="nav-link" data-scroll-target="#are-the-sbps-normally-distributed"> <span class="header-section-number">17.3</span> Are the SBPs Normally Distributed?</a></li>
+  <li><a href="#identifying-and-describing-sbp-outliers" id="toc-identifying-and-describing-sbp-outliers" class="nav-link" data-scroll-target="#identifying-and-describing-sbp-outliers"> <span class="header-section-number">17.4</span> Identifying and Describing SBP outliers</a></li>
+  <li><a href="#does-weight-category-relate-to-sbp" id="toc-does-weight-category-relate-to-sbp" class="nav-link" data-scroll-target="#does-weight-category-relate-to-sbp"> <span class="header-section-number">17.5</span> Does Weight Category Relate to SBP?</a></li>
+  <li><a href="#re-leveling-a-factor" id="toc-re-leveling-a-factor" class="nav-link" data-scroll-target="#re-leveling-a-factor"> <span class="header-section-number">17.6</span> Re-Leveling a Factor</a>
+  <ul class="collapse">
+  <li><a href="#sbp-by-weight-category" id="toc-sbp-by-weight-category" class="nav-link" data-scroll-target="#sbp-by-weight-category"> <span class="header-section-number">17.6.1</span> SBP by Weight Category</a></li>
+  </ul></li>
+  <li><a href="#are-weight-and-sbp-linked" id="toc-are-weight-and-sbp-linked" class="nav-link" data-scroll-target="#are-weight-and-sbp-linked"> <span class="header-section-number">17.7</span> Are Weight and SBP Linked?</a></li>
+  <li><a href="#sbp-and-weight-by-arcus-senilis-groups" id="toc-sbp-and-weight-by-arcus-senilis-groups" class="nav-link" data-scroll-target="#sbp-and-weight-by-arcus-senilis-groups"> <span class="header-section-number">17.8</span> SBP and Weight by Arcus Senilis groups?</a></li>
+  <li><a href="#linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis" id="toc-linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis" class="nav-link" data-scroll-target="#linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis"> <span class="header-section-number">17.9</span> Linear Model for SBP-Weight Relationship: subjects without Arcus Senilis</a></li>
+  <li><a href="#linear-model-for-sbp-weight-relationship-subjects-with-arcus-senilis" id="toc-linear-model-for-sbp-weight-relationship-subjects-with-arcus-senilis" class="nav-link" data-scroll-target="#linear-model-for-sbp-weight-relationship-subjects-with-arcus-senilis"> <span class="header-section-number">17.10</span> Linear Model for SBP-Weight Relationship: subjects with Arcus Senilis</a></li>
+  <li><a href="#including-arcus-status-in-the-model" id="toc-including-arcus-status-in-the-model" class="nav-link" data-scroll-target="#including-arcus-status-in-the-model"> <span class="header-section-number">17.11</span> Including Arcus Status in the model</a></li>
+  <li><a href="#predictions-from-these-linear-models" id="toc-predictions-from-these-linear-models" class="nav-link" data-scroll-target="#predictions-from-these-linear-models"> <span class="header-section-number">17.12</span> Predictions from these Linear Models</a></li>
+  <li><a href="#scatterplots-with-facets-across-a-categorical-variable" id="toc-scatterplots-with-facets-across-a-categorical-variable" class="nav-link" data-scroll-target="#scatterplots-with-facets-across-a-categorical-variable"> <span class="header-section-number">17.13</span> Scatterplots with Facets Across a Categorical Variable</a></li>
+  <li><a href="#scatterplot-and-correlation-matrices" id="toc-scatterplot-and-correlation-matrices" class="nav-link" data-scroll-target="#scatterplot-and-correlation-matrices"> <span class="header-section-number">17.14</span> Scatterplot and Correlation Matrices</a>
+  <ul class="collapse">
+  <li><a href="#displaying-a-correlation-matrix" id="toc-displaying-a-correlation-matrix" class="nav-link" data-scroll-target="#displaying-a-correlation-matrix"> <span class="header-section-number">17.14.1</span> Displaying a Correlation Matrix</a></li>
+  <li><a href="#using-the-ggally-package" id="toc-using-the-ggally-package" class="nav-link" data-scroll-target="#using-the-ggally-package"> <span class="header-section-number">17.14.2</span> Using the <code>GGally</code> package</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="WCGS-Study" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="setup-packages-used-here" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">17.1</span> Setup: Packages Used Here</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We will also use the <code>geom_density_ridges</code> function from the <code>ggridges</code> package, and the <code>favstats</code> function from the <code>mosaic</code> package, and the <code>ggpairs</code> function from the <code>GGally</code> package.</p>
+</section>
+<section id="the-western-collaborative-group-study-wcgs-data-set" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="the-western-collaborative-group-study-wcgs-data-set"><span class="header-section-number">17.2</span> The Western Collaborative Group Study (<code>wcgs</code>) data set</h2>
+<p><span class="citation" data-cites="Vittinghoff">Vittinghoff et al. (<a href="references.html#ref-Vittinghoff" role="doc-biblioref">2012</a>)</span> explore data from the Western Collaborative Group Study (WCGS) in great detail<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. We’ll touch lightly on some key issues in this Chapter.</p>
+<blockquote class="blockquote">
+<p>The Western Collaborative Group Study (WCGS) was designed to test the hypothesis that the so-called Type A behavior pattern (TABP) - “characterized particularly by excessive drive, aggressiveness, and ambition, frequently in association with a relatively greater preoccupation with competitive activity, vocational deadlines, and similar pressures” - is a cause of coronary heart disease (CHD). Two additional goals, developed later in the study, were (1) to investigate the comparability of formulas developed in WCGS and in the Framingham Study (FS) for prediction of CHD risk, and (2) to determine how addition of TABP to an existing multivariate prediction formula affects ability to select subjects for intervention programs.</p>
+</blockquote>
+<p>The study enrolled over 3,000 men ages 39-59 who were employed in San Francisco or Los Angeles, during 1960 and 1961.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>wcgs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/wcgs.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as_factor))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>wcgs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,154 × 22
+      id   age agec  height weight lnwght wghtcat   bmi   sbp lnsbp   dbp  chol
+   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  2343    50 46-50     67    200   5.30 170-200  31.3   132  4.88    90   249
+ 2  3656    51 51-55     73    192   5.26 170-200  25.3   120  4.79    74   194
+ 3  3526    59 56-60     70    200   5.30 170-200  28.7   158  5.06    94   258
+ 4 22057    51 51-55     69    150   5.01 140-170  22.1   126  4.84    80   173
+ 5 12927    44 41-45     71    160   5.08 140-170  22.3   126  4.84    80   214
+ 6 16029    47 46-50     64    158   5.06 140-170  27.1   116  4.75    76   206
+ 7  3894    40 35-40     70    162   5.09 140-170  23.2   122  4.80    78   190
+ 8 11389    41 41-45     70    160   5.08 140-170  23.0   130  4.87    84   212
+ 9 12681    50 46-50     71    195   5.27 170-200  27.2   112  4.72    70   130
+10 10005    43 41-45     68    187   5.23 170-200  28.4   120  4.79    80   233
+# … with 3,144 more rows, and 10 more variables: behpat &lt;fct&gt;, dibpat &lt;fct&gt;,
+#   smoke &lt;fct&gt;, ncigs &lt;dbl&gt;, arcus &lt;dbl&gt;, chd69 &lt;fct&gt;, typchd69 &lt;dbl&gt;,
+#   time169 &lt;dbl&gt;, t1 &lt;dbl&gt;, uni &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Here, we have 3154 rows (subjects) and 22 columns (variables). After importing the data and creating a tibble with <code>read_csv</code>, I used <code>mutate(across(where(is.character), as_factor)</code> to convert all variables containing character data into factors.</p>
+<section id="structure-of-wcgs" class="level3" data-number="17.2.1">
+<h3 data-number="17.2.1" class="anchored" data-anchor-id="structure-of-wcgs"><span class="header-section-number">17.2.1</span> Structure of <code>wcgs</code></h3>
+<p>We can specify the (sometimes terrible) variable names, through the <code>names</code> function, or we can add other elements of the structure, so that we can identify elements of particular interest.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(wcgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [3,154 × 22] (S3: tbl_df/tbl/data.frame)
+ $ id      : num [1:3154] 2343 3656 3526 22057 12927 ...
+ $ age     : num [1:3154] 50 51 59 51 44 47 40 41 50 43 ...
+ $ agec    : Factor w/ 5 levels "46-50","51-55",..: 1 2 3 2 4 1 5 4 1 4 ...
+ $ height  : num [1:3154] 67 73 70 69 71 64 70 70 71 68 ...
+ $ weight  : num [1:3154] 200 192 200 150 160 158 162 160 195 187 ...
+ $ lnwght  : num [1:3154] 5.3 5.26 5.3 5.01 5.08 ...
+ $ wghtcat : Factor w/ 4 levels "170-200","140-170",..: 1 1 1 2 2 2 2 2 1 1 ...
+ $ bmi     : num [1:3154] 31.3 25.3 28.7 22.1 22.3 ...
+ $ sbp     : num [1:3154] 132 120 158 126 126 116 122 130 112 120 ...
+ $ lnsbp   : num [1:3154] 4.88 4.79 5.06 4.84 4.84 ...
+ $ dbp     : num [1:3154] 90 74 94 80 80 76 78 84 70 80 ...
+ $ chol    : num [1:3154] 249 194 258 173 214 206 190 212 130 233 ...
+ $ behpat  : Factor w/ 4 levels "A1","A2","B3",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ dibpat  : Factor w/ 2 levels "Type A","Type B": 1 1 1 1 1 1 1 1 1 1 ...
+ $ smoke   : Factor w/ 2 levels "Yes","No": 1 1 2 2 2 1 2 1 2 1 ...
+ $ ncigs   : num [1:3154] 25 25 0 0 0 80 0 25 0 25 ...
+ $ arcus   : num [1:3154] 1 0 1 1 0 0 0 0 1 0 ...
+ $ chd69   : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
+ $ typchd69: num [1:3154] 0 0 0 0 0 0 0 0 0 0 ...
+ $ time169 : num [1:3154] 1367 2991 2960 3069 3081 ...
+ $ t1      : num [1:3154] -1.63 -4.06 0.64 1.12 2.43 ...
+ $ uni     : num [1:3154] 0.486 0.186 0.728 0.624 0.379 ...</code></pre>
+</div>
+</div>
+</section>
+<section id="codebook-for-wcgs" class="level3" data-number="17.2.2">
+<h3 data-number="17.2.2" class="anchored" data-anchor-id="codebook-for-wcgs"><span class="header-section-number">17.2.2</span> Codebook for <code>wcgs</code></h3>
+<p>This table was lovingly hand-crafted, and involved a lot of typing. We’ll look for better ways in 432.</p>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 17%">
+<col style="width: 20%">
+<col style="width: 51%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Name</th>
+<th style="text-align: center;">Stored As</th>
+<th style="text-align: center;">Type</th>
+<th>Details (units, levels, etc.)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><code>id</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">(nominal)</td>
+<td>ID #, nominal and uninteresting</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>age</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>age, in years - no decimal places</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>agec</code></td>
+<td style="text-align: center;">factor (5)</td>
+<td style="text-align: center;">(ordinal)</td>
+<td>age: 35-40, 41-45, 46-50, 51-55, 56-60</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>height</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>height, in inches</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>weight</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>weight, in pounds</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>lnwght</code></td>
+<td style="text-align: center;">number</td>
+<td style="text-align: center;">quantitative</td>
+<td>natural logarithm of weight</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>wghtcat</code></td>
+<td style="text-align: center;">factor (4)</td>
+<td style="text-align: center;">(ordinal)</td>
+<td>wt: &lt; 140, 140-170, 170-200, &gt; 200</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>bmi</code></td>
+<td style="text-align: center;">number</td>
+<td style="text-align: center;">quantitative</td>
+<td>body-mass index:</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td>703 * weight in lb / (height in in)<sup>2</sup></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>sbp</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>systolic blood pressure, in mm Hg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>lnsbp</code></td>
+<td style="text-align: center;">number</td>
+<td style="text-align: center;">quantitative</td>
+<td>natural logarithm of sbp</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>dbp</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>diastolic blood pressure, mm Hg</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>chol</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>total cholesterol, mg/dL</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>behpat</code></td>
+<td style="text-align: center;">factor (4)</td>
+<td style="text-align: center;">(nominal)</td>
+<td>behavioral pattern: A1, A2, B3 or B4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>dibpat</code></td>
+<td style="text-align: center;">factor (2)</td>
+<td style="text-align: center;">(binary)</td>
+<td>behavioral pattern: A or B</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>smoke</code></td>
+<td style="text-align: center;">factor (2)</td>
+<td style="text-align: center;">(binary)</td>
+<td>cigarette smoker: Yes or No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>ncigs</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>number of cigarettes smoked per day</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>arcus</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">(nominal)</td>
+<td>arcus senilis present (1) or absent (0)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>chd69</code></td>
+<td style="text-align: center;">factor (2)</td>
+<td style="text-align: center;">(binary)</td>
+<td>CHD event: Yes or No</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>typchd69</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">(4 levels)</td>
+<td>event: 0 = no CHD, 1 = MI or SD,</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td>2 = silent MI, 3 = angina</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>time169</code></td>
+<td style="text-align: center;">integer</td>
+<td style="text-align: center;">quantitative</td>
+<td>follow-up time in days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>t1</code></td>
+<td style="text-align: center;">number</td>
+<td style="text-align: center;">quantitative</td>
+<td>heavy-tailed (random draws)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>uni</code></td>
+<td style="text-align: center;">number</td>
+<td style="text-align: center;">quantitative</td>
+<td>light-tailed (random draws)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="quick-summary" class="level3" data-number="17.2.3">
+<h3 data-number="17.2.3" class="anchored" data-anchor-id="quick-summary"><span class="header-section-number">17.2.3</span> Quick Summary</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wcgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id             age           agec          height          weight   
+ Min.   : 2001   Min.   :39.00   46-50: 750   Min.   :60.00   Min.   : 78  
+ 1st Qu.: 3741   1st Qu.:42.00   51-55: 528   1st Qu.:68.00   1st Qu.:155  
+ Median :11406   Median :45.00   56-60: 242   Median :70.00   Median :170  
+ Mean   :10478   Mean   :46.28   41-45:1091   Mean   :69.78   Mean   :170  
+ 3rd Qu.:13115   3rd Qu.:50.00   35-40: 543   3rd Qu.:72.00   3rd Qu.:182  
+ Max.   :22101   Max.   :59.00                Max.   :78.00   Max.   :320  
+                                                                           
+     lnwght         wghtcat          bmi             sbp            lnsbp      
+ Min.   :4.357   170-200:1171   Min.   :11.19   Min.   : 98.0   Min.   :4.585  
+ 1st Qu.:5.043   140-170:1538   1st Qu.:22.96   1st Qu.:120.0   1st Qu.:4.787  
+ Median :5.136   &gt; 200  : 213   Median :24.39   Median :126.0   Median :4.836  
+ Mean   :5.128   &lt; 140  : 232   Mean   :24.52   Mean   :128.6   Mean   :4.850  
+ 3rd Qu.:5.204                  3rd Qu.:25.84   3rd Qu.:136.0   3rd Qu.:4.913  
+ Max.   :5.768                  Max.   :38.95   Max.   :230.0   Max.   :5.438  
+                                                                               
+      dbp              chol       behpat       dibpat     smoke     
+ Min.   : 58.00   Min.   :103.0   A1: 264   Type A:1589   Yes:1502  
+ 1st Qu.: 76.00   1st Qu.:197.2   A2:1325   Type B:1565   No :1652  
+ Median : 80.00   Median :223.0   B3:1216                           
+ Mean   : 82.02   Mean   :226.4   B4: 349                           
+ 3rd Qu.: 86.00   3rd Qu.:253.0                                     
+ Max.   :150.00   Max.   :645.0                                     
+                  NA's   :12                                        
+     ncigs          arcus        chd69         typchd69         time169    
+ Min.   : 0.0   Min.   :0.0000   No :2897   Min.   :0.0000   Min.   :  18  
+ 1st Qu.: 0.0   1st Qu.:0.0000   Yes: 257   1st Qu.:0.0000   1st Qu.:2842  
+ Median : 0.0   Median :0.0000              Median :0.0000   Median :2942  
+ Mean   :11.6   Mean   :0.2985              Mean   :0.1363   Mean   :2684  
+ 3rd Qu.:20.0   3rd Qu.:1.0000              3rd Qu.:0.0000   3rd Qu.:3037  
+ Max.   :99.0   Max.   :1.0000              Max.   :3.0000   Max.   :3430  
+                NA's   :2                                                  
+       t1                 uni           
+ Min.   :-47.43147   Min.   :0.0007097  
+ 1st Qu.: -1.00337   1st Qu.:0.2573755  
+ Median :  0.00748   Median :0.5157779  
+ Mean   : -0.03336   Mean   :0.5052159  
+ 3rd Qu.:  0.97575   3rd Qu.:0.7559902  
+ Max.   : 47.01623   Max.   :0.9994496  
+ NA's   :39                             </code></pre>
+</div>
+</div>
+<p>For a more detailed description, we might consider <code>Hmisc::describe</code>, <code>psych::describe</code>, <code>mosaic::favstats</code>, etc.</p>
+</section>
+</section>
+<section id="are-the-sbps-normally-distributed" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="are-the-sbps-normally-distributed"><span class="header-section-number">17.3</span> Are the SBPs Normally Distributed?</h2>
+<p>Consider the question of whether the distribution of the systolic blood pressure results is well-approximated by the Normal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> sbp, <span class="at">data =</span> wcgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'mosaic':
+  method                           from   
+  fortify.SpatialPolygonsDataFrame ggplot2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bin_w <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># specify binwidth</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> sbp)) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> bin_w, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="st">"orchid"</span>, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_function</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x, <span class="at">mean =</span> res<span class="sc">$</span>mean, </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">sd =</span> res<span class="sc">$</span>sd) <span class="sc">*</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            res<span class="sc">$</span>n <span class="sc">*</span> bin_w,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Systolic BP for `wcgs` subjects"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">x =</span> <span class="st">"Systolic BP (mm Hg)"</span>, <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">caption =</span> <span class="st">"Superimposed Normal model"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Since the data contain both <code>sbp</code> and <code>lnsbp</code> (its natural logarithm), let’s compare them. Note that in preparing the graph, we’ll need to change the location for the text annotation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> lnsbp, <span class="at">data =</span> wcgs)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>bin_w <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># specify binwidth</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> lnsbp)) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> bin_w, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="st">"orange"</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_function</span>(</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x, <span class="at">mean =</span> res<span class="sc">$</span>mean, </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">sd =</span> res<span class="sc">$</span>sd) <span class="sc">*</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            res<span class="sc">$</span>n <span class="sc">*</span> bin_w,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"ln(Systolic BP) for `wcgs` subjects"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">x =</span> <span class="st">"ln(Systolic BP)"</span>, <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">caption =</span> <span class="st">"Superimposed Normal model"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk40-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can also look at Normal Q-Q plots, for instance…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">sample =</span> sbp)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_qq</span>(<span class="at">color =</span> <span class="st">"orchid"</span>) <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_qq_line</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Ordered SBP"</span>, <span class="at">title =</span> <span class="st">"sbp in wcgs"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">sample =</span> lnsbp)) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_qq</span>(<span class="at">color =</span> <span class="st">"orange"</span>) <span class="sc">+</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_qq_line</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Ordered ln(SBP)"</span>, <span class="at">title =</span> <span class="st">"ln(sbp) in wcgs"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## next step requires library(patchwork)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Normal Q-Q plots of SBP and ln(SBP) in wcgs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk50-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There’s at best a small improvement from <code>sbp</code> to <code>lnsbp</code> in terms of approximation by a Normal distribution.</p>
+</section>
+<section id="identifying-and-describing-sbp-outliers" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="identifying-and-describing-sbp-outliers"><span class="header-section-number">17.4</span> Identifying and Describing SBP outliers</h2>
+<p>It looks like there’s an outlier (or a series of them) in the SBP data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> sbp)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">fill =</span> <span class="st">"royalblue"</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">outlier.color =</span> <span class="st">"royalblue"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot with Violin of SBP in `wcgs` data"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Systolic Blood Pressure (mm Hg)"</span>, </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk60-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">describe</span>(wcgs<span class="sc">$</span>sbp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>wcgs$sbp 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+    3154        0       62    0.996    128.6    16.25      110      112 
+     .25      .50      .75      .90      .95 
+     120      126      136      148      156 
+
+lowest :  98 100 102 104 106, highest: 200 208 210 212 230</code></pre>
+</div>
+</div>
+<p>The maximum value here is 230, and is clearly the most extreme value in the data set. One way to gauge this is to describe that observation’s <strong>Z score</strong>, the number of standard deviations away from the mean that the observation falls. Here, the maximum value, 230 is 6.71 standard deviations above the mean, and thus has a Z score of 6.7.</p>
+<p>A negative Z score would indicate a point below the mean, while a positive Z score indicates, as we’ve seen, a point above the mean. The minimum systolic blood pressure, 98 is 2.03 standard deviations <em>below</em> the mean, so it has a Z score of -2.</p>
+<p>Recall that the Empirical Rule suggests that if a variable follows a Normal distribution, it would have approximately 95% of its observations falling inside a Z score of (-2, 2), and 99.74% falling inside a Z score range of (-3, 3). Do the systolic blood pressures appear Normally distributed?</p>
+</section>
+<section id="does-weight-category-relate-to-sbp" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="does-weight-category-relate-to-sbp"><span class="header-section-number">17.5</span> Does Weight Category Relate to SBP?</h2>
+<p>The data are collected into four groups based on the subject’s weight (in pounds).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> wghtcat, <span class="at">y =</span> sbp)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> wghtcat), <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot of Systolic BP by Weight Category in WCGS"</span>, </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Weight Category"</span>, <span class="at">y =</span> <span class="st">"Systolic Blood Pressure"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk80-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="re-leveling-a-factor" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="re-leveling-a-factor"><span class="header-section-number">17.6</span> Re-Leveling a Factor</h2>
+<p>Well, that’s not so good. We really want those weight categories (the <em>levels</em>) to be ordered more sensibly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wcgs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(wghtcat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> wghtcat    n    percent
+ 170-200 1171 0.37127457
+ 140-170 1538 0.48763475
+   &gt; 200  213 0.06753329
+   &lt; 140  232 0.07355739</code></pre>
+</div>
+</div>
+<p>Like all <em>factor</em> variables in R, the categories are specified as levels. We want to change the order of the levels in a new version of this factor variable so they make sense. There are multiple ways to do this, but I prefer the <code>fct_relevel</code> function from the <code>forcats</code> package (part of the tidyverse.) Which order is more appropriate?</p>
+<p>I’ll add a new variable to the <code>wcgs</code> data called <code>weight_f</code> that relevels the <code>wghtcat</code> data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>wcgs <span class="ot">&lt;-</span> wcgs <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">weight_f =</span> <span class="fu">fct_relevel</span>(wghtcat, <span class="st">"&lt; 140"</span>, <span class="st">"140-170"</span>, <span class="st">"170-200"</span>, <span class="st">"&gt; 200"</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>wcgs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(weight_f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> weight_f    n    percent
+    &lt; 140  232 0.07355739
+  140-170 1538 0.48763475
+  170-200 1171 0.37127457
+    &gt; 200  213 0.06753329</code></pre>
+</div>
+</div>
+<p>For more on the <code>forcats</code> package, check out <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span>, especially the Section on Factors.</p>
+<section id="sbp-by-weight-category" class="level3" data-number="17.6.1">
+<h3 data-number="17.6.1" class="anchored" data-anchor-id="sbp-by-weight-category"><span class="header-section-number">17.6.1</span> SBP by Weight Category</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> weight_f, <span class="at">y =</span> sbp, <span class="at">fill =</span> weight_f)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Systolic Blood Pressure by Reordered Weight Category in WCGS"</span>, </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Weight Category"</span>, <span class="at">y =</span> <span class="st">"Systolic Blood Pressure"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk110-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We might see some details well with a <strong>ridgeline plot</strong>, too.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> sbp, <span class="at">y =</span> weight_f, <span class="at">fill =</span> weight_f, <span class="at">height =</span> ..density..)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="at">scale =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"SBP by Weight Category (wcgs)"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Systolic Blood Pressure"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Weight Category"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Picking joint bandwidth of 3.74</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk120-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As the plots suggest, patients in the heavier groups generally had higher systolic blood pressures.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(sbp <span class="sc">~</span> weight_f, <span class="at">data =</span> wcgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  weight_f min  Q1 median  Q3 max     mean       sd    n missing
+1    &lt; 140  98 112    120 130 196 123.1379 14.73394  232       0
+2  140-170 100 118    124 134 192 126.2939 13.65294 1538       0
+3  170-200 100 120    130 140 230 131.1136 15.57024 1171       0
+4    &gt; 200 110 126    132 150 212 137.8685 16.75522  213       0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="are-weight-and-sbp-linked" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="are-weight-and-sbp-linked"><span class="header-section-number">17.7</span> Are Weight and SBP Linked?</h2>
+<p>Let’s build a scatter plot of SBP (Outcome) by Weight (Predictor), rather than breaking down into categories.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> sbp)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>, <span class="at">shape=</span><span class="dv">1</span>, <span class="at">color=</span><span class="st">"forestgreen"</span>) <span class="sc">+</span> <span class="do">## default size = 2</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span> <span class="do">## add se=FALSE to hide conf. interval</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method=</span>loess, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"SBP vs. Weight in 3,154 WCGS Subjects"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk140-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>The mass of the data is hidden from us - showing 3154 points in one plot can produce little more than a blur where there are lots of points on top of each other.</li>
+<li>Here the least squares regression line (in red), and loess scatterplot smoother, (in blue) can help.</li>
+</ul>
+<p>The relationship between systolic blood pressure and weight appears to be very close to linear, but of course there is considerable scatter around that generally linear relationship. It turns out that the Pearson correlation of these two variables is 0.253.</p>
+</section>
+<section id="sbp-and-weight-by-arcus-senilis-groups" class="level2" data-number="17.8">
+<h2 data-number="17.8" class="anchored" data-anchor-id="sbp-and-weight-by-arcus-senilis-groups"><span class="header-section-number">17.8</span> SBP and Weight by Arcus Senilis groups?</h2>
+<p>An issue of interest to us will be to assess whether the SBP-Weight relationship we see above is similar among subjects who have arcus senilis and those who do not.</p>
+<blockquote class="blockquote">
+<p>Arcus senilis is an old age syndrome where there is a white, grey, or blue opaque ring in the corneal margin (peripheral corneal opacity), or white ring in front of the periphery of the iris. It is present at birth but then fades; however, it is quite commonly present in the elderly. It can also appear earlier in life as a result of hypercholesterolemia.</p>
+<p>Wikipedia article on Arcus Senilis, retrieved 2017-08-15</p>
+</blockquote>
+<p>Let’s start with a quick look at the <code>arcus</code> data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>wcgs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(arcus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> arcus    n      percent valid_percent
+     0 2211 0.7010145847     0.7014594
+     1  941 0.2983512999     0.2985406
+    NA    2 0.0006341154            NA</code></pre>
+</div>
+</div>
+<p>We have 2 missing values, so we probably want to do something about that before plotting the data, and we may also want to create a factor variable with more meaningful labels than 1 (which means yes, arcus senilis is present) and 0 (which means no, it isn’t.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>wcgs <span class="ot">&lt;-</span> wcgs <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">arcus_f =</span> <span class="fu">fct_recode</span>(<span class="fu">factor</span>(arcus),</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Arcus senilis"</span> <span class="ot">=</span> <span class="st">"1"</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"No arcus senilis"</span> <span class="ot">=</span> <span class="st">"0"</span>),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">arcus_f =</span> <span class="fu">fct_relevel</span>(arcus_f, <span class="st">"Arcus senilis"</span>))</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>wcgs <span class="sc">|&gt;</span> <span class="fu">tabyl</span>(arcus_f, arcus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          arcus_f    0   1 NA_
+    Arcus senilis    0 941   0
+ No arcus senilis 2211   0   0
+             &lt;NA&gt;    0   0   2</code></pre>
+</div>
+</div>
+<p>Let’s build a version of the <code>wcgs</code> data that eliminates all missing data in the variables of immediate interest, and then plot the SBP-weight relationship in groups of patients with and without arcus senilis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>wcgs <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(arcus_f, sbp, weight)) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> sbp, <span class="at">group =</span> arcus_f)) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method=</span>lm, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method=</span>loess, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"SBP vs. Weight by Arcus Senilis status"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"3,152 Western Collaborative Group Study subjects with known arcus senilis status"</span>) <span class="sc">+</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> arcus_f) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk170-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis" class="level2" data-number="17.9">
+<h2 data-number="17.9" class="anchored" data-anchor-id="linear-model-for-sbp-weight-relationship-subjects-without-arcus-senilis"><span class="header-section-number">17.9</span> Linear Model for SBP-Weight Relationship: subjects without Arcus Senilis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model.noarcus <span class="ot">&lt;-</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(sbp <span class="sc">~</span> weight, <span class="at">data =</span> <span class="fu">filter</span>(wcgs, arcus <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model.noarcus) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">95.92</td>
+<td style="text-align: right;">2.56</td>
+<td style="text-align: right;">37.54</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">weight</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">12.77</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(model.noarcus) <span class="sc">|&gt;</span> <span class="fu">select</span>(r.squared<span class="sc">:</span>p.value, AIC) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">r.squared</th>
+<th style="text-align: right;">adj.r.squared</th>
+<th style="text-align: right;">sigma</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">AIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.069</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">14.799</td>
+<td style="text-align: right;">162.959</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18193.78</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.noarcus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sbp ~ weight, data = filter(wcgs, arcus == 0))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-29.011 -10.251  -2.447   7.553  99.848 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  95.9219     2.5552   37.54   &lt;2e-16 ***
+weight        0.1902     0.0149   12.77   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 14.8 on 2209 degrees of freedom
+Multiple R-squared:  0.0687,    Adjusted R-squared:  0.06828 
+F-statistic:   163 on 1 and 2209 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The linear model for the 2211 patients without Arcus Senilis has R-squared = 6.87%.</p>
+<ul>
+<li>The regression equation is 95.92 - 0.19 weight, for those patients without Arcus Senilis.</li>
+</ul>
+</section>
+<section id="linear-model-for-sbp-weight-relationship-subjects-with-arcus-senilis" class="level2" data-number="17.10">
+<h2 data-number="17.10" class="anchored" data-anchor-id="linear-model-for-sbp-weight-relationship-subjects-with-arcus-senilis"><span class="header-section-number">17.10</span> Linear Model for SBP-Weight Relationship: subjects with Arcus Senilis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>model.witharcus <span class="ot">&lt;-</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(sbp <span class="sc">~</span> weight, <span class="at">data =</span> <span class="fu">filter</span>(wcgs, arcus <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model.witharcus) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">101.88</td>
+<td style="text-align: right;">3.76</td>
+<td style="text-align: right;">27.13</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">weight</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">7.39</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(model.witharcus) <span class="sc">|&gt;</span> <span class="fu">select</span>(r.squared<span class="sc">:</span>p.value, AIC) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">r.squared</th>
+<th style="text-align: right;">adj.r.squared</th>
+<th style="text-align: right;">sigma</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">AIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.055</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">14.192</td>
+<td style="text-align: right;">54.583</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7666.828</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.witharcus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sbp ~ weight, data = filter(wcgs, arcus == 1))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-30.335  -9.636  -1.961   7.973  76.738 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 101.87847    3.75572  27.126  &lt; 2e-16 ***
+weight        0.16261    0.02201   7.388 3.29e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 14.19 on 939 degrees of freedom
+Multiple R-squared:  0.05494,   Adjusted R-squared:  0.05393 
+F-statistic: 54.58 on 1 and 939 DF,  p-value: 3.29e-13</code></pre>
+</div>
+</div>
+<p>The linear model for the 941 patients with Arcus Senilis has R-squared = 5.49%.</p>
+<ul>
+<li>The regression equation is 101.88 - 0.163 weight, for those patients with Arcus Senilis.</li>
+</ul>
+</section>
+<section id="including-arcus-status-in-the-model" class="level2" data-number="17.11">
+<h2 data-number="17.11" class="anchored" data-anchor-id="including-arcus-status-in-the-model"><span class="header-section-number">17.11</span> Including Arcus Status in the model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sbp <span class="sc">~</span> weight <span class="sc">*</span> arcus, <span class="at">data =</span> <span class="fu">filter</span>(wcgs, <span class="sc">!</span><span class="fu">is.na</span>(arcus)))</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model3) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">95.92</td>
+<td style="text-align: right;">2.52</td>
+<td style="text-align: right;">38.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">weight</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">12.92</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">arcus</td>
+<td style="text-align: right;">5.96</td>
+<td style="text-align: right;">4.62</td>
+<td style="text-align: right;">1.29</td>
+<td style="text-align: right;">0.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">weight:arcus</td>
+<td style="text-align: right;">-0.03</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">-1.02</td>
+<td style="text-align: right;">0.31</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(model3) <span class="sc">|&gt;</span> <span class="fu">select</span>(r.squared<span class="sc">:</span>p.value, AIC) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">r.squared</th>
+<th style="text-align: right;">adj.r.squared</th>
+<th style="text-align: right;">sigma</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">AIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.066</td>
+<td style="text-align: right;">0.065</td>
+<td style="text-align: right;">14.62</td>
+<td style="text-align: right;">74.094</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">25860.96</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sbp ~ weight * arcus, data = filter(wcgs, !is.na(arcus)))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-30.335 -10.152  -2.349   7.669  99.848 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  95.92190    2.52440  37.998   &lt;2e-16 ***
+weight        0.19017    0.01472  12.921   &lt;2e-16 ***
+arcus         5.95657    4.61972   1.289    0.197    
+weight:arcus -0.02756    0.02703  -1.019    0.308    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 14.62 on 3148 degrees of freedom
+Multiple R-squared:  0.06595,   Adjusted R-squared:  0.06506 
+F-statistic: 74.09 on 3 and 3148 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>The actual regression equation in this setting includes both weight, and an indicator variable (1 = yes, 0 = no) for arcus senilis status, and the product term combining weight and that 1/0 indicator. In 432, we’ll spend substantial time and energy discussing these product terms, but we’ll not do much of that in 431.</p>
+<ul>
+<li>Note the use of the product term <code>weight*arcus</code> in the setup of the model to allow both the slope of weight and the intercept term in the model to change depending on arcus senilis status.
+<ul>
+<li>For a patient who has arcus, the regression equation is SBP = 95.92 + 0.19 weight + 5.96 (1) - 0.028 weight (1) = 101.88 + 0.162 weight.</li>
+<li>For a patient without arcus senilis, the regression equation is SBP = 95.92 + 0.19 weight + 5.96 (0) - 0.028 weight (0) = 95.92 + 0.19 weight.</li>
+</ul></li>
+</ul>
+<p>The linear model including the interaction of weight and arcus to predict sbp for the 3152 patients with known Arcus Senilis status has R-squared = 6.6%. Again, we’ll discuss interaction more substantially in 432.</p>
+</section>
+<section id="predictions-from-these-linear-models" class="level2" data-number="17.12">
+<h2 data-number="17.12" class="anchored" data-anchor-id="predictions-from-these-linear-models"><span class="header-section-number">17.12</span> Predictions from these Linear Models</h2>
+<p>What is our predicted SBP for a subject weighing 175 pounds?</p>
+<p>How does that change if our subject weighs 200 pounds?</p>
+<p>Recall that</p>
+<ul>
+<li><em>Without</em> Arcus Senilis, linear model for SBP = 95.9 + 0.19 x weight</li>
+<li><em>With</em> Arcus Senilis, linear model for SBP = 101.9 + 0.16 x weight</li>
+</ul>
+<p>So the predictions for a 175 pound subject are:</p>
+<ul>
+<li><p>95.9 + 0.19 x 175 = 129 mm Hg without Arcus Senilis, and</p></li>
+<li><p>101.9 + 0.16 x 175 = 130 mm Hg with Arcus Senilis.</p></li>
+</ul>
+<p>And thus, the predictions for a 200 pound subject are:</p>
+<ul>
+<li><p>95.9 + 0.19 x 200 = 134 mm Hg without Arcus Senilis, and</p></li>
+<li><p>101.9 + 0.16 x 200 = 134.4 mm Hg with Arcus Senilis.</p></li>
+</ul>
+</section>
+<section id="scatterplots-with-facets-across-a-categorical-variable" class="level2" data-number="17.13">
+<h2 data-number="17.13" class="anchored" data-anchor-id="scatterplots-with-facets-across-a-categorical-variable"><span class="header-section-number">17.13</span> Scatterplots with Facets Across a Categorical Variable</h2>
+<p>We can use facets in <code>ggplot2</code> to show scatterplots across the levels of a categorical variable, like <code>behpat</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wcgs, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> sbp, <span class="at">col =</span> behpat)) <span class="sc">+</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> behpat) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>, <span class="at">size=</span><span class="fu">rel</span>(<span class="fl">1.25</span>), <span class="at">color=</span><span class="st">"white"</span>),</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span><span class="st">"royalblue"</span>)) <span class="sc">+</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatterplots of SBP vs. Weight within Behavior Pattern"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk210-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="scatterplot-and-correlation-matrices" class="level2" data-number="17.14">
+<h2 data-number="17.14" class="anchored" data-anchor-id="scatterplot-and-correlation-matrices"><span class="header-section-number">17.14</span> Scatterplot and Correlation Matrices</h2>
+<p>A <strong>scatterplot matrix</strong> can be very helpful in understanding relationships between multiple variables simultaneously. There are several ways to build such a thing, including the <code>pairs</code> function…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span> (<span class="sc">~</span> sbp <span class="sc">+</span> age <span class="sc">+</span> weight <span class="sc">+</span> height, <span class="at">data=</span>wcgs, <span class="at">main=</span><span class="st">"Simple Scatterplot Matrix"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk220-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="displaying-a-correlation-matrix" class="level3" data-number="17.14.1">
+<h3 data-number="17.14.1" class="anchored" data-anchor-id="displaying-a-correlation-matrix"><span class="header-section-number">17.14.1</span> Displaying a Correlation Matrix</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>wcgs <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(sbp, age, weight, height) <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">sbp</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: right;">weight</th>
+<th style="text-align: right;">height</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sbp</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">0.253</td>
+<td style="text-align: right;">0.018</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">-0.034</td>
+<td style="text-align: right;">-0.095</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">weight</td>
+<td style="text-align: right;">0.253</td>
+<td style="text-align: right;">-0.034</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.533</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">height</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">-0.095</td>
+<td style="text-align: right;">0.533</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="using-the-ggally-package" class="level3" data-number="17.14.2">
+<h3 data-number="17.14.2" class="anchored" data-anchor-id="using-the-ggally-package"><span class="header-section-number">17.14.2</span> Using the <code>GGally</code> package</h3>
+<p>The <code>ggplot2</code> system doesn’t have a built-in scatterplot system. There are some nice add-ins in the world, though. One option I sort of like is in the <code>GGally</code> package, which can produce both correlation matrices and scatterplot matrices.</p>
+<p>The <code>ggpairs</code> function provides a density plot on each diagonal, Pearson correlations on the upper right and scatterplots on the lower left of the matrix.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggpairs</span>(wcgs <span class="sc">|&gt;</span> <span class="fu">select</span>(sbp, age, weight, height), </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Scatterplot Matrix via ggpairs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-wcgs_files/figure-html/c15_chunk240-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Vittinghoff" class="csl-entry" role="doc-biblioentry">
+Vittinghoff, Eric, David V. Glidden, Stephen C. Shiboski, and Charles E. McCulloch. 2012. <em>Regression Methods in Biostatistics: Linear, Logistic, Survival, and Repeated Measures Models</em>. Second. Springer-Verlag, Inc. <a href="http://www.biostat.ucsf.edu/vgsm/">http://www.biostat.ucsf.edu/vgsm/</a>.
+</div>
+<div id="ref-R4DS" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, and Garrett Grolemund. 2022. <em>R for Data Science</em>. Second. O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
+</div>
+</div>
+</section>
+</section>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>For more on the WCGS, you might look at http://www.epi.umn.edu/cvdepi/study-synopsis/western-collaborative-group-study/<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./16-hydrate.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./partBhold.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part B coming soon</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -24,12 +24,13 @@ book:
         - 08-summarizing_categories.qmd
         - 09-missing_data.qmd
         - 10-nnyfs_foundations.qmd
-        - 11-assessingnormality.qmd
+        - 11-normality.qmd
         - 12-straightlinemodels.qmd
-        - 13-linear_trans.qmd
-        - 14-crabs.qmd
-        - 15-hydrate.qmd
-        - 16-wcgs.qmd
+        - 13-correlation.qmd
+        - 14-linear_trans.qmd
+        - 15-crabs.qmd
+        - 16-hydrate.qmd
+        - 17-wcgs.qmd
     - part: "Part B. Comparing Summaries"
       chapters:
         - partBhold.qmd

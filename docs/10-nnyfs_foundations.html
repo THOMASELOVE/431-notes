@@ -107,7 +107,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./11-assessingnormality.html" rel="next">
+<link href="./11-normality.html" rel="next">
 <link href="./09-missing_data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -247,7 +247,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-assessingnormality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -257,22 +257,27 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./16-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
   </div>
 </li>
       </ul>
@@ -287,7 +292,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -302,7 +307,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -417,7 +422,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="NYFS-Study" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span></h1>
+<h1 class="title"><span id="sec-nyfs" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span></h1>
 </div>
 
 
@@ -2245,7 +2250,7 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span> </span>
 <span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by BMI Category"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/c9_subgr_18-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This really works better when we are comparing only two groups, like females to males.</p>
@@ -2257,7 +2262,7 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Triceps Skinfold by Sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2277,7 +2282,7 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <pre><code>Picking joint bandwidth of 3.47</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>And here’s a ridgeline plot for the triceps skinfolds. We’ll start by sorting the subgroups by the median value of our outcome (triceps skinfold) in this case, though it turns out not to matter. We’ll also add some color.</p>
@@ -2300,7 +2305,7 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <pre><code>Picking joint bandwidth of 1.37</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>For one last example, we’ll look at age by BMI category, so that sorting the BMI subgroups by the median matters, and we’ll try an alternate color scheme, and a theme specially designed for the ridgeline plot.</p>
@@ -2321,7 +2326,7 @@ lowest : 11.9 12.6 12.7 12.9 13.0, highest: 42.8 43.0 46.9 48.2 48.3
 <pre><code>Picking joint bandwidth of 1.15</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid" width="672"></p>
+<p><img src="10-nnyfs_foundations_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -2451,7 +2456,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./11-assessingnormality.html" class="pagination-link">
+      <a href="./11-normality.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

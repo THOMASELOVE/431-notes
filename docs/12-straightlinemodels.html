@@ -88,8 +88,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./13-linear_trans.html" rel="next">
-<link href="./11-assessingnormality.html" rel="prev">
+<link href="./13-correlation.html" rel="next">
+<link href="./11-normality.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,6 +118,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -225,7 +228,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-assessingnormality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -235,22 +238,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./16-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
   </div>
 </li>
       </ul>
@@ -265,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part B coming soon</span></a>
   </div>
 </li>
       </ul>
@@ -280,7 +288,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
   </div>
 </li>
       </ul>
@@ -320,32 +328,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">12.1</span> Setup: Packages Used Here</a></li>
-  <li><a href="#assessing-a-scatterplot" id="toc-assessing-a-scatterplot" class="nav-link" data-scroll-target="#assessing-a-scatterplot"> <span class="header-section-number">12.2</span> Assessing A Scatterplot</a>
+  <li><a href="#assessing-a-scatterplot" id="toc-assessing-a-scatterplot" class="nav-link" data-scroll-target="#assessing-a-scatterplot"> <span class="header-section-number">12.2</span> Assessing A Scatterplot</a></li>
+  <li><a href="#highlighting-an-unusual-point" id="toc-highlighting-an-unusual-point" class="nav-link" data-scroll-target="#highlighting-an-unusual-point"> <span class="header-section-number">12.3</span> Highlighting an unusual point</a></li>
+  <li><a href="#adding-a-scatterplot-smooth-using-loess" id="toc-adding-a-scatterplot-smooth-using-loess" class="nav-link" data-scroll-target="#adding-a-scatterplot-smooth-using-loess"> <span class="header-section-number">12.4</span> Adding a Scatterplot Smooth using loess</a></li>
+  <li><a href="#equation-for-a-linear-model" id="toc-equation-for-a-linear-model" class="nav-link" data-scroll-target="#equation-for-a-linear-model"> <span class="header-section-number">12.5</span> Equation for a Linear Model</a></li>
+  <li><a href="#summarizing-the-fit-of-a-linear-model" id="toc-summarizing-the-fit-of-a-linear-model" class="nav-link" data-scroll-target="#summarizing-the-fit-of-a-linear-model"> <span class="header-section-number">12.6</span> Summarizing the Fit of a Linear Model</a>
   <ul class="collapse">
-  <li><a href="#highlighting-an-unusual-point" id="toc-highlighting-an-unusual-point" class="nav-link" data-scroll-target="#highlighting-an-unusual-point"> <span class="header-section-number">12.2.1</span> Highlighting an unusual point</a></li>
-  <li><a href="#adding-a-scatterplot-smooth-using-loess" id="toc-adding-a-scatterplot-smooth-using-loess" class="nav-link" data-scroll-target="#adding-a-scatterplot-smooth-using-loess"> <span class="header-section-number">12.2.2</span> Adding a Scatterplot Smooth using loess</a></li>
-  <li><a href="#what-line-does-r-fit" id="toc-what-line-does-r-fit" class="nav-link" data-scroll-target="#what-line-does-r-fit"> <span class="header-section-number">12.2.3</span> What Line Does R Fit?</a></li>
+  <li><a href="#using-modelsummary" id="toc-using-modelsummary" class="nav-link" data-scroll-target="#using-modelsummary"> <span class="header-section-number">12.6.1</span> Using <code>modelsummary()</code></a></li>
+  <li><a href="#plotting-coefficients-with-modelplot" id="toc-plotting-coefficients-with-modelplot" class="nav-link" data-scroll-target="#plotting-coefficients-with-modelplot"> <span class="header-section-number">12.6.2</span> Plotting coefficients with <code>modelplot()</code></a></li>
   </ul></li>
-  <li><a href="#correlation-coefficients" id="toc-correlation-coefficients" class="nav-link" data-scroll-target="#correlation-coefficients"> <span class="header-section-number">12.3</span> Correlation Coefficients</a></li>
-  <li><a href="#the-pearson-correlation-coefficient" id="toc-the-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#the-pearson-correlation-coefficient"> <span class="header-section-number">12.4</span> The Pearson Correlation Coefficient</a></li>
-  <li><a href="#studying-correlation-through-6-examples" id="toc-studying-correlation-through-6-examples" class="nav-link" data-scroll-target="#studying-correlation-through-6-examples"> <span class="header-section-number">12.5</span> Studying Correlation through 6 Examples</a>
-  <ul class="collapse">
-  <li><a href="#data-set-alex" id="toc-data-set-alex" class="nav-link" data-scroll-target="#data-set-alex"> <span class="header-section-number">12.5.1</span> Data Set Alex</a></li>
-  <li><a href="#data-set-bonnie" id="toc-data-set-bonnie" class="nav-link" data-scroll-target="#data-set-bonnie"> <span class="header-section-number">12.5.2</span> Data Set Bonnie</a></li>
-  <li><a href="#correlations-for-all-six-data-sets-in-the-correx1-example" id="toc-correlations-for-all-six-data-sets-in-the-correx1-example" class="nav-link" data-scroll-target="#correlations-for-all-six-data-sets-in-the-correx1-example"> <span class="header-section-number">12.5.3</span> Correlations for All Six Data Sets in the Correx1 Example</a></li>
-  <li><a href="#data-set-colin" id="toc-data-set-colin" class="nav-link" data-scroll-target="#data-set-colin"> <span class="header-section-number">12.5.4</span> Data Set Colin</a></li>
-  <li><a href="#draw-the-picture" id="toc-draw-the-picture" class="nav-link" data-scroll-target="#draw-the-picture"> <span class="header-section-number">12.5.5</span> Draw the Picture!</a></li>
-  </ul></li>
-  <li><a href="#estimating-correlation-from-scatterplots" id="toc-estimating-correlation-from-scatterplots" class="nav-link" data-scroll-target="#estimating-correlation-from-scatterplots"> <span class="header-section-number">12.6</span> Estimating Correlation from Scatterplots</a></li>
-  <li><a href="#the-spearman-rank-correlation" id="toc-the-spearman-rank-correlation" class="nav-link" data-scroll-target="#the-spearman-rank-correlation"> <span class="header-section-number">12.7</span> The Spearman Rank Correlation</a>
-  <ul class="collapse">
-  <li><a href="#spearman-formula" id="toc-spearman-formula" class="nav-link" data-scroll-target="#spearman-formula"> <span class="header-section-number">12.7.1</span> Spearman Formula</a></li>
-  <li><a href="#comparing-pearson-and-spearman-correlations" id="toc-comparing-pearson-and-spearman-correlations" class="nav-link" data-scroll-target="#comparing-pearson-and-spearman-correlations"> <span class="header-section-number">12.7.2</span> Comparing Pearson and Spearman Correlations</a></li>
-  <li><a href="#spearman-vs.-pearson-example-1" id="toc-spearman-vs.-pearson-example-1" class="nav-link" data-scroll-target="#spearman-vs.-pearson-example-1"> <span class="header-section-number">12.7.3</span> Spearman vs.&nbsp;Pearson Example 1</a></li>
-  <li><a href="#spearman-vs.-pearson-example-2" id="toc-spearman-vs.-pearson-example-2" class="nav-link" data-scroll-target="#spearman-vs.-pearson-example-2"> <span class="header-section-number">12.7.4</span> Spearman vs.&nbsp;Pearson Example 2</a></li>
-  <li><a href="#spearman-vs.-pearson-example-3" id="toc-spearman-vs.-pearson-example-3" class="nav-link" data-scroll-target="#spearman-vs.-pearson-example-3"> <span class="header-section-number">12.7.5</span> Spearman vs.&nbsp;Pearson Example 3</a></li>
-  <li><a href="#spearman-vs.-pearson-example-4" id="toc-spearman-vs.-pearson-example-4" class="nav-link" data-scroll-target="#spearman-vs.-pearson-example-4"> <span class="header-section-number">12.7.6</span> Spearman vs.&nbsp;Pearson Example 4</a></li>
-  </ul></li>
+  <li><a href="#summaries-with-the-broom-package" id="toc-summaries-with-the-broom-package" class="nav-link" data-scroll-target="#summaries-with-the-broom-package"> <span class="header-section-number">12.7</span> Summaries with the <code>broom</code> package</a></li>
+  <li><a href="#key-takeaways-from-a-simple-regression" id="toc-key-takeaways-from-a-simple-regression" class="nav-link" data-scroll-target="#key-takeaways-from-a-simple-regression"> <span class="header-section-number">12.8</span> Key Takeaways from a Simple Regression</a></li>
   </ul>
 </nav>
     </div>
@@ -374,11 +367,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(equatiomatic)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="assessing-a-scatterplot" class="level2" data-number="12.2">
@@ -391,12 +387,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> protein, <span class="at">y =</span> fat)) <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"sienna"</span>) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Protein vs. Fat consumption"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"Children in the NNYFS data, with fitted straight line regression model"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Protein (in g)"</span>, <span class="at">y =</span> <span class="st">"Fat (in g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Protein vs. Fat consumption in NNYFS data"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"with fitted straight line regression model"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Protein (in g)"</span>, <span class="at">y =</span> <span class="st">"Fat (in g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_fig1-1.png" class="img-fluid" width="672"></p>
+<p><img src="12-straightlinemodels_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Here, I’ve arbitrarily decided to place <code>fat</code> on the vertical axis, and <code>protein</code> on the horizontal. Fitting a prediction model to this scatterplot will then require that we predict <code>fat</code> on the basis of <code>protein</code>.</p>
@@ -407,58 +404,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>moderately <strong>strong</strong> in that the range of values for <code>fat</code> associated with any particular value of <code>protein</code> is fairly tight. If we know someone’s protein consumption, that should meaningfully improve our ability to predict their fat consumption, among the subjects in these data.</li>
 <li>that we see some unusual or <strong>outlier</strong> values, further away from the general pattern of most subjects shown in the data.</li>
 </ol>
-<section id="highlighting-an-unusual-point" class="level3" data-number="12.2.1">
-<h3 data-number="12.2.1" class="anchored" data-anchor-id="highlighting-an-unusual-point"><span class="header-section-number">12.2.1</span> Highlighting an unusual point</h3>
+</section>
+<section id="highlighting-an-unusual-point" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="highlighting-an-unusual-point"><span class="header-section-number">12.3</span> Highlighting an unusual point</h2>
 <p>Consider the subject with protein consumption close to 200 g, whose fat consumption is below 100 g. That’s well below the prediction of the linear model for example. We can identify the subject because it is the only person with <code>protein</code> &gt; 190 and <code>fat</code> &lt; 100 with BMI &gt; 35 and waist.circ &lt; 70. So I’ll create a subset of the <code>nnyfs</code> data containing the point that meets that standard, and then add a red point and a label to the plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify outlier and place it in data frame s1 </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(nnyfs, protein <span class="sc">&gt;</span> <span class="dv">190</span> <span class="sc">&amp;</span> fat <span class="sc">&lt;</span> <span class="dv">100</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> protein, <span class="at">y =</span> fat)) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"sienna"</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> s1, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> s1, <span class="at">label =</span> s1<span class="sc">$</span>SEQN, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Protein vs. Fat consumption in NNYFS"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"with regression line, and an outlier labeled by SEQN"</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Protein (in g)"</span>, <span class="at">y =</span> <span class="st">"Fat (in g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify outlier and place it in nnyfs_temp1 tibble</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>nnyfs_temp1 <span class="ot">&lt;-</span> nnyfs <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(protein <span class="sc">&gt;</span> <span class="dv">190</span> <span class="sc">&amp;</span> fat <span class="sc">&lt;</span> <span class="dv">100</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> protein, <span class="at">y =</span> fat)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"sienna"</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> nnyfs_temp1, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> nnyfs_temp1, <span class="at">label =</span> nnyfs_temp1<span class="sc">$</span>SEQN, </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Protein vs. Fat consumption in NNYFS"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"with regression line, and an outlier labeled by SEQN"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Protein (in g)"</span>, <span class="at">y =</span> <span class="st">"Fat (in g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_fig2-1.png" class="img-fluid" width="672"></p>
+<p><img src="12-straightlinemodels_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>While this subject is hardly the only unusual point in the data set, it is one of the more unusual ones, in terms of its vertical distance from the regression line. We can identify the subject by printing (part of) the tibble we created.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="sc">|&gt;</span> <span class="fu">select</span>(SEQN, sex, race_eth, age_child, protein, fat) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nnyfs_temp1 <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SEQN, sex, race_eth, age_child, protein, fat) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: right;">SEQN</th>
-<th style="text-align: left;">sex</th>
-<th style="text-align: left;">race_eth</th>
-<th style="text-align: right;">age_child</th>
-<th style="text-align: right;">protein</th>
-<th style="text-align: right;">fat</th>
-</tr>
-</thead>
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> SEQN </th>
+   <th style="text-align:left;"> sex </th>
+   <th style="text-align:left;"> race_eth </th>
+   <th style="text-align:right;"> age_child </th>
+   <th style="text-align:right;"> protein </th>
+   <th style="text-align:right;"> fat </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: right;">71919</td>
-<td style="text-align: left;">Female</td>
-<td style="text-align: left;">2_White Non-Hispanic</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">199.33</td>
-<td style="text-align: right;">86.08</td>
-</tr>
+  <tr>
+   <td style="text-align:right;"> 71919 </td>
+   <td style="text-align:left;"> Female </td>
+   <td style="text-align:left;"> 2_White Non-Hispanic </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 199.33 </td>
+   <td style="text-align:right;"> 86.08 </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 <p>Now, does it seem to you like a straight line model will describe this <code>protein</code>-<code>fat</code> relationship well?</p>
 </section>
-<section id="adding-a-scatterplot-smooth-using-loess" class="level3" data-number="12.2.2">
-<h3 data-number="12.2.2" class="anchored" data-anchor-id="adding-a-scatterplot-smooth-using-loess"><span class="header-section-number">12.2.2</span> Adding a Scatterplot Smooth using loess</h3>
+<section id="adding-a-scatterplot-smooth-using-loess" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="adding-a-scatterplot-smooth-using-loess"><span class="header-section-number">12.4</span> Adding a Scatterplot Smooth using loess</h2>
 <p>Next, we’ll use the <strong>loess</strong> procedure to fit a smooth curve to the data, which attempts to capture the general pattern.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> nnyfs, <span class="fu">aes</span>(<span class="at">x =</span> protein, <span class="at">y =</span> fat)) <span class="sc">+</span></span>
@@ -469,7 +471,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"with loess smooth (red) and linear fit (blue)"</span>,</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Protein (in g)"</span>, <span class="at">y =</span> <span class="st">"Fat (in g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_fig3-1.png" class="img-fluid" width="672"></p>
+<p><img src="12-straightlinemodels_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This “loess” smooth curve is fairly close to the straight line fit, indicating that perhaps a linear regression model might fit the data well.</p>
@@ -497,17 +499,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> </span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Impact of adjusting loess smooth span: NNYFS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_fig4-1.png" class="img-fluid" width="672"></p>
+<p><img src="12-straightlinemodels_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>By reducing the size of the span, the plot on the right shows a somewhat less “smooth” function than the plot on the left.</p>
 </section>
-<section id="what-line-does-r-fit" class="level3" data-number="12.2.3">
-<h3 data-number="12.2.3" class="anchored" data-anchor-id="what-line-does-r-fit"><span class="header-section-number">12.2.3</span> What Line Does R Fit?</h3>
+<section id="equation-for-a-linear-model" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="equation-for-a-linear-model"><span class="header-section-number">12.5</span> Equation for a Linear Model</h2>
 <p>Returning to the linear regression model, how can we, mathematically, characterize that line? As with any straight line, our model equation requires us to specify two parameters: a slope and an intercept (sometimes called the y-intercept.)</p>
 <p>To identify the equation R used to fit this line (using the method of least squares), we use the <code>lm</code> command</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(fat <span class="sc">~</span> protein, <span class="at">data =</span> nnyfs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(fat <span class="sc">~</span> protein, <span class="at">data =</span> nnyfs)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -518,13 +521,23 @@ Coefficients:
     18.8945       0.7251  </code></pre>
 </div>
 </div>
-<p>So the fitted line is specified as</p>
+<p>So the fitted line contained in model <code>m</code> can be specified as</p>
 <p><span class="math display">\[
 \mbox{fat} = 18.8945 + 0.7251 \mbox{ protein }
 \]</span></p>
+<p>We can use the <code>extract_eq()</code> function from the <code>equatiomatic</code> package to pull the equation out of this model, as well. Unfortunately, if I run this code, it breaks in the PDF version of this book. So I’ll demonstrate in class, and just show the results here without actually executing the code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_eq</span>(m, <span class="at">use_coefs =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><span class="math display">\[
+\operatorname{\widehat{fat}} = 18.89 + 0.73(\operatorname{protein})
+\]</span></p>
+</section>
+<section id="summarizing-the-fit-of-a-linear-model" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="summarizing-the-fit-of-a-linear-model"><span class="header-section-number">12.6</span> Summarizing the Fit of a Linear Model</h2>
 <p>A detailed summary of the fitted linear regression model is also available.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(fat <span class="sc">~</span> protein, <span class="at">data =</span> nnyfs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -546,525 +559,173 @@ Multiple R-squared:  0.4451,    Adjusted R-squared:  0.4447
 F-statistic:  1216 on 1 and 1516 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>The way we’ll usually summarize the estimated coefficients of a linear model is to use the <code>broom</code> package’s <code>tidy</code> function to put the coefficient estimates into a tibble.</p>
+<section id="using-modelsummary" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="using-modelsummary"><span class="header-section-number">12.6.1</span> Using <code>modelsummary()</code></h3>
+<p>Another available approach to provide a summary is to use the <code>modelsummary()</code> function from the <code>modelsummary</code> package. Although this is mostly used for comparing multiple models, we can obtain good results for just one, like this.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">lm</span>(fat <span class="sc">~</span> protein, <span class="at">data =</span> nnyfs),</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 13%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 11%">
-<col style="width: 13%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
-<th style="text-align: right;">conf.low</th>
-<th style="text-align: right;">conf.high</th>
-</tr>
-</thead>
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">18.895</td>
-<td style="text-align: right;">1.533</td>
-<td style="text-align: right;">12.325</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">15.887</td>
-<td style="text-align: right;">21.902</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">protein</td>
-<td style="text-align: right;">0.725</td>
-<td style="text-align: right;">0.021</td>
-<td style="text-align: right;">34.868</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.684</td>
-<td style="text-align: right;">0.766</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 18.895 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (1.533) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> protein </td>
+   <td style="text-align:center;"> 0.725 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.021) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 1518 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.445 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.445 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 14094.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 14110.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −7044.082 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 1215.779 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 25.06 </td>
+  </tr>
 </tbody>
 </table>
+
+</div>
+</div>
+<p>The <a href="https://vincentarelbundock.github.io/modelsummary/index.html">modelsummary vignette</a> provides a lot of information on how to amplify these results.</p>
+</section>
+<section id="plotting-coefficients-with-modelplot" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="plotting-coefficients-with-modelplot"><span class="header-section-number">12.6.2</span> Plotting coefficients with <code>modelplot()</code></h3>
+<p>Also from the <code>modelsummary</code> package, the <code>modelplot()</code> function can be of some help in understanding the size of our coefficients (and their standard errors).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelplot</span>(m) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Model m coefficients"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12-straightlinemodels_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="summaries-with-the-broom-package" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="summaries-with-the-broom-package"><span class="header-section-number">12.7</span> Summaries with the <code>broom</code> package</h2>
+<p>If we want to use them to do anything else, the way we’ll usually summarize the estimated coefficients of a linear model is to use the <code>broom</code> package’s <code>tidy</code> function to put the coefficient estimates into a tibble.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">lm</span>(fat <span class="sc">~</span> protein, <span class="at">data =</span> nnyfs),</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+   <th style="text-align:right;"> conf.low </th>
+   <th style="text-align:right;"> conf.high </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 18.895 </td>
+   <td style="text-align:right;"> 1.533 </td>
+   <td style="text-align:right;"> 12.325 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 15.887 </td>
+   <td style="text-align:right;"> 21.902 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> protein </td>
+   <td style="text-align:right;"> 0.725 </td>
+   <td style="text-align:right;"> 0.021 </td>
+   <td style="text-align:right;"> 34.868 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.684 </td>
+   <td style="text-align:right;"> 0.766 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
 <p>We can also summarize the quality of fit in a linear model using the <code>broom</code> package’s <code>glance</code> function. For now, we’ll focus our attention on just one of the many summaries available for a linear model from <code>glance</code>: the R-squared value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(<span class="fu">lm</span>(fat <span class="sc">~</span> protein, <span class="at">data =</span> nnyfs)) <span class="sc">|&gt;</span> <span class="fu">select</span>(r.squared) <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(<span class="fu">lm</span>(fat <span class="sc">~</span> protein, <span class="at">data =</span> nnyfs)) <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(r.squared) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: right;">r.squared</th>
-</tr>
-</thead>
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> r.squared </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: right;">0.445</td>
-</tr>
+  <tr>
+   <td style="text-align:right;"> 0.445 </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 <p>We’ll spend a lot of time working with these regression summaries in this course.</p>
+</section>
+<section id="key-takeaways-from-a-simple-regression" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="key-takeaways-from-a-simple-regression"><span class="header-section-number">12.8</span> Key Takeaways from a Simple Regression</h2>
 <p>For now, it will suffice to understand the following:</p>
 <ul>
 <li>The outcome variable in this model is <strong>fat</strong>, and the predictor variable is <strong>protein</strong>.</li>
-<li>The straight line model for these data fitted by least squares is <code>fat</code> = 18.9 + 0.725 <code>protein</code></li>
+<li>The straight line model for these data fitted by least squares is <code>fat</code> = 18.895 + 0.725 <code>protein</code></li>
 <li>The slope of <code>protein</code> is positive, which indicates that as <code>protein</code> increases, we expect that <code>fat</code> will also increase. Specifically, we expect that for every additional gram of protein consumed, the fat consumption will be 0.725 gram larger.</li>
 <li>The multiple R-squared (squared correlation coefficient) is 0.445, which implies that 44.5% of the variation in <code>fat</code> is explained using this linear model with <code>protein</code>.</li>
 <li>This also implies that the Pearson correlation between <code>fat</code> and <code>protein</code> is the square root of 0.445, or 0.667. More on the Pearson correlation soon.</li>
 </ul>
 <p>So, if we plan to use a simple (least squares) linear regression model to describe fat consumption as a function of protein consumption in the NNYFS data, does it look like a least squares (or linear regression) model will be an effective choice?</p>
-</section>
-</section>
-<section id="correlation-coefficients" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="correlation-coefficients"><span class="header-section-number">12.3</span> Correlation Coefficients</h2>
-<p>Two different correlation measures are worth our immediate attention.</p>
-<ul>
-<li>The one most often used is called the <em>Pearson</em> correlation coefficient, and is symbolized with the letter r or sometimes the Greek letter rho (<span class="math inline">\(\rho\)</span>).</li>
-<li>Another tool is the Spearman rank correlation coefficient, also occasionally symbolized by <span class="math inline">\(\rho\)</span>.</li>
-</ul>
-<p>For the <code>nnyfs</code> data, the Pearson correlation of <code>fat</code> and <code>protein</code> can be found using the <code>cor()</code> function.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">select</span>(fat, protein) <span class="sc">|&gt;</span> <span class="fu">cor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              fat   protein
-fat     1.0000000 0.6671209
-protein 0.6671209 1.0000000</code></pre>
-</div>
-</div>
-<p>Note that the correlation of any variable with itself is 1, and that the correlation of <code>fat</code> with <code>protein</code> is the same regardless of whether you enter <code>fat</code> first or <code>protein</code> first.</p>
-</section>
-<section id="the-pearson-correlation-coefficient" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="the-pearson-correlation-coefficient"><span class="header-section-number">12.4</span> The Pearson Correlation Coefficient</h2>
-<p>Suppose we have <span class="math inline">\(n\)</span> observations on two variables, called X and Y. The Pearson correlation coefficient assesses how well the relationship between X and Y can be described using a linear function.</p>
-<ul>
-<li>The Pearson correlation is <strong>dimension-free</strong>.</li>
-<li>It falls between -1 and +1, with the extremes corresponding to situations where all the points in a scatterplot fall exactly on a straight line with negative and positive slopes, respectively.</li>
-<li>A Pearson correlation of zero corresponds to the situation where there is no linear association.</li>
-<li>Unlike the estimated slope in a regression line, the sample correlation coefficient is symmetric in X and Y, so it does not depend on labeling one of them (Y) the response variable, and one of them (X) the predictor.</li>
-</ul>
-<p>Suppose we have <span class="math inline">\(n\)</span> observations on two variables, called <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, where <span class="math inline">\(\bar{X}\)</span> is the sample mean of <span class="math inline">\(X\)</span> and <span class="math inline">\(s_x\)</span> is the standard deviation of <span class="math inline">\(X\)</span>. The <strong>Pearson</strong> correlation coefficient <span class="math inline">\(r_{XY}\)</span> is:</p>
-<p><span class="math display">\[
-r_{XY} = \frac{1}{n-1} \sum\limits_{i=1}^n (\frac{x_i - \bar{x}}{s_x}) (\frac{y_i - \bar{y}}{s_y})
-\]</span></p>
-</section>
-<section id="studying-correlation-through-6-examples" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="studying-correlation-through-6-examples"><span class="header-section-number">12.5</span> Studying Correlation through 6 Examples</h2>
-<p>The <code>correx1</code> data file contains six different sets of (x,y) points, identified by the <code>set</code> variable.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>correx1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/correx1.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 277 Columns: 3
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (1): set
-dbl (2): x, y
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(correx1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     set                  x                y         
- Length:277         Min.   : 5.897   Min.   : 7.308  
- Class :character   1st Qu.:29.487   1st Qu.:30.385  
- Mode  :character   Median :46.154   Median :46.923  
-                    Mean   :46.529   Mean   :49.061  
-                    3rd Qu.:63.333   3rd Qu.:68.077  
-                    Max.   :98.205   Max.   :95.385  </code></pre>
-</div>
-</div>
-<section id="data-set-alex" class="level3" data-number="12.5.1">
-<h3 data-number="12.5.1" class="anchored" data-anchor-id="data-set-alex"><span class="header-section-number">12.5.1</span> Data Set Alex</h3>
-<p>Let’s start by working with the <strong>Alex</strong> data set.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">filter</span>(correx1, set <span class="sc">==</span> <span class="st">"Alex"</span>), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"correx1: Data Set Alex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">filter</span>(correx1, set <span class="sc">==</span> <span class="st">"Alex"</span>), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"correx1: Alex, with loess smooth"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>setA <span class="ot">&lt;-</span> <span class="fu">filter</span>(correx1, set <span class="sc">==</span> <span class="st">"Alex"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(setA, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"correx1: Alex, with Fitted Linear Model"</span>) <span class="sc">+</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">75</span>, <span class="at">y =</span> <span class="dv">75</span>, <span class="at">col =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">6</span>,</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Pearson r = "</span>, <span class="fu">signif</span>(<span class="fu">cor</span>(setA<span class="sc">$</span>x, setA<span class="sc">$</span>y),<span class="dv">3</span>))) <span class="sc">+</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">50</span>, <span class="at">y =</span> <span class="dv">15</span>,  <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">5</span>,</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"y = "</span>, <span class="fu">signif</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(setA<span class="sc">$</span>y <span class="sc">~</span> setA<span class="sc">$</span>x))[<span class="dv">1</span>],<span class="dv">3</span>), </span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">signif</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(setA<span class="sc">$</span>y <span class="sc">~</span> setA<span class="sc">$</span>x))[<span class="dv">2</span>],<span class="dv">2</span>), <span class="st">"x"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="data-set-bonnie" class="level3" data-number="12.5.2">
-<h3 data-number="12.5.2" class="anchored" data-anchor-id="data-set-bonnie"><span class="header-section-number">12.5.2</span> Data Set Bonnie</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>setB <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(correx1, set <span class="sc">==</span> <span class="st">"Bonnie"</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(setB, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"correx1: Data Set Bonnie"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(setB, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"correx1: Bonnie, with Fitted Linear Model"</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">25</span>, <span class="at">y =</span> <span class="dv">65</span>, <span class="at">col =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">6</span>,</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Pearson r = "</span>, <span class="fu">signif</span>(<span class="fu">cor</span>(setB<span class="sc">$</span>x, setB<span class="sc">$</span>y),<span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">50</span>, <span class="at">y =</span> <span class="dv">15</span>,  <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">5</span>,</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"y = "</span>, <span class="fu">signif</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(setB<span class="sc">$</span>y <span class="sc">~</span> setB<span class="sc">$</span>x))[<span class="dv">1</span>],<span class="dv">3</span>), </span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">" + "</span>,</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">signif</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(setB<span class="sc">$</span>y <span class="sc">~</span> setB<span class="sc">$</span>x))[<span class="dv">2</span>],<span class="dv">2</span>), <span class="st">"x"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="correlations-for-all-six-data-sets-in-the-correx1-example" class="level3" data-number="12.5.3">
-<h3 data-number="12.5.3" class="anchored" data-anchor-id="correlations-for-all-six-data-sets-in-the-correx1-example"><span class="header-section-number">12.5.3</span> Correlations for All Six Data Sets in the Correx1 Example</h3>
-<p>Let’s look at the Pearson correlations associated with each of the six data sets contained in the <code>correx1</code> example.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tab1 <span class="ot">&lt;-</span> correx1 <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(set) <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="st">"Pearson r"</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">use=</span><span class="st">"complete"</span>),<span class="dv">2</span>))</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tab1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;">set</th>
-<th style="text-align: right;">Pearson r</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Alex</td>
-<td style="text-align: right;">-0.97</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Bonnie</td>
-<td style="text-align: right;">0.80</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Colin</td>
-<td style="text-align: right;">-0.80</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Danielle</td>
-<td style="text-align: right;">0.00</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Earl</td>
-<td style="text-align: right;">-0.01</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Fiona</td>
-<td style="text-align: right;">0.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="data-set-colin" class="level3" data-number="12.5.4">
-<h3 data-number="12.5.4" class="anchored" data-anchor-id="data-set-colin"><span class="header-section-number">12.5.4</span> Data Set Colin</h3>
-<p>It looks like the picture for Colin should be very similar (in terms of scatter) to the picture for Bonnie, except that Colin will have a negative slope, rather than the positive one Bonnie has. Is that how this plays out?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>setBC <span class="ot">&lt;-</span> <span class="fu">filter</span>(correx1, set <span class="sc">==</span> <span class="st">"Bonnie"</span> <span class="sc">|</span> set <span class="sc">==</span> <span class="st">"Colin"</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(setBC, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Uh, oh. It looks like the point in Colin at the top right is twisting what would otherwise be a very straight regression model with an extremely strong negative correlation. There’s no better way to look for outliers than to examine the scatterplot.</p>
-</section>
-<section id="draw-the-picture" class="level3" data-number="12.5.5">
-<h3 data-number="12.5.5" class="anchored" data-anchor-id="draw-the-picture"><span class="header-section-number">12.5.5</span> Draw the Picture!</h3>
-<p>We’ve seen that Danielle, Earl and Fiona all show Pearson correlations of essentially zero. However, the three data sets look very different in a scatterplot.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(correx1, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig8-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>When we learn that the correlation is zero, we tend to assume we have a picture like the Danielle data set. If Danielle were our real data, we might well think that x would be of little use in predicting y.</p>
-<ul>
-<li>But what if our data looked like Earl? In the Earl data set, x is incredibly helpful in predicting y, but we can’t use a straight line model - instead, we need a non-linear modeling approach.</li>
-<li>You’ll recall that the Fiona data set also had a Pearson correlation of zero. But here, the picture is rather more interesting.</li>
-</ul>
-<p>So, remember, draw the appropriate scatterplot whenever you make use of a correlation coefficient.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(setA, setB, setBC, tab1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="estimating-correlation-from-scatterplots" class="level2" data-number="12.6">
-<h2 data-number="12.6" class="anchored" data-anchor-id="estimating-correlation-from-scatterplots"><span class="header-section-number">12.6</span> Estimating Correlation from Scatterplots</h2>
-<p>The correx2 data set is designed to help you calibrate yourself a bit in terms of estimating a correlation from a scatterplot. There are 11 data sets buried within the correx2 example, and they are labeled by their Pearson correlation coefficients, ranging from r = 0.01 to r = 0.999</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>correx2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/correx2.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 582 Columns: 4
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (1): set
-dbl (3): x, y, group
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>correx2 <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(set) <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">cor =</span> <span class="fu">round</span>(<span class="fu">cor</span>(x, y, <span class="at">use=</span><span class="st">"complete"</span>),<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 11 × 2
-   set       cor
-   &lt;chr&gt;   &lt;dbl&gt;
- 1 Set 01  0.01 
- 2 Set 10  0.102
- 3 Set 20  0.202
- 4 Set 30  0.301
- 5 Set 40  0.403
- 6 Set 50  0.499
- 7 Set 60  0.603
- 8 Set 70  0.702
- 9 Set 80  0.799
-10 Set 90  0.902
-11 Set 999 0.999</code></pre>
-</div>
-</div>
-<p>Here is a plot of the 11 data sets, showing the increase in correlation from 0.01 (in Set 01) to 0.999 (in Set 999).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(correx2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> set) <span class="sc">+</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Pearson Correlations from 0.01 to 0.999"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig10-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Note that R will allow you to fit a straight line model to any of these relationships, no matter how appropriate it might be to do so.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(correx2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> set) <span class="sc">+</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"R will fit a straight line to anything."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig11-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(correx2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> set) <span class="sc">+</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Even if a loess smooth suggests non-linearity."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(correx2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> <span class="fu">factor</span>(group))) <span class="sc">+</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> set) <span class="sc">+</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Note: The same 10 points (in red) are in each plot."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_correxfig13-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Note that the same 10 points are used in each of the data sets. It’s always possible that a lurking subgroup of the data within a scatterplot follows a very strong linear relationship. This is why it’s so important (and difficult) not to go searching for such a thing without a strong foundation of logic, theory and prior empirical evidence.</p>
-</section>
-<section id="the-spearman-rank-correlation" class="level2" data-number="12.7">
-<h2 data-number="12.7" class="anchored" data-anchor-id="the-spearman-rank-correlation"><span class="header-section-number">12.7</span> The Spearman Rank Correlation</h2>
-<p>The Spearman rank correlation coefficient is a rank-based measure of statistical dependence that assesses how well the relationship between X and Y can be described using a <strong>monotone function</strong> even if that relationship is not linear.</p>
-<ul>
-<li>A monotone function preserves order, that is, Y must either be strictly increasing as X increases, or strictly decreasing as X increases.</li>
-<li>A Spearman correlation of 1.0 indicates simply that as X increases, Y always increases.</li>
-<li>Like the Pearson correlation, the Spearman correlation is dimension-free, and falls between -1 and +1.</li>
-<li>A positive Spearman correlation corresponds to an increasing (but not necessarily linear) association between X and Y, while a negative Spearman correlation corresponds to a decreasing (but again not necessarily linear) association.</li>
-</ul>
-<section id="spearman-formula" class="level3" data-number="12.7.1">
-<h3 data-number="12.7.1" class="anchored" data-anchor-id="spearman-formula"><span class="header-section-number">12.7.1</span> Spearman Formula</h3>
-<p>To calculate the Spearman rank correlation, we take the ranks of the X and Y data, and then apply the usual Pearson correlation. To find the ranks, sort X and Y into ascending order, and then number them from 1 (smallest) to n (largest). In the event of a tie, assign the average rank to the tied subjects.</p>
-</section>
-<section id="comparing-pearson-and-spearman-correlations" class="level3" data-number="12.7.2">
-<h3 data-number="12.7.2" class="anchored" data-anchor-id="comparing-pearson-and-spearman-correlations"><span class="header-section-number">12.7.2</span> Comparing Pearson and Spearman Correlations</h3>
-<p>Let’s look at the <code>nnyfs</code> data again.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">select</span>(fat, protein) <span class="sc">|&gt;</span> <span class="fu">cor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              fat   protein
-fat     1.0000000 0.6671209
-protein 0.6671209 1.0000000</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>nnyfs <span class="sc">|&gt;</span> <span class="fu">select</span>(fat, protein) <span class="sc">%&gt;%</span> <span class="fu">cor</span>(., <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              fat   protein
-fat     1.0000000 0.6577489
-protein 0.6577489 1.0000000</code></pre>
-</div>
-</div>
-<p>The Spearman and Pearson correlations are not especially different in this case.</p>
-</section>
-<section id="spearman-vs.-pearson-example-1" class="level3" data-number="12.7.3">
-<h3 data-number="12.7.3" class="anchored" data-anchor-id="spearman-vs.-pearson-example-1"><span class="header-section-number">12.7.3</span> Spearman vs.&nbsp;Pearson Example 1</h3>
-<p>The next few plots describe relationships where we anticipate the Pearson and Spearman correlations might differ in their conclusions.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>spear1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/spear1.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 22 Columns: 2
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (2): x, y
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>spear2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/spear2.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 90 Columns: 2
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (2): x, y
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>spear3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/spear3.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 55 Columns: 2
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (2): x, y
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>spear4 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/spear4.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 15 Columns: 2
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-dbl (2): x, y
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># these are just toy examples with</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># two columns per data set and no row numbering</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Example 1 shows a function where the Pearson correlation is 0.925 (a strong but not perfect linear relation), but the Spearman correlation is 1 because the relationship is monotone, even though it is not perfectly linear.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(spear1, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Spearman vs. Pearson, Example 1"</span>) <span class="sc">+</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">y =</span> <span class="dv">20</span>, </span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Pearson r = "</span>, </span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">signif</span>(<span class="fu">cor</span>(spear1<span class="sc">$</span>x, spear1<span class="sc">$</span>y),<span class="dv">2</span>),</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">", Spearman r = "</span>, </span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">signif</span>(<span class="fu">cor</span>(spear1<span class="sc">$</span>x, spear1<span class="sc">$</span>y, <span class="at">method =</span> <span class="st">"spearman"</span>),<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_nnyfs_spear2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>So, a positive Spearman correlation corresponds to an increasing (but not necessarily linear) association between x and y.</p>
-</section>
-<section id="spearman-vs.-pearson-example-2" class="level3" data-number="12.7.4">
-<h3 data-number="12.7.4" class="anchored" data-anchor-id="spearman-vs.-pearson-example-2"><span class="header-section-number">12.7.4</span> Spearman vs.&nbsp;Pearson Example 2</h3>
-<p>Example 2 shows that a negative Spearman correlation corresponds to a decreasing (but, again, not necessarily linear) association between x and y.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(spear2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">col =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Spearman vs. Pearson, Example 2"</span>) <span class="sc">+</span></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">"purple"</span>,</span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Pearson r = "</span>, </span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">signif</span>(<span class="fu">cor</span>(spear2<span class="sc">$</span>x, spear2<span class="sc">$</span>y),<span class="dv">2</span>),</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">", Spearman r = "</span>, </span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">signif</span>(<span class="fu">cor</span>(spear2<span class="sc">$</span>x, spear2<span class="sc">$</span>y, <span class="at">method =</span> <span class="st">"spearman"</span>),<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_nnyfs_spear3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="spearman-vs.-pearson-example-3" class="level3" data-number="12.7.5">
-<h3 data-number="12.7.5" class="anchored" data-anchor-id="spearman-vs.-pearson-example-3"><span class="header-section-number">12.7.5</span> Spearman vs.&nbsp;Pearson Example 3</h3>
-<p>The Spearman correlation is less sensitive than the Pearson correlation is to strong outliers that are unusual on either the X or Y axis, or both. That is because the Spearman rank coefficient limits the outlier to the value of its rank.</p>
-<p>In Example 3, for instance, the Spearman correlation reacts much less to the outliers around X = 12 than does the Pearson correlation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(spear3, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Spearman vs. Pearson, Example 3"</span>) <span class="sc">+</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">5</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">15</span>, <span class="at">col =</span> <span class="st">"blue"</span>,</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Pearson r = "</span>, </span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">signif</span>(<span class="fu">cor</span>(spear3<span class="sc">$</span>x, spear3<span class="sc">$</span>y),<span class="dv">2</span>),</span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">", Spearman r = "</span>, </span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">signif</span>(<span class="fu">cor</span>(spear3<span class="sc">$</span>x, spear3<span class="sc">$</span>y, <span class="at">method =</span> <span class="st">"spearman"</span>),<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_nnyfs_spear4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="spearman-vs.-pearson-example-4" class="level3" data-number="12.7.6">
-<h3 data-number="12.7.6" class="anchored" data-anchor-id="spearman-vs.-pearson-example-4"><span class="header-section-number">12.7.6</span> Spearman vs.&nbsp;Pearson Example 4</h3>
-<p>The use of a Spearman correlation is no substitute for looking at the data. For non-monotone data like what we see in Example 4, neither the Spearman nor the Pearson correlation alone provides much guidance, and just because they are (essentially) telling you the same thing, that doesn’t mean what they’re telling you is all that helpful.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(spear4, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">col =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Spearman vs. Pearson, Example 4"</span>) <span class="sc">+</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">"purple"</span>,</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Pearson r = "</span>, </span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">signif</span>(<span class="fu">cor</span>(spear4<span class="sc">$</span>x, spear4<span class="sc">$</span>y),<span class="dv">2</span>),</span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">", Spearman r = "</span>, </span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">signif</span>(<span class="fu">cor</span>(spear4<span class="sc">$</span>x, spear4<span class="sc">$</span>y, <span class="at">method =</span> <span class="st">"spearman"</span>),<span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="12-straightlinemodels_files/figure-html/c10_nnyfs_spear5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
+<p>One way to study this is through looking at correlation: which is our next subject.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1167,13 +828,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./11-assessingnormality.html" class="pagination-link">
+      <a href="./11-normality.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./13-linear_trans.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./13-correlation.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

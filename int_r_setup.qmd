@@ -64,9 +64,10 @@ Package | Parts | Key functions in the Package
 :-------: | :---: | :---: 
 `arm` | C | --
 `boot` | B | --
-`broom` | A, B, C | `tidy`, `augment`, `glance` (part of `tidymodels`)
-`car` | A, C |  `boxCox`, `powerTransform`, `testTransform`
+`broom` | A, B, C | `tidy`, `glance`, `augment` (part of `tidymodels`)
+`car` | A, C |  `boxCox`, `powerTransform`
 `Epi` | B | `twoby2`
+`equatiomatic` | A, C | `extract_eq`
 `fivethirtyeight` | Appendix | source of data
 `GGally` | A, C | `ggpairs`
 `ggrepel` | C | --
@@ -80,6 +81,7 @@ Package | Parts | Key functions in the Package
 `knitr` | A, B, C | `kable`
 `lvplot` | A | `geom_lv`
 `mice` | C | --
+`modelsummary` | A, C | `modelsummary`
 `mosaic` | A, B, C | `favstats`, `inspect`
 `naniar` | A | `n_miss`, `miss_case_table`, `gg_miss_var`
 `NHANES` | A | source of data

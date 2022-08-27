@@ -1,4 +1,4 @@
-# National Youth Fitness Survey {#NYFS-Study}
+# National Youth Fitness Survey {#sec-nyfs}
 
 ## Setup: Packages Used Here
 
@@ -982,7 +982,7 @@ ggplot(nnyfs_temp3, aes(x=triceps_skinfold, fill = bmi_cat)) +
 
 Or, we can plot all of the densities on top of each other with semi-transparent fills.
 
-```{r c9_subgr_18}
+```{r}
 nnyfs_temp3 <- nnyfs |> 
   filter(complete.cases(bmi_cat, triceps_skinfold)) 
 
