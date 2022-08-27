@@ -1,4 +1,4 @@
-# Summarizing Penguins
+# Summarizing Penguins {#sec-pen2}
 
 We will again use the data contained in the `palmerpenguins` package in this chapter. Here, we present a few of the more appealing ways to obtain numerical and graphical summaries, without much explanation. We'll discuss these issues further in the rest of Part A of these Course Notes.
 
@@ -33,6 +33,8 @@ penguins
 
 ## Numerical Summaries for a Tibble
 
+Note that in this work, I sometimes don't explain all of the numerical summaries provided. Some of that discussion is postponed to @sec-summ_quant.
+
 ### Using summary()
 
 We have several ways to obtain useful summaries of all variables in the `penguins` data.
@@ -52,7 +54,12 @@ penguins |>
   mosaic::inspect()
 ```
 
-Daniel Kaplan's [Statistical Modeling, 2nd edition](https://dtkaplan.github.io/SM2-bookdown/) provides an entire course which coordinates nicely with the tools available in the `mosaic` package. In our course, we'll just make use of two - this `inspect()` tool, and a related tool called `favstats` which lets us look at some common summaries for a single variable, or for one variable divided into groups by another.
+Daniel Kaplan's [Statistical Modeling, 2nd edition](https://dtkaplan.github.io/SM2-bookdown/) provides an entire course which coordinates nicely with the tools available in the `mosaic` package. In our course, we'll most often use this `inspect()` tool, and a related tool called `favstats`.
+
+### Using favstats() from mosaic.
+
+The `favstats` function lets us look at some common summaries for a single variable, or for one variable divided into groups by another. We'll also return to this approach in @sec-summ_quant.
+
 
 ```{r}
 mosaic::favstats(~ bill_length_mm, data = penguins) |>
@@ -66,10 +73,9 @@ mosaic::favstats(bill_length_mm ~ species, data = penguins) |>
   kable_styling()
 ```
 
-
 ### Using describe() from `psych`
 
-We can use the `describe()` function from the `psych` package to get some additional summaries, if we're interested, and here we also demonstrate the use of the `kbl()` and `kable_styling()` functions from the `kableExtra` package to make the table look appealing in HTML. More on the use of the `kableExtra` package [is available here](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
+We can use the `describe()` function from the `psych` package to get some additional summaries, if we're interested, and here we also demonstrate the use of the `kbl()` and `kable_styling()` functions from the `kableExtra` package to make the table look appealing in HTML. More on the use of the `kableExtra` package [is available here](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html). We'll also return to this approach in @sec-summ_quant.
 
 ```{r}
 penguins |>
@@ -80,7 +86,7 @@ penguins |>
 
 ### Using describe() from `Hmisc`
 
-One approach Frank Harrell has developed that I find helpful is the `describe()` function within his `Hmisc` package, which produces these results.
+One approach Frank Harrell has developed that I find helpful is the `describe()` function within his `Hmisc` package, which produces these results. We'll also return to this approach in @sec-summ_quant.
 
 
 ```{r}
@@ -99,12 +105,12 @@ penguins |>
   tbl_summary()
 ```
 
-A vignette explaining the use of the `gtsummary` package [is available here](https://www.danieldsjoberg.com/gtsummary/).
+A vignette explaining the use of the `gtsummary` package [is available here](https://www.danieldsjoberg.com/gtsummary/). We'll also return to this approach in @sec-summ_quant.
 
 
 #### Using descr from `summarytools`
 
-The `dfSummary()` function from the `summarytools` package can also be used to provide numerical descriptions of all of the numerical variables contained within a tibble.
+The `descr()` function from the `summarytools` package can also be used to provide numerical descriptions of all of the numerical variables contained within a tibble.
 
 ```{r}
 penguins |> 
@@ -112,15 +118,19 @@ penguins |>
 ```
 
 
-An introduction to the summarytools package [is available here](https://cran.r-project.org/web/packages/summarytools/vignettes/introduction.html), and illustrates some other ways to modify this output to suit your needs.
+An introduction to the summarytools package [is available here](https://cran.r-project.org/web/packages/summarytools/vignettes/introduction.html), and illustrates some other ways to modify this output to suit your needs. We'll also return to this approach in @sec-summ_quant.
 
-### Using dfSummary from `summarytools`
+### dfSummary() from `summarytools`
 
-The `dfSummary()` function from the `summarytools` package can be used to provide some additional descriptions of all variables within a tibble.
+The `dfSummary()` function from the `summarytools` package can be used to provide some additional descriptions of all variables within a tibble. You'll find more information about these numerical descriptions in @sec-summ_quant.
 
 ```{r}
-penguins |> 
-  dfSummary()
+#| message: FALSE
+dfSummary(penguins, 
+          plain.ascii  = FALSE, 
+          style        = "grid", 
+          graph.magnif = 0.75, 
+          valid.col    = FALSE)
 ```
 
 ### Visualizing with `visdat` functions
@@ -226,7 +236,7 @@ mosaic::favstats(bill_length_mm ~ species, data = penguins) |>
 
 One advantage of this approach is that (as you'll note) it handles the missing data in the way we'd probably expect, by restricting the summaries to the complete cases.
 
-### Using tbl_summary() to summarize the tibble
+## Using tbl_summary() to summarize the tibble
 
 The `tbl_summary()` function from the `gtsummary` package can also do the job of summarizing all of the other variables in the tibble, broken down by species, very nicely.
 

@@ -138,6 +138,9 @@ div.csl-indent {
   }
 }</script>
 
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 </head>
 
@@ -351,6 +354,7 @@ div.csl-indent {
   <li><a href="#cross-tabulations-of-two-variables" id="toc-cross-tabulations-of-two-variables" class="nav-link" data-scroll-target="#cross-tabulations-of-two-variables"> <span class="header-section-number">8.8</span> Cross-Tabulations of Two Variables</a></li>
   <li><a href="#cross-classifying-three-categorical-variables" id="toc-cross-classifying-three-categorical-variables" class="nav-link" data-scroll-target="#cross-classifying-three-categorical-variables"> <span class="header-section-number">8.9</span> Cross-Classifying Three Categorical Variables</a></li>
   <li><a href="#gaining-control-over-tables-in-r-the-gt-package" id="toc-gaining-control-over-tables-in-r-the-gt-package" class="nav-link" data-scroll-target="#gaining-control-over-tables-in-r-the-gt-package"> <span class="header-section-number">8.10</span> Gaining Control over Tables in R: the <code>gt</code> package</a></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">8.11</span> Coming Up</a></li>
   </ul>
 </nav>
     </div>
@@ -379,10 +383,11 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-the-nh_adult750-data-again" class="level2" data-number="8.2">
@@ -892,150 +897,246 @@ Proportion        0.021
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"all"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> Education/SleepTrouble    No   Yes  Total
-              8th Grade  5.3%  1.3%   6.7%
-         9 - 11th Grade  6.9%  3.2%  10.1%
-            High School 13.6%  5.5%  19.1%
-           Some College 23.1%  9.1%  32.1%
-           College Grad 25.1%  6.9%  32.0%
-                  Total 74.0% 26.0% 100.0%</code></pre>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'lrrrrrr'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Education/SleepTrouble </th>
+   <th style="text-align:right;"> No </th>
+   <th style="text-align:right;"> Yes </th>
+   <th style="text-align:right;"> Total </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 8th Grade </td>
+   <td style="text-align:right;"> 5.3% </td>
+   <td style="text-align:right;"> 1.3% </td>
+   <td style="text-align:right;"> 6.7% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 9 - 11th Grade </td>
+   <td style="text-align:right;"> 6.9% </td>
+   <td style="text-align:right;"> 3.2% </td>
+   <td style="text-align:right;"> 10.1% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> High School </td>
+   <td style="text-align:right;"> 13.6% </td>
+   <td style="text-align:right;"> 5.5% </td>
+   <td style="text-align:right;"> 19.1% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Some College </td>
+   <td style="text-align:right;"> 23.1% </td>
+   <td style="text-align:right;"> 9.1% </td>
+   <td style="text-align:right;"> 32.1% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> College Grad </td>
+   <td style="text-align:right;"> 25.1% </td>
+   <td style="text-align:right;"> 6.9% </td>
+   <td style="text-align:right;"> 32.0% </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:right;"> 74.0% </td>
+   <td style="text-align:right;"> 26.0% </td>
+   <td style="text-align:right;"> 100.0% </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
 <p>Another common approach is to include both counts and percentages in a cross-tabulation. Let’s look at the breakdown of <code>HealthGen</code> by <code>MaritalStatus</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'lrrrrrr'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 11%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">MaritalStatus/HealthGen</th>
-<th style="text-align: left;">Excellent</th>
-<th style="text-align: left;">Vgood</th>
-<th style="text-align: left;">Good</th>
-<th style="text-align: left;">Fair</th>
-<th style="text-align: left;">Poor</th>
-<th style="text-align: left;">NA_</th>
-</tr>
-</thead>
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> MaritalStatus/HealthGen </th>
+   <th style="text-align:right;"> Excellent </th>
+   <th style="text-align:right;"> Vgood </th>
+   <th style="text-align:right;"> Good </th>
+   <th style="text-align:right;"> Fair </th>
+   <th style="text-align:right;"> Poor </th>
+   <th style="text-align:right;"> NA_ </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">Divorced</td>
-<td style="text-align: left;">7 (9.0%)</td>
-<td style="text-align: left;">19 (24.4%)</td>
-<td style="text-align: left;">29 (37.2%)</td>
-<td style="text-align: left;">11 (14.1%)</td>
-<td style="text-align: left;">3 (3.8%)</td>
-<td style="text-align: left;">9 (11.5%)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">LivePartner</td>
-<td style="text-align: left;">4 (5.7%)</td>
-<td style="text-align: left;">19 (27.1%)</td>
-<td style="text-align: left;">25 (35.7%)</td>
-<td style="text-align: left;">18 (25.7%)</td>
-<td style="text-align: left;">0 (0.0%)</td>
-<td style="text-align: left;">4 (5.7%)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Married</td>
-<td style="text-align: left;">46 (11.9%)</td>
-<td style="text-align: left;">101 (26.0%)</td>
-<td style="text-align: left;">130 (33.5%)</td>
-<td style="text-align: left;">41 (10.6%)</td>
-<td style="text-align: left;">6 (1.5%)</td>
-<td style="text-align: left;">64 (16.5%)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NeverMarried</td>
-<td style="text-align: left;">25 (14.0%)</td>
-<td style="text-align: left;">52 (29.1%)</td>
-<td style="text-align: left;">56 (31.3%)</td>
-<td style="text-align: left;">24 (13.4%)</td>
-<td style="text-align: left;">3 (1.7%)</td>
-<td style="text-align: left;">19 (10.6%)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Separated</td>
-<td style="text-align: left;">2 (10.5%)</td>
-<td style="text-align: left;">3 (15.8%)</td>
-<td style="text-align: left;">4 (21.1%)</td>
-<td style="text-align: left;">8 (42.1%)</td>
-<td style="text-align: left;">0 (0.0%)</td>
-<td style="text-align: left;">2 (10.5%)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Widowed</td>
-<td style="text-align: left;">0 (0.0%)</td>
-<td style="text-align: left;">3 (18.8%)</td>
-<td style="text-align: left;">8 (50.0%)</td>
-<td style="text-align: left;">2 (12.5%)</td>
-<td style="text-align: left;">2 (12.5%)</td>
-<td style="text-align: left;">1 (6.2%)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Total</td>
-<td style="text-align: left;">84 (11.2%)</td>
-<td style="text-align: left;">197 (26.3%)</td>
-<td style="text-align: left;">252 (33.6%)</td>
-<td style="text-align: left;">104 (13.9%)</td>
-<td style="text-align: left;">14 (1.9%)</td>
-<td style="text-align: left;">99 (13.2%)</td>
-</tr>
+  <tr>
+   <td style="text-align:left;"> Divorced </td>
+   <td style="text-align:right;"> 7  (9.0%) </td>
+   <td style="text-align:right;"> 19 (24.4%) </td>
+   <td style="text-align:right;"> 29 (37.2%) </td>
+   <td style="text-align:right;"> 11 (14.1%) </td>
+   <td style="text-align:right;"> 3  (3.8%) </td>
+   <td style="text-align:right;"> 9 (11.5%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> LivePartner </td>
+   <td style="text-align:right;"> 4  (5.7%) </td>
+   <td style="text-align:right;"> 19 (27.1%) </td>
+   <td style="text-align:right;"> 25 (35.7%) </td>
+   <td style="text-align:right;"> 18 (25.7%) </td>
+   <td style="text-align:right;"> 0  (0.0%) </td>
+   <td style="text-align:right;"> 4  (5.7%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Married </td>
+   <td style="text-align:right;"> 46 (11.9%) </td>
+   <td style="text-align:right;"> 101 (26.0%) </td>
+   <td style="text-align:right;"> 130 (33.5%) </td>
+   <td style="text-align:right;"> 41 (10.6%) </td>
+   <td style="text-align:right;"> 6  (1.5%) </td>
+   <td style="text-align:right;"> 64 (16.5%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NeverMarried </td>
+   <td style="text-align:right;"> 25 (14.0%) </td>
+   <td style="text-align:right;"> 52 (29.1%) </td>
+   <td style="text-align:right;"> 56 (31.3%) </td>
+   <td style="text-align:right;"> 24 (13.4%) </td>
+   <td style="text-align:right;"> 3  (1.7%) </td>
+   <td style="text-align:right;"> 19 (10.6%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Separated </td>
+   <td style="text-align:right;"> 2 (10.5%) </td>
+   <td style="text-align:right;"> 3 (15.8%) </td>
+   <td style="text-align:right;"> 4 (21.1%) </td>
+   <td style="text-align:right;"> 8 (42.1%) </td>
+   <td style="text-align:right;"> 0  (0.0%) </td>
+   <td style="text-align:right;"> 2 (10.5%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Widowed </td>
+   <td style="text-align:right;"> 0  (0.0%) </td>
+   <td style="text-align:right;"> 3 (18.8%) </td>
+   <td style="text-align:right;"> 8 (50.0%) </td>
+   <td style="text-align:right;"> 2 (12.5%) </td>
+   <td style="text-align:right;"> 2 (12.5%) </td>
+   <td style="text-align:right;"> 1  (6.2%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:right;"> 84 (11.2%) </td>
+   <td style="text-align:right;"> 197 (26.3%) </td>
+   <td style="text-align:right;"> 252 (33.6%) </td>
+   <td style="text-align:right;"> 104 (13.9%) </td>
+   <td style="text-align:right;"> 14  (1.9%) </td>
+   <td style="text-align:right;"> 99 (13.2%) </td>
+  </tr>
 </tbody>
 </table>
+
 </div>
 </div>
 <p>What if we wanted to ignore the missing <code>HealthGen</code> values? Most often, I filter down to the complete observations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(MaritalStatus, HealthGen)) <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> MaritalStatus/HealthGen  Excellent       Vgood        Good        Fair
-                Divorced  7 (10.1%)  19 (27.5%)  29 (42.0%)  11 (15.9%)
-             LivePartner  4  (6.1%)  19 (28.8%)  25 (37.9%)  18 (27.3%)
-                 Married 46 (14.2%) 101 (31.2%) 130 (40.1%)  41 (12.7%)
-            NeverMarried 25 (15.6%)  52 (32.5%)  56 (35.0%)  24 (15.0%)
-               Separated  2 (11.8%)   3 (17.6%)   4 (23.5%)   8 (47.1%)
-                 Widowed  0  (0.0%)   3 (20.0%)   8 (53.3%)   2 (13.3%)
-                   Total 84 (12.9%) 197 (30.3%) 252 (38.7%) 104 (16.0%)
-       Poor
-  3  (4.3%)
-  0  (0.0%)
-  6  (1.9%)
-  3  (1.9%)
-  0  (0.0%)
-  2 (13.3%)
- 14  (2.2%)</code></pre>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(MaritalStatus, HealthGen)) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'lrrrrr'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> MaritalStatus/HealthGen </th>
+   <th style="text-align:right;"> Excellent </th>
+   <th style="text-align:right;"> Vgood </th>
+   <th style="text-align:right;"> Good </th>
+   <th style="text-align:right;"> Fair </th>
+   <th style="text-align:right;"> Poor </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Divorced </td>
+   <td style="text-align:right;"> 7 (10.1%) </td>
+   <td style="text-align:right;"> 19 (27.5%) </td>
+   <td style="text-align:right;"> 29 (42.0%) </td>
+   <td style="text-align:right;"> 11 (15.9%) </td>
+   <td style="text-align:right;"> 3  (4.3%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> LivePartner </td>
+   <td style="text-align:right;"> 4  (6.1%) </td>
+   <td style="text-align:right;"> 19 (28.8%) </td>
+   <td style="text-align:right;"> 25 (37.9%) </td>
+   <td style="text-align:right;"> 18 (27.3%) </td>
+   <td style="text-align:right;"> 0  (0.0%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Married </td>
+   <td style="text-align:right;"> 46 (14.2%) </td>
+   <td style="text-align:right;"> 101 (31.2%) </td>
+   <td style="text-align:right;"> 130 (40.1%) </td>
+   <td style="text-align:right;"> 41 (12.7%) </td>
+   <td style="text-align:right;"> 6  (1.9%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NeverMarried </td>
+   <td style="text-align:right;"> 25 (15.6%) </td>
+   <td style="text-align:right;"> 52 (32.5%) </td>
+   <td style="text-align:right;"> 56 (35.0%) </td>
+   <td style="text-align:right;"> 24 (15.0%) </td>
+   <td style="text-align:right;"> 3  (1.9%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Separated </td>
+   <td style="text-align:right;"> 2 (11.8%) </td>
+   <td style="text-align:right;"> 3 (17.6%) </td>
+   <td style="text-align:right;"> 4 (23.5%) </td>
+   <td style="text-align:right;"> 8 (47.1%) </td>
+   <td style="text-align:right;"> 0  (0.0%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Widowed </td>
+   <td style="text-align:right;"> 0  (0.0%) </td>
+   <td style="text-align:right;"> 3 (20.0%) </td>
+   <td style="text-align:right;"> 8 (53.3%) </td>
+   <td style="text-align:right;"> 2 (13.3%) </td>
+   <td style="text-align:right;"> 2 (13.3%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:right;"> 84 (12.9%) </td>
+   <td style="text-align:right;"> 197 (30.3%) </td>
+   <td style="text-align:right;"> 252 (38.7%) </td>
+   <td style="text-align:right;"> 104 (16.0%) </td>
+   <td style="text-align:right;"> 14  (2.2%) </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
-<p>For more on working with <code>tabyls</code>, see the vignette in the <code>janitor</code> package. There you’ll find a complete list of all of the <code>adorn</code> functions, for example.</p>
+<p>For more on working with <code>tabyls</code>, see <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html">this overview of janitor functions</a>. There you’ll find a complete list of all of the <code>adorn</code> functions, for example.</p>
 <p>Here’s another approach, to look at the cross-classification of Race and HealthGen:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Race <span class="sc">+</span> HealthGen, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Race <span class="sc">+</span> HealthGen, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          HealthGen
 Race       Excellent Vgood Good Fair Poor
@@ -1052,9 +1153,9 @@ Race       Excellent Vgood Good Fair Poor
 <h2 data-number="8.9" class="anchored" data-anchor-id="cross-classifying-three-categorical-variables"><span class="header-section-number">8.9</span> Cross-Classifying Three Categorical Variables</h2>
 <p>Suppose we are interested in <code>Smoke100</code> and its relationship to <code>PhysActive</code> and <code>SleepTrouble</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Smoke100, PhysActive, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"top"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Smoke100, PhysActive, SleepTrouble) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"top"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$No
           PhysActive    
@@ -1072,7 +1173,7 @@ $Yes
 <p>The result here is a tabyl of <code>Smoke100</code> (rows) by <code>PhysActive</code> (columns), split into a list by <code>SleepTrouble</code>.</p>
 <p>There are several alternative approaches for doing this, although I expect us to stick with <code>tabyl</code> for our work in 431. These alternatives include the use of the <code>xtabs</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Smoke100 <span class="sc">+</span> PhysActive <span class="sc">+</span> SleepTrouble, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Smoke100 <span class="sc">+</span> PhysActive <span class="sc">+</span> SleepTrouble, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>, , SleepTrouble = No
 
@@ -1091,7 +1192,7 @@ Smoke100  No Yes
 </div>
 <p>We can also build a <strong>flat</strong> version of this table, as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(Smoke100 <span class="sc">~</span> PhysActive <span class="sc">+</span> SleepTrouble, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(Smoke100 <span class="sc">~</span> PhysActive <span class="sc">+</span> SleepTrouble, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        Smoke100  No Yes
 PhysActive SleepTrouble                 
@@ -1103,9 +1204,9 @@ Yes        No                    219 106
 </div>
 <p>And we can do this with <code>dplyr</code> functions and the <code>table()</code> function, as well, for example…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Smoke100, PhysActive, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">table</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Smoke100, PhysActive, SleepTrouble) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">table</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>, , SleepTrouble = No
 
@@ -1128,21 +1229,21 @@ Smoke100  No Yes
 <p>With the <code>gt</code> package, anyone can make wonderful-looking tables using the R programming language. The <code>gt</code> package allows you to start with a tibble or data frame, and use it to make very detailed tables that look professional, and includes tools that enable you to include titles and subtitles, all sorts of labels, as well as footnotes and source notes.</p>
 <p>Here’s a fairly simple example of a cross-tabulation of part of the <code>nh_750</code> data built using a few tools from the <code>gt</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>temp_tbl <span class="ot">&lt;-</span> nh_750 <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">complete.cases</span>(PhysActive, HealthGen)) <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(PhysActive, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>() </span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>(temp_tbl) <span class="sc">|&gt;</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Cross-Tabulation from nh_750**"</span>),</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">subtitle =</span> <span class="fu">md</span>(<span class="st">"Physical Activity vs. Overall Health"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>temp_tbl <span class="ot">&lt;-</span> nh_750 <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">complete.cases</span>(PhysActive, HealthGen)) <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(PhysActive, HealthGen) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>() </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>(temp_tbl) <span class="sc">|&gt;</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Cross-Tabulation from nh_750**"</span>),</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">subtitle =</span> <span class="fu">md</span>(<span class="st">"Physical Activity vs. Overall Health"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="gtiycripwm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="vgaeckbjbz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#gtiycripwm .gt_table {
+#vgaeckbjbz .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1167,7 +1268,7 @@ Smoke100  No Yes
   border-left-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_heading {
+#vgaeckbjbz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1179,7 +1280,7 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_title {
+#vgaeckbjbz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1191,7 +1292,7 @@ Smoke100  No Yes
   border-bottom-width: 0;
 }
 
-#gtiycripwm .gt_subtitle {
+#vgaeckbjbz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1203,13 +1304,13 @@ Smoke100  No Yes
   border-top-width: 0;
 }
 
-#gtiycripwm .gt_bottom_border {
+#vgaeckbjbz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_col_headings {
+#vgaeckbjbz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1224,7 +1325,7 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_col_heading {
+#vgaeckbjbz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1244,7 +1345,7 @@ Smoke100  No Yes
   overflow-x: hidden;
 }
 
-#gtiycripwm .gt_column_spanner_outer {
+#vgaeckbjbz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1256,15 +1357,15 @@ Smoke100  No Yes
   padding-right: 4px;
 }
 
-#gtiycripwm .gt_column_spanner_outer:first-child {
+#vgaeckbjbz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gtiycripwm .gt_column_spanner_outer:last-child {
+#vgaeckbjbz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gtiycripwm .gt_column_spanner {
+#vgaeckbjbz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1276,7 +1377,7 @@ Smoke100  No Yes
   width: 100%;
 }
 
-#gtiycripwm .gt_group_heading {
+#vgaeckbjbz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1301,7 +1402,7 @@ Smoke100  No Yes
   vertical-align: middle;
 }
 
-#gtiycripwm .gt_empty_group_heading {
+#vgaeckbjbz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1316,15 +1417,15 @@ Smoke100  No Yes
   vertical-align: middle;
 }
 
-#gtiycripwm .gt_from_md > :first-child {
+#vgaeckbjbz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gtiycripwm .gt_from_md > :last-child {
+#vgaeckbjbz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gtiycripwm .gt_row {
+#vgaeckbjbz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1343,7 +1444,7 @@ Smoke100  No Yes
   overflow-x: hidden;
 }
 
-#gtiycripwm .gt_stub {
+#vgaeckbjbz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1356,7 +1457,7 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#gtiycripwm .gt_stub_row_group {
+#vgaeckbjbz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1370,11 +1471,11 @@ Smoke100  No Yes
   vertical-align: top;
 }
 
-#gtiycripwm .gt_row_group_first td {
+#vgaeckbjbz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gtiycripwm .gt_summary_row {
+#vgaeckbjbz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1384,16 +1485,16 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#gtiycripwm .gt_first_summary_row {
+#vgaeckbjbz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_first_summary_row.thick {
+#vgaeckbjbz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gtiycripwm .gt_last_summary_row {
+#vgaeckbjbz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1403,7 +1504,7 @@ Smoke100  No Yes
   border-bottom-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_grand_summary_row {
+#vgaeckbjbz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1413,7 +1514,7 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#gtiycripwm .gt_first_grand_summary_row {
+#vgaeckbjbz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1423,11 +1524,11 @@ Smoke100  No Yes
   border-top-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_striped {
+#vgaeckbjbz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gtiycripwm .gt_table_body {
+#vgaeckbjbz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1436,7 +1537,7 @@ Smoke100  No Yes
   border-bottom-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_footnotes {
+#vgaeckbjbz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1450,7 +1551,7 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_footnote {
+#vgaeckbjbz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1459,7 +1560,7 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#gtiycripwm .gt_sourcenotes {
+#vgaeckbjbz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1473,7 +1574,7 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#gtiycripwm .gt_sourcenote {
+#vgaeckbjbz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1481,64 +1582,64 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#gtiycripwm .gt_left {
+#vgaeckbjbz .gt_left {
   text-align: left;
 }
 
-#gtiycripwm .gt_center {
+#vgaeckbjbz .gt_center {
   text-align: center;
 }
 
-#gtiycripwm .gt_right {
+#vgaeckbjbz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gtiycripwm .gt_font_normal {
+#vgaeckbjbz .gt_font_normal {
   font-weight: normal;
 }
 
-#gtiycripwm .gt_font_bold {
+#vgaeckbjbz .gt_font_bold {
   font-weight: bold;
 }
 
-#gtiycripwm .gt_font_italic {
+#vgaeckbjbz .gt_font_italic {
   font-style: italic;
 }
 
-#gtiycripwm .gt_super {
+#vgaeckbjbz .gt_super {
   font-size: 65%;
 }
 
-#gtiycripwm .gt_footnote_marks {
+#vgaeckbjbz .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#gtiycripwm .gt_asterisk {
+#vgaeckbjbz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gtiycripwm .gt_indent_1 {
+#vgaeckbjbz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gtiycripwm .gt_indent_2 {
+#vgaeckbjbz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gtiycripwm .gt_indent_3 {
+#vgaeckbjbz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gtiycripwm .gt_indent_4 {
+#vgaeckbjbz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gtiycripwm .gt_indent_5 {
+#vgaeckbjbz .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1582,6 +1683,10 @@ Smoke100  No Yes
 </div>
 </div>
 <p>The <code>gt</code> package and its usage is described in detail at https://gt.rstudio.com/.</p>
+</section>
+<section id="coming-up" class="level2" data-number="8.11">
+<h2 data-number="8.11" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">8.11</span> Coming Up</h2>
+<p>Next, we’ll make some early attempts at describing missingness in our data.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

@@ -2,10 +2,13 @@
 
 ## Setup: Packages Used Here
 
-```{r, message = FALSE}
+```{r}
+#| message: FALSE
+
 knitr::opts_chunk$set(comment = NA)
 
 library(janitor)
+library(kableExtra)
 library(gt)
 library(tidyverse)
 
@@ -16,7 +19,7 @@ theme_set(theme_bw())
 
 To demonstrate key ideas in this Chapter, we will again consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We'll load into the `nh_750` data frame the information from the `nh_adult750.Rds` file we created in Section \@ref(newNHANES).
 
-```{r c7_read}
+```{r}
 nh_750 <- read_rds("data/nh_adult750.Rds")
 ```
 
@@ -36,7 +39,7 @@ HealthGen    | Self-report health           | 5 | ordinal
 
 When R recognizes a variable as categorical, it stores it as a *factor*. Such variables get special treatment from the `summary` function, in particular a table of available values (so long as there aren't too many.)
 
-```{r c7_summary_1}
+```{r}
 nh_750 |>
   select(Sex, Race, Education, PhysActive, Smoke100, 
          SleepTrouble, HealthGen, MaritalStatus) |>
@@ -47,7 +50,7 @@ nh_750 |>
 
 Suppose we build a table (using the `tabyl` function from the `janitor` package) to describe the `HealthGen` distribution.
 
-```{r c7_tabyl1}
+```{r}
 nh_750 |>
     tabyl(HealthGen) |>
     adorn_pct_formatting()
@@ -57,7 +60,7 @@ Note how the missing (`<NA>`) values are not included in the `valid_percent` cal
 
 What if we want to add a total count, sometimes called the *marginal* total?
 
-```{r c7_tabyl2}
+```{r}
 nh_750 |>
     tabyl(HealthGen) |>
     adorn_totals() |>
@@ -66,7 +69,7 @@ nh_750 |>
 
 What about marital status, which has no missing data in our sample?
 
-```{r c7_tabyl3}
+```{r}
 nh_750 |>
     tabyl(MaritalStatus) |>
     adorn_totals() |>
@@ -128,7 +131,7 @@ On the whole, it's *far* easier to fall into a good graph in R (at least if you 
 
 A common measure applied to a categorical variable is to identify the mode, the most frequently observed value. To find the mode for variables with lots of categories (so that the `summary` may not be sufficient), we usually tabulate the data, and then sort by the counts of the numbers of observations, as we did with discrete quantitative variables.
 
-```{r c7_mode_Health}
+```{r}
 nh_750 |>
     group_by(HealthGen) |>
     summarise(count = n()) |>
@@ -137,7 +140,7 @@ nh_750 |>
 
 ## `describe` in the `Hmisc` package
 
-```{r c7_Hmisc_desc}
+```{r}
 Hmisc::describe(nh_750 |> 
                     select(Sex, Race, Education, PhysActive, 
                            Smoke100, SleepTrouble, 
@@ -148,7 +151,7 @@ Hmisc::describe(nh_750 |>
 
 It is very common for us to want to describe the association of one categorical variable with another. For instance, is there a relationship between Education and SleepTrouble in these data?
 
-```{r c7_xtab1}
+```{r}
 nh_750 |>
     tabyl(Education, SleepTrouble) |>
     adorn_totals(where = c("row", "col")) 
@@ -156,7 +159,7 @@ nh_750 |>
 
 Note the use of `adorn_totals` to get the marginal counts, and how we specify that we want both the row and column totals. We can add a title for the columns with...
 
-```{r c7_xtab2}
+```{r}
 nh_750 |>
     tabyl(Education, SleepTrouble) |>
     adorn_totals(where = c("row", "col")) |>
@@ -165,7 +168,7 @@ nh_750 |>
 
 Often, we'll want to show percentages in a cross-tabulation like this. To get row percentages so that we can directly see the probability of `SleepTrouble = Yes` for each level of `Education`, we can use:
 
-```{r c7_xtab3}
+```{r}
 nh_750 |>
     tabyl(Education, SleepTrouble) |>
     adorn_totals(where = "row") |>
@@ -176,7 +179,7 @@ nh_750 |>
 
 If we want to compare the distribution of `Education` between the two levels of `SleepTrouble` with column percentages, we can use the following...
 
-```{r c7_xtab4}
+```{r}
 nh_750 |>
     tabyl(Education, SleepTrouble) |>
     adorn_totals(where = "col") |>
@@ -187,18 +190,19 @@ nh_750 |>
 
 If we want overall percentages in the cells of the table, so that the total across all combinations of `Education` and `SleepTrouble` is 100%, we can use:
 
-```{r c7_xtab5}
+```{r}
 nh_750 |>
     tabyl(Education, SleepTrouble) |>
     adorn_totals(where = c("row", "col")) |>
     adorn_percentages(denominator = "all") |>
     adorn_pct_formatting() |>
-    adorn_title(placement = "combined") 
+    adorn_title(placement = "combined") |>
+    kbl(align = 'lrrrrrr') 
 ```
 
 Another common approach is to include both counts and percentages in a cross-tabulation. Let's look at the breakdown of `HealthGen` by `MaritalStatus`.
 
-```{r c7_xtab6}
+```{r}
 nh_750 |>
     tabyl(MaritalStatus, HealthGen) |>
     adorn_totals(where = c("row")) |>
@@ -206,12 +210,13 @@ nh_750 |>
     adorn_pct_formatting() |>
     adorn_ns(position = "front") |>
     adorn_title(placement = "combined") |>
-    knitr::kable()
+    kbl(align = 'lrrrrrr') |>
+    kable_styling(full_width = FALSE)
 ```
 
 What if we wanted to ignore the missing `HealthGen` values? Most often, I filter down to the complete observations.
 
-```{r c7_xtab7}
+```{r}
 nh_750 |>
     filter(complete.cases(MaritalStatus, HealthGen)) |>
     tabyl(MaritalStatus, HealthGen) |>
@@ -219,14 +224,16 @@ nh_750 |>
     adorn_percentages(denominator = "row") |>
     adorn_pct_formatting() |>
     adorn_ns(position = "front") |>
-    adorn_title(placement = "combined")
+    adorn_title(placement = "combined") |>
+    kbl(align = 'lrrrrr') |>
+    kable_styling(full_width = FALSE)
 ```
 
-For more on working with `tabyls`, see the vignette in the `janitor` package. There you'll find a complete list of all of the `adorn` functions, for example.
+For more on working with `tabyls`, see [this overview of janitor functions](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html). There you'll find a complete list of all of the `adorn` functions, for example.
 
 Here's another approach, to look at the cross-classification of Race and HealthGen:
 
-```{r c7_xtab8}
+```{r}
 xtabs(~ Race + HealthGen, data = nh_750)
 ```
 
@@ -234,7 +241,7 @@ xtabs(~ Race + HealthGen, data = nh_750)
 
 Suppose we are interested in `Smoke100` and its relationship to `PhysActive` and `SleepTrouble`.
 
-```{r c7_xtab9}
+```{r}
 nh_750 |>
     tabyl(Smoke100, PhysActive, SleepTrouble) |>
     adorn_title(placement = "top")
@@ -244,20 +251,20 @@ The result here is a tabyl of `Smoke100` (rows) by `PhysActive` (columns), split
 
 There are several alternative approaches for doing this, although I expect us to stick with `tabyl` for our work in 431. These alternatives include the use of the `xtabs` function:
 
-```{r c7_xtab10a}
+```{r}
 xtabs(~ Smoke100 + PhysActive + SleepTrouble, data = nh_750)
 ```
 
 We can also build a **flat** version of this table, as follows:
 
-```{r c7_xtab10b}
+```{r}
 ftable(Smoke100 ~ PhysActive + SleepTrouble, data = nh_750)
 ```
 
 
 And we can do this with `dplyr` functions and the `table()` function, as well, for example...
 
-```{r c7_xtab10c}
+```{r}
 nh_750 |>
     select(Smoke100, PhysActive, SleepTrouble) |>
     table() 
@@ -269,7 +276,9 @@ With the `gt` package, anyone can make wonderful-looking tables using the R prog
 
 Here's a fairly simple example of a cross-tabulation of part of the `nh_750` data built using a few tools from the `gt` package.
 
-```{r, message = FALSE}
+```{r}
+#| message: FALSE
+
 temp_tbl <- nh_750 |> filter(complete.cases(PhysActive, HealthGen)) |>
   tabyl(PhysActive, HealthGen) |>
   tibble() 
@@ -282,4 +291,6 @@ gt(temp_tbl) |>
 
 The `gt` package and its usage is described in detail at https://gt.rstudio.com/.
 
+## Coming Up
 
+Next, we'll make some early attempts at describing missingness in our data.

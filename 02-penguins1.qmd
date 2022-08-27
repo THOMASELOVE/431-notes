@@ -89,8 +89,9 @@ Another approach we could have used here is aided by the `kableExtra` package's 
 new_penguins |> 
     tabyl(sex, species) |>
     adorn_totals(where = c("row", "col")) |> 
-    adorn_title() |>
-    kbl(align = c('lcccr')) 
+    adorn_title(placement = "combined") |>
+    kbl(align = c('lcccr')) |>
+    kable_styling(full_width = FALSE)
 ```
 
 We can switch the rows and columns, and add some additional features, using the code below, which makes use of the `gt()` and `tab_header()` functions from the `gt` package, which is designed to help build complex tables. More on the incredibly versatile `gt()` package is available at <https://gt.rstudio.com/>.
