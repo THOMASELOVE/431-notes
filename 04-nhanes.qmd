@@ -17,35 +17,35 @@ theme_set(theme_bw())
 
 ## The NHANES data: A First Sample
 
-The `NHANES` package provides a sample of 10,000 NHANES responses from the 2009-10 and 2011-12 administrations, in a data frame also called `NHANES`. We can obtain the dimensions of this data frame (think of it as a rectangle of data) with the `dim()` function.
+The `NHANES` package provides a sample of 10,000 NHANES responses from the 2009-10 and 2011-12 administrations, in a tibble also called `NHANES`. We can obtain the dimensions of this tibble with the `dim()` function.
 
 ```{r}
 NHANES
 ```
 
-We see that we have `r nrow(NHANES)` rows and `r ncol(NHANES)` columns in the `NHANES` tibble.
+We see that we have `r nrow(NHANES)` rows and `r ncol(NHANES)` columns in the `NHANES` tibble. For more on what makes a particular data frame into a tibble, and why we'd want such a thing, you might be interested in the Tibbles section of @R4DS. Essentially, tibbles are data frames that are easier and more predictable to work with.
 
 ## Sampling NHANES Adults {#newNHANES} 
 
 Suppose we want to take this NHANES tibble, and use it to generate a sample describing 750 unique (distinct) adult subjects who completed the 2011-12 version of the survey when they were between the ages of 21 and 64.
 
-### Creating a Temporary, Cleaner Data Frame
+### Creating a Temporary, Cleaner Tibble
 
-I'll start by describing the plan we will use to create a new tibble called `nh_temp` from which we will eventually build our final sample. In particular, let me lay out the steps I will use to create the `nh_temp` frame from the original `NHANES` data frame available in the R package called `NHANES`.
+I'll start by describing the plan we will use to create a new tibble called `nh_temp` from which we will eventually build our final sample. In particular, let me lay out the steps I will use to create the `nh_temp` frame from the original `NHANES` tibble available in the R package called `NHANES`.
 
-1. We'll **filter** the original NHANES data frame to include only the responses from the 2011-12 administration of the survey. This will cut the sample in half, from 10,000 rows to 5,000.
+1. We'll **filter** the original NHANES tibble to include only the responses from the 2011-12 administration of the survey. This will cut the sample in half, from 10,000 rows to 5,000.
 
 2. We'll then **filter** again to restrict the sample to adults whose age is at least 21 and also less than 65. I'll do this because I want to avoid problems with including both children and adults in my sample, and because I also want to focus on the population of people in the US who are usually covered by private insurance from their job, or by Medicaid insurance from the government, rather than those covered by Medicare.
 
-3. What is listed in the NHANES data frame as `Gender` should be more correctly referred to as `Sex`. `Sex` is a biological feature of an individual, while `Gender` is a social construct. This is an important distinction, so I'll change the name of the variable.
+3. What is listed in the NHANES tibble as `Gender` should be more correctly referred to as `Sex`. `Sex` is a biological feature of an individual, while `Gender` is a social construct. This is an important distinction, so I'll change the name of the variable.
 
-4. We'll also rename three other variables, specifically we'll use `Race` to describe the `Race3` variable in the original NHANES data frame, as well as `SBP` to refer to the average systolic blood pressure, which is specified as `BPSysAve`, and `DBP` to refer to the average diastolic blood pressure, which is specified as `BPDiaAve`.
+4. We'll also rename three other variables, specifically we'll use `Race` to describe the `Race3` variable in the original NHANES tibble, as well as `SBP` to refer to the average systolic blood pressure, which is specified as `BPSysAve`, and `DBP` to refer to the average diastolic blood pressure, which is specified as `BPDiaAve`.
 
-5. Having accomplished the previous four steps, we'll then *select* the variables we want to keep in the sample. (We use *select* for choosing variables or columns in the data frame, and *filter* for selecting subjects or rows.) The sixteen variables we will select are: ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, Pulse, PhysActive, Smoke100, SleepTrouble, MaritalStatus and HealthGen.
+5. Having accomplished the previous four steps, we'll then *select* the variables we want to keep in the sample. (We use *select* for choosing variables or columns in the tibble, and *filter* for selecting subjects or rows.) The sixteen variables we will select are: ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, Pulse, PhysActive, Smoke100, SleepTrouble, MaritalStatus and HealthGen.
 
-6. The original NHANES data frame includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we'd like to only include each subject one time. We use the `distinct()` function to limit the data frame to completely unique subjects (so that, for example, we don't wind up with two or more rows that have the same ID number.)
+6. The original NHANES tibble includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we'd like to only include each subject one time. We use the `distinct()` function to limit the tibble to completely unique subjects (so that, for example, we don't wind up with two or more rows that have the same ID number.)
 
-Here is the code I used to complete the six steps listed above and create the `nh_temp` data frame.
+Here is the code I used to complete the six steps listed above and create the `nh_temp` tibble.
 
 ```{r build_nh_temp}
 nh_temp <- NHANES |>
@@ -58,18 +58,18 @@ nh_temp <- NHANES |>
    distinct()
 ```
 
-The resulting `nh_temp` data frame has `r nrow(nh_temp)` rows and `r ncol(nh_temp)` columns.
+The resulting `nh_temp` tibble has `r nrow(nh_temp)` rows and `r ncol(nh_temp)` columns.
 
 ```{r}
 nh_temp
 ```
 
-### Sampling `nh_temp` to obtain our `nh_adult750` sample
+### Sampling `nh_temp` to obtain our `nh_adult750` sample {#sec-nh750}
 
-Having established the `nh_temp` sampling frame, we now select a random sample of 750 adults from the `r nrow(nh_temp)` available responses. 
+Having established the `nh_temp` tibble, we now select a random sample of 750 adults from the `r nrow(nh_temp)` available responses. 
 
 - We will use the `set.seed()` function in R to set a random numerical seed to ensure that if you redo this work, you will obtain the same sample.
-    - Setting a seed is an important part of being able to replicate the work later when sampling is involved.
+    - Setting a seed is an important part of being able to replicate the work later when sampling is involved. If you and I use the same seed, we should get the same sample.
 - Then we will use the `slice_sample()` function to actually draw the random sample, without replacement.
     - "Without replacement" means that once we've selected a particular subject, we won't select them again.
 
@@ -82,7 +82,7 @@ nh_adult750 <- slice_sample(nh_temp, n = 750, replace = F)
 nh_adult750
 ```
 
-The `nh_adult750` data frame now includes `r nrow(nh_adult750)` rows (observations) on `r ncol(nh_adult750)` variables (columns). Essentially, we have `r ncol(nh_adult750)` pieces of information on each of `r nrow(nh_adult750)` adult NHANES subjects who were included in the 2011-12 panel.
+The `nh_adult750` tibble now includes `r nrow(nh_adult750)` rows (observations) on `r ncol(nh_adult750)` variables (columns). Essentially, we have `r ncol(nh_adult750)` pieces of information on each of `r nrow(nh_adult750)` adult NHANES subjects who were included in the 2011-12 panel.
 
 ### Summarizing the Data's Structure
 
@@ -163,7 +163,7 @@ miss_var_table(nh_adult750)
 
 So, for instance, we have `r miss_var_table(nh_temp) |> filter(n_miss_in_var == 0) |> select(n_vars)` variables with no missing data, and that constitutes `r miss_var_table(nh_temp) |> filter(n_miss_in_var == 0) |> select(pct_vars)`% of the 16 variables in our `nh_adult750` data.
 
-The `miss_var_summary()` function tabulates the number, percent missing, and cumulative sum of missing of each variable in our data frame, in order of most to least missing values.
+The `miss_var_summary()` function tabulates the number, percent missing, and cumulative sum of missing of each variable in our tibble, in order of most to least missing values.
 
 ```{r}
 miss_var_summary(nh_adult750) |>
@@ -171,7 +171,7 @@ miss_var_summary(nh_adult750) |>
   kable_styling(full_width = FALSE, position = "center")
 ```
 
-So, for example, the `r miss_var_summary(nh_temp) |> slice_head(n = 1) |> select(variable)` variable is the one missing more of our data than anything else within the `nh_adult750` data frame.
+So, for example, the `r miss_var_summary(nh_temp) |> slice_head(n = 1) |> select(variable)` variable is the one missing more of our data than anything else within the `nh_adult750` tibble.
 
 A graph of this information is available, as well.
 
@@ -197,7 +197,7 @@ miss_case_summary(nh_adult750)
 
 ## Sampling 500 Complete Cases {#sec-nh_cc} 
 
-If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our `nh_temp` sampling frame to filter for complete cases.
+If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our `nh_temp` tibble to filter for complete cases.
 
 ```{r build_nh_temp2}
 nh_temp2 <- NHANES |>
@@ -211,7 +211,7 @@ nh_temp2 <- NHANES |>
     na.omit()
 ```
 
-Let's check that this new sampling frame has no missing data.
+Let's check that this new tibble has no missing data.
 
 ```{r}
 miss_var_table(nh_temp2)
@@ -230,16 +230,16 @@ nh_adult500cc
 
 ## Saving our Samples in `.Rds` files
 
-We'll save the `nh_adult750` and `nh_adult500cc` samples to use in later parts of the notes. To do this, we'll save them as `.Rds` files, which will have some advantages for us later on.
+We'll save the `nh_adult750` and `nh_adult500cc` samples to use in later parts of the notes. To do this, we'll save them as `.Rds` files, which are files we can read directly into R with the `read_rds` command, and which will have some advantages for us later on.
 
 ```{r}
 write_rds(nh_adult750, file = "data/nh_adult750.Rds")
 write_rds(nh_adult500cc, file = "data/nh_adult500cc.Rds")
 ```
 
-You will also find these `.Rds` files as part of the [`431-data` repository](https://github.com/THOMASELOVE/431-data) for the course.
+You will also find these `.Rds` files as part of the [431-data repository](https://github.com/THOMASELOVE/431-data) for the course.
 
 ## Coming Up
 
-Next, we'll introduce some new ways of thinking about data and variables as we load, explore and learn about some of the variables in these two NHANES samples.
+Next, we'll introduce some new ways of thinking about data and variables as we load, explore and learn about some of the variables in our two NHANES samples.
 

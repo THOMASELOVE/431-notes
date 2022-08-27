@@ -1,0 +1,23 @@
+# Session Information
+
+It is often helpful to include a summary of your R session, specifically some information about your operating system, the version of R and the packages you made use of in creating your document.
+
+We demonstrate two approaches to including this below, each of which you'll use in submitting Lab and Project assignments over the course of the semester.
+
+## Using sessionInfo()
+
+One approach is to use the `sessionInfo()` function available in base R.
+
+```{r}
+sessionInfo()
+```
+
+
+## Using session_info() 
+
+Another approach is to use the `session_info()` function available in the `sessioninfo` package. Professor Love has a slight preference for this approach, but it's not an important distinction to make.
+
+```{r}
+sessioninfo::session_info()
+```
+

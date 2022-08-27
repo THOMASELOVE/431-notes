@@ -13,6 +13,7 @@ knitr::opts_chunk$set(comment = NA)
 library(palmerpenguins) 
 library(kableExtra)
 library(gtsummary)
+library(summarytools)
 library(visdat)
 library(lvplot)
 library(tidyverse) 
@@ -51,9 +52,24 @@ penguins |>
   mosaic::inspect()
 ```
 
+Daniel Kaplan's [Statistical Modeling, 2nd edition](https://dtkaplan.github.io/SM2-bookdown/) provides an entire course which coordinates nicely with the tools available in the `mosaic` package. In our course, we'll just make use of two - this `inspect()` tool, and a related tool called `favstats` which lets us look at some common summaries for a single variable, or for one variable divided into groups by another.
+
+```{r}
+mosaic::favstats(~ bill_length_mm, data = penguins) |>
+  kbl() |>
+  kable_styling()
+```
+
+```{r}
+mosaic::favstats(bill_length_mm ~ species, data = penguins) |>
+  kbl() |>
+  kable_styling()
+```
+
+
 ### Using describe() from `psych`
 
-We can use the `describe()` function from the `psych` package to get some additional summaries, if we're interested, and here we also demonstrate the use of the `kbl()` and `kable_styling()` functions from the `kableExtra` package to make the table look appealing in HTML.
+We can use the `describe()` function from the `psych` package to get some additional summaries, if we're interested, and here we also demonstrate the use of the `kbl()` and `kable_styling()` functions from the `kableExtra` package to make the table look appealing in HTML. More on the use of the `kableExtra` package [is available here](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html).
 
 ```{r}
 penguins |>
@@ -72,6 +88,8 @@ penguins |>
   Hmisc::describe() 
 ```
 
+
+
 ### Using tbl_summary() from `gtsummary`
 
 If you want to produce results which look like you might expect to see in a published paper, the `tbl_summary()` function from the `gtsummary` package has many nice features.
@@ -79,6 +97,30 @@ If you want to produce results which look like you might expect to see in a publ
 ```{r}
 penguins |> 
   tbl_summary()
+```
+
+A vignette explaining the use of the `gtsummary` package [is available here](https://www.danieldsjoberg.com/gtsummary/).
+
+
+#### Using descr from `summarytools`
+
+The `dfSummary()` function from the `summarytools` package can also be used to provide numerical descriptions of all of the numerical variables contained within a tibble.
+
+```{r}
+penguins |> 
+  descr(stats = "common" )
+```
+
+
+An introduction to the summarytools package [is available here](https://cran.r-project.org/web/packages/summarytools/vignettes/introduction.html), and illustrates some other ways to modify this output to suit your needs.
+
+### Using dfSummary from `summarytools`
+
+The `dfSummary()` function from the `summarytools` package can be used to provide some additional descriptions of all variables within a tibble.
+
+```{r}
+penguins |> 
+  dfSummary()
 ```
 
 ### Visualizing with `visdat` functions
@@ -95,6 +137,8 @@ We can explore the missing data further using the `vis_miss` function.
 ```{r}
 vis_miss(penguins)
 ```
+
+A vignette explaining the use of the `visdat` package [is available here](https://cran.r-project.org/web/packages/visdat/vignettes/using_visdat.html).
 
 ## Histograms for a Variable
 
@@ -169,6 +213,19 @@ penguins |>
   kable_styling(bootstrap_options = "striped", full_width = FALSE)
 ```
 
+
+## Using favstats() from the mosaic package
+
+As we noted previously, we can also use `favstats()` from the `mosaic` package to help us look at the results for a single variable, split into groups by another, like this:
+
+```{r}
+mosaic::favstats(bill_length_mm ~ species, data = penguins) |>
+  kbl() |>
+  kable_styling()
+```
+
+One advantage of this approach is that (as you'll note) it handles the missing data in the way we'd probably expect, by restricting the summaries to the complete cases.
+
 ### Using tbl_summary() to summarize the tibble
 
 The `tbl_summary()` function from the `gtsummary` package can also do the job of summarizing all of the other variables in the tibble, broken down by species, very nicely.
@@ -180,7 +237,7 @@ penguins |>
 
 ## Comparing Penguins by Species Graphically
 
-### Faceting Histograms
+### Faceting Histograms with facet_wrap()
 
 We could compare the distributions of the flipper lengths across the three species, by creating a set of faceted histograms, like so...
 
@@ -203,7 +260,7 @@ We might add in the command
 
 to eliminate the redundant legend on the right-hand side of the plot.
 
-### Using `facet_grid()`
+### Using facet_grid() instead
 
 The `facet_wrap()` approach has created three histograms, spread horizontally. Alternatively, we could plot the species vertically using `facet_grid()`, which clearly shows which species produces the penguins with the larger flipper lengths, especially if we reduce the width of the bins a bit.
 
@@ -253,4 +310,6 @@ ggplot(data = penguins3, aes(x = species, y = flipper_length_mm)) +
   labs(title = "Letter-Value Plot of Flipper Length in Penguins by Species")
 ```
 
-You're probably tiring of the penguins now. Let's look at a larger data set next.
+## Coming Up
+
+You're probably tiring of the penguins now. Next, we'll look at some data on people, taken from the National Health and Nutrition Examination Survey, or NHANES.

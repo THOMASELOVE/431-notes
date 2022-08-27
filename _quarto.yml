@@ -3,9 +3,9 @@ project:
   output-dir: docs
 
 book:
-  title: "Notes for 431"
+  title: "Course Notes for 431"
   author: "Thomas E. Love, Ph.D."
-  date: "2022-08-25"
+  date: "2022-08-27"
   search: true
   downloads: [pdf]
   output-file: "431-notes"
@@ -55,6 +55,7 @@ book:
 ##        - 33-olsfits.qmd
   appendices:
     - 98_gettingdataintoR.qmd
+    - 99_sessioninfo.qmd
     - references.qmd
 
 bibliography: references.bib

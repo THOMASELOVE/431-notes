@@ -25,9 +25,9 @@ As @BockVD point out, the truly critical notion, of course, is that data values,
 
 In general, each row of a data frame corresponds to an individual (respondent, experimental unit, record, or observation) about whom some characteristics are gathered in columns (and these characteristics may be called variables, factors or data elements.) Every column / variable should have a name that indicates *what* it is measuring, and every row / observation should have a name that indicates *who* is being measured.
 
-## Loading in the "Complete Cases" Sample
+## Reading in the "Complete Cases" Sample
 
-Let's begin by loading into the `nh_500cc` data frame the information from the `nh_adult500cc.Rds` file we created in @sec-nh_cc..
+Let's begin by loading into the `nh_500cc` tibble the information from the `nh_adult500cc.Rds` file we created in @sec-nh_cc. Notice that I am simplifying the name of the tibble, to save me some typing.
 
 ```{r}
 nh_500cc <- read_rds("data/nh_adult500cc.Rds")
@@ -179,9 +179,11 @@ We can also use `tabyl()` to look at combinations of multi-categorical variables
 nh_500cc |>
   tabyl(Education, HealthGen) |>
   adorn_totals(where = c("row", "col")) |>
-  adorn_title() 
+  adorn_title() |>
+  kbl(align = 'lrrrrrc') |>
+  kable_styling(full_width = FALSE)
 ```
 
 ## Coming Up
 
-In our next Chapter, we'll look at several approaches to building tabular and graphical summaries for these data, beyond the introduction provided here.
+Next, we'll look at several additional approaches to building tabular and graphical summaries for these data, beyond the ideas provided here.

@@ -1,3 +1,5 @@
+**Version**: `r Sys.time()`.
+
 # Working with These Notes {.unnumbered}
 
 1.  This document is broken down into multiple chapters. Use the table of contents on the left side of the screen to navigate between chapters, or use the right side to navigate within the current chapter.

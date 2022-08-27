@@ -7,13 +7,14 @@ knitr::opts_chunk$set(comment = NA)
 
 library(knitr)
 library(broom)
+library(ggstance)
 library(patchwork)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
-We will also use the `ggpairs` function from the `GGally` package, and the `favstats` function from the `mosaic` package.
+Note the use of the `ggstance` package here, which is new to us. We will also use the `ggpairs` function from the `GGally` package, and the `favstats` function from the `mosaic` package.
 
 
 ## The Data
@@ -117,7 +118,7 @@ So, our 90% confidence interval for the slope of `dose` ranges from 1.21 to 8.55
 
 ## Coefficient Plots
 
-The `tidy` method makes it easy to construct coefficient plots using `ggplot2`.
+The `tidy` method makes it easy to construct coefficient plots using `ggplot2`, and we'll also make use of the `geom_crossbarh` function from the `ggstance` package.
 
 ```{r c14_chunk60}
 td <- tidy(m1, conf.int = TRUE, conf.level = 0.90)

@@ -58,18 +58,20 @@ The `Love-boost.R` script includes four functions:
 
 ## Packages Used in these Notes {.unnumbered}
 
-A complete list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at [our course web site](https://thomaselove.github.io/431-2022/).
+A list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at [our course web site](https://thomaselove.github.io/431-2022/).
 
 Package | Parts | Key functions in the Package
 :-------: | :---: | :---: 
+`arm` | C | --
 `boot` | B | --
-`broom` | A, B, C | `tidy`, `augment`, `glance`
+`broom` | A, B, C | `tidy`, `augment`, `glance` (part of `tidymodels`)
 `car` | A, C |  `boxCox`, `powerTransform`, `testTransform`
 `Epi` | B | `twoby2`
 `fivethirtyeight` | Appendix | source of data
 `GGally` | A, C | `ggpairs`
 `ggrepel` | C | --
 `ggridges` | A, B | --
+`ggstance` | A | --
 `gt` | A | for presenting tables
 `gtsummary` | A | `tbl_summary`
 `Hmisc` | A, B, C | `describe` and others
@@ -86,7 +88,9 @@ Package | Parts | Key functions in the Package
 `psych` | A, B | `describe`
 `pwr` | B | --
 `rms` | C | --
-`simputation` | A | various impuation functions
+`sessioninfo` | Appendix | --
+`simputation` | A | various imputation functions
+`summarytools` | A | `descr`, `dfSummary`
 `tidyverse` | A, B, C, Appendix | dozens of functions
 `vcd` | B | --
 `visdat` | A | `vis_dat`, `vis_miss`
@@ -106,5 +110,5 @@ The `tidyverse` package is actually a meta-package which includes the following 
 
 Loading the tidyverse with `library(tidyverse)` loads those eight packages.
 
-Installing the tidyverse also installs several other useful packages on your machine. Read more about the `tidyverse` at [https://www.tidyverse.org/](https://www.tidyverse.org/)
+Installing the tidyverse also installs several other useful packages on your machine, like `glue` and `lubridate`, for example. Read more about the `tidyverse` at [https://www.tidyverse.org/](https://www.tidyverse.org/)
 

@@ -8,7 +8,9 @@ Most numerical summaries that might be new to you are applied most appropriately
 
 ## Setup: Packages Used Here
 
-```{r, message = FALSE}
+```{r}
+#| message: FALSE
+
 knitr::opts_chunk$set(comment = NA)
 
 library(patchwork)
@@ -17,11 +19,11 @@ library(tidyverse)
 theme_set(theme_bw())
 ```
 
-This chapter also requires that the `knitr`, `Hmisc`, `mosaic`, and `psych` packages are loaded on your machine, but are not included with `library()` above.
+This chapter also requires that the `knitr`, `Hmisc`, `mosaic`, and `psych` packages are loaded on your machine, but these packages are not loaded with `library()` above.
 
 ## Working with the `nh_750` data
 
-To demonstrate key ideas in this Chapter, we will consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We'll load into the `nh_750` data frame the information from the `nh_adult750.Rds` file we created in Section \@ref(newNHANES).
+To demonstrate key ideas in this Chapter, we will consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We'll load into the `nh_750` data frame the information from the `nh_adult750.Rds` file we created in @sec-nh750.
 
 ```{r c6_read}
 nh_750 <- read_rds("data/nh_adult750.Rds")

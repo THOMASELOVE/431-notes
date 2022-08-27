@@ -483,7 +483,7 @@ nh_500cc |>
     tabyl(Smoke100, HealthGen) |>
     adorn_totals(c("row", "col")) |>
     adorn_title() |>
-    kbl() |>
+    kbl(align = 'crrrrr') |>
     kable_styling(position = "center", full_width = FALSE)
 ```
 
@@ -497,7 +497,7 @@ nh_500cc |>
     adorn_pct_formatting() |>
     adorn_ns() |>
     adorn_title() |>
-    kbl() |>
+    kbl(align = 'crrrrr') |>
     kable_styling(position = "center", full_width = FALSE)
 ```
 
@@ -511,7 +511,7 @@ nh_500cc |>
     adorn_pct_formatting() |>
     adorn_ns() |>
     adorn_title() |>
-    kbl() |>
+    kbl(align = 'crrrrr') |>
     kable_styling(position = "center", full_width = FALSE)
 ```
 

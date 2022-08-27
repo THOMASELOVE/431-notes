@@ -20,6 +20,7 @@ knitr::opts_chunk$set(comment = NA)
 library(palmerpenguins) 
 library(janitor) 
 library(knitr) 
+library(kableExtra)
 library(gt)
 library(tidyverse) 
 
@@ -35,11 +36,11 @@ The `penguins` data from the `palmerpenguins` package contains `r nrow(penguins)
 penguins
 ```
 
-For instance, the first penguin in the data is of the species Adelie (the three species included in the data are Adelie, Chinstrap and Gentoo), and was observed on the island called Torgeson. The remaining data for that penguin include measures of its bill length and depth, its flipper length and body mass, its sex and the year in which it was observed.
+For instance, the first penguin in the data is of the species Adelie, and was observed on the island called Torgeson. The remaining data for that penguin include measures of its bill length and depth, its flipper length and body mass, its sex and the year in which it was observed.
 
-Note that though there are `r nrow(penguins)` rows in the tibble of data called `penguins`, only the first ten rows (penguins) are shown in the table above. Note also that the symbol `<NA>` is used to indicate a missing (not available) value.
+Note that though there are `r nrow(penguins)` rows in the tibble of data called `penguins`, only the first ten rows (penguins) are shown in the table above. Note also that the symbol `NA` or `<NA>` is used to indicate a missing (not available) value.
 
-## Create `newpenguins`: Eliminating Missing Data
+## Create `new_penguins`: Eliminating Missing Data
 
 Next, let's take the `penguins` data from the `palmerpenguins` package, and identify those observations which have complete data (so, no missing values) in four variables of interest. We'll store that result in a new tibble (data set) called `new_penguins` and then take a look at that result using the following code.
 
@@ -81,6 +82,16 @@ new_penguins |>
 ```
 
 The `kable()` function comes from the `knitr` package we loaded earlier. Notice that we added some comments to the code here with the prefix `#`. These comments are ignored by R in processing the data.
+
+Another approach we could have used here is aided by the `kableExtra` package's function called `kbl()`, which lets us set up the alignment of our columns. We'll also add the species name using `adorn_title()` from the `janitor` package.
+
+```{r}
+new_penguins |> 
+    tabyl(sex, species) |>
+    adorn_totals(where = c("row", "col")) |> 
+    adorn_title() |>
+    kbl(align = c('lcccr')) 
+```
 
 We can switch the rows and columns, and add some additional features, using the code below, which makes use of the `gt()` and `tab_header()` functions from the `gt` package, which is designed to help build complex tables. More on the incredibly versatile `gt()` package is available at <https://gt.rstudio.com/>.
 
@@ -158,3 +169,7 @@ What can we learn from these plots and their construction? In particular,
 -   How does the shape and nature of this body mass - flipper length relationship change based on Sex and Species?
 -   Do you think it would be helpful to plot a straight-line relationship (rather than a smooth curve) within each combination of Sex and Species in the final plot? Why or why not? (Also, what would we have to do to the code to accomplish this?)
 -   How was the R code for the plot revised to accomplish each of the six "wants" specified above?
+
+## Coming Up
+
+Next, we'll introduce and demonstrate some more of the many available tools for creating summaries (both graphical and numerical) in R, again working with the Palmer Penguins data.
