@@ -5,7 +5,7 @@ project:
 book:
   title: "Course Notes for 431"
   author: "Thomas E. Love, Ph.D."
-  date: "2022-08-27"
+  date: "2022-08-29"
   search: true
   downloads: [pdf]
   output-file: "431-notes"

@@ -1,0 +1,730 @@
+# Species Found on the Galapagos Islands
+
+## Setup: Packages Used Here
+
+```{r, message = FALSE}
+knitr::opts_chunk$set(comment = NA)
+
+library(broom)
+library(car)
+library(GGally)
+library(knitr)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+We'll also use a function from the `arm` package, and from the `Hmisc` package.
+
+## A Little Background
+
+The `gala` data describe describe features of the 30 Galapagos Islands. 
+
+```{r}
+gala <- read_csv("data/gala.csv", show_col_types = FALSE)
+```
+
+The Galapagos Islands are found about 900 km west of South America: specifically the continental part of Ecuador. The Islands form a province of Ecuador and serve as a national park and marine reserve. They are noted for their vast numbers of unique (or endemic) species and were studied by Charles Darwin during the voyage of the Beagle. 
+
+![galapic.jpg](figures/galapic.jpg)
+
+### Sources
+
+The data were initially presented by Johnson M and Raven P (1973) Species number and endemism: the Galapagos Archipelago revisited. *Science* 179: 893-895 and also appear in several regression texts, including my source: @Faraway2015. Note that Faraway filled in some missing data to simplify things a bit. A similar version of the data is available as part of the `faraway` library in R, but I encourage you to use the version I supply on our web site.
+
+### Variables in the `gala` data frame
+
+- **id** = island identification code
+- **island** = island name
+- **species** = our outcome, the number of species found on the island
+- **area** = the area of the island, in square kilometers
+- **elevation** = the highest elevation of the island, in meters
+- **nearest** = the distance from the nearest island, in kilometers
+- **scruz** = the distance from Santa Cruz Island, in kilometers. Santa Cruz is the home to the largest human population in the Islands, and to the town of Puerto Ayora.
+- **adjacent** = the area of the adjacent island, in square kilometers
+
+```{r head of gala}
+gala
+Hmisc::describe(gala) # check for missing and inexplicable values
+```
+
+## DTDP: A Scatterplot Matrix
+
+After missingness and range checks, the first step in any data analysis problem is to draw the picture. The most useful picture for me in thinking about a regression problem with a reasonably small number of predictors is a scatterplot matrix. 
+
+Our outcome, that we are predicting here is the number of `species`.
+
+We'll use five predictors: 
+
+- `area`
+- `elevation`
+- `nearest`
+- `scruz` and
+- `adjacent`. 
+
+```{r}
+ggpairs(gala %>% select(area, elevation, nearest,
+                        scruz, adjacent, species))
+```
+
+
+### Questions about the Scatterplot Matrix
+
+In this Chapter, I will provide you with nearly 100 questions that you should be able to answer in light of the output provided. Here are the first few. If you have questions about how to interpret the output in light of these questions, please ask about them on Piazza or in TA office hours.
+
+1.  What are we looking for in the scatterplots in the bottom row?
+2.	What can we learn from the Pearson correlations in the right column?
+3.	How do the density plots help increase our understanding of the data?
+4.	What about the scatterplots that are not in the top row?
+5.	What can we learn from the Pearson correlations that compare predictors?
+
+## Fitting A "Kitchen Sink" Linear Regression model
+
+Next, we'll fit a multiple linear regression model to predict the number of species based on the five predictors included in the gala data frame (and scatterplot matrix above.)  We use the lm command to fit the linear model, and use what is called Wilkinson-Rogers notation to specify the model.
+
+```{r p53}
+model1 <- lm(species ~ area + elevation + nearest + scruz + 
+               adjacent, data=gala)
+```
+
+Here are the results of running `tidy()` and `glance()` from the `broom` package on `model1`.
+
+```{r}
+tidy(model1) %>%
+    kable(digits = 3)
+
+glance(model1) %>%
+    select(r.squared, adj.r.squared, sigma, statistic, 
+           p.value, df, df.residual, nobs, AIC, BIC) %>%
+    kable(digits = c(3, 3, 1, 1, 3, 0, 0, 0, 1, 1))
+```
+
+Here is the result of running `summary` on `model1`.
+
+```{r}
+summary(model1)
+```
+
+### Questions about the Kitchen Sink Model Summaries
+
+What conclusions can we draw from the `summary` output for this model? Specifically ...
+
+6.  What is being predicted? What is the prediction equation?
+7.	How do we interpret the `elevation` estimate of 0.32?
+8.	How do we interpret the `area` estimate of -0.02?
+9.	How do we interpret the intercept estimate of 7.07?
+10.	Overall, does our `model1` add detectable predictive value (say, at the 5% significance level) over the simplest possible model for this outcome (the model using the intercept term alone)? 
+11.	What proportion of the variation in `species` counts does this model account for?
+12.	What does the residual standard error mean in this context?
+13.	What can we learn from the standard errors in the coefficient output?
+14.	What can we learn from the `t` values and `Pr(>|t|)` values in the summary output?
+15.	How should we interpret the meaning of the `Adjusted R-squared` value?
+
+## Finding Confidence Intervals for our Coefficient Estimates
+
+Of course, we can find these intervals in several ways. One approach uses `tidy()` from the `broom` package.
+
+```{r}
+tidy(model1, conf.int = TRUE, conf.level = 0.95) %>%
+    select(term, estimate, std.error, conf.low, conf.high) %>%
+    kable(digits = 3)
+```
+
+
+Another approach would be:
+
+```{r p53b}
+confint(model1, level = 0.95)
+```
+
+### Questions about the Confidence Intervals
+
+16. What can we learn from the provided confidence interval for `elevation`?
+17.	How do the confidence interval results here compare to the t tests we saw previously?
+
+## Measuring Collinearity - the Variance Inflation Factor
+
+The **variance inflation factor** (abbreviated VIF) can be used to quantify the impact of multicollinearity in a linear regression model. 
+
+The VIF is sometimes interpreted by taking its square root, and then interpreting the result as telling you how much larger the standard error for that coefficient is, as compared to what it would be if that variable were uncorrelated with the other predictors.
+
+In R, the `vif` function from the `car` library, when applied to a linear regression model, specifies the variance inflation factors for each of the model's coefficients, as follows.
+
+```{r p54}
+vif(model1)
+```
+
+So, for instance, the VIF of 3.99 for `elevation` implies that the standard error of the elevation coefficient is approximately 2 times larger than it would be if elevation was uncorrelated with the other predictors. 
+
+**I will look closely at any VIF value that is greater than 5, although some people use a cutoff of 10.** 
+
+- Another collinearity measure called tolerance is simply 1/`VIF`. 
+- For example, the tolerance for `elevation` would be 0.25, and the cutoff for a potentially problematic tolerance is either 0.2 or lower, or 0.1 or lower.
+
+To calculate the VIF for a predictor $x_1$, use all of the other predictors to predict $x_1$ and find the multiple $R^2$ value. 
+
+- `VIF` for $x_1$ = 1 / (1 - $R^2_{x_1 | others}$), and `tolerance` = (1 - $R^2_{x_1 | others}$).
+
+## Global (F) Testing of Overall Significance
+
+Our Galapagos Islands species count regression model (called `model1`) predicts the count of an island's species using `area`, `elevation`, `nearest`, `scruz` and `adjacent`.
+
+```{r p55}
+nullmodel <- lm(species ~ 1, data=gala)
+summary(nullmodel)
+
+anova(model1, nullmodel)
+```
+
+### Questions about the Global Test via ANOVA
+
+18. How do we interpret the null model fit above?
+19.	What are the hypotheses being tested by this ANOVA output?
+20.	What conclusions can we draw from the ANOVA output presented here?
+21.	Where do we find information regarding the result for the previous question in the summary output for the linear model?
+22.	How would we set up an ANOVA model to test whether the "kitchen sink" model's predictive value would be meaningfully impacted by removing the `adjacent` predictor from the model?
+23.	Where do we find information regarding these result for the previous question in the `summary` output for the linear model?
+24.	How would we set an ANOVA model to test whether a model with `area` only would be a detectable improvement over the null model?
+
+## Sequential Testing in a Regression Model with ANOVA
+
+```{r p56}
+anova(model1)
+```
+
+### Questions about Sequential Testing and ANOVA
+
+25. What conclusions can we draw from the `area` row in the output above?
+26.	What conclusions can we draw from the `elevation` row?
+27.	Does `nearest` add statistically detectable predictive value to the model including `area` and `elevation`, but none of the other predictors?
+28.	Does `adjacent` add detectable predictive value as last predictor into the model?
+29.	Where else in the regression output can we find the answer to the previous question?
+30.	How does the mean square of the residuals (3718) relate to the residual standard error?
+31.	What percentage of the variation in the species counts is accounted for by area alone?
+32.	What percentage of the variation explained by the kitchen sink model would also be accounted for in a two-predictor regression model including `area` and `elevation` alone?
+33.	How could we use the original linear model output to whether a model using the four predictors that appear most promising here would be statistically meaningfully worse than the full model with all five predictors?
+34.	What does the following output do differently than the output above, and why is that potentially useful here? Why is the p value for `scruz` so different?
+
+```{r p56-2}
+anova(lm(species ~ area + elevation + adjacent + 
+             scruz + nearest, data=gala))
+```
+
+35.  Consider the ANOVA below, run on a new model with `elevation` after `adjacent`. What happens? Why?
+
+```{r p56-3}
+anova(lm(species ~ area + adjacent + elevation + 
+             scruz + nearest, data=gala))
+```
+
+
+
+## An ANOVA table for the Model as a Whole
+
+It's probably also worthwhile to compute a completed ANOVA table for the model as a whole. All elements are in the ANOVA tables above, or the model summary.
+
+Group | DF | SS |	MS |	F |	P
+-----:|---:|---:|---:|---:|---:
+Regression |	5 |	291849 |	58369.8 |	15.7 | 6.838e-07
+Residuals |	24 |	89231 |	3718.0 | | 		
+Total	| 29 |	381080		| | |
+
+36. How did I determine the Mean Square for the Regression model?
+37.	What conclusions can we draw from this ANOVA table?
+
+## Assumption Checking for our Galapagos Islands models
+
+Remember that the key assumptions of multiple linear regression are:
+
+- [Linearity] We have also assumed that the structural part of the model is correctly specified (we've included all the predictors that need to be in the model, and expressed them in the most appropriate manner, and we've left out any predictors that don't need to be in the model.)
+- [Normality] The regression makes errors that come from a Normal distribution
+- [Homoscedasticity = Constant Variance] The regression makes errors that come from a distribution with constant variance at all predictor levels.
+- [Independence] The regression errors are independent of each other.
+
+In addition, we need to realize that sometimes a few observations may be particularly problematic. For instance:
+
+1. An observation may simply not fit the model well (i.e. it creates a large residual)
+2. An observation may have high leverage over the fit of the model (this happens with observations that have an unusual combination of predictor values, in particular)
+3. An observation may actually have high influence on the model (in the sense that whether they are included or excluded has a large impact on the model's fit, and the value of its parameter estimates.)
+4. Or any combination of high residual, leverage and influence may occur.
+
+So it is important to check the assumptions that we can with the data we have. Our most important tools are plots and other summaries of residuals, and what are called influence statistics. 
+
+## My First Plot: Studentized Residuals vs. Fitted Values
+
+The first diagnostic plot I usually draw for a multiple regression is a scatterplot of the model's **studentized** residuals\footnote{More on studentized and standardized residuals later. For now, think of them like z scores.} (on the vertical axis) vs. the model's fitted values (on the horizontal.)  This plot can be used to assess potential non-linearity, non-constant variance, and non-Normality in the residuals.
+
+```{r p60, fig.width=4, fig.height = 4, fig.align="center"}
+gala$stures <- rstudent(model1); gala$fits <- fitted(model1)
+ggplot(gala, aes(x = fits, y = stures)) +
+    geom_point(size = 3, shape = 1) +
+    geom_smooth(col = "blue", se = FALSE, method = "loess",
+                formula = y ~ x, weight = 0.5) +
+    geom_hline(aes(yintercept = 0), linetype = "dashed") +
+    labs(x = "Fitted Values of Species", 
+         y = "Studentized Residuals",
+         title = "gala data: Model 1",
+         subtitle = "Studentized Residuals vs. Fitted Values")
+```
+
+### Questions about Studentized Residuals vs. Fitted Values
+
+38. Consider the point at bottom right. What can you infer about this observation?
+39.	Why did I include the dotted horizontal line at Studentized Residual = 0? 
+40.	What is the purpose of the thin blue line?
+41.	What does this plot suggest about the potential for outliers in the residuals?
+
+## Automatic Regression Diagnostics for Model 1
+
+```{r p58, fig.height=8, warning=FALSE}
+par(mfrow=c(2,2))
+plot(model1)
+par(mfrow=c(1,1))
+```
+
+
+
+## Model 1: Diagnostic Plot 1
+
+As we've seen, the first of R's automated diagnostic plots for a linear model is a plot of the residuals vs. the fitted values.
+
+```{r p61, fig.width = 5, fig.align="center"}
+plot(model1, which=1)
+```
+
+### Questions about Diagnostic Plot 1: Residuals vs. Fitted Values
+
+42. What type of regression residuals is R plotting here?
+43.	Which points are identified by numbers here?
+44.	Why did R include the gray dotted line at Residual = 0? 
+45.	What is the purpose of the thin red line?
+46.	What can you tell about the potential for outliers in the model 1 residuals from the plot?
+47.	What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it? Which assumptions can we assess with it?
+48.	What would we do if we saw a violation of assumptions in this plot? 
+49.	What are the key differences between this plot and the one I showed earlier?
+
+## Diagnostic Plot 2: Assessing Normality
+
+The second diagnostic plot prepared by R for any linear model using the plot command is a Normal Q-Q plot of the standardized residuals from the model.
+
+```{r p62, fig.width = 5, fig.align="center"}
+plot(model1, which=2)
+```
+
+### Questions about Diagnostic Plot 2: Normal Plot of Standardized Residuals
+
+50. Which points are being identified here by number?
+51.	Which assumption(s) of multiple regression does this plot help us check?
+52.	What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it? 
+53.	What would we do if we saw a violation of assumptions in this plot?
+
+We could also look at studentized residuals, or we could apply a more complete set of plots and other assessments of normality. Usually, I don't.
+
+
+## Diagnostic Plot 3: Assessing Constant Variance
+
+The third diagnostic plot prepared by R for any linear model using the `plot` command shows the square root of the model's standardized residuals vs. its fitted values. R calls this a **scale-location plot**.
+
+```{r p63, fig.width = 5, fig.align="center"}
+plot(model1, which=3)
+```
+
+### Questions about Diagnostic Plot 3: Scale-Location Plot
+
+54. Which points are being identified here by number?
+55.	Which assumption(s) of multiple regression does this plot help us check?
+56.	What is the role of the thin red line in this plot?
+57.	What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it? 
+58.	What would we do if we saw a violation of assumptions in this plot?
+
+## Obtaining Fitted Values and Residuals from a Model
+
+We can use the `augment()` function from the `broom` package to find the predictions made by the regression model for each of the observations used to create the model.
+
+```{r p64}
+gala_aug <- augment(model1)
+
+names(gala_aug)
+```
+
+Here, we obtain 
+
+- predicted (fitted) values for the outcome, in `.fitted`
+- residuals (observed - fitted) values for each observation, in `.resid`
+- leverage values in `.hat` for each observation
+- standard errors associated with each observation in `.sigma`
+- Cook's distance values for each observation in `.cooksd`
+- standardized residuals in `.std.resid`
+
+Here, for instance, are the first few rows.
+
+```{r}
+head(gala_aug) %>% kable(digits = 2)
+```
+
+### Questions about Fitted Values
+
+59.  Verify that the first fitted value [116.73] is in fact what you get for Baltra (observation 1) when you apply the regression equation:
+```
+species = 7.07 - 0.02 area + 0.32 elevation 
+               + 0.009 nearest - 0.24 scruz - 0.07 adjacent
+```
+
+We can compare these predictions to the actual observed counts of the number of species on each island. Subtracting the fitted values from the observed values gives us the residuals, as does the `resid` function.
+
+```{r p64-2}
+round(resid(model1),2)
+```
+
+### Questions about Residuals
+
+60. What does a positive residual indicate? 
+61. What does a negative residual indicate?
+62.	The standard deviation of the full set of 30 residuals turns out to be 55.47. How does this compare to the residual standard error?
+63.	The command below identifies Santa Cruz. What does it indicate about Santa Cruz, specifically?
+
+```{r p64-3}
+gala$island[which.max(resid(model1))]
+```
+
+64. From the results below, what is the `model1` residual for Santa Cruz? What does this imply about the `species` prediction made by Model 1 for Santa Cruz?
+
+```{r test}
+which.max(resid(model1))
+round(resid(model1),2)
+gala[which.max(resid(model1)),]
+```
+
+
+
+## Relationship between Fitted and Observed Values
+
+We've already seen that the `fitted` command can produce predicted values for each observations used to develop a regression model, and that the `resid` command can produce the residuals (observed - predicted) for those same observations.
+Returning to our original model1, let's compare the fitted values (stored earlier in `fits`) to the observed values.
+
+```{r p65, fig.height=4, fig.width=5, fig.align="center"}
+ggplot(gala, aes(x = species, y = fits)) +
+    geom_point(size = 3, shape = 1) + 
+    geom_abline(intercept = 0, slope = 1, 
+                col = "purple", linetype = "dashed") +
+    labs(x = "Observed Species Count", 
+         y = "Model Predicted Species")
+```
+
+### Questions about Fitted and Observed Values
+
+65.  Why did I draw the dotted purple line with y-intercept 0 and slope 1? Why is that particular line of interest?
+66.	If a point on this plot is in the top left here, above the dotted line, what does that mean?
+67.	If a point is below the dotted line here, what does that mean?
+68.	How does this plot display the size of an observation's residual?
+
+## Standardizing Residuals
+
+We've already seen that the raw residuals from a regression model can be obtained using the `resid` function. Residuals are defined to have mean 0. This is one of the requirements of the least squares procedure for estimating a linear model, and their true standard deviation is effectively estimated using the residual standard error.
+
+There are two additional types of residuals for us to be aware of: standardized residuals, and studentized (sometimes called externally standardized, or jackknife) residuals. Each approach standardizes the residuals by dividing them by a standard deviation estimate, so the resulting residuals should have mean 0 and standard deviation 1 if assumptions hold.
+
+- **Standardized** residuals are the original (raw) residuals, scaled by a standard deviation estimate developed using the entire data set. This summary is part of what is provided by `augment` from the `broom` package, as `.std.resid`.
+- **Studentized** residuals are the original (raw) residuals, scaled by a standard deviation estimate developed using the entire data set EXCEPT for this particular observation.
+
+The `rstudent` function, when applied to a linear regression model, will the model's studentized residuals.
+
+```{r p66, fig.height=3.5}
+gala_aug <- gala_aug %>%
+    mutate(.stu.resid = rstudent(model1))
+
+ggplot(gala_aug, aes(x = .std.resid, 
+                           y = .stu.resid)) +
+    geom_point(size = 3, pch = 1) +
+    geom_abline(intercept = 0, slope = 1, col = "red") +
+    geom_label(x = 2.5, y = 1, 
+               label = "y = x", col = "red") +
+    theme(aspect.ratio = 1) +
+    labs(x = "Standardized Residuals for Model 1", 
+         y = "Studentized Residuals for Model 1")
+```
+
+### Questions about Standardized and Studentized Residuals
+
+69.  From the plot above, what conclusions can you draw about the two methods of standardizing residuals as they apply in the case of our model1?
+
+## Influence Measures for Multiple Regression
+
+R can output a series of **influence measures** for a regression model. Let me show you all of the available measures for model 1, but just for three of the data points - #1 (which is not particularly influential) and #12 and #16 (which are).
+
+First, we'll look at the raw data:
+
+```{r p68}
+gala[c(1,12,16),]
+```
+
+And then, we'll gather the output available in the `influence.measures` function.
+
+```{r p68b, eval=FALSE}
+influence.measures(model1)
+```
+
+Here's an edited version of this output...
+```
+Influence measures of
+lm(formula = species ~ area + elevation + nearest + scruz + adjacent, 
+data = gala) :
+
+     dfb.1_  dfb.area  dfb.elvt dfb.nrst  dfb.scrz  dfb.adjc
+1  -0.15064   0.13572 -0.122412  0.07684  0.084786  1.14e-01
+12  0.16112   0.16395 -0.122578  0.03093 -0.059059 -8.27e-01
+16 -1.18618 -20.87453  4.885852  0.36713 -1.022431 -8.09e-01
+
+     dffit   cov.r   cook.d    hat inf
+1   -0.29335  1.0835 1.43e-02 0.0787    
+12  -1.24249 25.1101 2.68e-01 0.9497   *
+16 -29.59041  0.3275 6.81e+01 0.9685   *
+```
+This output presents dfbetas for each coefficient, followed by dffit statistics, covariance ratios, Cook's distance and leverage values (`hat`) along with an indicator of influence.
+
+We'll consider each of these elements in turn.
+
+
+
+## DFBETAs
+
+The first part of the influence measures output concerns what are generally called `dfbetas` ...
+
+id | island | dfb.1_ | dfb.area | dfb.elvt | dfb.nrst | dfb.scrz | dfb.adjc
+-:| :-: | -:| -:| -:| -:| -:| -:
+1 | Baltra | -0.151 | 0.136 | -0.122 |  0.077 | 0.085 | 0.114
+12 | Fernandina | 0.161 | 0.164 | -0.123 | 0.031 | -0.059 | -0.827
+16 | Isabela | -1.186 | -20.875 |  4.886 | 0.367 | -1.022 | -0.809
+
+The `dfbetas` look at a standardized difference in the estimate of a coefficient (slope) that will occur if the specified point (here, `island`) is removed from the data set. 
+
+- Positive values indicate that deleting the point will yield a smaller coefficient. 
+- Negative values indicate that deleting the point will yield a larger coefficient. 
+- If the absolute value of the dfbeta is greater than $2 / \sqrt{n}$, where $n$ is the sample size, then the `dfbeta` is considered to be large. 
+
+In this case, our cutoff would be $2 / \sqrt{30}$ or 0.365, so that the Isabela `dfbeta` values are all indicative of large influence. Essentially, if we remove Isabela from the data, and refit the model, our regression slopes will change a lot (see below). Fernandina has some influence as well, especially on the `adjacent` coefficient.
+
+Predictor | Coefficient (*p*) **all 30 islands** | Coefficient (*p*) **without Isabela**
+--------: | ------------------------------------:| ------------------------------------:
+Intercept | 7.07 (*p* = 0.72) | 22.59 (*p* = 0.11)
+`area` | -0.02 (*p* = 0.30) | 0.30 (*p* < 0.01)
+`elevation` | 0.32 (*p* < 0.01) | 0.14 (*p* < 0.01)
+`nearest` | 0.01 (*p* = 0.99) | -0.26 (*p* = 0.73)
+`scruz` | -0.24 (*p* = 0.28) | -0.09 (*p* = 0.55)
+`adjacent` | -0.08 (*p* < 0.01) | -0.07 (*p* < 0.01)
+
+After the dfbetas, the `influence.measures` output presents `dffit`, covariance ratios, Cook's distance and leverage values (`hat`) for each observation, along with an indicator of influence.
+
+```
+id  island         dffit   cov.r   cook.d    hat inf
+1   Baltra      -0.29335  1.0835 1.43e-02 0.0787    
+12  Fernandina  -1.24249 25.1101 2.68e-01 0.9497   *
+16  Isabela    -29.59041  0.3275 6.81e+01 0.9685   *
+```
+
+## Cook's d or Cook's Distance
+
+The main measure of influence is Cook's Distance, also called Cook's d. Cook's d provides a summary of the influence of a particular point on all of the regression coefficients. It is a function of the standardized residual and the leverage. We've seen that the `augment()` function in the `broom` package provides both Cook's distance and leverage values for all observations in our model.
+
+- Cook's distance values greater than 1 are generally indicators of high influence.
+- Obviously, Isabela (with a value of Cook's d = 68.1) is a highly influential observation by this measure.
+
+### Plotting Cook's Distance
+
+As one of its automated regression diagnostic plots, R will produce an index plot of the Cook's distance values. Note the relatively enormous influence for island 16 (Isabela).
+
+```{r model 1 diagnostic 4}
+plot(model1, which = 4)
+```
+
+## DFFITS 
+
+A similar measure to Cook's distance is called `DFFITS`. The `DFFITS` value describes the influence of the point on the fitted value. It's the number of standard deviations that the fitted value changes if the observation is removed. This is defined as a function of the studentized residual and the leverage. 
+
+- If the absolute value of `DFFITS` is greater than 2 times $\sqrt{p / n-p}$, where *p* is the number of predictors (not including the intercept), we deem the observation influential.
+- For the `gala` data, we'd consider any point with `DFFITS` greater than 2 x $\sqrt{5 / (30-5)}$ = 0.894 to be influential by this standard, since n = 30 and we are estimating p = 5 slopes in our model. This is true of both Fernandina and Isabela.
+
+## Covariance Ratio 
+
+The covariance ratio `cov.r` indicates the role of the observation on the precision of estimation. If `cov.r` is greater than 1, then this observation improves the precision, overall, and if it's less than 1, the observation drops the precision of estimation, and these are the points about which we'll be most concerned.
+
+- As with most of our other influence measures, Isabela appears to be a concern.
+
+## Leverage 
+
+The `hat` value is a measure of leverage. Specifically, this addresses whether or not the point in question is unusual in terms of its combination of predictor values. We've seen that the `augment()` function in the `broom` package provides leverage values for all observations in our model.
+
+- The usual cutoff for a large leverage value is 2.5 times the average leverage across all observations, where the average leverage is equal to k/n, where n is the number of observations included in the regression model, and k is the number of model coefficients (slopes plus intercept).
+- In the `gala` example, we'd regard any observation with a hat value larger than 2.5 x 6/30 = 0.5 to have large leverage. This includes Fernandina and Isabela.
+
+### Indicator of Influence
+
+The little asterisk indicates an observation which is influential according to R's standards for any of these measures. You can take the absence of an asterisk as a clear indication that a point is NOT influential. Points with asterisks may or may not be influential in an important way. In practice, I usually focus on the Cook's distance to make decisions about likely influence, when the results aren't completely clear.
+
+## Building Predictions from our models
+
+The `predict` function, when applied to a linear regression model, produces the fitted values, just as the `augment()` function did, and, as we've seen, it can be used to generate *prediction* intervals for a single new observation, or *confidence* intervals for a group of new observations with the same predictor values. 
+
+Let us, just for a moment, consider a "typical" island, exemplified by the median value of all the predictors\footnote{This approach is motivated by @Faraway2015, pp. 52-53.}. There's a trick to creating this and dumping it in a vector I will call `x.medians`.
+
+```{r p70a}
+x <- model.matrix(model1)
+x.medians <- apply(x, 2, function(x) median(x))
+x.medians
+```
+
+We want to use the model to predict our outcome (species) on the basis of the inputs above: a new island with values of all predictors equal to the median of the existing islands. As before, building an interval forecast around a fitted value requires us to decide whether we are:
+
+- predicting the number of species for one particular island with the specified characteristics (in which case we use something called a prediction interval) or
+- predicting the mean number of species across all islands that have the specified characteristics (in which case we use the confidence interval). 
+
+```{r p 70b}
+newdata <- data.frame(t(x.medians))
+predict(model1, newdata, interval="prediction", level = 0.95)
+predict(model1, newdata, interval="confidence", level = 0.95)
+```
+
+### Questions about the Prediction and Confidence Interval Methods
+
+70. What is the 95% prediction interval for this new observation? Does that make sense?
+71.	Which interval (prediction or confidence) is wider? Does that make sense?
+72.	Is there an island that has characteristics that match our new medians variable?
+73.	What happens if we don't specify new data in making a prediction?
+
+## Making a Prediction with New Data (without `broom`)
+
+74.	How does the output below help us to make a prediction with a new data point, or series of them? Interpret the resulting intervals.
+
+```{r p70-2}
+newdata2 <- tibble(area = 2, elevation = 100, nearest = 3, 
+                       scruz = 5, adjacent = 1)
+predict(model1, newdata2, interval="prediction", level = 0.95)
+predict(model1, newdata2, interval="confidence", level = 0.95)
+```
+
+## Scaling Predictors using Z Scores: Semi-Standardized Coefficients
+
+We know that the interpretation of the coefficients in a regression model is sensitive to the scale of the predictors. We have already seen how to "standardize" each predictor by subtracting its mean and dividing by its standard deviation. 
+
+- Each coefficient in this semi-standardized model has the following interpretation: the expected difference in the outcome, comparing units (subjects) that differ by one standard deviation in the variable of interest, but for which all other variables are fixed at their average.
+- Remember also that the intercept in such a model shows the mean outcome across all subjects.
+
+Consider a two-variable model, using `area` and `elevation` to predict the number of `species`...
+
+```{r p71a}
+model2 <- lm(species ~ area + elevation, data=gala)
+summary(model2)
+```
+
+Now compare these results to the ones we get after scaling the area and elevation variables. Remember that the `scale` function centers a variable on zero by subtracting the mean from each observation, and then scales the result by dividing by the standard deviation. This ensures that each regression input has mean 0 and standard deviation 1, and is thus a *z score*.
+
+```{r p71b}
+model2.z <- lm(species ~ scale(area) + scale(elevation), 
+               data=gala)
+summary(model2.z)
+```
+
+### Questions about the Semi-Standardized Model
+
+75. What changes after centering and rescaling the predictors, and what does not? 
+76.	Why might rescaling like this be a helpful thing to do if you want to compare predictors in terms of importance?
+
+
+
+## Fully Standardized Regression Coefficients
+
+Suppose we standardize the coefficients by also taking centering and scaling (using the z score) the outcome variable: `species`, creating a **fully standardized** model.
+
+```{r p72}
+model2.zout <- lm(scale(species) ~ 
+                  scale(area) + scale(elevation), data=gala)
+summary(model2.zout)
+```
+
+### Questions about the Standardized Model
+
+77.  How do you interpret the value 0.142 of the `scale(area)` coefficient here? You may want to start by reviewing the summary of the original `gala` data shown here.
+
+```{r p72b}
+summary(gala[c("species", "area", "elevation")])
+```
+
+78.	How do you interpret the value 0.632 of the `scale(elevation)` coefficient in the standardized model?
+79.	What is the intercept in this setting? Will this be the case whenever you scale like this?
+80.	What are some of the advantages of looking at scaled regression coefficients?
+81.	Why are these called *fully* standardized coefficients while the previous page described semi-standardized coefficients? 
+82.	What would motivate you to use one of these two methods of standardization (fully standardized or semi-standardized) vs. the other?
+
+## Robust Standardization of Regression Coefficients
+
+Another common option for scaling is to specify lower and upper comparison points, perhaps by comparing the impact of a move from the 25th to the 75th percentile for each variable, while holding all of the other variables constant.
+
+Occasionally, you will see robust semi-standardized regression coefficients, which measure the increase in the outcome, Y, associated with an increase in that particular predictor of one IQR (inter-quartile range). 
+
+```{r p73}
+gala$area.scaleiqr <- 
+    (gala$area - mean(gala$area)) / IQR(gala$area)
+gala$elevation.scaleiqr <- 
+    (gala$elevation - mean(gala$elevation)) / 
+                            IQR(gala$elevation)
+
+model2.iqr <- lm(species ~ 
+                     area.scaleiqr + elevation.scaleiqr,
+                 data=gala)
+summary(model2.iqr)
+```
+
+### Questions about Robust Standardization
+
+83.  How should we interpret the 57.96 value for the scaled `elevation` variable? You may want to start by considering the summary of the original elevation data below. 
+
+```{r p73-2}
+summary(gala$elevation)
+```
+
+A **robust standardized coefficient** analysis measures the increase in Y (in IQR of Y) associated with an increase in the predictor of interest of one IQR.
+
+```{r p73-3}
+gala$species.scaleiqr <- (gala$species - mean(gala$species)) / IQR(gala$species)
+model2.iqrout <- lm(species.scaleiqr ~ area.scaleiqr + elevation.scaleiqr, data=gala)
+model2.iqrout
+```
+
+84.  What can we learn from the R output above?
+
+## Scaling Inputs by Dividing by 2 Standard Deviations
+
+It turns out that standardizing the inputs to a regression model by dividing by a standard deviation creates some difficulties when you want to include a binary predictor in the model. 
+
+Instead, Andrew Gelman recommends that you consider centering all of the predictors (binary or continuous) by subtracting off the mean, and then, for the non-binary predictors, also dividing not by one, but rather by two standard deviations. 
+
+- Such a standardization can go a long way to helping us understand a model whose predictors are on different scales, and provides an interpretable starting point. 
+- Another appealing part of this approach is that in the `arm` library, Gelman and his colleagues have created an R function called `standardize`, which can be used to automate the process of checking coefficients that have been standardized in this manner, after the regression model has been fit.
+
+```{r p74}
+model2
+
+arm::standardize(model2)
+```
+
+### Questions about Standardizing by Dividing by Two SD
+
+85.	How does this result compare to the semi-standardized regression coefficients we have seen on the last few analyses?
+
+86. How should we interpret the `z.area` coefficient of 32.5 here? Again, you may want to start by obtaining a statistical summary of the original `area` data, as shown below.
+
+```{r p74b}
+summary(gala$area)
+```
+
+To standardize the outcome in this way, as well, we use:
+
+```{r p74-2}
+arm::standardize(model2, standardize.y=TRUE)
+```
+
+87.  How should we interpret the `z.area` coefficient of 0.142 here? 
+88.	How does these relate to the standardized regression coefficients we've seen before?
+
+Again, if you have questions about how to interpret the output in light of the questions contained in this Chapter, please ask us for help on Piazza or in TA office hours.
+

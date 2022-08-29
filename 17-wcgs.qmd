@@ -1,44 +1,51 @@
-# The WCGS {#WCGS-Study}
+# The WCGS {#sec-WCGS}
 
 ## Setup: Packages Used Here
 
-```{r, message = FALSE}
+```{r}
+#| message: false
+
 knitr::opts_chunk$set(comment = NA)
 
-library(knitr)
-library(janitor)
 library(broom)
+library(GGally)
+library(ggridges)
+library(janitor)
+library(kableExtra)
 library(patchwork)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
-We will also use the `geom_density_ridges` function from the `ggridges` package, and the `favstats` function from the `mosaic` package, and the `ggpairs` function from the `GGally` package.
+We will also use the `favstats` function from the `mosaic` package, even though I won't load `mosaic` here.
 
+## The Western Collaborative Group Study (`wcgs`)
 
-## The Western Collaborative Group Study (`wcgs`) data set
-
-@Vittinghoff explore data from the Western Collaborative Group Study (WCGS) in great detail^[For more on the WCGS, you might look at http://www.epi.umn.edu/cvdepi/study-synopsis/western-collaborative-group-study/]. We'll touch lightly on some key issues in this Chapter.
+@Vittinghoff explore data from the Western Collaborative Group Study (WCGS) in some detail^[For more on the WCGS, you might look at http://www.epi.umn.edu/cvdepi/study-synopsis/western-collaborative-group-study/]. We'll touch lightly on some key issues in this Chapter.
 
 > The Western Collaborative Group Study (WCGS) was designed to test the hypothesis that the so-called Type A behavior pattern (TABP) - "characterized particularly by excessive drive, aggressiveness, and ambition, frequently in association with a relatively greater preoccupation with competitive activity, vocational deadlines, and similar pressures" - is a cause of coronary heart disease (CHD). Two additional goals, developed later in the study, were (1) to investigate the comparability of formulas developed in WCGS and in the Framingham Study (FS) for prediction of CHD risk, and (2) to determine how addition of TABP to an existing multivariate prediction formula affects ability to select subjects for intervention programs.
 
 The study enrolled over 3,000 men ages 39-59 who were employed in San Francisco or Los Angeles, during 1960 and 1961.
 
-```{r c15_read, message = FALSE}
+In the code chunk below, after importing the data and creating a tibble with `read_csv`, I used `mutate(across(where(is.character), as_factor)` to convert all variables containing character data into factors.
+
+```{r}
+#| message: false
+
 wcgs <- read_csv("data/wcgs.csv") |>
     mutate(across(where(is.character), as_factor))
 
 wcgs
 ```
 
-Here, we have `r dim(wcgs)[1]` rows (subjects) and `r dim(wcgs)[2]` columns (variables). After importing the data and creating a tibble with `read_csv`, I used `mutate(across(where(is.character), as_factor)` to convert all variables containing character data into factors.
+Here, we have `r dim(wcgs)[1]` rows (subjects) and `r dim(wcgs)[2]` columns (variables). 
 
 ### Structure of `wcgs`
 
-We can specify the (sometimes terrible) variable names, through the `names` function, or we can add other elements of the structure, so that we can identify elements of particular interest.
+We can specify the (sometimes terrible) variable names, through the `names` function, or we can add other elements of the structure, so that we can identify items of particular interest.
 
-```{r c15_chunk10}
+```{r}
 str(wcgs)
 ```
 
@@ -55,8 +62,7 @@ Name    | Stored As  | Type         | Details (units, levels, etc.)
 `weight`  | integer    | quantitative | weight, in pounds
 `lnwght`  | number     | quantitative | natural logarithm of weight
 `wghtcat` | factor (4) | (ordinal) | wt: < 140, 140-170, 170-200, > 200
-`bmi`     | number     | quantitative | body-mass index: 
-| | | | 703 * weight in lb / (height in in)^2^
+`bmi`     | number     | quantitative | body-mass index: <br /> 703 * weight in lb / (height in in)^2^
 `sbp`     | integer    | quantitative | systolic blood pressure, in mm Hg
 `lnsbp`   | number     | quantitative | natural logarithm of sbp
 `dbp`     | integer    | quantitative | diastolic blood pressure, mm Hg
@@ -67,25 +73,24 @@ Name    | Stored As  | Type         | Details (units, levels, etc.)
 `ncigs`   | integer | quantitative | number of cigarettes smoked per day
 `arcus`   | integer | (nominal) | arcus senilis present (1) or absent (0)
 `chd69`   | factor (2) | (binary) | CHD event: Yes or No
-`typchd69`| integer | (4 levels) | event: 0 = no CHD, 1 = MI or SD,
-| | | | 2 = silent MI, 3 = angina
+`typchd69`| integer | (4 levels) | event: 0 = no CHD, 1 = MI or SD, <br /> 2 = silent MI, 3 = angina
 `time169` | integer | quantitative | follow-up time in days
 `t1`      | number  | quantitative | heavy-tailed (random draws)
 `uni`     | number  | quantitative | light-tailed (random draws)
 
 ### Quick Summary
 
-```{r c15_chunk20}
+```{r}
 summary(wcgs)
 ```
 
-For a more detailed description, we might consider `Hmisc::describe`, `psych::describe`, `mosaic::favstats`, etc.
+For a more detailed description, we might consider `Hmisc::describe`, `psych::describe`, `mosaic::inspect`, etc., as we've done (for instance) in @sec-pen2 and @sec-summ_quant.
 
 ## Are the SBPs Normally Distributed?
 
-Consider the question of whether the distribution of the systolic blood pressure results is well-approximated by the Normal.
+Consider the question of whether the distribution of the systolic blood pressure results is well-approximated by the Normal, where we'll make use of tools based on our discussion in @sec-normal.
 
-```{r c15_chunk30}
+```{r}
 res <- mosaic::favstats(~ sbp, data = wcgs)
 bin_w <- 5 # specify binwidth
 
@@ -105,7 +110,7 @@ ggplot(wcgs, aes(x = sbp)) +
 
 Since the data contain both `sbp` and `lnsbp` (its natural logarithm), let's compare them. Note that in preparing the graph, we'll need to change the location for the text annotation.
 
-```{r c15_chunk40}
+```{r}
 res <- mosaic::favstats(~ lnsbp, data = wcgs)
 bin_w <- 0.05 # specify binwidth
 
@@ -125,7 +130,7 @@ ggplot(wcgs, aes(x = lnsbp)) +
 
 We can also look at Normal Q-Q plots, for instance...
 
-```{r c15_chunk50}
+```{r}
 p1 <- ggplot(wcgs, aes(sample = sbp)) +
     geom_qq(color = "orchid") + 
     geom_qq_line(color = "red") +
@@ -148,7 +153,9 @@ There's at best a small improvement from `sbp` to `lnsbp` in terms of approximat
 
 It looks like there's an outlier (or a series of them) in the SBP data.
 
-```{r c15_chunk60, fig.height = 4}
+```{r}
+#| fig-height: 4
+
 ggplot(wcgs, aes(x = "", y = sbp)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "royalblue", 
@@ -159,22 +166,22 @@ ggplot(wcgs, aes(x = "", y = sbp)) +
     coord_flip() 
 ```
 
-
-```{r c15_chunk70}
+```{r}
+mosaic::favstats(wcgs$sbp)
 Hmisc::describe(wcgs$sbp)
 ```
 
-The maximum value here is `r max(wcgs$sbp)`, and is clearly the most extreme value in the data set. One way to gauge this is to describe that observation's **Z score**, the number of standard deviations away from the mean that the observation falls. Here, the maximum value, `r max(wcgs$sbp)` is `r round((max(wcgs$sbp)-mean(wcgs$sbp))/sd(wcgs$sbp), 2)` standard deviations above the mean, and thus has a Z score of `r round((max(wcgs$sbp)-mean(wcgs$sbp))/sd(wcgs$sbp), 1)`.
+The maximum value here is `r max(wcgs$sbp)`, and is clearly the most extreme value in the data set. One way to gauge this is to describe that observation's **Z score**, the number of standard deviations away from the mean that the observation falls. Here, the maximum value, `r max(wcgs$sbp)` is `r round_half_up((max(wcgs$sbp)-mean(wcgs$sbp))/sd(wcgs$sbp), 2)` standard deviations above the mean, and thus has a Z score of `r round_half_up((max(wcgs$sbp)-mean(wcgs$sbp))/sd(wcgs$sbp), 1)`.
 
-A negative Z score would indicate a point below the mean, while a positive Z score indicates, as we've seen, a point above the mean. The minimum systolic blood pressure, `r min(wcgs$sbp)` is `r round((mean(wcgs$sbp)-min(wcgs$sbp))/sd(wcgs$sbp), 2)` standard deviations *below* the mean, so it has a Z score of `r round((min(wcgs$sbp)-mean(wcgs$sbp))/sd(wcgs$sbp), 1)`. 
+A negative Z score would indicate a point below the mean, while a positive Z score indicates, as we've seen, a point above the mean. The minimum systolic blood pressure, `r min(wcgs$sbp)` is `r round_half_up((mean(wcgs$sbp)-min(wcgs$sbp))/sd(wcgs$sbp), 2)` standard deviations *below* the mean, so it has a Z score of `r round_half_up((min(wcgs$sbp)-mean(wcgs$sbp))/sd(wcgs$sbp), 1)`. 
 
-Recall that the Empirical Rule suggests that if a variable follows a Normal distribution, it would have approximately 95% of its observations falling inside a Z score of (-2, 2), and 99.74% falling inside a Z score range of (-3, 3). Do the systolic blood pressures appear Normally distributed?
+Recall that the Empirical Rule (described in @sec-normal) suggests that if a variable follows a Normal distribution, it would have approximately 95% of its observations falling inside a Z score of (-2, 2), and 99.74% falling inside a Z score range of (-3, 3). Do the systolic blood pressures appear Normally distributed?
 
 ## Does Weight Category Relate to SBP?
 
 The data are collected into four groups based on the subject's weight (in pounds).
 
-```{r c15_chunk80}
+```{r}
 ggplot(wcgs, aes(x = wghtcat, y = sbp)) +
     geom_violin() +
     geom_boxplot(aes(fill = wghtcat), width = 0.3, notch = TRUE) +
@@ -188,7 +195,7 @@ ggplot(wcgs, aes(x = wghtcat, y = sbp)) +
 
 Well, that's not so good. We really want those weight categories (the *levels*) to be ordered more sensibly. 
 
-```{r c15_chunk90}
+```{r}
 wcgs |> tabyl(wghtcat)
 ```
 
@@ -196,18 +203,18 @@ Like all *factor* variables in R, the categories are specified as levels. We wan
 
 I'll add a new variable to the `wcgs` data called `weight_f` that relevels the `wghtcat` data.
 
-```{r c15_chunk100}
+```{r}
 wcgs <- wcgs |>
     mutate(weight_f = fct_relevel(wghtcat, "< 140", "140-170", "170-200", "> 200"))
 
 wcgs |> tabyl(weight_f)
 ```
 
-For more on the `forcats` package, check out @R4DS, especially the Section on Factors.
+For more on the `forcats` package, check out @R4DS, especially its [section on Factors](https://r4ds.hadley.nz/factors.html).
 
 ### SBP by Weight Category
 
-```{r c15_chunk110}
+```{r}
 ggplot(wcgs, aes(x = weight_f, y = sbp, fill = weight_f)) +
     geom_boxplot(notch = TRUE) +
     scale_fill_viridis_d() +
@@ -218,7 +225,7 @@ ggplot(wcgs, aes(x = weight_f, y = sbp, fill = weight_f)) +
 
 We might see some details well with a **ridgeline plot**, too.
 
-```{r c15_chunk120}
+```{r}
 ggplot(wcgs, aes(x = sbp, y = weight_f, fill = weight_f, height = ..density..)) +
     ggridges::geom_density_ridges(scale = 2) +
     scale_fill_viridis_d() +
@@ -230,7 +237,7 @@ ggplot(wcgs, aes(x = sbp, y = weight_f, fill = weight_f, height = ..density..)) 
 
 As the plots suggest, patients in the heavier groups generally had higher systolic blood pressures.
 
-```{r c15_chunk130}
+```{r}
 mosaic::favstats(sbp ~ weight_f, data = wcgs)
 ```
 
@@ -238,11 +245,13 @@ mosaic::favstats(sbp ~ weight_f, data = wcgs)
 
 Let's build a scatter plot of SBP (Outcome) by Weight (Predictor), rather than breaking down into categories.
 
-```{r c15_chunk140, message = FALSE}
+```{r}
+#| message: false
+
 ggplot(wcgs, aes(x = weight, y = sbp)) +
     geom_point(size=3, shape=1, color="forestgreen") + ## default size = 2
-    stat_smooth(method=lm, color="red") + ## add se=FALSE to hide conf. interval
-    stat_smooth(method=loess, se=FALSE, color="blue") +
+    geom_smooth(method = "lm", se = FALSE, col = "red", formula = y ~ x) +
+    geom_smooth(method = "loess", col = "blue", formula = y ~ x) +
     ggtitle("SBP vs. Weight in 3,154 WCGS Subjects") 
 ```
 
@@ -253,7 +262,7 @@ The relationship between systolic blood pressure and weight appears to be very c
 
 ## SBP and Weight by Arcus Senilis groups?
 
-An issue of interest to us will be to assess whether the SBP-Weight relationship we see above is similar among subjects who have arcus senilis and those who do not. 
+An issue of interest to us will be to assess whether the SBP-Weight relationship we see above is similar among subjects who have been diagnosed with arcus senilis and those who have not. 
 
 > Arcus senilis is an old age syndrome where there is a white, grey, or blue opaque ring in the corneal margin (peripheral corneal opacity), or white ring in front of the periphery of the iris. It is present at birth but then fades; however, it is quite commonly present in the elderly. It can also appear earlier in life as a result of hypercholesterolemia.
 > 
@@ -261,13 +270,13 @@ An issue of interest to us will be to assess whether the SBP-Weight relationship
 
 Let's start with a quick look at the `arcus` data.
 
-```{r c15_chunk150}
+```{r}
 wcgs |> tabyl(arcus)
 ```
 
 We have `r sum(is.na(wcgs$arcus))` missing values, so we probably want to do something about that before plotting the data, and we may also want to create a factor variable with more meaningful labels than 1 (which means yes, arcus senilis is present) and 0 (which means no, it isn't.)
 
-```{r c15_chunk160}
+```{r}
 wcgs <- wcgs |>
     mutate(arcus_f = fct_recode(factor(arcus),
                                 "Arcus senilis" = "1",
@@ -279,27 +288,35 @@ wcgs |> tabyl(arcus_f, arcus)
 
 Let's build a version of the `wcgs` data that eliminates all missing data in the variables of immediate interest, and then plot the SBP-weight relationship in groups of patients with and without arcus senilis.
 
-```{r c15_chunk170, message = FALSE}
-wcgs |>
-    filter(complete.cases(arcus_f, sbp, weight)) |>
-    ggplot(aes(x = weight, y = sbp, group = arcus_f)) +
+```{r}
+#| message: false
+
+wcgs_temp <- wcgs |>
+    filter(complete.cases(arcus_f, sbp, weight)) 
+
+ggplot(wcgs_temp, aes(x = weight, y = sbp, group = arcus_f)) +
     geom_point(shape = 1) + 
-    stat_smooth(method=lm, color="red") +
-    stat_smooth(method=loess, se=FALSE, color="blue") +
+    geom_smooth(method = "lm", col = "red", formula = y ~ x) +
+    geom_smooth(method = "loess", se = FALSE, col = "blue", formula = y ~ x) +
     labs(title = "SBP vs. Weight by Arcus Senilis status",
-         caption = "3,152 Western Collaborative Group Study subjects with known arcus senilis status") + 
+         caption = "3,152 WCGS with known arcus senilis status") + 
     facet_wrap(~ arcus_f) 
 ```
 
 ## Linear Model for SBP-Weight Relationship: subjects without Arcus Senilis
 
-```{r c15_chunk180}
+```{r}
 model.noarcus <- 
     lm(sbp ~ weight, data = filter(wcgs, arcus == 0))
 
-tidy(model.noarcus) |> kable(digits = 2)
+tidy(model.noarcus) |> 
+    kbl(digits = 2) |>
+    kable_styling(full_width = FALSE)
 
-glance(model.noarcus) |> select(r.squared:p.value, AIC) |> kable(digits = 3)
+glance(model.noarcus) |> 
+    select(r.squared:p.value, AIC) |> 
+    kbl(digits = c(3, 3, 1, 1, 3, 0)) |>
+    kable_styling(full_width = FALSE)
 
 summary(model.noarcus)
 ```
@@ -310,13 +327,18 @@ The linear model for the `r table(wcgs$arcus)["0"]` patients without Arcus Senil
 
 ## Linear Model for SBP-Weight Relationship: subjects with Arcus Senilis
 
-```{r c15_chunk190}
+```{r}
 model.witharcus <- 
     lm(sbp ~ weight, data = filter(wcgs, arcus == 1))
 
-tidy(model.witharcus) |> kable(digits = 2)
+tidy(model.witharcus) |> 
+    kbl(digits = 2) |>
+    kable_styling(full_width = FALSE)
 
-glance(model.witharcus) |> select(r.squared:p.value, AIC) |> kable(digits = 3)
+glance(model.witharcus) |> 
+    select(r.squared:p.value, AIC) |> 
+    kbl(digits = c(3, 3, 1, 1, 3, 0)) |>
+    kable_styling(full_width = FALSE)
 
 summary(model.witharcus)
 ```
@@ -327,12 +349,17 @@ The linear model for the `r table(wcgs$arcus)["1"]` patients with Arcus Senilis 
 
 ## Including Arcus Status in the model
 
-```{r c15_chunk200}
+```{r}
 model3 <- lm(sbp ~ weight * arcus, data = filter(wcgs, !is.na(arcus)))
 
-tidy(model3) |> kable(digits = 2)
+tidy(model3) |> 
+    kbl(digits = 2) |>
+    kable_styling(full_width = FALSE)
 
-glance(model3) |> select(r.squared:p.value, AIC) |> kable(digits = 3)
+glance(model3) |> 
+    select(r.squared:p.value, AIC) |> 
+    kbl(digits = c(3, 3, 1, 1, 3, 0)) |>
+    kable_styling(full_width = FALSE)
 
 summary(model3)
 ```
@@ -354,26 +381,26 @@ How does that change if our subject weighs 200 pounds?
     
 Recall that
 
-- *Without* Arcus Senilis, linear model for SBP = `r round(coef(model.noarcus)[1],1)` + `r round(coef(model.noarcus)[2],2)` x weight
-- *With* Arcus Senilis, linear model for SBP = `r round(coef(model.witharcus)[1],1)` + `r round(coef(model.witharcus)[2],2)` x weight
+- *Without* Arcus Senilis, linear model for SBP = `r round_half_up(coef(model.noarcus)[1],1)` + `r round_half_up(coef(model.noarcus)[2],2)` x weight
+- *With* Arcus Senilis, linear model for SBP = `r round_half_up(coef(model.witharcus)[1],1)` + `r round_half_up(coef(model.witharcus)[2],2)` x weight
 
 So the predictions for a 175 pound subject are:
 
-- `r round(coef(model.noarcus)[1],1)` + `r round(coef(model.noarcus)[2],2)` x 175 = `r round(coef(model.noarcus)[1] + coef(model.noarcus)[2]*175,0)` mm Hg without Arcus Senilis, and 
+- `r round_half_up(coef(model.noarcus)[1],1)` + `r round_half_up(coef(model.noarcus)[2],2)` x 175 = `r round_half_up(coef(model.noarcus)[1] + coef(model.noarcus)[2]*175,0)` mm Hg without Arcus Senilis, and 
 
-- `r round(coef(model.witharcus)[1],1)` + `r round(coef(model.witharcus)[2],2)` x 175 = `r round(coef(model.witharcus)[1] + coef(model.witharcus)[2]*175,0)` mm Hg with Arcus Senilis.
+- `r round_half_up(coef(model.witharcus)[1],1)` + `r round_half_up(coef(model.witharcus)[2],2)` x 175 = `r round_half_up(coef(model.witharcus)[1] + coef(model.witharcus)[2]*175,0)` mm Hg with Arcus Senilis.
 
 And thus, the predictions for a 200 pound subject are:
 
-- `r round(coef(model.noarcus)[1],1)` + `r round(coef(model.noarcus)[2],2)` x 200 = `r round(coef(model.noarcus)[1] + coef(model.noarcus)[2]*200,1)` mm Hg without Arcus Senilis, and 
+- `r round_half_up(coef(model.noarcus)[1],1)` + `r round_half_up(coef(model.noarcus)[2],2)` x 200 = `r round_half_up(coef(model.noarcus)[1] + coef(model.noarcus)[2]*200,1)` mm Hg without Arcus Senilis, and 
 
-- `r round(coef(model.witharcus)[1],1)` + `r round(coef(model.witharcus)[2],2)` x 200 = `r round(coef(model.witharcus)[1] + coef(model.witharcus)[2]*200,1)` mm Hg with Arcus Senilis.
+- `r round_half_up(coef(model.witharcus)[1],1)` + `r round_half_up(coef(model.witharcus)[2],2)` x 200 = `r round_half_up(coef(model.witharcus)[1] + coef(model.witharcus)[2]*200,1)` mm Hg with Arcus Senilis.
 
 ## Scatterplots with Facets Across a Categorical Variable
 
 We can use facets in `ggplot2` to show scatterplots across the levels of a categorical variable, like `behpat`.
 
-```{r c15_chunk210, message = FALSE}
+```{r, message = FALSE}
 ggplot(wcgs, aes(x = weight, y = sbp, col = behpat)) +
     geom_point() +
     facet_wrap(~ behpat) +
@@ -389,17 +416,21 @@ ggplot(wcgs, aes(x = weight, y = sbp, col = behpat)) +
 
 A **scatterplot matrix** can be very helpful in understanding relationships between multiple variables simultaneously. There are several ways to build such a thing, including the `pairs` function...
 
-```{r c15_chunk220, fig.height=6}
-pairs (~ sbp + age + weight + height, data=wcgs, main="Simple Scatterplot Matrix")
+```{r}
+#| fig-height: 6
+
+pairs (~ sbp + age + weight + height, data=wcgs, 
+       main="Simple Scatterplot Matrix")
 ```
 
 ### Displaying a Correlation Matrix
 
-```{r c15_chunk230}
+```{r}
 wcgs |>
-    dplyr::select(sbp, age, weight, height) |>
+    select(sbp, age, weight, height) |>
     cor() |>
-    kable(digits = 3)
+    kbl(digits = 3) |>
+    kable_styling(full_width = FALSE)
 ```
 
 ### Using the `GGally` package
@@ -408,9 +439,12 @@ The `ggplot2` system doesn't have a built-in scatterplot system. There are some 
 
 The `ggpairs` function provides a density plot on each diagonal, Pearson correlations on the upper right and scatterplots on the lower left of the matrix.
 
-```{r c15_chunk240, message = FALSE}
-GGally::ggpairs(wcgs |> select(sbp, age, weight, height), 
-                title = "Scatterplot Matrix via ggpairs")
+```{r}
+#| message: false
+
+ggpairs(wcgs |> 
+          select(sbp, age, weight, height),
+        title = "Scatterplot Matrix via ggpairs")
 ```
 
 

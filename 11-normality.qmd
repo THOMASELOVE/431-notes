@@ -1,4 +1,4 @@
-# Assessing Normality
+# Assessing Normality {#sec-normal}
 
 ## Setup: Packages Used Here
 
