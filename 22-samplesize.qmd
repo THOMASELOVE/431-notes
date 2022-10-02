@@ -1,0 +1,315 @@
+# Sample Size and Power for Means {#sec-sample-size-1}
+
+## Setup: Package Used Here
+
+```{r, message = FALSE}
+knitr::opts_chunk$set(comment = NA)
+
+library(pwr)
+```
+
+## Power and Sample Size Considerations
+
+I'll begin here by repeating some of the material first shared in [Chapter -@sec-test-intro].
+For most statistical tests, it is theoretically possible to estimate the power of the test in the design stage, (before any data are collected) for various sample sizes, so we can hone in on a sample size choice which will enable us to collect data only on as many subjects as are truly necessary. 
+
+A power calculation is likely the most common element of an scientific grant proposal on which a statistician is consulted. This is a fine idea in theory, but in practice...
+
+- The tests that have power calculations worked out in intensive detail using R are mostly those with more substantial assumptions. Examples include t tests that assume population normality, common population variance and balanced designs in the independent samples setting, or paired t tests that assume population normality in the paired samples setting. 
+- These power calculations are also usually based on tests rather than confidence intervals, which would be much more useful in most settings. Simulation is your friend here.
+- Even more unfortunately, this process of doing power and related calculations is **far more of an art than a science**. 
+- As a result, the value of many power calculations is negligible, since the assumptions being made are so arbitrary and poorly connected to real data. 
+- On several occasions, I have stood in front of a large audience of medical statisticians actively engaged in clinical trials and other studies that require power calculations for funding. When I ask for a show of hands of people who have had power calculations prior to such a study whose assumptions matched the eventual data perfectly, I get lots of laughs. It doesn't happen.
+- Even the underlying framework that assumes a power of 80% with a significance level of 5% is sufficient for most studies is pretty silly. 
+
+All that said, I feel obliged to show you some examples of power calculations done using R, and provide some insight on how to make some of the key assumptions in a way that won't alert reviewers too much to the silliness of the enterprise. All of the situations described in this Chapter are toy problems, but they may be instructive about some fundamental ideas.
+
+## Sample Size in a One-Sample t test
+
+For a t test, R can estimate any one of the following elements, given the other four, using the `power.t.test` command, for either a one-tailed or two-tailed single-sample t test...
+
+- n = the sample size 
+- $\delta$ = delta = the true difference in population means between the null hypothesis value and a particular alternative
+- s = sd = the true standard deviation of the population
+- $\alpha$ = sig.level = the significance level for the test (maximum acceptable risk of Type I error)
+- 1 - $\beta$ = power = the power of the t test to detect the effect of size $\delta$
+
+### A Toy Example
+
+Suppose that in a recent health survey, the average beef consumption in the U.S. per person was 90 pounds per year. Suppose you are planning a new study to see if beef consumption levels have changed. You plan to take a random sample of 25 people to build your new estimate, and test whether the current pounds of beef consumed per year is 90. Suppose you want to do a two-sided (two-tailed) test at 95% confidence (so $\alpha$ = 0.05), and that you expect that the true difference will need to be at least $\delta$ = 5 pounds (i.e. 85 or less or 95 or more) in order for the result to be of any real, practical interest. Suppose also that you are willing to assume that the true standard deviation of the measurements in the population is 10 pounds.
+
+That is, of course, a lot to suppose.
+
+Now, we want to know what power the proposed experiment will have to detect a change of 5 pounds (or more) away from the original 90 pounds, with these specifications, and how tweaking these specifications will affect the power of the study.
+
+So, we have
+- n = 25 data points to be collected
+- $\delta$ = 5 pounds is the minimum clinically meaningful effect size
+- s = 10 is the assumed population standard deviation, in pounds per year
+- $\alpha$ is 0.05, and we'll do a two-sided test
+
+### Using the `power.t.test` function
+
+```{r}
+power.t.test(n = 25, delta = 5, sd = 10, sig.level = 0.05, 
+             type="one.sample", alternative="two.sided")
+```
+
+So, under this study design, we would expect to detect an effect of size $\delta$ = 5 pounds with just under 67% power, i.e. with a probability of incorrect retention of $H_0$ of just about 1/3. Most of the time, we'd like to improve this power, and to do so, we'd need to adjust our assumptions.
+
+## Changing Assumptions 
+
+We made assumptions about the sample size n, the minimum clinically meaningful effect size (change in the population mean) $\delta$, the population standard deviation s, and the significance level $\alpha$, not to mention decisions about the test, like that we'd do a one-sample t test, rather than another sort of test for a single sample, and that we'd do a two-tailed, or two-sided test. Often, these assumptions are tweaked a bit to make the power look more like what a reviewer/funder is hoping to see.
+
+### Increasing Sample Size Increases Power
+
+Suppose, we committed to using more resources and gathering data from 40 subjects instead of the 25 we assumed initially -- what effect would this have on our power?
+
+```{r}
+power.t.test(n = 40, delta = 5, sd = 10, sig.level = 0.05, 
+             type="one.sample", alternative="two.sided")
+```
+
+With more samples, we should have a more powerful test, able to detect the difference with greater probability. In fact, a sample of 40 paired differences yields 87% power. As it turns out, we would need at least 44 observations with this scenario to get to 90% power, as shown in the calculation below, which puts the power in, but leaves out the sample size.
+
+```{r}
+power.t.test(power=0.9, delta = 5, sd = 10, sig.level = 0.05, 
+             type="one.sample", alternative="two.sided")
+```
+
+We see that we would need at least 44 observations to achieve 90% power. Note: we always round the sample size up in doing a power calculation -- if this calculation had actually suggested n = 43.1 paired differences were needed, we would still have rounded up to 44.
+
+### Increasing Effect Size will increase Power
+
+A larger effect should be easier to detect. If we go back to our original calculation, which had 67% power to detect an effect of size $\delta$ = 5, and now change the desired effect size to $\delta$ = 6 pounds (i.e. a value of 84 or less or 96 or more), we should obtain a more powerful design.
+
+```{r}
+power.t.test(n = 25, delta = 6, sd = 10, sig.level = 0.05, 
+             type="one.sample", alternative="two.sided")
+```
+
+We see that this change in effect size from 5 to 6, leaving everything else the same, increases our power from 67% to 82%. To reach 90% power, we'd need to increase the effect size we were trying to detect to at least 6.76 pounds. 
+
+```{r}
+power.t.test(n = 25, power = 0.9, sd = 10, sig.level = 0.05, 
+             type="one.sample", alternative="two.sided")
+```
+
+- Again, note that I am rounding up here. 
+- Using $\delta$ = 6.75 would not quite make it to 90.00% power. 
+- Using $\delta$ = 6.76 guarantees that the power will be 90% or more, and not just round up to 90%.
+
+### Decreasing the Standard Deviation will increase Power
+
+The choice of standard deviation is usually motivated by a pilot study, or else pulled out of thin air - it's relatively easy to convince yourself that the true standard deviation might be a little smaller than you'd guessed initially. Let's see what happens to the power if we reduce the sample standard deviation from 10 pounds to 9. This should make the effect of 5 pounds easier to detect, because it will have smaller variation associated with it.
+
+```{r}
+power.t.test(n = 25, delta = 5, sd = 9, sig.level = 0.05, 
+             type="one.sample", alternative="two.sided")
+```
+
+This change in standard deviation from 10 to 9, leaving everything else the same, increases our power from 67% to nearly 76%. To reach 90% power, we'd need to decrease the standard deviation of the population paired differences to no more than 7.39 pounds. 
+
+```{r}
+power.t.test(n = 25, delta = 5, sd = NULL, power = 0.9, sig.level = 0.05, 
+             type="one.sample", alternative="two.sided")
+```
+
+Note I am rounding down here. 
+
+- Using s = 7.4 pounds would not quite make it to 90.00% power.
+
+Note also that in order to get R to treat the standard debviation as unknown, I must specify it as NULL in the formula.
+
+### Larger Significance Level increases Power
+
+We can trade off some of our Type II error (lack of power) for Type I error. If we are willing to trade off some Type I error (as described by the $\alpha$), we can improve the power. For instance, suppose we decided to run the original test with 90% confidence. 
+
+```{r}
+power.t.test(n = 25, delta = 5, sd = 10, sig.level = 0.1, 
+             type="one.sample", alternative="two.sided")
+```
+
+The calculation suggests that our power would thus increase from 67% to just over 78%.
+
+## Paired Sample t Tests and Power/Sample Size
+
+For a paired-samples t test, R can estimate any one of the following elements, given the other four, using the `power.t.test` command, for either a one-tailed or two-tailed paired t test...
+
+- n = the sample size (# of pairs) being compared
+- $\delta$ = delta = the true difference in means between the two groups
+- s = sd = the true standard deviation of the paired differences
+- $\alpha$ = sig.level = the significance level for the comparison (maximum acceptable risk of Type I error)
+- 1 - $\beta$ = power = the power of the paired t test to detect the effect of size $\delta$
+
+### A Toy Example
+
+As a toy example, suppose you are planning a paired samples experiment involving n = 30 subjects who will each provide a "Before" and an "After" result, which is measured in days.
+
+Suppose you want to do a two-sided (two-tailed) test at 95% confidence (so $\alpha$ = 0.05), and that you expect that the true difference between the "Before" and "After" groups will have to be at least $\delta$ = 5 days to be of any real interest. Suppose also that you are willing to assume that the true standard deviation of those paired differences will be 10 days.
+
+That is, of course, a lot to suppose.
+
+Now, we want to know what power the proposed experiment will have to detect this difference with these specifications, and how tweaking these specifications will affect the power of the study.
+
+So, we have
+- n = 30 paired differences will be collected
+- $\delta$ = 5 days is the minimum clinically meaningful difference
+- s = 10 days is the assumed population standard deviation of the paired differences
+- $\alpha$ is 0.05, and we'll do a two-sided test
+
+### Using the `power.t.test` function
+
+```{r}
+power.t.test(n = 30, delta = 5, sd = 10, sig.level = 0.05, 
+             type="paired", alternative="two.sided")
+```
+
+So, under this study design, we would expect to detect an effect of size $\delta$ = 5 days with 75% power, i.e. with a probability of incorrect retention of $H_0$ of 0.25. Most of the time, we'd like to improve this power, and to do so, we'd need to adjust our assumptions.
+
+### Changing Assumptions in a Power Calculation
+
+We made assumptions about the sample size n, the minimum clinically meaningful difference in means $\delta$, the population standard deviation s, and the significance level $\alpha$, not to mention decisions about the test, like that we'd do a paired t test, rather than another sort of test for paired samples, or use an independent samples approach, and that we'd do a two-tailed, or two-sided test. Often, these assumptions are tweaked a bit to make the power look more like what a reviewer/funder is hoping to see.
+
+### Changing the Sample Size
+
+Suppose, we committed to using more resources and gathering "Before" and "After" data from 40 subjects instead of the 30 we assumed initially -- what effect would this have on our power?
+
+```{r}
+power.t.test(n = 40, delta = 5, sd = 10, sig.level = 0.05, 
+             type="paired", alternative="two.sided")
+```
+
+With more samples, we should have a more powerful test, able to detect the difference with greater probability. In fact, a sample of 40 paired differences yields 87% power. As it turns out, we would need at least 44 paired differences with this scenario to get to 90% power, as shown in the calculation below, which puts the power in, but leaves out the sample size.
+
+```{r}
+power.t.test(power=0.9, delta = 5, sd = 10, sig.level = 0.05, 
+             type="paired", alternative="two.sided")
+```
+
+We see that we would need at least 44 paired differences to achieve 90% power. Note: we always round the sample size up in doing a power calculation -- if this calculation had actually suggested n = 43.1 paired differences were needed, we would still have rounded up to 44.
+
+### Changing the Effect Size
+
+A larger effect should be easier to detect. If we go back to our original calculation, which had 75% power to detect an effect (i.e. a true population mean difference) of size $\delta$ = 5, and now change the desired effect size to $\delta$ = 6, we should obtain a more powerful design.
+
+```{r}
+power.t.test(n = 30, delta = 6, sd = 10, sig.level = 0.05, 
+             type="paired", alternative="two.sided")
+```
+
+We see that this change in effect size from 5 to 6, leaving everything else the same, increases our power from 75% to nearly 89%. To reach 90% power, we'd need to increase the effect size we were trying to detect to at least 6.13 days. 
+
+- Again, note that I am rounding up here. 
+- Using $\delta$ = 6.12 would not quite make it to 90.00% power. 
+- Using $\delta$ = 6.13 guarantees that the power will be 90% or more, and not just round up to 90%..
+
+### Changing the Standard Deviation
+
+The choice of standard deviation is usually motivated by a pilot study, or else pulled out of thin air. It's relatively easy to convince yourself that the true standard deviation might be a little smaller than you'd guessed initially. Let's see what happens to the power if we reduce the sample standard deviation from 10 days to 9 days. This should make the effect of 5 days easier to detect as being different from the null hypothesized value of 0, because it will have smaller variation associated with it.
+
+```{r}
+power.t.test(n = 30, delta = 5, sd = 9, sig.level = 0.05, 
+             type="paired", alternative="two.sided")
+```
+
+This change in standard deviation from 10 to 9, leaving everything else the same, increases our power from 75% to nearly 84%. To reach 90% power, we'd need to decrease the standard deviation of the population paired differences to no more than 8.16 days. 
+
+Note I am rounding down here, because using $s$ = 8.17 days would not quite make it to 90.00% power. Note also that in order to get R to treat the sd as unknown, I must specify it as NULL in the formula... 
+
+```{r}
+power.t.test(n = 30, delta = 5, sd = NULL, power = 0.9, 
+             sig.level = 0.05, type="paired", alternative="two.sided")
+```
+
+### Changing the Significance Level
+
+We can trade off some of our Type II error (lack of power) for Type I error. If we are willing to trade off some Type I error (as described by the $\alpha$), we can improve the power. For instance, suppose we decided to run the original test with 90% confidence. 
+
+```{r}
+power.t.test(n = 30, delta = 5, sd = 10, sig.level = 0.1, 
+             type="paired", alternative="two.sided")
+```
+
+The calculation suggests that our power would thus increase from 75% to nearly 85%.
+
+## Two Independent Samples: Power for t Tests
+
+For an independent-samples t test, with a balanced design (so that $n_1$ = $n_2$), R can estimate any one of the following elements, given the other four, using the `power.t.test` command, for either a one-tailed or two-tailed t test...
+
+- n = the sample size in each of the two groups being compared
+- $\delta$ = delta = the true difference in means between the two groups
+- s = sd = the true standard deviation of the individual values in each group (assumed to be constant -- since we assume equal population variances)
+- $\alpha$ = sig.level = the significance level for the comparison (maximum acceptable risk of Type I error)
+- 1 - $\beta$ = power = the power of the t test to detect the effect of size $\delta$
+
+This method only produces power calculations for balanced designs -- where the sample size is equal in the two groups. If you want a two-sample power calculation for an unbalanced design, you will need to use a different library and function in R, as we'll see.
+
+## A New Example
+
+Suppose we plan a study of the time to relapse for patients in a drug trial, where subjects will be assigned randomly to a (new) treatment or to a placebo. Suppose we anticipate that the placebo group will have a mean of about 9 months, and want to detect an improvement (increase) in time to relapse of 50%, so that the treatment group would have a mean of at least 13.5 months. We'll use $\alpha$ = .10 and $\beta$ = .10, as well. Assume we'd do a two-sided test, with an equal number of observations in each group, and we'll assume the observed standard deviation of 9 months in a pilot study will hold here, as well.
+
+We want the sample size required by the test under a two sample setting where:
+
+- $\alpha$ = .10, 
+- with 90% power (so that $\beta$ = .10), 
+- and where we will have equal numbers of samples in the placebo group (group 1) and the treatment group (group 2).  
+- We'll plug in the observed standard deviation of 9 months.
+- We'll look at detecting a change from 9 [the average in the placebo group] to 13.5 (a difference of 50%, giving delta = 4.5) 
+- using a two-sided pooled t-test.  
+
+The appropriate R command is:
+
+```{r}
+power.t.test(delta = 4.5, sd = 9, 
+             sig.level = 0.10, power = 0.9, 
+             type="two.sample", 
+             alternative="two.sided")
+```
+
+This suggests that we will need a sample of at least 70 subjects in the treated group and an additional 70 subjects in the placebo group, for a total of 140 subjects.
+
+### Another Scenario
+
+What if resources are sparse, and we'll be forced to do the study with no more than 120 subjects, overall? If we require 90% confidence in a two-sided test, what power will we have?
+
+```{r}
+power.t.test(n = 60, delta = 4.5, sd = 9, 
+             sig.level = 0.10,
+             type="two.sample", 
+             alternative="two.sided")
+```
+
+It looks like the power under those circumstances would be just under 86%. Note that the n = 60 refers to half of the total sample size, since we'll need 60 drug and 60 placebo subjects in this balanced design.
+
+## Power for Independent Sample T tests with Unbalanced Designs
+
+Using the `pwr` package, R can do sample size calculations that describe the power of a two-sample t test that does not require a balanced design using the `pwr.t2n.test` command.
+
+Suppose we wanted to do the same study as we described above, using 100 "treated" patients but as few "placebo" patients as possible. What sample size would be required to maintain 90% power? There is one change here -- the effect size d in the `pwr.t2n.test` command is specified using the difference in means $\delta$ that we used previously, divided by the standard deviation s that we used previously. So, in our old setup, we assumed delta = 4.5, sd = 9, so now we'll assume d = 4.5/9 instead.
+
+```{r}
+pwr.t2n.test(n1 = 100, d = 4.5/9, 
+             sig.level = 0.1, power = 0.9,
+             alternative="two.sided")
+```
+
+We would need at least 53 subjects in the "placebo" group.
+
+### The most efficient design for an independent samples comparison will be balanced.
+
+- Note that if we use $n_1$ = 100 subjects in the treated group, we need at least $n_2$ = 53 in the placebo group to achieve 90% power, and a total of 153 subjects. 
+- Compare this to the balanced design, where we needed 70 subjects in each group to achieve the same power, thus, a total of 140 subjects. 
+
+We saw earlier that a test with 60 subjects in each group would yield just under 86% power. Suppose we instead built a test with 80 subjects in the treated group, and 40 in the placebo group, then what would our power be?
+
+```{r}
+pwr.t2n.test(n1 = 80, n2 = 40, d = 4.5/9, 
+             sig.level = 0.10,
+             alternative="two.sided")
+```
+
+As we'd expect, the power is stronger for a balanced design than for an unbalanced design with the same overall sample size. 
+
+Note that I used a two-sided test to establish my power calculation -- in general, this is the most conservative and defensible approach for any such calculation, **unless there is a strong and specific reason to use a one-sided approach in building a power calculation, don't**.
+

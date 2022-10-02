@@ -1,0 +1,157 @@
+# Hypothesis Testing: What is it good for? {#sec-test-intro}
+
+## Introduction
+
+Hypothesis testing uses sample data to attempt to reject the hypothesis that nothing interesting is happening -- that is, to reject the notion that chance alone can explain the sample results\footnote{Some of this is adapted from @GoodHardin, and @Utts1999}. We can, in many settings, use confidence intervals to summarize the results, as well, and confidence intervals and hypothesis tests are closely connected. 
+
+In particular, it's worth stressing that:
+
+- **A significant effect is not necessarily the same thing as an interesting effect.**  For example, results calculated from large samples are nearly always "significant" even when the effects are quite small in magnitude.  Before doing a test, always ask if the effect is large enough to be of any practical interest.  If not, why do the test?
+
+- **A non-significant effect is not necessarily the same thing as no difference.**  A large effect of real practical interest may still produce a non-significant result simply because the sample is too small.
+
+- **There are assumptions behind all statistical inferences.** Checking assumptions is crucial to validating the inference made by any test or confidence interval.
+
+## Five Steps in any Hypothesis Test
+
+1.	Specify the null hypothesis, $H_0$ (which usually indicates that there is no difference or no association between the results in various groups of subjects)
+2.	Specify the research or alternative hypothesis, $H_A$, sometimes called $H_1$ (which usually indicates that there is some difference or some association between the results in those same groups of subjects).
+3.	Specify the test procedure or test statistic to be used to make inferences to the population based on sample data. Here is where we usually specify $\alpha$, the probability of incorrectly rejecting $H_0$ that we are willing to accept. In the absence of other information, we often use $\alpha = 0.05$
+4.	Obtain the data, and summarize it to obtain the relevant test statistic, which gets summarized as a $p$ value.
+5.	Use the $p$ value to either
+    - **reject** $H_0$ in favor of the alternative $H_A$ (concluding that there is a statistically significant difference/association at the $\alpha$ significance level) or
+    - **retain** $H_0$ (and conclude that there is no statistically significant difference/association at the $\alpha$ significance level)
+
+## Type I and Type II Error
+
+Once we know how unlikely the results would have been if the null hypothesis were true, we must make one of two choices:
+
+1. The *p* value is not small enough to convincingly rule out chance.  Therefore, we cannot reject the null hypothesis as an explanation for the results.
+2. The *p* value was small enough to convincingly rule out chance.  We reject the null hypothesis and accept the alternative hypothesis.
+
+How small must the *p* value be in order to rule out the null hypothesis?  The standard choice is 5%.  This standardization has some substantial disadvantages\footnote{Ingelfinger JA, Mosteller F, Thibodeau LA and Ware JH (1987) Biostatistics in Clinical Medicine, 2nd Edition, New York: MacMillan. pp. 156-157.}. It is simply a convention that has become accepted over the years, and there are many situations for which a 5% cutoff is unwise. While it does give a specific level to keep in mind, it suggests a rather mindless cutpoint having nothing to do with the importance of the decision nor the costs or losses associated with outcomes.
+
+
+
+## The Courtroom Analogy
+
+Consider the analogy of the jury in a courtroom.
+
+1.	The evidence is not strong enough to convincingly rule out that the defendant is innocent.  Therefore, we cannot reject the null hypothesis, or innocence of the defendant.
+2.	The evidence was strong enough that we are willing to rule out the possibility that an innocent person (as stated in the null hypothesis) produced the observed data.  We reject the null hypothesis, that the defendant is innocent, and assert the alternative hypothesis.
+
+Consistent with our thinking in hypothesis testing, in many cases we would not accept the hypothesis that the defendant is innocent.  We would simply conclude that the evidence was not strong enough to rule out the possibility of innocence.
+
+The *p* value is the probability of getting a result as extreme or more extreme than the one observed if the proposed null hypothesis is true.  Notice that it is not valid to actually accept that the null hypothesis is true.  To do so would be to say that we are essentially convinced that chance alone produced the observed results -- a common mistake.
+
+## Significance vs. Importance
+
+Remember that a statistically significant relationship or difference does not necessarily mean an important one.  A result that is significant in the statistical meaning of the word may not be significant clinically.  Statistical significance is a technical term.  Findings can be both statistically significant and practically significant or either or neither.
+
+When we have large samples, we will regularly find small differences that have a small *p* value even though they have no practical importance.  At the other extreme, with small samples, even large differences will often not be large enough to create a small *p* value. The notion of statistical significance has not helped science, and we won't perpetuate it any further.
+
+## What does Dr. Love dislike about *p* values and "statistical significance"?
+
+A lot of things. A major issue is that I believe that *p* values are impossible to explain in a way that is both [a] technically correct and [b] straightforward at the same time. As evidence of this, you might want to look at [this article and associated video by Christie Aschwanden at 538.com](http://fivethirtyeight.com/features/statisticians-found-one-thing-they-can-agree-on-its-time-to-stop-misusing-p-values/) 
+
+The notion of a *p* value was an incredibly impressive achievement back when Wald and others were doing the work they were doing in the 1940s, and might still have been useful as recently as 10 years ago. But the notion of a *p* value relies on a lot of flawed assumptions, and null hypothesis significance testing is fraught with difficulties. Nonetheless, researchers use *p* values every day. 
+
+## The ASA Articles in 2016 and 2019 on Statistical Significance and P-Values
+
+However, my primary motivation for taking the approach I'm taking comes from the pieces in two key reference collections we'll read and discuss more thoroughly in 431 and 432.
+
+1. The American Statistical Association's 2016 [Statement on p-Values](http://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108): Context, Process and Purpose.
+
+> The ASA Statement on p-Values and Statistical Significance (Wasserstein and Lazar 2016) was developed primarily because after decades, warnings about the don'ts had gone mostly unheeded. The statement was about what not to do, because there is widespread agreement about the don'ts.
+
+2. [Statistical Inference in the 21st Century: A World Beyond *p* < 0.05](https://amstat.tandfonline.com/toc/utas20/73/sup1) from 2019 in *The American Statistician*
+
+> This is a world where researchers are free to treat "p = 0.051" and "p = 0.049" as not being categorically different, where authors no longer find themselves constrained to selectively publish their results based on a single magic number. In this world, where studies with "p < 0.05" and studies with "p > 0.05" are not automatically in conflict, researchers will see their results more easily replicated-and, even when not, they will better understand why. As we venture down this path, we will begin to see fewer false alarms, fewer overlooked discoveries, and the development of more customized statistical strategies. Researchers will be free to communicate all their findings in all their glorious uncertainty, knowing their work is to be judged by the quality and effective communication of their science, and not by their p-values. As "statistical significance" is used less, statistical thinking will be used more. The ASA Statement on P-Values and Statistical Significance started moving us toward this world.... Now we must go further.
+
+> The ASA Statement on P-Values and Statistical Significance stopped just short of recommending that declarations of "statistical significance" be abandoned. We take that step here. We conclude, based on our review of the articles in this special issue and the broader literature, that it is time to stop using the term "statistically significant" entirely. Nor should variants such as "significantly different," "p < 0.05," and "nonsignificant" survive, whether expressed in words, by asterisks in a table, or in some other way.... Regardless of whether it was ever useful, a declaration of "statistical significance" has today become meaningless.
+
+For the moment, I will say this. I emphasize confidence intervals over *p* values, which is at best a partial solution. But ...
+
+1. Very rarely does a situation emerge in which a *p* value can be available in which looking at the associated confidence interval isn't far more helpful for making a comparison of interest.
+2. The use of a *p* value requires making at least as many assumptions about the population, sample, individuals and data as does a confidence interval.
+3. Most null hypotheses are clearly not exactly true prior to data collection, and so the test summarized by a *p* value is of questionable value most of the time.
+4. No one has a truly adequate definition of a *p* value, in terms of both precision and parsimony. Brief, understandable definitions always fail to be technically accurate.
+5. Bayesian approaches avoid some of these pitfalls, but come with their own issues.
+6. Many smart people agree with me, and have sworn off of *p* values whenever they can.
+
+Again, we'll look at these issues in greater depth later in the course.
+
+## Errors in Hypothesis Testing
+
+In testing hypotheses, there are two potential decisions and each one brings with it the possibility that a mistake has been made.  
+
+Let's use the courtroom analogy.  Here are the potential choices and associated potential errors.  Although the seriousness of errors depends on the seriousness of the crime and punishment, the potential error for choice 2 is usually more serious.
+
+1. We cannot rule out that the defendant is innocent, so (s)he is set free without penalty.
+    - Potential Error: A criminal has been erroneously freed.
+2. We believe that there is enough evidence to conclude that the defendant is guilty.
+    - Potential Error: An innocent person is convicted / penalized and a guilty person remains free.
+
+As another example, consider being tested for disease.  Most tests for diseases are not 100% accurate.  The lab technician or physician must make a choice:
+
+1. In the opinion of the medical practitioner, you are healthy.  The test result was weak enough to be called "negative" for the disease.
+    - Potential Error: You actually have the disease but have been told that you do not.  This is called a **false negative**.
+2. In the opinion of the medical practitioner, you have the disease.  The test results were strong enough to be called "positive" for the disease.
+    - Potential Error: You are actually healthy but have been told you have the disease.  This is called a **false positive**.
+
+
+## The Two Types of Hypothesis Testing Errors
+
+-- | $H_A$ is true | $H_0$ is true
+-----------------:| :----------------------------:| :---------------------------:
+Test Rejects $H_0$ | Correct Decision | Type I Error (False Positive) 
+Test Retains $H_0$ | Type II Error (False Negative) | Correct Decision
+
+- A Type I error can only be made if the null hypothesis is actually true.
+- A Type II error can only be made if the alternative hypothesis is actually true.
+
+## The Significance Level is the Probability of a Type I Error
+
+If the null hypothesis is true, the *p* value is the probability of making an error by choosing the alternative hypothesis instead.  Alpha ($\alpha$) is defined as the probability of rejecting the null hypothesis when the null hypothesis is actually true, creating a Type I error. This is also called the significance level, so that 100(1-$\alpha$) is the confidence level -- the probability of correctly concluding that there is no difference (retaining $H_0$) when the null hypothesis is true.
+
+
+## The Probability of avoiding a Type II Error is called Power
+
+A Type II error is made if the alternative hypothesis is true, but you fail to choose it.  The probability depends on exactly which part of the alternative hypothesis is true, so that computing the probability of making a Type II error is not feasible.  The power of a test is the probability of making the correct decision when the alternative hypothesis is true.  Beta ($\beta$) is defined as the probability of concluding that there was no difference, when in fact there was one (a Type II error).  Power is then just 1 - $\beta$, the probability of concluding that there was a difference, when, in fact, there was one.  
+
+Traditionally, people like the power of a test to be at least 80%, meaning that $\beta$ is at most 0.20. Often, I'll be arguing for 90% as a minimum power requirement, or we'll be presenting a range of power calculations for a variety of sample size choices.
+
+## Incorporating the Costs of Various Types of Errors
+
+Which error is more serious in medical testing, where we think of our $H_0$: patient is healthy vs. $H_A$: disease is present?
+
+It depends on the disease and on the consequences of a negative or positive test result.  A false negative in a screening test for cancer could lead to a fatal delay in treatment, whereas a false positive would probably lead to a retest.  A more troublesome example occurs in testing for an infectious disease.  Inevitably, there is a trade-off between the two types of errors.  It all depends on the consequences.
+
+It would be nice if we could specify the probability that we were making an error with each potential decision.  We could then weigh the consequence of the error against its probability.  Unfortunately, in most cases, we can only specify the conditional probability of making a Type I error, given that the null hypothesis is true.  
+
+In deciding whether to reject a null hypothesis, we will need to consider the consequences of the two potential types of errors.  If a Type I error is very serious, then you should reject the null hypothesis only if the *p* value is very small.  Conversely, if a Type II error is more serious, you should be willing to reject the null hypothesis with a larger *p* value, perhaps 0.10 or 0.20, instead of 0.05.
+
+- $\alpha$ is the probability of rejecting $H_0$ when $H_0$ is true.
+    - So 1 - $\alpha$, the confidence level, is the probability of retaining $H_0$ when that's the right thing to do.
+- $\beta$ is the probability of retaining $H_0$ when $H_A$ is true.
+    - So 1 - $\beta$, the power, is the probability of rejecting $H_0$ when that's the right thing to do.
+
+-- | $H_A$ is True | $H_0$ is True
+--:| :--------------------------------------:| :-------------------------------------:
+Test Rejects $H_0$ | Correct Decision (1 - $\beta$) | Type I Error ($\alpha$)
+Test Retains $H_0$ | Type II Error ($\beta$) | Correct Decision (1 - $\alpha$)
+
+## Power and Sample Size Considerations
+
+For most statistical tests, it is theoretically possible to estimate the power of the test in the design stage, (before any data are collected) for various sample sizes, so we can hone in on a sample size choice which will enable us to collect data only on as many subjects as are truly necessary. 
+
+A power calculation is likely the most common element of an scientific grant proposal on which a statistician is consulted. This is a fine idea in theory, but in practice...
+
+- The tests that have power calculations worked out in intensive detail using R are mostly those with more substantial assumptions. Examples include t tests that assume population normality, common population variance and balanced designs in the independent samples setting, or paired t tests that assume population normality in the paired samples setting. 
+- These power calculations are also usually based on tests rather than confidence intervals, which would be much more useful in most settings. Simulation is your friend here.
+- Even more unfortunately, this process of doing power and related calculations is **far more of an art than a science**. 
+- As a result, the value of many power calculations is negligible, since the assumptions being made are so arbitrary and poorly connected to real data. 
+- On several occasions, I have stood in front of a large audience of medical statisticians actively engaged in clinical trials and other studies that require power calculations for funding. When I ask for a show of hands of people who have had power calculations prior to such a study whose assumptions matched the eventual data perfectly, I get lots of laughs. It doesn't happen.
+- Even the underlying framework that assumes a power of 80% with a significance level of 5% is sufficient for most studies is pretty silly. 
+
+All that said, I feel obliged to show you some examples of power calculations done using R, and provide some insight on how to make some of the key assumptions in a way that won't alert reviewers too much to the silliness of the enterprise, and so I will do so in [Chapter -@sec-sample-size-1].

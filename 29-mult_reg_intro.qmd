@@ -1,0 +1,57 @@
+# Multiple Regression: Introduction
+
+In Chapter \@ref(Hydrate-Study) in working with a study of dehydration recovery in children, we discussed many of the fundamental ideas of multiple regression. There, we provided code and insight into the scatterplot and the scatterplot matrix, fit linear models and plotted the coefficients, analyzed summary output from `summary`, `tidy` and `glance` as well as the ANOVA table, and plotted residuals vs. fitted values. 
+
+In the remaining chapters, we will build on that foundation in three additional examples.
+
+- The `wcgs` data from the Western Collaborative Group Study, which we described and studied back in Chapter \@ref(WCGS-Study).
+- The `emp_bmi` data from a study published in *BMJ Open* of a nationally representative sample of over 7000 participants in the Korean Longitudinal Study of Aging.
+- The `gala` data, which describe features of the 30 Galapagos Islands.
+
+## Reminders of a few Key Concepts
+
+1. **Scatterplots** We have often accompanied our scatterplots with regression lines estimated by the method of least squares, and by loess smooths which permit local polynomial functions to display curved relationships, and occasionally presented in the form of a scatterplot matrix to enable simultaneous comparisons of multiple two-way associations.
+
+2. **Measures of Correlation/Association** By far the most commonly used is the Pearson correlation, which is a unitless (scale-free) measure of bivariate linear association  for the variables X and Y, symbolized by r, and ranging from -1 to +1. The Pearson correlation is a function of the slope of the least squares regression line, divided by the product of the standard deviations of X and Y. We have also mentioned the *Spearman* rank correlation coefficient, which is obtained by using the usual formula for a Pearson correlation, but on the ranks (1 = minimum, n = maximum, with average ranks are applied to the ties) of the X and Y values. This approach (running a correlation of the orderings of the data) substantially reduces the effect of outliers. The result still ranges from -1 to +1, with 0 indicating no linear association.
+
+3. **Fitting Linear Models** We have fit several styles of linear model to date, including both *simple* regressions, where our outcome Y is modeled as a linear function of a single predictor X, and *multiple* regression models, where more than one predictor is used. Functions from the `broom` package can be used to yield several crucial results, in addition to those we can obtain with a `summary` of the model. These include:
+
+- (from `tidy`) the estimated coefficients (intercept and slope(s)) of the fitted model, and 
+- (from `glance`) the $R^2$ or coefficient of determination, which specifies the proportion of variation in our outcome accounted for by the linear model, and various other summaries of the model's quality of fit
+- (from `augment`) fitted values, residuals and other summaries related to individual points used to fit the model, or individual predictions made by the model, which will be helpful for assessing predictive accuracy and for developing diagnostic tools for assessing the assumptions of multiple regression.
+
+## What is important in 431?
+
+In 431, my primary goal is to immerse you in several cases, which will demonstrate good statistical practice in the analysis of data using multiple regression models. Often, we will leave gaps for 432, but the principal goal is to get you to the point where you can do a solid (if not quite complete) analysis of data for the modeling part (Study 2) of Project B.
+
+Key topics regarding multiple regression we cover in 431 include:
+
+1.	Describing the multivariate relationship
+        - Scatterplots and smoothing
+        - Correlation coefficients, Correlation matrices
+2.	Transformations and Re-expression
+        - The need for transformation
+        - Using a Box-Cox method to help identify effective transformation choices
+        - Measuring and addressing collinearity
+3.	Testing the significance of a multiple regression model
+        - T tests for individual predictors as last predictor in
+        - Global F tests based on ANOVA to assess overall predictive significance
+        - Incremental and Sequential testing of groups of predictors
+4.	Interpreting the predictive value of a model
+        - $R^2$ and Adjusted $R^2$, along with AIC and BIC 
+        - Residual standard deviation and RMSE
+5.	Checking model assumptions
+        - Residual Analysis including studentized residuals, and the major plots
+        - Identifying points with high Leverage
+        - Assessing Influence numerically and graphically
+6.	Model Selection
+        - The importance of parsimony
+        - Stepwise regression 
+7.	Assessing Predictive Accuracy through Cross-Validation
+        - Summaries of predictive error
+        - Plotting predictions across multiple models
+8.	Summarizing the Key Findings of the Model, briefly and accurately
+        - Making the distinction between causal findings and associations
+        - The importance of logic, theory and empirical evidence. (LTE)
+
+

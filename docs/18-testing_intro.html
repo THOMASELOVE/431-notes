@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Course Notes for 431 - 18&nbsp; Hypothesis Testing: What is it good for?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./19-ci_for_mean.html" rel="next">
+<link href="./17-wcgs.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Course Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-testing_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-ci_for_mean.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-pairedsamples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sample Size and Power for Means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partBhold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Rest of Part B coming soon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partChold.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Part C coming soon.</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"> <span class="header-section-number">18.1</span> Introduction</a></li>
+  <li><a href="#five-steps-in-any-hypothesis-test" id="toc-five-steps-in-any-hypothesis-test" class="nav-link" data-scroll-target="#five-steps-in-any-hypothesis-test"> <span class="header-section-number">18.2</span> Five Steps in any Hypothesis Test</a></li>
+  <li><a href="#type-i-and-type-ii-error" id="toc-type-i-and-type-ii-error" class="nav-link" data-scroll-target="#type-i-and-type-ii-error"> <span class="header-section-number">18.3</span> Type I and Type II Error</a></li>
+  <li><a href="#the-courtroom-analogy" id="toc-the-courtroom-analogy" class="nav-link" data-scroll-target="#the-courtroom-analogy"> <span class="header-section-number">18.4</span> The Courtroom Analogy</a></li>
+  <li><a href="#significance-vs.-importance" id="toc-significance-vs.-importance" class="nav-link" data-scroll-target="#significance-vs.-importance"> <span class="header-section-number">18.5</span> Significance vs.&nbsp;Importance</a></li>
+  <li><a href="#what-does-dr.-love-dislike-about-p-values-and-statistical-significance" id="toc-what-does-dr.-love-dislike-about-p-values-and-statistical-significance" class="nav-link" data-scroll-target="#what-does-dr.-love-dislike-about-p-values-and-statistical-significance"> <span class="header-section-number">18.6</span> What does Dr.&nbsp;Love dislike about <em>p</em> values and “statistical significance”?</a></li>
+  <li><a href="#the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values" id="toc-the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values" class="nav-link" data-scroll-target="#the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values"> <span class="header-section-number">18.7</span> The ASA Articles in 2016 and 2019 on Statistical Significance and P-Values</a></li>
+  <li><a href="#errors-in-hypothesis-testing" id="toc-errors-in-hypothesis-testing" class="nav-link" data-scroll-target="#errors-in-hypothesis-testing"> <span class="header-section-number">18.8</span> Errors in Hypothesis Testing</a></li>
+  <li><a href="#the-two-types-of-hypothesis-testing-errors" id="toc-the-two-types-of-hypothesis-testing-errors" class="nav-link" data-scroll-target="#the-two-types-of-hypothesis-testing-errors"> <span class="header-section-number">18.9</span> The Two Types of Hypothesis Testing Errors</a></li>
+  <li><a href="#the-significance-level-is-the-probability-of-a-type-i-error" id="toc-the-significance-level-is-the-probability-of-a-type-i-error" class="nav-link" data-scroll-target="#the-significance-level-is-the-probability-of-a-type-i-error"> <span class="header-section-number">18.10</span> The Significance Level is the Probability of a Type I Error</a></li>
+  <li><a href="#the-probability-of-avoiding-a-type-ii-error-is-called-power" id="toc-the-probability-of-avoiding-a-type-ii-error-is-called-power" class="nav-link" data-scroll-target="#the-probability-of-avoiding-a-type-ii-error-is-called-power"> <span class="header-section-number">18.11</span> The Probability of avoiding a Type II Error is called Power</a></li>
+  <li><a href="#incorporating-the-costs-of-various-types-of-errors" id="toc-incorporating-the-costs-of-various-types-of-errors" class="nav-link" data-scroll-target="#incorporating-the-costs-of-various-types-of-errors"> <span class="header-section-number">18.12</span> Incorporating the Costs of Various Types of Errors</a></li>
+  <li><a href="#power-and-sample-size-considerations" id="toc-power-and-sample-size-considerations" class="nav-link" data-scroll-target="#power-and-sample-size-considerations"> <span class="header-section-number">18.13</span> Power and Sample Size Considerations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-test-intro" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">18.1</span> Introduction</h2>
+<p>Hypothesis testing uses sample data to attempt to reject the hypothesis that nothing interesting is happening – that is, to reject the notion that chance alone can explain the sample results. We can, in many settings, use confidence intervals to summarize the results, as well, and confidence intervals and hypothesis tests are closely connected.</p>
+<p>In particular, it’s worth stressing that:</p>
+<ul>
+<li><p><strong>A significant effect is not necessarily the same thing as an interesting effect.</strong> For example, results calculated from large samples are nearly always “significant” even when the effects are quite small in magnitude. Before doing a test, always ask if the effect is large enough to be of any practical interest. If not, why do the test?</p></li>
+<li><p><strong>A non-significant effect is not necessarily the same thing as no difference.</strong> A large effect of real practical interest may still produce a non-significant result simply because the sample is too small.</p></li>
+<li><p><strong>There are assumptions behind all statistical inferences.</strong> Checking assumptions is crucial to validating the inference made by any test or confidence interval.</p></li>
+</ul>
+</section>
+<section id="five-steps-in-any-hypothesis-test" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="five-steps-in-any-hypothesis-test"><span class="header-section-number">18.2</span> Five Steps in any Hypothesis Test</h2>
+<ol type="1">
+<li>Specify the null hypothesis, <span class="math inline">\(H_0\)</span> (which usually indicates that there is no difference or no association between the results in various groups of subjects)</li>
+<li>Specify the research or alternative hypothesis, <span class="math inline">\(H_A\)</span>, sometimes called <span class="math inline">\(H_1\)</span> (which usually indicates that there is some difference or some association between the results in those same groups of subjects).</li>
+<li>Specify the test procedure or test statistic to be used to make inferences to the population based on sample data. Here is where we usually specify <span class="math inline">\(\alpha\)</span>, the probability of incorrectly rejecting <span class="math inline">\(H_0\)</span> that we are willing to accept. In the absence of other information, we often use <span class="math inline">\(\alpha = 0.05\)</span></li>
+<li>Obtain the data, and summarize it to obtain the relevant test statistic, which gets summarized as a <span class="math inline">\(p\)</span> value.</li>
+<li>Use the <span class="math inline">\(p\)</span> value to either
+<ul>
+<li><strong>reject</strong> <span class="math inline">\(H_0\)</span> in favor of the alternative <span class="math inline">\(H_A\)</span> (concluding that there is a statistically significant difference/association at the <span class="math inline">\(\alpha\)</span> significance level) or</li>
+<li><strong>retain</strong> <span class="math inline">\(H_0\)</span> (and conclude that there is no statistically significant difference/association at the <span class="math inline">\(\alpha\)</span> significance level)</li>
+</ul></li>
+</ol>
+</section>
+<section id="type-i-and-type-ii-error" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="type-i-and-type-ii-error"><span class="header-section-number">18.3</span> Type I and Type II Error</h2>
+<p>Once we know how unlikely the results would have been if the null hypothesis were true, we must make one of two choices:</p>
+<ol type="1">
+<li>The <em>p</em> value is not small enough to convincingly rule out chance. Therefore, we cannot reject the null hypothesis as an explanation for the results.</li>
+<li>The <em>p</em> value was small enough to convincingly rule out chance. We reject the null hypothesis and accept the alternative hypothesis.</li>
+</ol>
+<p>How small must the <em>p</em> value be in order to rule out the null hypothesis? The standard choice is 5%. This standardization has some substantial disadvantages. It is simply a convention that has become accepted over the years, and there are many situations for which a 5% cutoff is unwise. While it does give a specific level to keep in mind, it suggests a rather mindless cutpoint having nothing to do with the importance of the decision nor the costs or losses associated with outcomes.</p>
+</section>
+<section id="the-courtroom-analogy" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="the-courtroom-analogy"><span class="header-section-number">18.4</span> The Courtroom Analogy</h2>
+<p>Consider the analogy of the jury in a courtroom.</p>
+<ol type="1">
+<li>The evidence is not strong enough to convincingly rule out that the defendant is innocent. Therefore, we cannot reject the null hypothesis, or innocence of the defendant.</li>
+<li>The evidence was strong enough that we are willing to rule out the possibility that an innocent person (as stated in the null hypothesis) produced the observed data. We reject the null hypothesis, that the defendant is innocent, and assert the alternative hypothesis.</li>
+</ol>
+<p>Consistent with our thinking in hypothesis testing, in many cases we would not accept the hypothesis that the defendant is innocent. We would simply conclude that the evidence was not strong enough to rule out the possibility of innocence.</p>
+<p>The <em>p</em> value is the probability of getting a result as extreme or more extreme than the one observed if the proposed null hypothesis is true. Notice that it is not valid to actually accept that the null hypothesis is true. To do so would be to say that we are essentially convinced that chance alone produced the observed results – a common mistake.</p>
+</section>
+<section id="significance-vs.-importance" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="significance-vs.-importance"><span class="header-section-number">18.5</span> Significance vs.&nbsp;Importance</h2>
+<p>Remember that a statistically significant relationship or difference does not necessarily mean an important one. A result that is significant in the statistical meaning of the word may not be significant clinically. Statistical significance is a technical term. Findings can be both statistically significant and practically significant or either or neither.</p>
+<p>When we have large samples, we will regularly find small differences that have a small <em>p</em> value even though they have no practical importance. At the other extreme, with small samples, even large differences will often not be large enough to create a small <em>p</em> value. The notion of statistical significance has not helped science, and we won’t perpetuate it any further.</p>
+</section>
+<section id="what-does-dr.-love-dislike-about-p-values-and-statistical-significance" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="what-does-dr.-love-dislike-about-p-values-and-statistical-significance"><span class="header-section-number">18.6</span> What does Dr.&nbsp;Love dislike about <em>p</em> values and “statistical significance”?</h2>
+<p>A lot of things. A major issue is that I believe that <em>p</em> values are impossible to explain in a way that is both [a] technically correct and [b] straightforward at the same time. As evidence of this, you might want to look at <a href="http://fivethirtyeight.com/features/statisticians-found-one-thing-they-can-agree-on-its-time-to-stop-misusing-p-values/">this article and associated video by Christie Aschwanden at 538.com</a></p>
+<p>The notion of a <em>p</em> value was an incredibly impressive achievement back when Wald and others were doing the work they were doing in the 1940s, and might still have been useful as recently as 10 years ago. But the notion of a <em>p</em> value relies on a lot of flawed assumptions, and null hypothesis significance testing is fraught with difficulties. Nonetheless, researchers use <em>p</em> values every day.</p>
+</section>
+<section id="the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="the-asa-articles-in-2016-and-2019-on-statistical-significance-and-p-values"><span class="header-section-number">18.7</span> The ASA Articles in 2016 and 2019 on Statistical Significance and P-Values</h2>
+<p>However, my primary motivation for taking the approach I’m taking comes from the pieces in two key reference collections we’ll read and discuss more thoroughly in 431 and 432.</p>
+<ol type="1">
+<li>The American Statistical Association’s 2016 <a href="http://amstat.tandfonline.com/doi/full/10.1080/00031305.2016.1154108">Statement on p-Values</a>: Context, Process and Purpose.</li>
+</ol>
+<blockquote class="blockquote">
+<p>The ASA Statement on p-Values and Statistical Significance (Wasserstein and Lazar 2016) was developed primarily because after decades, warnings about the don’ts had gone mostly unheeded. The statement was about what not to do, because there is widespread agreement about the don’ts.</p>
+</blockquote>
+<ol start="2" type="1">
+<li><a href="https://amstat.tandfonline.com/toc/utas20/73/sup1">Statistical Inference in the 21st Century: A World Beyond <em>p</em> &lt; 0.05</a> from 2019 in <em>The American Statistician</em></li>
+</ol>
+<blockquote class="blockquote">
+<p>This is a world where researchers are free to treat “p = 0.051” and “p = 0.049” as not being categorically different, where authors no longer find themselves constrained to selectively publish their results based on a single magic number. In this world, where studies with “p &lt; 0.05” and studies with “p &gt; 0.05” are not automatically in conflict, researchers will see their results more easily replicated-and, even when not, they will better understand why. As we venture down this path, we will begin to see fewer false alarms, fewer overlooked discoveries, and the development of more customized statistical strategies. Researchers will be free to communicate all their findings in all their glorious uncertainty, knowing their work is to be judged by the quality and effective communication of their science, and not by their p-values. As “statistical significance” is used less, statistical thinking will be used more. The ASA Statement on P-Values and Statistical Significance started moving us toward this world…. Now we must go further.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>The ASA Statement on P-Values and Statistical Significance stopped just short of recommending that declarations of “statistical significance” be abandoned. We take that step here. We conclude, based on our review of the articles in this special issue and the broader literature, that it is time to stop using the term “statistically significant” entirely. Nor should variants such as “significantly different,” “p &lt; 0.05,” and “nonsignificant” survive, whether expressed in words, by asterisks in a table, or in some other way…. Regardless of whether it was ever useful, a declaration of “statistical significance” has today become meaningless.</p>
+</blockquote>
+<p>For the moment, I will say this. I emphasize confidence intervals over <em>p</em> values, which is at best a partial solution. But …</p>
+<ol type="1">
+<li>Very rarely does a situation emerge in which a <em>p</em> value can be available in which looking at the associated confidence interval isn’t far more helpful for making a comparison of interest.</li>
+<li>The use of a <em>p</em> value requires making at least as many assumptions about the population, sample, individuals and data as does a confidence interval.</li>
+<li>Most null hypotheses are clearly not exactly true prior to data collection, and so the test summarized by a <em>p</em> value is of questionable value most of the time.</li>
+<li>No one has a truly adequate definition of a <em>p</em> value, in terms of both precision and parsimony. Brief, understandable definitions always fail to be technically accurate.</li>
+<li>Bayesian approaches avoid some of these pitfalls, but come with their own issues.</li>
+<li>Many smart people agree with me, and have sworn off of <em>p</em> values whenever they can.</li>
+</ol>
+<p>Again, we’ll look at these issues in greater depth later in the course.</p>
+</section>
+<section id="errors-in-hypothesis-testing" class="level2" data-number="18.8">
+<h2 data-number="18.8" class="anchored" data-anchor-id="errors-in-hypothesis-testing"><span class="header-section-number">18.8</span> Errors in Hypothesis Testing</h2>
+<p>In testing hypotheses, there are two potential decisions and each one brings with it the possibility that a mistake has been made.</p>
+<p>Let’s use the courtroom analogy. Here are the potential choices and associated potential errors. Although the seriousness of errors depends on the seriousness of the crime and punishment, the potential error for choice 2 is usually more serious.</p>
+<ol type="1">
+<li>We cannot rule out that the defendant is innocent, so (s)he is set free without penalty.
+<ul>
+<li>Potential Error: A criminal has been erroneously freed.</li>
+</ul></li>
+<li>We believe that there is enough evidence to conclude that the defendant is guilty.
+<ul>
+<li>Potential Error: An innocent person is convicted / penalized and a guilty person remains free.</li>
+</ul></li>
+</ol>
+<p>As another example, consider being tested for disease. Most tests for diseases are not 100% accurate. The lab technician or physician must make a choice:</p>
+<ol type="1">
+<li>In the opinion of the medical practitioner, you are healthy. The test result was weak enough to be called “negative” for the disease.
+<ul>
+<li>Potential Error: You actually have the disease but have been told that you do not. This is called a <strong>false negative</strong>.</li>
+</ul></li>
+<li>In the opinion of the medical practitioner, you have the disease. The test results were strong enough to be called “positive” for the disease.
+<ul>
+<li>Potential Error: You are actually healthy but have been told you have the disease. This is called a <strong>false positive</strong>.</li>
+</ul></li>
+</ol>
+</section>
+<section id="the-two-types-of-hypothesis-testing-errors" class="level2" data-number="18.9">
+<h2 data-number="18.9" class="anchored" data-anchor-id="the-two-types-of-hypothesis-testing-errors"><span class="header-section-number">18.9</span> The Two Types of Hypothesis Testing Errors</h2>
+<table class="table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 38%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">–</th>
+<th style="text-align: center;"><span class="math inline">\(H_A\)</span> is true</th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> is true</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Test Rejects <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Correct Decision</td>
+<td style="text-align: center;">Type I Error (False Positive)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Test Retains <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Type II Error (False Negative)</td>
+<td style="text-align: center;">Correct Decision</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A Type I error can only be made if the null hypothesis is actually true.</li>
+<li>A Type II error can only be made if the alternative hypothesis is actually true.</li>
+</ul>
+</section>
+<section id="the-significance-level-is-the-probability-of-a-type-i-error" class="level2" data-number="18.10">
+<h2 data-number="18.10" class="anchored" data-anchor-id="the-significance-level-is-the-probability-of-a-type-i-error"><span class="header-section-number">18.10</span> The Significance Level is the Probability of a Type I Error</h2>
+<p>If the null hypothesis is true, the <em>p</em> value is the probability of making an error by choosing the alternative hypothesis instead. Alpha (<span class="math inline">\(\alpha\)</span>) is defined as the probability of rejecting the null hypothesis when the null hypothesis is actually true, creating a Type I error. This is also called the significance level, so that 100(1-<span class="math inline">\(\alpha\)</span>) is the confidence level – the probability of correctly concluding that there is no difference (retaining <span class="math inline">\(H_0\)</span>) when the null hypothesis is true.</p>
+</section>
+<section id="the-probability-of-avoiding-a-type-ii-error-is-called-power" class="level2" data-number="18.11">
+<h2 data-number="18.11" class="anchored" data-anchor-id="the-probability-of-avoiding-a-type-ii-error-is-called-power"><span class="header-section-number">18.11</span> The Probability of avoiding a Type II Error is called Power</h2>
+<p>A Type II error is made if the alternative hypothesis is true, but you fail to choose it. The probability depends on exactly which part of the alternative hypothesis is true, so that computing the probability of making a Type II error is not feasible. The power of a test is the probability of making the correct decision when the alternative hypothesis is true. Beta (<span class="math inline">\(\beta\)</span>) is defined as the probability of concluding that there was no difference, when in fact there was one (a Type II error). Power is then just 1 - <span class="math inline">\(\beta\)</span>, the probability of concluding that there was a difference, when, in fact, there was one.</p>
+<p>Traditionally, people like the power of a test to be at least 80%, meaning that <span class="math inline">\(\beta\)</span> is at most 0.20. Often, I’ll be arguing for 90% as a minimum power requirement, or we’ll be presenting a range of power calculations for a variety of sample size choices.</p>
+</section>
+<section id="incorporating-the-costs-of-various-types-of-errors" class="level2" data-number="18.12">
+<h2 data-number="18.12" class="anchored" data-anchor-id="incorporating-the-costs-of-various-types-of-errors"><span class="header-section-number">18.12</span> Incorporating the Costs of Various Types of Errors</h2>
+<p>Which error is more serious in medical testing, where we think of our <span class="math inline">\(H_0\)</span>: patient is healthy vs.&nbsp;<span class="math inline">\(H_A\)</span>: disease is present?</p>
+<p>It depends on the disease and on the consequences of a negative or positive test result. A false negative in a screening test for cancer could lead to a fatal delay in treatment, whereas a false positive would probably lead to a retest. A more troublesome example occurs in testing for an infectious disease. Inevitably, there is a trade-off between the two types of errors. It all depends on the consequences.</p>
+<p>It would be nice if we could specify the probability that we were making an error with each potential decision. We could then weigh the consequence of the error against its probability. Unfortunately, in most cases, we can only specify the conditional probability of making a Type I error, given that the null hypothesis is true.</p>
+<p>In deciding whether to reject a null hypothesis, we will need to consider the consequences of the two potential types of errors. If a Type I error is very serious, then you should reject the null hypothesis only if the <em>p</em> value is very small. Conversely, if a Type II error is more serious, you should be willing to reject the null hypothesis with a larger <em>p</em> value, perhaps 0.10 or 0.20, instead of 0.05.</p>
+<ul>
+<li><span class="math inline">\(\alpha\)</span> is the probability of rejecting <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is true.
+<ul>
+<li>So 1 - <span class="math inline">\(\alpha\)</span>, the confidence level, is the probability of retaining <span class="math inline">\(H_0\)</span> when that’s the right thing to do.</li>
+</ul></li>
+<li><span class="math inline">\(\beta\)</span> is the probability of retaining <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_A\)</span> is true.
+<ul>
+<li>So 1 - <span class="math inline">\(\beta\)</span>, the power, is the probability of rejecting <span class="math inline">\(H_0\)</span> when that’s the right thing to do.</li>
+</ul></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 48%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">–</th>
+<th style="text-align: center;"><span class="math inline">\(H_A\)</span> is True</th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> is True</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Test Rejects <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Correct Decision (1 - <span class="math inline">\(\beta\)</span>)</td>
+<td style="text-align: center;">Type I Error (<span class="math inline">\(\alpha\)</span>)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Test Retains <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Type II Error (<span class="math inline">\(\beta\)</span>)</td>
+<td style="text-align: center;">Correct Decision (1 - <span class="math inline">\(\alpha\)</span>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="power-and-sample-size-considerations" class="level2" data-number="18.13">
+<h2 data-number="18.13" class="anchored" data-anchor-id="power-and-sample-size-considerations"><span class="header-section-number">18.13</span> Power and Sample Size Considerations</h2>
+<p>For most statistical tests, it is theoretically possible to estimate the power of the test in the design stage, (before any data are collected) for various sample sizes, so we can hone in on a sample size choice which will enable us to collect data only on as many subjects as are truly necessary.</p>
+<p>A power calculation is likely the most common element of an scientific grant proposal on which a statistician is consulted. This is a fine idea in theory, but in practice…</p>
+<ul>
+<li>The tests that have power calculations worked out in intensive detail using R are mostly those with more substantial assumptions. Examples include t tests that assume population normality, common population variance and balanced designs in the independent samples setting, or paired t tests that assume population normality in the paired samples setting.</li>
+<li>These power calculations are also usually based on tests rather than confidence intervals, which would be much more useful in most settings. Simulation is your friend here.</li>
+<li>Even more unfortunately, this process of doing power and related calculations is <strong>far more of an art than a science</strong>.</li>
+<li>As a result, the value of many power calculations is negligible, since the assumptions being made are so arbitrary and poorly connected to real data.</li>
+<li>On several occasions, I have stood in front of a large audience of medical statisticians actively engaged in clinical trials and other studies that require power calculations for funding. When I ask for a show of hands of people who have had power calculations prior to such a study whose assumptions matched the eventual data perfectly, I get lots of laughs. It doesn’t happen.</li>
+<li>Even the underlying framework that assumes a power of 80% with a significance level of 5% is sufficient for most studies is pretty silly.</li>
+</ul>
+<p>All that said, I feel obliged to show you some examples of power calculations done using R, and provide some insight on how to make some of the key assumptions in a way that won’t alert reviewers too much to the silliness of the enterprise, and so I will do so in <a href="22-samplesize.html">Chapter&nbsp;<span>22</span></a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./17-wcgs.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./19-ci_for_mean.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
