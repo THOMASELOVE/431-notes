@@ -8,14 +8,16 @@ knitr::opts_chunk$set(comment = NA)
 source("data/Love-boost.R")
 library(broom)
 library(Epi)
-library(knitr)
+library(ggridges)
+library(Hmisc)
+library(kableExtra)
 library(janitor)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
-In addition to the `Love-boost.R` script, we will also use the `favstats` function from the `mosaic` package, and several functions from the `ggridges` and `Hmisc` packages.
+In addition to the `Love-boost.R` script, we will also use the `favstats` function from the `mosaic` package.
 
 
 ## The Trial
@@ -29,7 +31,7 @@ In this study, patients meeting specific criteria (including elevated temperatur
 The full trial involved 455 patients, of which our sample includes 300. 150 of our patients were randomly assigned to the Ibuprofen group and 150 to the Placebo group^[This was a *double-blind* study, where neither the patients nor their care providers know, during the execution of the trial, what intervention group was assigned to each patient.]. I picked the `sepsis` sample we will work with excluding patients with missing values for our outcome of interest, and then selected a random sample of 150 Ibuprofen and 150 Placebo patients from the rest of the group, and converted the temperatures and changes from Fahrenheit to Celsius. The data are gathered in the `sepsis` data file.
 
 ```{r, message = FALSE}
-sepsis <- read_csv("data/sepsis.csv")
+sepsis <- read_csv("data/sepsis.csv", show_col_types = FALSE)
 ```
 
 For the moment, we focus on two variables:
@@ -135,20 +137,21 @@ ggplot(sepsis, aes(sample = temp_drop)) +
     labs(y = "Temperature Drop Values (in degrees C)")
 ```
 
-We'll could perhaps also look at a ridgeline plot.
+We'll could perhaps also look at a ridgeline plot, with some extra functions and theming from the `ggridges` package.
 
 ```{r}
 ggplot(sepsis, aes(x = temp_drop, y = treat, fill = treat)) +
-    ggridges::geom_density_ridges(scale = 0.9) +
+    geom_density_ridges(scale = 0.9) +
     guides(fill = "none") + 
     labs(title = "Temperature Drop in Sepsis Patients",
          x = "Drop in Temperature (degrees Celsius)", y = "") +
-    ggridges::theme_ridges()
+    theme_ridges()
 ```
 
 The center of the ibuprofen distribution is shifted a bit towards the more positive (greater improvement) direction, it seems, than is the distribution for the placebo patients. This conclusion matches what we see in some key numerical summaries, within the treatment groups.
 
 ```{r}
+#| message: false
 mosaic::favstats(temp_drop ~ treat, data = sepsis)
 ```
 
@@ -160,7 +163,7 @@ Next, we will build a point estimate and 90% confidence interval for the differe
 model_sep <- lm(temp_drop ~ treat == "Ibuprofen", data = sepsis)
 
 tidy(model_sep, conf.int = TRUE, conf.level = 0.90) |>
-    kable(digits = 3)
+    kbl(digits = 3) |> kable_styling()
 ```
 
 The point estimate for the "Ibuprofen - Placebo" difference in population means is 0.311 degrees C, and the 90% confidence interval is (0.191, 0.432) degrees C.
@@ -171,7 +174,7 @@ We could also have run the model like this:
 model_sep2 <- lm(temp_drop ~ treat, data = sepsis)
 
 tidy(model_sep2, conf.int = TRUE, conf.level = 0.90) |>
-    kable(digits = 3)
+    kbl(digits = 3) |> kable_styling()
 ```
 
 and would therefore conclude that the *Placebo - Ibuprofen* difference was estimated as -0.311, with 90% confidence interval (-0.432, -0.191), which is of course equivalent to our previous estimate.
@@ -200,7 +203,7 @@ tt1 <- t.test(temp_drop ~ treat,
               conf.level = 0.90,
               alt = "two.sided",
               var.equal = TRUE)
-tidy(tt1)
+tidy(tt1) |> kbl(digits = 2) |> kable_styling()
 ```
 
 ### Using linear regression to obtain a pooled t confidence interval
@@ -218,7 +221,8 @@ We see that our point estimate from the linear regression model is that the diff
 We can obtain a t-based confidence interval for each of the parameter estimates in a linear model directly using `tidy` from the `broom` package. Linear models usually summarize only the estimate and standard error. Remember that a reasonable approximation in large samples to a 95% confidence interval for a regression estimate (slope or intercept) can be obtained from estimate plus or minus two times the standard error.
 
 ```{r}
-tidy(model1, conf.int = TRUE, conf.level = 0.95) |> kable(digits = 3)
+tidy(model1, conf.int = TRUE, conf.level = 0.95) |> 
+  kbl(digits = 3) |> kable_styling()
 ```
 
 So, in the case of the `treatPlacebo` estimate, we can obtain an approximate 95% confidence interval with (`r round(coef(summary(model1))["treatPlacebo",1] - 2*coef(summary(model1))["treatPlacebo",2],3)`, `r round(coef(summary(model1))["treatPlacebo",1]+2*coef(summary(model1))["treatPlacebo",2],3)`). Compare this to the 95% confidence interval available from the model directly, shown in the tidied output above, or with the `confint` command below, and you'll see only a small difference.
@@ -244,7 +248,7 @@ Tidying works in this situation, too.
 tt0 <- t.test(temp_drop ~ treat, 
               data = sepsis, conf.level = 0.90, alt = "two.sided")
 
-tidy(tt0)
+tidy(tt0) |> kbl(digits = 2) |> kable_styling()
 ```
 
 When there is a *balanced design*, that is, when the same number of observations appear in each of the two samples, then the Welch t test and the Pooled t test produce the same confidence interval. Differences appear if the sample sizes in the two groups being compared are different.
@@ -260,7 +264,7 @@ wt <- wilcox.test(temp_drop ~ treat, data = sepsis,
 
 wt
 
-tidy(wt)
+tidy(wt) |> kbl(digits = 2) |> kable_styling()
 ```
 
 ## Bootstrapping: A More Robust Approach 
@@ -333,6 +337,8 @@ To address question 9, we'll need to look at the data in each sample, as we did 
 ggplot(sepsis, aes(x = treat, y = temp_drop, fill = treat)) +
     geom_violin() +
     geom_boxplot(width = 0.3, fill = "white") +
+    stat_summary(fun = "mean", geom = "point", 
+                 shape = 23, size = 3, fill = "red") +
     scale_fill_viridis_d(alpha = 0.3) +
     guides(fill = "none") + 
     labs(title = "Boxplot of Temperature Drop in Sepsis Patients",

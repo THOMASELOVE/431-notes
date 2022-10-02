@@ -8,15 +8,19 @@ In this part of the course, we'll make use of a few scripts I've gathered for yo
 knitr::opts_chunk$set(comment = NA)
 
 source("data/Love-boost.R")
+library(boot)
 library(broom)
-library(knitr)
+library(Hmisc)
+library(janitor)
+library(kableExtra)
 library(patchwork)
+library(psych)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
-We will also use the `favstats` function from the `mosaic` package, the `describe` function from the `psych` package, and several functions from the `Hmisc` package, and from the `boot` package.
+We will also use the `favstats` function from the `mosaic` package.
 
 ## Introduction
 
@@ -40,9 +44,14 @@ We'll develop confidence intervals to compare parameters about two populations (
 The `serzinc` data include serum zinc levels in micrograms per deciliter that have been gathered for a sample of 462 males aged 15-17, My source for these data is Appendix B1 of @PaganoGauvreau. Serum zinc deficiency has been associated with anemia, loss of strength and endurance, and it is thought that 25% of the world's population is at risk of zinc deficiency.  Such a deficiency can indicate poor nutrition, and can affect growth and vision, for instance. "Typical" values^[Reference values for those over the age of 10 years at http://www.mayomedicallaboratories.com/test-catalog/Clinical+and+Interpretive/8620 , visited 2019-09-17.] are said to be 0.66-1.10 mcg/ml, which is 66 - 110 micrograms per deciliter. 
 
 ```{r}
-serzinc <- read_csv("data/serzinc.csv")
+#| message: false
+serzinc <- read_csv("data/serzinc.csv", show_col_types = FALSE)
 
-summary(serzinc)
+names(serzinc)
+
+mosaic::favstats(~ zinc, data = serzinc) |>
+  kbl(digits = 2) |>
+  kable_styling()
 ```
 
 ## Our Goal: A Confidence Interval for the Population Mean
@@ -84,6 +93,8 @@ p2 <- ggplot(serzinc, aes(x = zinc)) +
 
 p3 <- ggplot(serzinc, aes(x = zinc, y = "")) +
   geom_boxplot(fill = "dodgerblue", outlier.color = "dodgerblue") + 
+  stat_summary(fun = "mean", geom = "point", 
+               shape = 23, size = 3, fill = "white") +
   labs(title = "Boxplot", y = "")
 
 p1 + (p2 / p3 + plot_layout(heights = c(4,1))) +
@@ -94,25 +105,23 @@ These results include some of the more useful plots and numerical summaries when
 
 ### Numerical Summaries
 
-This section describes some numerical summaries of interest to augment the plots in summarizing the center, spread and shape of the distribution of serum zinc among these 462 teenage males. 
+This section describes some numerical summaries of interest to augment the plots in summarizing the center, spread and shape of the distribution of serum zinc among these 462 teenage males. Note that I use `summarise` here to be sure that the `dplyr` package's `summarise/summarize` function is used, rather than the one contained in `Hmisc`. I could also have used `dplyr::summarize()` to accomplish the same goal.
 
-```{r, message=FALSE}
-mosaic::favstats(~ zinc, data = serzinc) |> 
-    kable(digits = 3)
+```{r}
+#| message: false
+
+describe(serzinc$zinc) |>  # from psych package
+  kbl(digits = 2) |> kable_styling()
 
 serzinc |>
-    summarize(mean(zinc), median(zinc), sd(zinc),
+    summarise(mean(zinc), median(zinc), sd(zinc),
               skew1 = (mean(zinc) - median(zinc))/sd(zinc)) |>
-    kable(digits = 3)
+    kbl(digits = 2) |> kable_styling()
 ```
 
 The skew1 value here (mean - median divided by the standard deviation) backs up our graphical assessment, that the data are slightly right skewed.
 
-```{r}
-psych::describe(serzinc$zinc)
-```
-
-Rounded to two decimal places, the standard deviation of the serum zinc data turns out to be `r round(sd(serzinc$zinc),2)`, and so the standard error of the mean, shown as `se` in the `psych::describe` output, is `r round(sd(serzinc$zinc),2)` divided by the square root of the sample size, *n* = `r length(serzinc$zinc)`. This standard error is about to become quite important to us in building statistical inferences about the mean of the entire population of teenage males based on this sample.
+Rounded to two decimal places, the standard deviation of the serum zinc data turns out to be `r round_half_up(sd(serzinc$zinc),2)`, and so the standard error of the mean, shown as `se` in the `psych::describe` output, is `r round(sd(serzinc$zinc),2)` divided by the square root of the sample size, *n* = `r length(serzinc$zinc)`. This standard error is about to become quite important to us in building statistical inferences about the mean of the entire population of teenage males based on this sample.
 
 ## Defining a Confidence Interval
 
@@ -190,7 +199,7 @@ Student's t distribution looks a lot like a Normal distribution, when the sample
 - t distributions with large numbers of degrees of freedom are more or less indistinguishable from the standard Normal distribution.
 - t distributions with smaller degrees of freedom (say, with df < 30, in particular) are still symmetric, but are more outlier-prone than a Normal distribution
 
-```{r, echo = FALSE}
+```{r}
 p1 <- ggplot(data.frame(x = c(-3, 3)), aes(x)) + 
   stat_function(fun = dt, args = list(df = 1)) + 
   stat_function(fun = dnorm, col = "red") +
@@ -252,11 +261,11 @@ summary(model_zinc)
 confint(model_zinc, level = 0.90)
 ```
 
-Generally, though, I'll use the `tidy()` function in `broom` to obtain the key information from a model like this:
+Generally, though, I'll use the `tidy()` function in the `broom` package to obtain the key information from a model like this:
 
 ```{r}
 tidy(model_zinc, conf.int = TRUE, conf = 0.90) |>
-    kable(digits = 2)
+    kbl(digits = 2) |> kable_styling()
 ```
 
 As an alternative, we could also use the `t.test` function, which can build (in this case) a two-sided confidence interval for the zinc levels like this:
@@ -272,9 +281,8 @@ tt
 and the `tidy()` function from the `broom` package works here, too.
 
 ```{r}
-# requires library(broom)
 tidy(tt, conf.int = TRUE, conf = 0.90) |> 
-  knitr::kable(digits = 2)
+  kbl(digits = 2) |> kable_styling()
 ```
 
 And again, our 90% confidence interval for the true population mean serum zinc level, based on our sample of 462 patients, is (86.71, 89.16) micrograms per deciliter^[Since the measured zinc levels appear as integers, we should probably be rounding even further in our confidence interval, down to perhaps one decimal place.].
@@ -292,11 +300,13 @@ An appropriate interpretation of the 90% two-sided confidence interval above fol
 We can obtain them using `tidy` and the same modeling approach.
 
 ```{r}
-tidy(model_zinc, conf.int = TRUE, conf.level = 0.95)
+tidy(model_zinc, conf.int = TRUE, conf.level = 0.95) |> 
+  kbl(digits = 2) |> kable_styling()
 ```
 
 ```{r}
-tidy(model_zinc, conf.int = TRUE, conf.level = 0.99)
+tidy(model_zinc, conf.int = TRUE, conf.level = 0.99) |> 
+  kbl(digits = 2) |> kable_styling()
 ```
 
 ## Using the `broom` package with the t test
@@ -307,7 +317,7 @@ For example, we can use the `tidy` function within `broom` to create a single-ro
 
 ```{r}
 tt <- t.test(serzinc$zinc, conf.level = 0.95, alternative = "two.sided")
-tidy(tt)
+tidy(tt) |> kbl(digits = 2) |> kable_styling()
 ```
 
 We can thus pull the endpoints of a 95% confidence interval directly from this output. `broom` also has a `glance` function, which returns the same information as `tidy` in the case of a t-test.
@@ -318,10 +328,10 @@ Below, we see two-sided confidence intervals for various levels of $\alpha$.
 
 Confidence Level | $\alpha$ | Two-Sided Interval Estimate for Zinc Level Population Mean, $\mu$ | Point Estimate of $\mu$
 :---------------: | :-----: | :-------------------------: | :---------------------------:
-80% or 0.80 | 0.20 | (`r round(tidy(model_zinc, conf.int = TRUE, conf.level = 0.80) |> select(conf.low, conf.high), 1)`) | `r round(mean(serzinc$zinc),1)`
-90% or 0.90 | 0.10 | (`r round(tidy(model_zinc, conf.int = TRUE, conf.level = 0.90) |> select(conf.low, conf.high), 1)`) | `r round(mean(serzinc$zinc),1)`
-95% or 0.95 | 0.05 | (`r round(tidy(model_zinc, conf.int = TRUE, conf.level = 0.95) |> select(conf.low, conf.high), 1)`) | `r round(mean(serzinc$zinc),1)`
-99% or 0.99 | 0.01| (`r round(tidy(model_zinc, conf.int = TRUE, conf.level = 0.99) |> select(conf.low, conf.high), 1)`) | `r round(mean(serzinc$zinc),1)`
+80% or 0.80 | 0.20 | (`r round_half_up(tidy(model_zinc, conf.int = TRUE, conf.level = 0.80) |> select(conf.low, conf.high), 1)`) | `r round_half_up(mean(serzinc$zinc),1)`
+90% or 0.90 | 0.10 | (`r round_half_up(tidy(model_zinc, conf.int = TRUE, conf.level = 0.90) |> select(conf.low, conf.high), 1)`) | `r round_half_up(mean(serzinc$zinc),1)`
+95% or 0.95 | 0.05 | (`r round_half_up(tidy(model_zinc, conf.int = TRUE, conf.level = 0.95) |> select(conf.low, conf.high), 1)`) | `r round_half_up(mean(serzinc$zinc),1)`
+99% or 0.99 | 0.01| (`r round_half_up(tidy(model_zinc, conf.int = TRUE, conf.level = 0.99) |> select(conf.low, conf.high), 1)`) | `r round_half_up(mean(serzinc$zinc),1)`
 
 What happens to the width of the confidence interval in this table as the confidence level changes?
 
@@ -339,9 +349,9 @@ Note the relationship between the *two-sided* 80% confidence interval, and the *
 
 Confidence  | $\alpha$ | Type of Interval | Interval Estimate for Zinc Level Population Mean, $\mu$ 
 :---------: | :-----: | :-------------------------: | :---------------------------:
-80% (.80) | 0.20 | Two-Sided | (`r round(t.test(serzinc$zinc, conf.level = 0.80)$conf[c(1,2)],2)`) 
-90% (.90) | 0.10 | One-Sided (Less Than) | $\mu$ < `r round(t.test(serzinc$zinc, conf.level = 0.90, alternative = "less")$conf[2],2)`. 
-90% (.90) | 0.10 | One-Sided (Greater Than) | $\mu$ > `r round(t.test(serzinc$zinc, conf.level = 0.90, alternative = "greater")$conf[1],2)`.
+80% (.80) | 0.20 | Two-Sided | (`r round_half_up(t.test(serzinc$zinc, conf.level = 0.80)$conf[c(1,2)],2)`) 
+90% (.90) | 0.10 | One-Sided (Less Than) | $\mu$ < `r round_half_up(t.test(serzinc$zinc, conf.level = 0.90, alternative = "less")$conf[2],2)`. 
+90% (.90) | 0.10 | One-Sided (Greater Than) | $\mu$ > `r round_half_up(t.test(serzinc$zinc, conf.level = 0.90, alternative = "greater")$conf[1],2)`.
 
 
 Why does this happen? The 80% two-sided interval is placed so as to cut off the top 10% of the distribution with its upper bound, and the bottom 10% of the distribution with its lower bound. The 90% "less than" one-sided interval is placed so as to have its lower bound cut off the top 10% of the distribution.
@@ -350,9 +360,9 @@ The same issue appears when we consider two-sided 90% and one-sided 95% confiden
 
 Confidence  | $\alpha$ | Type of Interval | Interval Estimate for Zinc Level Population Mean, $\mu$ 
 :---------: | :-----: | :-------------------------: | :---------------------------:
-90% (.90) | 0.10 | Two-Sided | (`r round(t.test(serzinc$zinc, conf.level = 0.90)$conf[c(1,2)],2)`) 
-95% (.95) | 0.05 | One-Sided (Less Than) | $\mu$ < `r round(t.test(serzinc$zinc, conf.level = 0.95, alternative = "less")$conf[2],2)`. 
-95% (.95) | 0.05 | One-Sided (Greater Than) | $\mu$ > `r round(t.test(serzinc$zinc, conf.level = 0.95, alternative = "greater")$conf[1],2)`. 
+90% (.90) | 0.10 | Two-Sided | (`r round_half_up(t.test(serzinc$zinc, conf.level = 0.90)$conf[c(1,2)],2)`) 
+95% (.95) | 0.05 | One-Sided (Less Than) | $\mu$ < `r round_half_up(t.test(serzinc$zinc, conf.level = 0.95, alternative = "less")$conf[2],2)`. 
+95% (.95) | 0.05 | One-Sided (Greater Than) | $\mu$ > `r round_half_up(t.test(serzinc$zinc, conf.level = 0.95, alternative = "greater")$conf[1],2)`. 
 
 Again, the 90% two-sided interval cuts off the top 5% and bottom 5% of the distribution with its bounds. The 95% "less than" one-sided interval also has its lower bound cut off the top 5% of the distribution.
 
@@ -401,9 +411,10 @@ What the computer does:
 
 The command that we use to obtain a Confidence Interval for $\mu$ using the basic nonparametric bootstrap and without assuming a Normally distributed population, is `smean.cl.boot`, a part of the `Hmisc` package in R.
 
-```{r, message=FALSE}
+```{r}
+#| message: false
 set.seed(431)
-Hmisc::smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.90)
+smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.90) ## from Hmisc
 ```
 
 - Remember that the t-based 90% CI for $\mu$ was (`r round(t.test(serzinc$zinc, conf.level = 0.90)$conf[c(1,2)],2)`), according to the following output...
@@ -418,8 +429,8 @@ tidy(lm(zinc ~ 1, data = serzinc), conf.int = TRUE, conf.level = 0.90)
 
 ```{r}
 set.seed(431)
-Hmisc::smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.90)
-Hmisc::smean.cl.normal(serzinc$zinc, conf.int = 0.90)
+smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.90)
+smean.cl.normal(serzinc$zinc, conf.int = 0.90)
 ```
 
 Bootstrap resampling confidence intervals do not follow the general confidence interval strategy using a point estimate plus or minus a margin for error. 
@@ -448,10 +459,10 @@ What if we wanted to change the confidence level?
 
 ```{r bootstrap ci for zinc 3}
 set.seed(431654)
-Hmisc::smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.95)
+smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.95)
 
 set.seed(431321)
-Hmisc::smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.99)
+smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.99)
 ```
 
 ## One-Tailed Bootstrap Confidence Intervals
@@ -470,7 +481,7 @@ Since we want a 95% confidence interval, we have $\alpha$ = 0.05. We double that
 
 ```{r}
 set.seed(43101)
-Hmisc::smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.90)
+smean.cl.boot(serzinc$zinc, B = 1000, conf.int = 0.90)  ## from Hmisc package
 ```
 
 The upper bound of this two-sided 90% CI will also be the upper bound for a 95% one-sided CI.
@@ -486,17 +497,18 @@ f.median <- function(y, id)
 {    median ( y[id])  }
 ```
 
-In step 2, we summon the `boot` package and call the `boot.ci` function.
+In step 2, we call the `boot.ci` function from the `boot` package.
 
 ```{r, message=FALSE}
 set.seed(431787)
-boot::boot.ci(boot::boot (serzinc$zinc, f.median, 1000), conf=0.90, type="basic")
+boot.ci(boot(serzinc$zinc, f.median, 1000), conf=0.90, type="basic")
 ```
 
 This yields a 90% confidence interval for the population median serum zinc level. Recall that the sample median for the serum zinc levels in our sample of 462 teenage males was `r median(serzinc$zinc)` micrograms per deciliter.
 
 ```{r}
-mosaic::favstats(~ zinc, data = serzinc)
+mosaic::favstats(~ zinc, data = serzinc) |>
+  kbl(digits = 2) |> kable_styling()
 ```
 
 Actually, the `boot.ci` function can provide up to five different types of confidence interval (see the help file) if we change to `type="all"`, and some of those other versions have attractive properties. However, we'll stick with the basic approach in 431.  
@@ -512,7 +524,7 @@ f.IQR <- function(y, id)
 {    IQR (y[id]) }
 
 set.seed(431207)
-boot::boot.ci(boot::boot (serzinc$zinc, f.IQR, 1000), 
+boot.ci(boot(serzinc$zinc, f.IQR, 1000), 
         conf=0.95, type="basic")
 ```
 
@@ -552,7 +564,7 @@ We can also use the `tidy` function within `broom` to create a single-row tibble
 
 ```{r}
 wt <- wilcox.test(serzinc$zinc, conf.int = TRUE, conf.level = 0.95)
-tidy(wt)
+tidy(wt) |> kbl(digits = 2) |> kable_styling()
 ```
 
 ## General Advice

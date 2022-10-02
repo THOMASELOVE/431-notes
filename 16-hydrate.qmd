@@ -63,6 +63,8 @@ What can we conclude here?
 Next, we'll do a more thorough graphical summary of our outcome, recovery score.
 
 ```{r}
+#| message: false
+
 p1 <- ggplot(hydrate, aes(sample = recov.score)) +
   geom_qq(col = '#440154') + geom_qq_line(col = "red") + 
   theme(aspect.ratio = 1) + 
