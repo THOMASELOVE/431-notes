@@ -4,19 +4,18 @@ What will we do with tables describing data from more than two categories at a t
 
 ## Setup: Packages Used Here
 
-```{r, message = FALSE}
+```{r}
+#| message: false
 knitr::opts_chunk$set(comment = NA)
 
 source("data/Love-boost.R")
 library(Epi)
 library(janitor)
+library(vcd)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
-
-We will also use some functions from the `vcd` package.
-
 
 ## A 2x3 Table: Comparing Response to Active vs. Placebo
 
@@ -33,7 +32,7 @@ Is there a statistically significant association here? That is to say, is there 
 
 To answer this, we'll have to get the data from this contingency table into a matrix in R. Here's one approach...
 
-```{r table2x3 a}
+```{r}
 T1 <- matrix(c(16,26,29,24,26,18), ncol=3, nrow=2, byrow=TRUE)
 rownames(T1) <- c("Active", "Placebo")
 colnames(T1) <- c("None", "Partial", "Complete")
@@ -45,19 +44,19 @@ T1
 
 We can add margins to the matrix to get a table including row and column totals.
 
-```{r table2x3 b}
+```{r}
 addmargins(T1)
 ```
 
 Instead of the counts, we can tabulate the proportion of all patients within each cell.
 
-```{r table2x3 c}
+```{r}
 prop.table(T1)
 ```
 
 Now, to actually obtain a *p* value and perform the significance test with $H_0$: rows and columns are independent vs. $H_A$: rows and columns are associated, we simply run a Pearson chi-square test on T1 ...
 
-```{r table2x3 i}
+```{r}
 chisq.test(T1)
 ```
 
@@ -65,7 +64,7 @@ Thanks to a p-value of about 0.13 (using the Pearson chi-square test) our conclu
 
 We could have run a Fisher's exact test, too, if we needed it. 
 
-```{r table2x3 j}
+```{r}
 fisher.test(T1)
 ```
 
@@ -93,26 +92,26 @@ We can assess the homogeneity of the confirmation results (columns) we observe i
 - The null hypothesis is that the rows and columns are independent.
 - The alternative hypothesis is that there is an association between the rows and the columns.
 
-```{r death certificates a}
-death.tab <- matrix(c(2040,367,327,149,60,48,288,25,70,703,
+```{r}
+death_table <- matrix(c(2040,367,327,149,60,48,288,25,70,703,
                       197,252,425,62,88,121,72,79), byrow=TRUE, nrow=6)
-rownames(death.tab) <- c("1955-65", "1970", "1970-71", "1975-77", "1977-78",
+rownames(death_table) <- c("1955-65", "1970", "1970-71", "1975-77", "1977-78",
                  "1980")
-colnames(death.tab) <- c("Confirmed", "Inaccurate", "Incorrect")
+colnames(death_table) <- c("Confirmed", "Inaccurate", "Incorrect")
  
-addmargins(death.tab)
+addmargins(death_table)
 ```
 
 To see the potential heterogeneity across rows in these data, we should perhaps also look at the proportions of autopsies in each of the three accuracy categories for each study.
 
-```{r death certificates b}
-addmargins(round(100*prop.table(death.tab,1),1),2) 
+```{r}
+addmargins(round_half_up(100*prop.table(death_table,1),1),2) 
 ```
 
 In three of the studies, approximately 3/4 of the results were confirmed. In the other three, 45%, 58% and 61% were confirmed. It looks like there's a fair amount of variation in results across studies. To see if this is true, formally, we run Pearson's chi-square test of independence, where the null hypothesis is that the rows and columns are independent, and the alternative hypothesis is that there is an association between the rows and the columns.
 
-```{r death certificates c}
-chisq.test(death.tab)
+```{r}
+chisq.test(death_table)
 ```
 
 The chi-square test statistic is 200 on 10 degrees of freedom, yielding p < 0.0001.
@@ -129,7 +128,7 @@ A three-dimensional or three-way table of counts often reflects a situation wher
 
 In the early 1970s and then again 20 years later, in Whickham, United Kingdom, surveys yielded the following relationship between whether a person was a smoker at the time of the original survey and whether they were still alive 20 years later\footnote{See Appleton et al. 1996. Ignoring a Covariate: An Example of Simpson's Paradox. The American Statistician, 50, 340-341.}.
 
-```{r whickham_1}
+```{r}
 whickham1 <- matrix(c(502, 230, 443, 139), byrow=TRUE, nrow=2)
 rownames(whickham1) <- c("Non-Smoker", "Smoker")
 colnames(whickham1) <- c("Alive", "Dead")
@@ -139,7 +138,7 @@ addmargins(whickham1)
 
 Here's the two-by-two table analysis.
 
-```{r 2x2 for whickham}
+```{r}
 twoby2(whickham1)
 ```
 
@@ -215,8 +214,8 @@ If the Woolf test is significant, it suggests that the Cochran-Mantel-Haenszel t
 
 ```{r}
 ## Next two results use the vcd package
-vcd::oddsratio(whick_t2, log = TRUE)
-vcd::woolf_test(whick_t2)
+oddsratio(whick_t2, log = TRUE)
+woolf_test(whick_t2)
 ```
 
 As you can see, the Woolf test is not close to our usual standards for statistically detectable results, implying the common odds ratio is at least potentially reasonable for all age groups (or at least the ones under ages 75, where some data are available.)

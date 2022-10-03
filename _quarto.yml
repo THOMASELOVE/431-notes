@@ -39,12 +39,11 @@ book:
         - 21-pairedsamples.qmd
         - 22-samplesize.qmd
         - 23-examples_2means.qmd
-        - partBhold.qmd
-    ##    - 24-anova.qmd
-    ##    - 25-one_proportion.qmd
-    ##    - 26-comparing_rates.qmd
-    ##    - 27-power_for_rates.qmd
-    ##    - 28-contingency_tables.qmd
+        - 24-anova.qmd
+        - 25-one_proportion.qmd
+        - 26-comparing_rates.qmd
+        - 27-power_for_rates.qmd
+        - 28-contingency_tables.qmd
     - part: "Part C. Building Models"
       chapters: 
         - partChold.qmd
