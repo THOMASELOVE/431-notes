@@ -5,19 +5,21 @@
 ```{r, message = FALSE}
 knitr::opts_chunk$set(comment = NA)
 
+library(ggridges)
+library(janitor)
+library(mosaic)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
-We will also use functions from the `ggridges` and `mosaic` packages.
-
 ## National Youth Fitness Survey
 
-Recall the National Youth Fitness Survey, which we explored a small piece of in some detail earlier in these notes. We'll look at a different part of the same survey here - specifically the 280 children whose data are captured in the `nyfs2` file.
+Recall the National Youth Fitness Survey, which we explored a small piece of in [Chapter -@sec-nyfs]. We'll look at a different part of the same survey here - specifically the 280 children whose data are captured in the `nyfs2` file.
 
 ```{r}
-nyfs2 <- read_csv("data/nyfs2.csv", show_col_types = FALSE)
+nyfs2 <- read_csv("data/nyfs2.csv", show_col_types = FALSE) |>
+  clean_names()
 
 nyfs2
 ```
@@ -26,60 +28,62 @@ nyfs2
 
 ```{r}
 nyfs2a <- nyfs2 |>
-    select(subject.id, income.cat3, GMQ) |>
-    arrange(subject.id)
+    select(subject_id, income_cat3, gmq) |>
+    arrange(subject_id)
 ```
 
 In this first analysis, we'll compare the population mean on the Gross Motor Quotient evaluation of these kids across three groups defined by income level.  Higher values of this GMQ measure indicate improved levels of gross motor development, both in terms of locomotor and object control. See https://wwwn.cdc.gov/Nchs/Nnyfs/Y_GMX.htm for more details.
 
 ```{r}
 nyfs2a |>
-    group_by(income.cat3) |>
-    summarise(n = n(), mean(GMQ), median(GMQ))
+    group_by(income_cat3) |>
+    summarise(n = n(), mean(gmq), median(gmq))
 ```
 
 Uh, oh. We should rearrange those income categories to match a natural order from low to high.
 
 ```{r}
-nyfs2a$income.cat3 <- 
-    fct_relevel(nyfs2a$income.cat3,
-                "Low (below 25K)", "Middle (25 - 64K)", "High (65K or more)")
+nyfs2a <- nyfs2a |> 
+  mutate(income_cat3 = fct_relevel(income_cat3, 
+         "Low (below 25K)", "Middle (25 - 64K)", "High (65K or more)"))
 ```
 
 When working with three independent samples, I use graphs analogous to those we built for two independent samples.
 
-```{r boxplot_nyfs2a}
-ggplot(nyfs2a, aes(x = income.cat3, y = GMQ, fill = income.cat3)) +
-  geom_jitter(aes(color = income.cat3), alpha = 0.5, width = 0.25) +
-  geom_boxplot(notch = TRUE, alpha = 0.75) +
+```{r}
+ggplot(nyfs2a, aes(x = income_cat3, y = gmq, fill = income_cat3)) +
+  geom_violin(aes(col = income_cat3), alpha = 0.5) +
+  geom_boxplot(notch = TRUE, alpha = 0.75, width = 0.3) +
+  stat_summary(fun = "mean", geom = "point", 
+               shape = 23, size = 3, fill = "white") +
   coord_flip() +
   guides(fill = "none", col = "none") +
   labs(title = "GMQ Scores for 280 Children in NNYFS",
        y = "GMQ Score, in points", x = "Income Category")
 ```
 
-In addition to this comparison boxplot, we might consider faceted plots, like these histograms.
+In addition to this comparison boxplot, we might consider faceted histograms.
 
-```{r histograms_nyfs2a, fig.height = 4}
-ggplot(nyfs2a, aes(x = GMQ, fill = income.cat3)) +
+```{r}
+ggplot(nyfs2a, aes(x = gmq, fill = income_cat3)) +
   geom_histogram(bins = 15, col = "white") +
-  guides(fill = FALSE) +
-  facet_wrap(~ income.cat3)
+  guides(fill = "none") +
+  facet_wrap(~ income_cat3)
 ```
 
 Or, if we want to ignore the (modest) sample size differences, we might consider density functions, perhaps through a ridgeline plot.
 
-```{r nyfs2a_ridgelineplot, message = FALSE}
-ggplot(nyfs2a, aes(x = GMQ, y = income.cat3, fill = income.cat3)) +
-    ggridges::geom_density_ridges(scale = 0.9) +
-    guides(fill = FALSE) + 
+```{r}
+ggplot(nyfs2a, aes(x = gmq, y = income_cat3, fill = income_cat3)) +
+    geom_density_ridges(scale = 0.9) +
+    guides(fill = "none") + 
     labs(title = "GMQ Score (in points) by Income Group",
          x = "GMQ Score", y = "") +
-    ggridges::theme_ridges()
+    theme_ridges()
 ```
 
-```{r, message=FALSE, warning=FALSE}
-by(nyfs2a$GMQ, nyfs2a$income.cat3, mosaic::favstats)
+```{r}
+by(nyfs2a$gmq, nyfs2a$income_cat3, favstats)
 ```
 
 ## Alternative Procedures for Comparing More Than Two Means
@@ -97,8 +101,8 @@ If we want to compare the population mean GMQ levels across those three income g
 - H0: All three means are the same vs.
 - HA: At least one of the population means is different than the others.
 
-```{r nyfs2a_oneway_test}
-oneway.test(GMQ ~ income.cat3, data = nyfs2a)
+```{r}
+oneway.test(gmq ~ income_cat3, data = nyfs2a)
 ```
 
 We get a p value, but this isn't much help, though, because we don't have any measure of effect size, nor do we have any confidence intervals. Like the analogous Welch t test, this approach allows us to forego the assumption of equal population variances in each of the three income groups, but it still requires us to assume that the populations are Normally distributed. 
@@ -113,8 +117,8 @@ If we want to compare the centers of the distributions of population GMQ score a
 
 The hypotheses being tested here are still as before, but for a measure of location other than the population mean
 
-```{r nyfs2a_kruskal_wallis}
-kruskal.test(GMQ ~ income.cat3, data = nyfs2a)
+```{r}
+kruskal.test(gmq ~ income_cat3, data = nyfs2a)
 ```
 
 Again, note that this isn't much help, though, because we don't have any measure of effect size, nor do we have any confidence intervals.
@@ -137,8 +141,8 @@ The null hypothesis is that the population means are all the same, and the alter
 
 R will produce some elements of a one-factor ANOVA using the `oneway.test` command:
 
-```{r nyfs2a_oneway_test_2}
-oneway.test(GMQ ~ income.cat3, data = nyfs2a, var.equal=TRUE)
+```{r}
+oneway.test(gmq ~ income_cat3, data = nyfs2a, var.equal=TRUE)
 ```
 
 This isn't the full analysis, though, which would require a more complete ANOVA table. There are two equivalent approaches to obtaining the full ANOVA table when comparing a series of 2 or more population means based on independent samples.
@@ -147,16 +151,16 @@ This isn't the full analysis, though, which would require a more complete ANOVA 
 
 Here's one possible ANOVA table, which doesn't require directly fitting a linear model.
 
-```{r anova_nyfs2a_1}
-summary(aov(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+summary(aov(gmq ~ income_cat3, data = nyfs2a))
 ```
 
 ### Using the `anova` function after fitting a linear model
 
 An equivalent way to get identical results in a slightly different format runs the linear model behind the ANOVA approach directly.
 
-```{r anova_nyfs2a_2}
-anova(lm(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+anova(lm(gmq ~ income_cat3, data = nyfs2a))
 ```
 
 ## Interpreting the ANOVA Table
@@ -184,22 +188,22 @@ Specifically, the elements of the ANOVA table are:
 
 ### The Degrees of Freedom
 
-```{r anova_nyfs2a_2a}
-anova(lm(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+anova(lm(gmq ~ income_cat3, data = nyfs2a))
 ```
 
-- The **degrees of freedom** attributable to the factor of interest (here, Income category) is the number of levels of the factor minus 1. Here, we have three Income categories (levels), so df(income.cat3) = 2.
+- The **degrees of freedom** attributable to the factor of interest (here, Income category) is the number of levels of the factor minus 1. Here, we have three Income categories (levels), so df(income_cat3) = 2.
 - The total degrees of freedom are the number of observations (across all levels of the factor) minus 1. We have 280 GMQ scores in the `nyfs2a` data, so the df(Total) must be 279, although the Total row isn't shown by R in its output.
 - The Residual degrees of freedom are the Total df - Factor df. So, here, that's 279 - 2 = 277.
 
 ### The Sums of Squares
 
-```{r anova_nyfs2a_2b}
-anova(lm(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+anova(lm(gmq ~ income_cat3, data = nyfs2a))
 ```
 
 - The sum of squares (often abbreviated SS or Sum Sq) represents variation explained. 
-- The factor SS is the sum across all levels of the factor of the sample size for the level multiplied by the squared difference between the level mean and the overall mean across all levels. Here, SS(`income.cat3`) = 146
+- The factor SS is the sum across all levels of the factor of the sample size for the level multiplied by the squared difference between the level mean and the overall mean across all levels. Here, SS(`income_cat3`) = 146
 - The total SS is the sum across all observations of the square of the difference between the individual values and the overall mean. Here, that is 146 + 58174 = 58320 
 - Residual SS = Total SS - Factor SS.
 - Also of interest is a calculation called $\eta^2$, ("eta-squared"), which is equivalent to $R^2$ in a linear model.
@@ -209,19 +213,19 @@ anova(lm(GMQ ~ income.cat3, data = nyfs2a))
 
 ### The Mean Square
 
-```{r anova_nyfs2a_2c}
-anova(lm(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+anova(lm(gmq ~ income_cat3, data = nyfs2a))
 ```
 
 - The Mean Square is the Sum of Squares divided by the degrees of freedom, so MS(Factor) = SS(Factor)/df(Factor). 
-- In our case, MS(`income.cat3`) = SS(`income.cat3`)/df(`income.cat3`) = 146 / 2 = 72.848 (notice that R maintains more decimal places than it shows for these calculations) and 
+- In our case, MS(`income_cat3`) = SS(`income_cat3`)/df(`income_cat3`) = 146 / 2 = 72.848 (notice that R maintains more decimal places than it shows for these calculations) and 
 - MS(Residuals) = SS(Residuals) / df(Residuals) = 58174 / 277 = 210.014.
     - MS(Residuals) or MS(Error) is an estimate of the residual variance which corresponds to $\sigma^2$ in the underlying linear model for the outcome of interest, here `GMQ`.
 
 ### The F Test Statistic and *p* Value
 
-```{r anova_nyfs2a_2d}
-anova(lm(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+anova(lm(gmq ~ income_cat3, data = nyfs2a))
 ```
 
 - The ANOVA F test is obtained by calculating MS(Factor) / MS(Residuals). So in our case, F = 72.848 / 210.014 = 0.3469
@@ -242,17 +246,17 @@ We will often summarize the proportion of the variation explained by the factor.
 Again, $\eta^2$ = SS(Factor) / SS(Total) 
 
 Here, we have 
-    - SS(`income.cat3`) = 146 and SS(Residuals) = 58174, so SS(Total) = 58320
+    - SS(`income_cat3`) = 146 and SS(Residuals) = 58174, so SS(Total) = 58320
     - Thus, $\eta^2$ = SS(Factor)/SS(Total) = 146/58320 = 0.0025
 
 The income category accounts for 0.25% of the variation in GMQ levels: only a tiny fraction.
 
 ## The Regression Approach to Compare Population Means based on Independent Samples
 
-This approach is equivalent to the ANOVA approach, and thus also (when there are just two samples to compare) to the pooled-variance t test. We run a linear regression model to predict the outcome (here, `GMQ`) on the basis of the categorical factor with three levels (here, `income.cat3`)
+This approach is equivalent to the ANOVA approach, and thus also (when there are just two samples to compare) to the pooled-variance t test. We run a linear regression model to predict the outcome (here, `GMQ`) on the basis of the categorical factor with three levels (here, `income_cat3`)
 
-```{r nyfs2a_model_1}
-summary(lm(GMQ ~ income.cat3, data=nyfs2a))
+```{r}
+summary(lm(gmq ~ income_cat3, data=nyfs2a))
 ```
 
 ### Interpreting the Regression Output
@@ -267,8 +271,8 @@ Of course, we knew all of this already from a summary of the sample means.
 
 ```{r}
 nyfs2a |>
-    group_by(income.cat3) |>
-    summarise(n = n(), mean(GMQ))
+    group_by(income_cat3) |>
+    summarise(n = n(), mean(gmq))
 ```
 
 The model for predicting GMQ is based on two binary (1/0) indicator variables, specifically, we have:
@@ -281,8 +285,8 @@ The coefficients section also provides a standard error and t statistic and two-
 
 To see the full ANOVA table corresponding to any linear regression model, we run...
 
-```{r nyfs2a_anova_regression_again}
-anova(lm(GMQ ~ income.cat3, data=nyfs2a))
+```{r}
+anova(lm(gmq ~ income_cat3, data=nyfs2a))
 ```
 
 ### ANOVA Assumptions
@@ -298,8 +302,8 @@ Happily, the F test is fairly robust to violations of the Normality assumption.
 
 ## Equivalent approach to get ANOVA Results
 
-```{r anova_nyfs2a_1a}
-summary(aov(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+summary(aov(gmq ~ income_cat3, data = nyfs2a))
 ```
 
 So which of the pairs of means are driving the differences we see?
@@ -329,8 +333,8 @@ Then across these three comparisons, our overall $\alpha$ can be (at worst)
 
 Goal: Simultaneous comparisons of White vs AA, AA vs Other and White vs Other
 
-```{r nyfs2a_bonferronitest}
-pairwise.t.test(nyfs2a$GMQ, nyfs2a$income.cat3, p.adjust="bonferroni")
+```{r}
+pairwise.t.test(nyfs2a$gmq, nyfs2a$income_cat3, p.adjust="bonferroni")
 ```
 
 These *p* values are very large.
@@ -339,14 +343,14 @@ These *p* values are very large.
 
 Goal: Simultaneous (less conservative) confidence intervals and *p* values for our three pairwise comparisons (High vs. Low, High vs. Middle, Middle vs. Low)
 
-```{r hsd_nyfs2a}
-TukeyHSD(aov(GMQ ~ income.cat3, data = nyfs2a))
+```{r}
+TukeyHSD(aov(gmq ~ income_cat3, data = nyfs2a))
 ```
 
 ### Plotting the Tukey HSD results
 
-```{r hsd_plot_nyfs2a, fig.height=6}
-plot(TukeyHSD(aov(GMQ ~ income.cat3, data = nyfs2a)))
+```{r}
+plot(TukeyHSD(aov(gmq ~ income_cat3, data = nyfs2a)))
 ```
 
 Note that the default positioning of the y axis in the plot of Tukey HSD results can be problematic. If we have longer names, in particular, for the levels of our factor, R will leave out some of the labels. We can alleviate that problem either by using the `fct_recode` function in the `forcats` package to rename the factor levels, or we can use the following code to reconfigure the margins of the plot.
@@ -355,7 +359,7 @@ Note that the default positioning of the y axis in the plot of Tukey HSD results
 mar.default <- c(5,6,4,2) + 0.1 # save default plotting margins
 
 par(mar = mar.default + c(0, 12, 0, 0)) 
-plot(TukeyHSD(aov(GMQ ~ income.cat3, data = nyfs2a)), las = 2)
+plot(TukeyHSD(aov(gmq ~ income_cat3, data = nyfs2a)), las = 2)
 
 par(mar = mar.default) # return to normal plotting margins
 ```
@@ -365,25 +369,26 @@ par(mar = mar.default) # return to normal plotting margins
 We'll look at the full data set in `nyfs2` now, so we can look at BMI as a function of income.
 
 ```{r, message = FALSE}
-nyfs2$income.cat3 <- 
-    fct_relevel(nyfs2$income.cat3,
+nyfs2$income_cat3 <- 
+    fct_relevel(nyfs2$income_cat3,
                 "Low (below 25K)", "Middle (25 - 64K)", "High (65K or more)")
 
-ggplot(nyfs2, aes(x = bmi, y = income.cat3, fill = income.cat3)) +
-    ggridges::geom_density_ridges(scale = 0.9) +
-    guides(fill = FALSE) + 
+ggplot(nyfs2, aes(x = bmi, y = income_cat3, fill = income_cat3)) +
+    geom_density_ridges(scale = 0.9) +
+    guides(fill = "none") + 
     labs(title = "Body-Mass Index by Income Group",
          x = "Body-Mass Index", y = "") +
-    ggridges::theme_ridges()
+    theme_ridges()
 ```
 
 ```{r}
-ggplot(nyfs2, aes(x = income.cat3, y = bmi, fill = income.cat3)) +
-  geom_jitter(aes(color = income.cat3), alpha = 0.5, width = 0.25) +
-  geom_boxplot(notch = TRUE, alpha = 0.75) +
-  theme_bw() +
+ggplot(nyfs2, aes(x = income_cat3, y = bmi, fill = income_cat3)) +
+  geom_violin(aes(col = income_cat3), alpha = 0.5) +
+  geom_boxplot(width = 0.3, notch = TRUE, alpha = 0.75) +
+  stat_summary(fun = "mean", geom = "point", 
+               shape = 23, size = 3, fill = "white") +
   coord_flip() +
-  guides(fill = FALSE, col = FALSE) +
+  guides(fill = "none", col = "none") +
   labs(title = "BMI for 280 Children in NNYFS",
        y = "Body-Mass Index", x = "Income Category")
 ```
@@ -391,20 +396,20 @@ ggplot(nyfs2, aes(x = income.cat3, y = bmi, fill = income.cat3)) +
 Here are the descriptive numerical summaries:
 
 ```{r}
-mosaic::favstats(bmi ~ income.cat3, data = nyfs2)
+mosaic::favstats(bmi ~ income_cat3, data = nyfs2)
 ```
 
 Here is the ANOVA table.
 
 ```{r}
-anova(lm(bmi ~ income.cat3, data = nyfs2))
+anova(lm(bmi ~ income_cat3, data = nyfs2))
 ```
 
 Let's consider the Tukey HSD results. First, we'll create a factor with shorter labels.
 
 ```{r}
 nyfs2$inc.new <- 
-    fct_recode(nyfs2$income.cat3, 
+    fct_recode(nyfs2$income_cat3, 
                "Low" = "Low (below 25K)", "Middle" = "Middle (25 - 64K)",
                "High" = "High (65K or more)")
 

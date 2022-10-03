@@ -9,16 +9,15 @@ knitr::opts_chunk$set(comment = NA)
 
 source("data/Love-boost.R")
 library(janitor)
+library(mosaic)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
-We will also use some functions from the `mosaic` package.
-
 ## A First Example: Ibuprofen and Sepsis Trial
 
-As we saw in a previous Chapter, we are interested in comparing the percentage of patients in each arm of the trial (Ibuprofen vs. Placebo) that showed an improvement in their temperature (`temp_drop` > 0). Our primary interest is in comparing the percentage of Ibuprofen patients whose temperature dropped to the percentage of Placebo patients whose temperature dropped.
+As we saw in [Chapter -@sec-ibusepsis], we are interested in comparing the percentage of patients in each arm of the trial (Ibuprofen vs. Placebo) that showed an improvement in their temperature (`temp_drop` > 0). Our primary interest is in comparing the percentage of Ibuprofen patients whose temperature dropped to the percentage of Placebo patients whose temperature dropped.
 
 - We can summarize the data behind the two proportions we are comparing in a contingency table with two rows which identify the exposure or treatment of interest, and two columns to represent the outcomes of interest.
 - In this case, we are comparing two groups of subjects based on treatment (`treat`): those who received Ibuprofen and those who received a placebo. The outcome of interest is whether the subject's temperature dropped (`temp_drop` > 0), or not. 
@@ -129,7 +128,7 @@ The command just requires you to read off the cells of the table, followed by th
 
 The resulting output follows. 
 
-```{r, message=FALSE}
+```{r}
 twobytwo(107, 43, 80, 70, 
          "Ibuprofen", "Placebo", "Dropped", "No Drop",
          conf.level = 0.90)
@@ -195,7 +194,8 @@ Applying this method to our Ibuprofen and Sepsis Trial data, we would simply add
 
 So instead of using
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 twobytwo(107, 43, 80, 70, 
          "Ibuprofen", "Placebo", "Dropped", "No Drop",
          conf.level = 0.90)
@@ -215,7 +215,7 @@ It is likely that the augmented version is a more accurate estimate here, but th
 
 ## A Second Example: Ebola Virus Disease Study, again
 
-For instance, recall the Ebola Virus Disease study from the *New England Journal of Medicine* that we described in the previous Chapter. Suppose we want to compare the proportion of deaths among cases that had a definitive outcome who were hospitalized to the proportion of deaths among cases that had a definitive outcome who were not hospitalized.
+For instance, recall the Ebola Virus Disease study from the *New England Journal of Medicine* that we described in @sec-ebola. Suppose we want to compare the proportion of deaths among cases that had a definitive outcome who were hospitalized to the proportion of deaths among cases that had a definitive outcome who were not hospitalized.
 
 The article suggests that of the 1,737 cases with a definitive outcome, there were 1,153 hospitalized cases. Across those 1,153 hospitalized cases, 741 people (64.3%) died, which means that across the remaining 584 non-hospitalized cases, 488 people (83.6%) died.
 

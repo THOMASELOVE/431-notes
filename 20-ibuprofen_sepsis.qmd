@@ -1,4 +1,4 @@
-# Ibuprofen in Sepsis
+# Ibuprofen in Sepsis {#sec-ibusepsis}
 
 ## Setup: Packages Used Here
 

@@ -1,4 +1,4 @@
-# Confidence Intervals for a Mean
+# Confidence Intervals for a Mean {#sec-cimean}
 
 ## Setup: Packages Used Here
 

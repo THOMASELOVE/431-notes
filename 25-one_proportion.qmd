@@ -9,22 +9,20 @@ knitr::opts_chunk$set(comment = NA)
 
 source("data/Love-boost.R")
 library(janitor)
-library(knitr)
+library(kableExtra)
+library(mosaic)
 library(broom)
 library(tidyverse)
 
 theme_set(theme_bw())
 ```
 
-We will also use some functions from the `mosaic` package.
-
 ## A First Example: Serum Zinc in the "Normal" Range?
 
-Recall that in the serum zinc study, we have 462 teenage male subjects, of whom 395 (or 85.5%) fell in the "normal range" of 66 to 110 micrograms per deciliter.
+Recall that in the serum zinc study discussed in [Chapter -@sec-cimean], we have 462 teenage male subjects, of whom 395 (or 85.5%) fell in the "normal range" of 66 to 110 micrograms per deciliter.
 
 ```{r}
-serzinc <- read_csv("data/serzinc.csv", 
-                    show_col_types = FALSE)
+serzinc <- read_csv("data/serzinc.csv", show_col_types = FALSE)
 
 serzinc <- serzinc |> 
   mutate(in_range = ifelse(zinc >= 66 & zinc <= 110, 1, 0))
@@ -54,7 +52,7 @@ We might consider taking the same approach as we did with the population mean ea
 model_zincprop <- lm(in_range ~ 1, data = serzinc)
 
 tidy(model_zincprop, conf.int = TRUE, conf = 0.90) |> 
-    knitr::kable(digits = 3)
+    kbl(digits = 3) |> kable_minimal()
 ```
 
 While there are more powerful approaches to estimate a confidence interval around this proportion, this simple approach turns out not to be too bad, so long as the sample proportion isn't very close to either 0 or 1.
@@ -103,11 +101,11 @@ I am aware of at least seven different procedures for estimating a confidence in
 The general format for using the `binom.test` function is as follows:
 
 ```
-mosaic::binom.test(x = 395,  # substitute in number of successes
-                   n = 462,  # substitute in number of trials
-                   conf.level = 0.95, # default confidence level
-                   p = 0.5,  # default null hypothesis proportion
-                   ci.method = "XXX") # see below for XXX options
+binom.test(x = 395,  # substitute in number of successes
+           n = 462,  # substitute in number of trials
+           conf.level = 0.95, # default confidence level
+           p = 0.5,  # default null hypothesis proportion
+           ci.method = "XXX") # see below for XXX options
 ```
 
 where the appropriate `ci.method` is obtained from the table below.
@@ -127,7 +125,7 @@ The Wald approach can be used to establish a very similar confidence interval to
 Here, we specify the `x` and `n` values. `n` is the total number of observations, and `x` is the number where the event of interest (in this case, serum zinc levels in the normal range) occurs. So `x` = 395 and `n` = 462.
 
 ```{r}
-m_wald <- mosaic::binom.test(x = 395, n = 462,
+m_wald <- binom.test(x = 395, n = 462,
                      conf.level = 0.95,
                      ci.method = "Wald")
 m_wald
@@ -140,14 +138,15 @@ When I fit intervals using the approaches in `mosaic::binom_test()` I will usual
 ```{r}
 tidy(m_wald) |> 
   select(estimate, conf.low, conf.high, statistic, parameter) |>
-  kable(digits = 3)
+  kbl(digits = 3) |> kable_classic(full_width = F)
 ```
 
 The other elements of the tidied result are shown below.
 
 ```{r}
 tidy(m_wald) |>
-  select(method, alternative, p.value)
+  select(method, alternative, p.value) |>
+  kbl(digits = 3) |> kable_classic(full_width = F)
 ```
 
 ### The Clopper-Pearson approach
@@ -155,9 +154,9 @@ tidy(m_wald) |>
 The `binom.test` command can be used to establish an "exact" confidence interval. This uses the method of Clopper and Pearson from 1934, and is exact in the sense that it guarantees, for instance, that the confidence level associated with the interval is at least as large as the nominal level of 95%, but not that the interval isn't wider than perhaps it needs to be.
 
 ```{r}
-m_clopper <- mosaic::binom.test(x = 395, n = 462,
-                                conf.level = 0.95,
-                                ci.method = "Clopper-Pearson")
+m_clopper <- binom.test(x = 395, n = 462,
+                        conf.level = 0.95,
+                        ci.method = "Clopper-Pearson")
 
 m_clopper
 ```
@@ -167,7 +166,7 @@ Clopper-Pearson is used by `stats::binom.test()` in R as well. Again, it guarant
 ```{r}
 tidy(m_clopper) |> 
   select(estimate, conf.low, conf.high, statistic, parameter) |>
-  kable(digits = 3)
+  kbl(digits = 3) |> kable_classic(full_width = F)
 ```
 
 ### The Score approach
@@ -187,15 +186,15 @@ In this case, we see that the Score approach and the Clopper-Pearson approach gi
 ```{r}
 tidy(m_score) |> 
   select(estimate, conf.low, conf.high, statistic, parameter) |>
-  kable(digits = 3)
+  kbl(digits = 3) |> kable_classic_2(full_width = F)
 ```
 
 As mentioned, the score test can also be run incorporating something called a *continuity correction*, since we are using a Normal approximation to the exact binomial distribution to establish our margin for error. R, by default, includes this continuity correction for the Score test when we use `prop.test` to collect it.
 
 ```{r}
-m_score_cor <- mosaic::binom.test(x = 395, n = 462,
-                                  conf.level = 0.95,
-                                  ci.method = "prop.test")
+m_score_cor <- binom.test(x = 395, n = 462,
+                          conf.level = 0.95,
+                          ci.method = "prop.test")
 
 m_score_cor
 ```
@@ -203,15 +202,15 @@ m_score_cor
 ```{r}
 tidy(m_score_cor) |> 
   select(estimate, conf.low, conf.high, statistic, parameter) |>
-  kable(digits = 3)
+  kbl(digits = 3) |> kable_paper(full_width = F)
 ```
 
 ### The Agresti-Coull Approach
 
 ```{r}
-m_agresti <- mosaic::binom.test(x = 395, n = 462,
-                                conf.level = 0.95,
-                                ci.method = "agresti-coull")
+m_agresti <- binom.test(x = 395, n = 462,
+                        conf.level = 0.95,
+                        ci.method = "agresti-coull")
 
 m_agresti
 ```
@@ -221,7 +220,7 @@ The Agresti-Coull approach is the Wald method after adding Z successes and Z fai
 ```{r}
 tidy(m_agresti) |> 
   select(estimate, conf.low, conf.high, statistic, parameter) |>
-  kable(digits = 3)
+  kbl(digits = 3) |> kable_paper(full_width = F)
 ```
 
 ### The "Plus 4" approach
@@ -229,9 +228,9 @@ tidy(m_agresti) |>
 This approach is just the Wald method after adding 2 successes and 2 failures (so 4 observations) to the data. It will be very similar to the Agresti-Coull method if we are working with a 95% confidence interval.
 
 ```{r}
-m_plus4 <- mosaic::binom.test(x = 395, n = 462,
-                              conf.level = 0.95,
-                              ci.method = "plus4")
+m_plus4 <- binom.test(x = 395, n = 462,
+                      conf.level = 0.95,
+                      ci.method = "plus4")
 
 m_plus4
 ```
@@ -239,7 +238,7 @@ m_plus4
 ```{r}
 tidy(m_plus4) |> 
   select(estimate, conf.low, conf.high, statistic, parameter) |>
-  kable(digits = 3)
+  kbl(digits = 3) |> kable_paper(full_width = F)
 ```
 
 ### SAIFS: single augmentation with an imaginary failure or success
@@ -296,7 +295,8 @@ I've got some setting wrong in my `bookdown` work so that this doesn't show up a
 
 ### The `saifs.ci` function in R
 
-```{r saifs.ci_function, eval=FALSE}
+```{r}
+#| eval: FALSE
 `saifs.ci` <- 
   function(x, n, conf.level=0.95, dig=3)
   {
@@ -322,7 +322,7 @@ I've got some setting wrong in my `bookdown` work so that this doesn't show up a
 ```
 
 
-## A Second Example: Ebola Mortality Rates through 9 Months of the Epidemic
+## A Second Example: Ebola Mortality Rates through 9 Months of the Epidemic {#sec-ebola}
 
 The World Health Organization's Ebola Response Team published an article\footnote{WHO Ebola Response Team (2014) Ebola virus disease in West Africa: The first 9 months of the epidemic and forward projections. New Engl J Med 371: 1481-1495 doi: 10.1056/NEJMoa1411100} in the October 16, 2014 issue of the New England Journal of Medicine, which contained some data I will use in this example, focusing on materials from their Table 2.
 
@@ -341,7 +341,7 @@ $p \pm Z_{.025} \sqrt{\frac{p(1-p)}{n}}$, or 0.708 $\pm$ 1.96(0.011) = $0.708 \p
 
 Note that I simply recalled from our prior work that $Z_{0.025} = 1.96$, but we can verify this:
 
-```{r z for 0.025}
+```{r}
 qnorm(0.025, lower.tail=FALSE)
 ```
 
@@ -352,28 +352,28 @@ We have 95% confidence in an interval estimate for the true population proportio
 ### Using R to estimate the CI for our Ebola example
 
 ```{r}
-ebola_wald <- mosaic::binom.test(x = 1229, n = 1737, conf.level = 0.95,
+ebola_wald <- binom.test(x = 1229, n = 1737, conf.level = 0.95,
                                  ci.method = "Wald") |>
-  tidy() |> select(estimate, conf.low, conf.high)
-ebola_clop <- mosaic::binom.test(x = 1229, n = 1737, conf.level = 0.95,
+  tidy() |> select(estimate, conf.low, conf.high) 
+ebola_clop <- binom.test(x = 1229, n = 1737, conf.level = 0.95,
                                  ci.method = "Clopper-Pearson") |>
   tidy() |> select(estimate, conf.low, conf.high)
-ebola_scor <- mosaic::binom.test(x = 1229, n = 1737, conf.level = 0.95,
+ebola_scor <- binom.test(x = 1229, n = 1737, conf.level = 0.95,
                                  ci.method = "Score") |>
-  tidy() |> select(estimate, conf.low, conf.high)
-ebola_agco <- mosaic::binom.test(x = 1229, n = 1737, conf.level = 0.95,
+  tidy() |> select(estimate, conf.low, conf.high) 
+ebola_agco <- binom.test(x = 1229, n = 1737, conf.level = 0.95,
                                  ci.method = "agresti-coull") |>
-  tidy() |> select(estimate, conf.low, conf.high)
-ebola_plus <- mosaic::binom.test(x = 1229, n = 1737, conf.level = 0.95,
+  tidy() |> select(estimate, conf.low, conf.high) 
+ebola_plus <- binom.test(x = 1229, n = 1737, conf.level = 0.95,
                                  ci.method = "plus4") |>
-  tidy() |> select(estimate, conf.low, conf.high)
+  tidy() |> select(estimate, conf.low, conf.high) 
 
 ebola_res <- bind_rows(ebola_wald, ebola_clop, ebola_scor, 
                        ebola_agco, ebola_plus) |>
   mutate(approach = c("Wald", "Clopper-Pearson", "Score",
                       "Agresti-Coull", "Plus4"))
 
-ebola_res |> kable(digits = 6)
+ebola_res |> kbl(digits = 6) |> kable_classic(full_width = FALSE)
 ```
 
 This is way more precision than we can really justify, but I just want you to see that the five results are all (slightly) different. 
@@ -405,15 +405,15 @@ Yes. This will especially be the case when we have a small sample size, and a pr
 The 90% confidence intervals under this circumstance are very different.
 
 ```{r}
-tidy1 <- mosaic::binom.test(x = 1, n = 10, conf.level = 0.90,
+tidy1 <- binom.test(x = 1, n = 10, conf.level = 0.90,
                             ci.method = "Wald") |> tidy()
-tidy2 <- mosaic::binom.test(x = 1, n = 10, conf.level = 0.90, 
+tidy2 <- binom.test(x = 1, n = 10, conf.level = 0.90, 
                             ci.method = "Clopper-Pearson") |> tidy()
-tidy3 <- mosaic::binom.test(x = 1, n = 10, conf.level = 0.90, 
+tidy3 <- binom.test(x = 1, n = 10, conf.level = 0.90, 
                             ci.method = "Score") |> tidy()
-tidy4 <- mosaic::binom.test(x = 1, n = 10, conf.level = 0.90, 
+tidy4 <- binom.test(x = 1, n = 10, conf.level = 0.90, 
                             ci.method = "agresti-coull") |> tidy()
-tidy5 <- mosaic::binom.test(x = 1, n = 10, conf.level = 0.90, 
+tidy5 <- binom.test(x = 1, n = 10, conf.level = 0.90, 
                             ci.method = "plus4") |> tidy()
 
 res <- bind_rows(tidy1, tidy2, tidy3, tidy4, tidy5) |>
@@ -421,12 +421,12 @@ res <- bind_rows(tidy1, tidy2, tidy3, tidy4, tidy5) |>
                       "Agresti-Coull", "Plus4")) |>
   select(approach, estimate, conf.low, conf.high)
 
-res |> kable(digits = 3)
+res |> kbl(digits = 3) |> kable_paper(full_width = F)
 ```
 
 Note that the Wald procedure doesn't force the confidence interval to appear in the (0, 1) range. 
 
-```{r, echo = FALSE}
+```{r}
 ggplot(res, aes(x = approach, y = estimate)) +
   geom_point() +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high)) + 
