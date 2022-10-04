@@ -106,12 +106,12 @@ By eye, I think the square root plot better matches the linear fit.
 
 ## Checking on a Transformation or Re-Expression
 
-We can do at least two more things to check on our transformation.
+In addition to plotting the impact of the transformation, we can do at least two other things to check on our transformation.
 
-1.  We can calculate the correlation of our original and re-expressed associations.
-2.  We can go ahead and fit the regression models using each approach and compare the plots of studentized residuals against fitted values from the data to see if the re-expression reduces the curve in that residual plot, as well.
+- We can calculate the correlation of our original and re-expressed associations.
+- We can go ahead and fit the regression models using each approach and compare the plots of studentized residuals against fitted values from the data to see if the re-expression reduces the curve in that residual plot, as well.
 
-Option 3 is by far the most important in practice, and it's the one we'll focus on going forward, but we'll demonstrate all three here.
+The last of these options is by far the most important in practice, and it's the one we'll focus on going forward, but we'll demonstrate both of these new approaches here.
 
 ### Checking the Correlation Coefficients
 
@@ -134,15 +134,13 @@ We can fit the regression models, obtain plots of residuals against fitted value
 model.orig <- lm(scatter1$y ~ scatter1$x)
 model.sqrt <- lm(sqrt(scatter1$y) ~ scatter1$x)
 
-p1 <- augment(model.orig) %>%
-    ggplot(., aes(x = scatter1$x, y = .resid)) + 
+p1 <- ggplot(augment(model.orig), aes(x = scatter1$x, y = .resid)) + 
     geom_point() +
     geom_smooth(method = "loess", formula = y ~ x, se = FALSE) +
     geom_smooth(method = "lm", formula = y ~ x, se = FALSE, col = "red") +
     labs(title = "Y vs X Residual Plot")
 
-p2 <- augment(model.sqrt) %>%
-    ggplot(., aes(x = scatter1$x, y = .resid)) + 
+p2 <- ggplot(augment(model.sqrt), aes(x = scatter1$x, y = .resid)) + 
     geom_point() +
     geom_smooth(method = "loess", formula = y ~ x, se = FALSE) +
     geom_smooth(method = "lm", formula = y ~ x, se = FALSE, col = "red") +

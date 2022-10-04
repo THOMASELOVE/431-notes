@@ -3,7 +3,7 @@
 ## Setup: Packages Used Here
 
 ```{r}
-#| message: FALSE
+#| message: false
 
 knitr::opts_chunk$set(comment = NA)
 
@@ -209,7 +209,7 @@ ggplot(correx2, aes(x = x, y = y)) +
 Note that R will allow you to fit a straight line model to any of these relationships, no matter how appropriate it might be to do so.
 
 ```{r}
-#| message: FALSE
+#| message: false
 ggplot(correx2, aes(x = x, y = y)) +
     geom_point() + 
     geom_smooth(method = "lm", formula = y ~ x, col = "red") +
@@ -218,7 +218,7 @@ ggplot(correx2, aes(x = x, y = y)) +
 ```
 
 ```{r}
-#| message: FALSE
+#| message: false
 ggplot(correx2, aes(x = x, y = y)) +
     geom_point() + 
     geom_smooth(col = "blue") +
@@ -228,7 +228,7 @@ ggplot(correx2, aes(x = x, y = y)) +
 
 
 ```{r}
-#| message: FALSE
+#| message: false
 ggplot(correx2, aes(x = x, y = y, color = factor(group))) +
     geom_point() + 
     guides(color = "none") +
@@ -270,12 +270,11 @@ The Spearman and Pearson correlations are not especially different in this case.
 
 The next few plots describe relationships where we anticipate the Pearson and Spearman correlations might differ in their conclusions. 
 
-Example 1 shows a function where the Pearson correlation is `r round_half_up(cor(correx3$x1, correx3$y1),3)` (a strong but not perfect linear relation), but the Spearman correlation is `r round_half_up(cor(correx3$x1, correx3$y1, method = "spearman"),2)` because the relationship is monotone, even though it is not perfectly linear. 
+Example 1 shows a function where the Pearson correlation is `r round_half_up(cor(correx3$x1, correx3$y1, use = "complete.obs"),3)` (a strong but not perfect linear relation), but the Spearman correlation is `r round_half_up(cor(correx3$x1, correx3$y1, use = "complete.obs", method = "spearman"),2)` because the relationship is monotone, even though it is not perfectly linear. 
 
 ```{r}
-#| message: FALSE
-#| warning: FALSE
-
+#| message: false
+#| warning: false
 
 ggplot(correx3, aes(x = x1, y = y1)) + 
     geom_point() +
@@ -296,8 +295,8 @@ So, a positive Spearman correlation corresponds to an increasing (but not necess
 Example 2 shows that a negative Spearman correlation corresponds to a decreasing (but, again, not necessarily linear) association between x and y.
 
 ```{r}
-#| message: FALSE
-#| warning: FALSE
+#| message: false
+#| warning: false
 
 ggplot(correx3, aes(x = x2, y = y2)) + 
     geom_point(col = "purple") +

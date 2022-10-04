@@ -752,7 +752,7 @@ protein 0.6577489 1.0000000</code></pre>
 <section id="spearman-vs.-pearson-example-1" class="level3" data-number="13.7.3">
 <h3 data-number="13.7.3" class="anchored" data-anchor-id="spearman-vs.-pearson-example-1"><span class="header-section-number">13.7.3</span> Spearman vs.&nbsp;Pearson Example 1</h3>
 <p>The next few plots describe relationships where we anticipate the Pearson and Spearman correlations might differ in their conclusions.</p>
-<p>Example 1 shows a function where the Pearson correlation is NA (a strong but not perfect linear relation), but the Spearman correlation is NA because the relationship is monotone, even though it is not perfectly linear.</p>
+<p>Example 1 shows a function where the Pearson correlation is 0.925 (a strong but not perfect linear relation), but the Spearman correlation is 1 because the relationship is monotone, even though it is not perfectly linear.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(correx3, <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> y1)) <span class="sc">+</span> </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
