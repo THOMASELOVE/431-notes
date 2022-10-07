@@ -13,7 +13,8 @@ b.	Given a pair of models to compare, what tools should we use to determine whic
 
 ## Setup: Packages Used Here
 
-```{r, message = FALSE}
+```{r}
+#| message: false
 knitr::opts_chunk$set(comment = NA)
 
 library(broom)
@@ -21,7 +22,7 @@ library(car)
 library(GGally)
 library(ggrepel)
 library(janitor)
-library(knitr)
+library(kableExtra)
 library(patchwork)
 library(tidyverse)
 
@@ -33,7 +34,7 @@ We'll also use some functions from the `Hmisc` and `rms` packages.
 
 ## Predicting Cholesterol Level in WCGS, Again
 
-To address these issues, I'll again look at the `wcgs` data (Western Collaborative Group Study), described in Chapter \@ref(WCGS-Study), then again in Chapter \@ref(Reg-Diag).
+To address these issues, I'll again look at the `wcgs` data (Western Collaborative Group Study), described in [Chapter -@sec-WCGS], then again in [Chapter -@sec-Reg-Diag].
 
 ```{r}
 wcgs <- read_csv("data/wcgs.csv", show_col_types = FALSE)
@@ -233,19 +234,19 @@ Given the large sample size, let's look at some 99% confidence intervals for our
 ```{r}
 tidy(modelA, conf.int = TRUE, conf.level = 0.99) |>
     select(term, estimate, conf.low, conf.high, p.value) |>
-    kable(digits = 3)
+    kbl(digits = 3) |> kable_classic(full_width = F)
 ```
 
 ```{r}
 tidy(modelB, conf.int = TRUE, conf.level = 0.99) |>
     select(term, estimate, conf.low, conf.high, p.value) |>
-    kable(digits = 3)
+    kbl(digits = 3) |> kable_classic(full_width = F)
 ```
 
 ```{r}
 tidy(modelC, conf.int = TRUE, conf.level = 0.99) |>
     select(term, estimate, conf.low, conf.high, p.value) |>
-    kable(digits = 3)
+    kbl(digits = 3) |> kable_classic(full_width = F)
 ```
 
 ### ANOVA comparison of the 3 models 
@@ -271,7 +272,7 @@ fit_report <- bind_rows(repA, repB, repC)
 fit_report |> 
     select(name, r2 = r.squared, adjr2 = adj.r.squared, sigma, 
            AIC, BIC, nobs, df, df.res = df.residual) |>
-    kable(digits = c(0,4,4,3,0,0,0,0,0))
+    kbl(digits = c(0,4,4,3,0,0,0,0,0)) |> kable_minimal()
 ```
 
 Our conclusions are:
@@ -298,7 +299,8 @@ For each model, we'll start with the pair of plots that show us:
 - the residuals vs. the fitted values, to check for non-linearity and non-constant variance, as well as  
 - Normal Q-Q plots of the standardized residuals to check for important non-Normality.
 
-```{r, fig.height = 10, fig.width = 7}
+```{r}
+#| fig-height: 10
 p1a <- ggplot(aug_A, aes(x = .fitted, y = .resid)) +
     geom_point(alpha = 0.2) + 
     geom_point(data = aug_A |> 
@@ -371,7 +373,8 @@ In each of these plots, I see no clear signs of substantial non-linearity or any
 
 As a second check on the assumption of non-constant variance, we'll draw scale-location plots. As a second check on the potential for poorly fit or highly leveraged points to influence our results, we'll also run the residuals vs. leverage plots.
 
-```{r, fig.height = 10, fig.width = 7}
+```{r}
+#| fig-height: 10
 p3a <- ggplot(aug_A, aes(x = .fitted, y = sqrt(abs(.std.resid)))) +
   geom_point() + 
   geom_smooth(method = "loess", formula = y ~ x, span = 2, se = F) +
@@ -471,7 +474,6 @@ Let's look at the first two results using Model A.
 test_A |> 
     mutate(sqrtchol = sqrt(chol)) |>
     select(chol, sqrtchol, .fitted, .resid) |> head(2)
-
 ```
 
 As we can see, the `.fitted` value is trying to predict the square root of `chol` and not `chol`. When we are doing validation in our test sample, it is more helpful to get back to the scale of our original outcome. So here, we'd square the `.fitted` value (to back out of our square root transformation) and get the actual prediction our model makes for `chol`. Then we can take the observed `chol` value and subtract the prediction of `chol` to get a new residual on the scale of our original `chol` values.
@@ -494,7 +496,7 @@ Now, we can summarize the quality of the predictions across each of the models w
 
 No one of these dominates the other, but we might be interested in which model gives us the best (smallest) result for each of these summaries. Let's run them.
 
-```{r, message = FALSE}
+```{r}
 test_res |> 
     group_by(mod_n) |>
     summarise(MAPE = mean(abs(res_chol)),

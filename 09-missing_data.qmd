@@ -16,7 +16,7 @@ library(tidyverse)
 
 theme_set(theme_bw())
 ```
-a
+
 We'll focus on tools from the `naniar` and `simputation` packages in this chapter. This chapter also requires that the `mosaic` package is loaded on your machine so we can use the `favstats()` function, but I won't load that here.
 
 ## A Toy Example (n = 15)

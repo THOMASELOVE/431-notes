@@ -1,8 +1,10 @@
-# Regression Diagnostics {#Reg-Diag}
+# Regression Diagnostics {#sec-Reg-Diag}
 
 ## Setup: Packages Used Here
 
-```{r, message = FALSE}
+```{r}
+#| message: false
+
 knitr::opts_chunk$set(comment = NA)
 
 library(broom)
@@ -10,7 +12,7 @@ library(car)
 library(GGally)
 library(ggrepel)
 library(janitor)
-library(knitr)
+library(kableExtra)
 library(mosaic)
 library(patchwork)
 library(tidyverse)
@@ -38,7 +40,7 @@ Of course, the multiple regression model is not limited to three predictors. We 
 
 ## Building an Example: 500 subjects from WCGS
 
-To fix ideas, suppose we return to the Western Collaborative Group Study (WCGS) data we studied back in Chapter \@ref(WCGS-Study), which described 3154 men ages 39-59 who were free of heart disease and were employees of one of 10 California companies in 1960-1961. 
+To fix ideas, suppose we return to the Western Collaborative Group Study (WCGS) data we studied in [Chapter -@sec-WCGS], which described 3154 men ages 39-59 who were free of heart disease and were employees of one of 10 California companies in 1960-1961. 
 
 We are going to select a random sample of 500 of those men, with complete data on our outcome of interest, which is total cholesterol in mg/dl (`chol`) and on our three predictors of interest, which are systolic blood pressure in mm Hg (`sbp`), body mass index (`bmi`) and behavioral pattern (`dibpat`), which is a two-category variable with levels "Type A" or "Type B". 
 
@@ -48,8 +50,8 @@ We are going to select a random sample of 500 of those men, with complete data o
 
 Below we create this sample of 500 subjects with complete data on our outcome and each of our three predictors.
 
-```{r create_wcgs_500}
-wcgs <- read_csv("data/wcgs.csv")
+```{r}
+wcgs <- read_csv("data/wcgs.csv", show_col_types = FALSE)
 
 set.seed(12345)
 
@@ -61,7 +63,7 @@ wcgs_500 <- wcgs |>
 
 Next, we'll look at a scatterplot matrix using `ggpairs` from the `GGally` package, placing our outcome last, as usual.
 
-```{r spm_wcgs_500}
+```{r}
 ggpairs(wcgs_500 |> select(sbp, bmi, dibpat, chol),
         lower = list(combo = wrap("facethist", binwidth = 0.5)), 
         title = "Scatterplot Matrix for 500 WCGS subjects")
@@ -80,13 +82,13 @@ As usual, we'll use `tidy` and `glance` from the `broom` package (part of `tidym
 ```{r}
 tidy(chol_m1, conf.int = TRUE, conf.level = 0.90) |>
     select(term, estimate, std.error, conf.low, conf.high, p.value) |>
-    kable(dig = 3)
+    kbl(digits = 3) |> kable_paper()
 ```
 
 ```{r}
 glance(chol_m1) |>
     select(r.squared, adj.r.squared, sigma, AIC, BIC, nobs) |>
-    kable(dig = c(3, 3, 1, 1, 1, 0))
+    kbl(digits = c(3, 3, 1, 1, 1, 0)) |> kable_paper()
 ```
 
 This isn't a terrific model, accounting for only 3% (according to $R^2$) of the variation in our outcome, although some of the individual predictors show effects that meet our usual standards for "detectable" results. Our goal, though, is to use this model as an example for studying residual diagnostics to search for possible violations of regression assumptions.
@@ -100,13 +102,15 @@ aug_chol1 <- augment(chol_m1, data = wcgs_500)
 This augments the original data with several summaries of the quality of fit for our individual rows in the `wcgs_500` data. Here are the first few values for some of the elements of `augment`.
 
 ```{r}
-head(aug_chol1 |> select(id:.resid)) |> kable(dig = 3)
+head(aug_chol1 |> select(id:.resid)) |> 
+  kbl(digits = 3) |> kable_minimal()
 ```
 
 This includes the original data, plus the model's predicted value for `chol`, stored in `.fitted` and the residual (actual `chol` - `.fitted`) stored in `.resid`. Here are the other elements of the `augment` result.
 
 ```{r}
-head(aug_chol1 |> select(id, .std.resid:.cooksd)) |> kable(dig = 3)
+head(aug_chol1 |> select(id, .std.resid:.cooksd)) |> 
+  kbl(digits = 3) |> kable_minimal()
 ```
 
 Here, we see:
@@ -182,7 +186,7 @@ When you ask R to plot the result of a linear model, it will produce up to five 
 
 To obtain this plot for the model including `sbp`, `bmi` and `dibpat` to predict `chol` we have two options. The simpler approach uses the following code to indicate plot 1 using the `which` command within the `plot` function.
 
-```{r, fig.height=5, fig.width=5, fig.align="center"}
+```{r}
 plot(chol_m1, which=1)
 ```
 
@@ -201,8 +205,6 @@ These turn out to be the observations with `id` = 3604, 2280 and 10360, respecti
 #### Using `ggplot2` to plot Residuals vs. Predicted Values
 
 ```{r}
-# requires library(ggrepel)
-
 ggplot(aug_chol1, aes(x = .fitted, y = .resid)) +
   geom_point() + 
   geom_point(data = aug_chol1 |> 
@@ -273,7 +275,7 @@ Reviewing the same plots we have previously seen, I can find no evidence of subs
 
 R does provide an additional plot to help assess this issue as linear model diagnostic plot 3. This one looks at the square root of the standardized residual plotted against the fitted values. You want the loess smooth in this plot to be flat, rather than sloped.
 
-```{r, fig.height=4, fig.width=5, fig.align="center"}
+```{r}
 plot(chol_m1, which=3)
 ```
 
@@ -302,7 +304,7 @@ It's helpful to see how this works in practice. Here are three sets of plots for
 
 Here, I'll create a tibble containing fake data on a predictor (x) and two outcomes (y1 or y2). The relationship between `y1` and `x` is meant to show no problems with the assumption of homoscedasticity. The relationship between `y2` and `x`, on the other hand, should show severe problems with this assumption. 
 
-```{r create_fake1_data}
+```{r}
 set.seed(5)
 
 N  = 250    ## original n = 500
@@ -432,7 +434,8 @@ Note the funnel shape for the upper two heteroscedastic (non-constant variance) 
 
 Here are the relevant plots for the same scenario using base R.
 
-```{r, fig.height = 8, fig.width = 6}
+```{r}
+#| fig.height: 8
 par(mfrow=c(3,2))
 plot(y1 ~ x, data = fake_1, main="Constant Variance")
 plot(y2 ~ x, data = fake_1, main="Non-Constant Variance")
@@ -469,7 +472,7 @@ R's general plot set for a linear model includes (as plot 2) a Normal Q-Q plot o
 
 ### Checking the Normality Assumption with a Plot
 
-```{r fig.height=5, fig.width=5, fig.align="center"}
+```{r}
 plot(chol_m1, which=2)
 ```
 
@@ -503,7 +506,8 @@ p1 + p2 +
 The Q-Q plot of standardized residuals shows one point (in row 113, according to the plot) that is far away from our expectations under the Normal model. Let's look at that point a little more closely.
 
 ```{r}
-aug_chol1 |> slice(113) |> select(id:.std.resid) |> kable(dig = 2)
+aug_chol1 |> slice(113) |> select(id:.std.resid) |> 
+  kbl(digits = 2) |> kable_classic_2()
 ```
 
 The standardized residual here is 4.71. That seems excessively large, in a sample of 250 observations.
@@ -524,7 +528,7 @@ Which value is that? It's the subject with `id` = 2280.
 
 ```{r}
 aug_chol1 |> slice(113) |>
-    select(id:.std.resid) |> kable(dig = 2)
+    select(id:.std.resid) |> kbl(digits = 2) |> kable_classic_2()
 ```
 
 In terms of solutions, we could consider dropping the point, but this would leave us with the vexing problem of how, exactly, to justify that choice. One question we might ask is whether dropping that point (row 113, or `id` = 2280) from our `chol_m1` model have a big impact?
@@ -555,7 +559,7 @@ aug_chol1 |>
 
 Another way to understand the impact of leverage is to look at a plot of residuals vs. leverage, which is diagnostic plot 5 for a linear model. Here's the base R version for our `chol_m1` model.
 
-```{r, fig.height=5, fig.width=5, fig.align="center"}
+```{r}
 plot(chol_m1, which=5)
 ```
 
@@ -583,7 +587,7 @@ aug_chol1 |> filter(id == 19078) |>
     select(id, sbp, bmi, dibpat, .hat)
 ```
 
-Compare these findings to what we see in the `wcgs_500` data overall. Let's focus on the quantitative variables involved in our model, `sbp` and `bmi`.
+Compare these findings to what we see in the `wcgs_500` data overall. Let's focus on the quantitative variables involved in our model, `sbp` and `bmi`, and use the `df_stats()` function from the `mosaic` package.
 
 ```{r}
 df_stats(~ sbp + bmi, data = wcgs_500)
@@ -614,7 +618,7 @@ ggplot(aug_chol1, aes(x = sbp, y = bmi)) +
                col = "red", size = 2) + 
     labs(x = "Systolic BP", y = "Body Mass Index",
          title = "Where are the highly leveraged points in our model?",
-         subtitle = "wcgs_500 data, model chol_1, 12 highest leverage points shown in red")
+         subtitle = "wcgs_500 model chol_1, 12 highest leverage points in red")
 ```
 
 The points with high leverage (large values of `.hat`) are simply those with an unusual combination of the two quantitative predictors.
@@ -633,7 +637,7 @@ You can obtain information on Cook's distance in several ways in R.
 - My favorite is model diagnostic plot 5 (the residuals vs. leverage plot) which we've seen before and which I repeat below. This plot uses red contours to indicate the value of Cook's distance. 
     - This is possible because influence, as measured by Cook's distance, is a function of both the observation's standardized residual and its leverage.
 
-```{r, fig.height=5, fig.width=5, fig.align="center"}
+```{r}
 plot(chol_m1, which=5)
 ```
 
@@ -643,7 +647,7 @@ No points in this plot indicate substantial influence on our model. To do so, th
 
 Model Diagnostic Plot 4 for a linear model is an index plot of Cook's distance.
 
-```{r, fig.height=5, fig.width=5, fig.align="center"}
+```{r}
 plot(chol_m1, which=4)
 ```
 
@@ -669,7 +673,7 @@ It is clear from this plot that the largest Cook's distance (somewhere between 0
 
 ```{r}
 aug_chol1 |> select(id, .std.resid, .hat, .cooksd) |>
-    arrange(desc(.cooksd)) |> head() |> kable(dig = 3)
+    arrange(desc(.cooksd)) |> head() |> kbl(digits = 3) |> kable_classic()
 ```
 
 Remember that we'd need a Cook's distance value to be at least 0.50 for us to worry about it in a serious way. Here, the largest we see (0.05 for `id` = 10214) is still far away from that standard. 
@@ -679,7 +683,7 @@ What is the story on point 10214? Why is it unusual?
 ```{r}
 aug_chol1 |> filter(id == 10214) |>
     select(id:.fitted, .std.resid, .hat, .cooksd) |> 
-    kable(dig = 2)
+    kbl(digits = 2) |> kable_classic()
 ```
 
 This turns out to be the subject with the largest BMI in the data, hence some leverage, and a somewhat large (-1.78) but not enormous standardized residual. Hence the combination suggests some influence on the model.
@@ -736,75 +740,73 @@ While it is true that we can sometimes improve the performance of the model in s
         - Even points with Cook's d > 0.5 may merit further investigation. 
         - Find the Cook's distances using the `augment()` function, which stores them in `.cooksd`.
 
-## Violated Assumptions: Problematic Residual Plots?
+## Violated Assumptions: Problems with Linearity
 
 So what do serious assumption violations look like, and what can we do about them?
 
-## Problems with Linearity
-
 Here is a simulated example that shows a clear problem with non-linearity.
 
-```{r violsim 1}
+```{r}
 set.seed(4311); x1 <- rnorm(n = 100, mean = 15, sd = 5)
 set.seed(4312); x2 <- rnorm(n = 100, mean = 10, sd = 5)
 set.seed(4313); e1 <- rnorm(n = 100, mean = 0, sd = 15)
 y <- 15 + x1 + x2^2 + e1
 viol1 <- data.frame(outcome = y, pred1 = x1, pred2 = x2) |> tibble()
-model.1 <- lm(outcome ~ pred1 + pred2, data = viol1)
-plot(model.1, which = 1)
+model_1 <- lm(outcome ~ pred1 + pred2, data = viol1)
+plot(model_1, which = 1)
 ```
 
 In light of this, I would be looking for a potential transformation of outcome. Does the Box-Cox plot make any useful suggestions?
 
-```{r boxCox_1_violsim1}
-boxCox(model.1); powerTransform(model.1)
+```{r}
+boxCox(model_1); powerTransform(model_1)
 ```
 
 Note that if the outcome was negative, we would have to add some constant value to every outcome in order to get every outcome value to be positive, and Box-Cox to run. This suggests fitting a new model, using the square root of the outcome.
 
-```{r violsim_2}
-model.2 <- lm(sqrt(outcome) ~ pred1 + pred2, data = viol1)
-plot(model.2, which = 1)
+```{r}
+model_2 <- lm(sqrt(outcome) ~ pred1 + pred2, data = viol1)
+plot(model_2, which = 1)
 ```
 
 This is meaningfully better in terms of curve, but now looks a bit fan-shaped, indicating a potential problem with heteroscedasticity. Let's look at the scale-location plot for this model.
 
-```{r violsim_2b}
-plot(model.2, which = 3)
+```{r}
+plot(model_2, which = 3)
 ```
 
 This definitely looks like there's a trend down in this plot. So the square root transformation, by itself, probably hasn't resolved assumptions sufficiently well. We'll have to be very careful about our interpretation of the model.
 
 ## Problems with Non-Normality: An Influential Point
 
-With 100 observations, a single value with a standardized residual above 3 is very surprising. In our initial model.1 here, we have a standardized residual value as large as 6, so we clearly have a problem with that outlier. 
+With 100 observations, a single value with a standardized residual above 3 is very surprising. In our initial model_1 here, we have a standardized residual value as large as 6, so we clearly have a problem with that outlier. 
 
-```{r violsim_2c}
-plot(model.1, which = 2)
+```{r}
+plot(model_1, which = 2)
 ```
 
 Should we, perhaps, remove point 72, and try again? Only if we have a reason beyond "it was poorly fit" to drop that point. Is point 72 highly leveraged or influential?
 
-```{r violsim_5}
-plot(model.1, which = 5)
+```{r}
+plot(model_1, which = 5)
 ```
 
 What if we drop this point (72) and fit our linear model again. Does this resolve our difficulty with the assumption of linearity?
 
-```{r viol_fit_without_72}
-model.1.no72 <- lm(outcome ~ pred1 + pred2, data = viol1[-72,])
+```{r}
+model_1_no72 <- lm(outcome ~ pred1 + pred2, data = viol1[-72,])
 par(mfrow=c(1,2))
-plot(model.1, which = 1, caption = "With Point 72")
-plot(model.1.no72, which = 1, caption = "Without Point 72")
+plot(model_1, which = 1, caption = "With Point 72")
+plot(model_1_no72, which = 1, caption = "Without Point 72")
 par(mfrow=c(1,1))
 ```
 
 No, it doesn't. But what if we combine our outcome transformation with dropping point 72?
 
 ```{r}
-model.2.no72 <- lm(sqrt(outcome) ~ pred1 + pred2, data = viol1[-72,])
+model_2_no72 <- lm(sqrt(outcome) ~ pred1 + pred2, data = viol1[-72,])
 par(mfrow=c(1,2))
-plot(model.2.no72, which = c(1,3))
+plot(model_2_no72, which = c(1,3))
 par(mfrow=c(1,1))
 ```
 
@@ -812,7 +814,7 @@ Nope. That still doesn't alleviate the problem of heteroscedasticity very well. 
 
 ```{r}
 par(mfrow=c(1,2))
-plot(model.2.no72, which = c(2,5))
+plot(model_2_no72, which = c(2,5))
 par(mfrow=c(1,1))
 ```
 

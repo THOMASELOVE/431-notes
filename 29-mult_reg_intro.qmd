@@ -1,10 +1,10 @@
 # Multiple Regression: Introduction
 
-In Chapter \@ref(Hydrate-Study) in working with a study of dehydration recovery in children, we discussed many of the fundamental ideas of multiple regression. There, we provided code and insight into the scatterplot and the scatterplot matrix, fit linear models and plotted the coefficients, analyzed summary output from `summary`, `tidy` and `glance` as well as the ANOVA table, and plotted residuals vs. fitted values. 
+In [Chapter -@sec-Hydrate-Study], while working with a study of dehydration recovery in children, we discussed many of the fundamental ideas of multiple regression. There, we provided code and insight into the scatterplot and the scatterplot matrix, fit linear models and plotted the coefficients, analyzed summary output from `summary()`, `tidy()` and `glance()` as well as the ANOVA table, and plotted residuals vs. fitted values using the `augment()` function. 
 
-In the remaining chapters, we will build on that foundation in three additional examples.
+In the remaining chapters, we will build on that foundation in some examples, including...
 
-- The `wcgs` data from the Western Collaborative Group Study, which we described and studied back in Chapter \@ref(WCGS-Study).
+- The `wcgs` data from the Western Collaborative Group Study, which we described in [Chapter -@sec-WCGS].
 - The `emp_bmi` data from a study published in *BMJ Open* of a nationally representative sample of over 7000 participants in the Korean Longitudinal Study of Aging.
 - The `gala` data, which describe features of the 30 Galapagos Islands.
 
