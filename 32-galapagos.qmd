@@ -63,7 +63,7 @@ We'll use five predictors:
 - `adjacent`. 
 
 ```{r}
-ggpairs(gala %>% select(area, elevation, nearest,
+ggpairs(gala |> select(area, elevation, nearest,
                         scruz, adjacent, species))
 ```
 
@@ -90,12 +90,12 @@ model1 <- lm(species ~ area + elevation + nearest + scruz +
 Here are the results of running `tidy()` and `glance()` from the `broom` package on `model1`.
 
 ```{r}
-tidy(model1) %>%
+tidy(model1) |>
     kable(digits = 3)
 
-glance(model1) %>%
+glance(model1) |>
     select(r.squared, adj.r.squared, sigma, statistic, 
-           p.value, df, df.residual, nobs, AIC, BIC) %>%
+           p.value, df, df.residual, nobs, AIC, BIC) |>
     kable(digits = c(3, 3, 1, 1, 3, 0, 0, 0, 1, 1))
 ```
 
@@ -125,8 +125,8 @@ What conclusions can we draw from the `summary` output for this model? Specifica
 Of course, we can find these intervals in several ways. One approach uses `tidy()` from the `broom` package.
 
 ```{r}
-tidy(model1, conf.int = TRUE, conf.level = 0.95) %>%
-    select(term, estimate, std.error, conf.low, conf.high) %>%
+tidy(model1, conf.int = TRUE, conf.level = 0.95) |>
+    select(term, estimate, std.error, conf.low, conf.high) |>
     kable(digits = 3)
 ```
 
@@ -359,7 +359,7 @@ Here, we obtain
 Here, for instance, are the first few rows.
 
 ```{r}
-head(gala_aug) %>% kable(digits = 2)
+head(gala_aug) |> kable(digits = 2)
 ```
 
 ### Questions about Fitted Values
@@ -430,7 +430,7 @@ There are two additional types of residuals for us to be aware of: standardized 
 The `rstudent` function, when applied to a linear regression model, will the model's studentized residuals.
 
 ```{r p66, fig.height=3.5}
-gala_aug <- gala_aug %>%
+gala_aug <- gala_aug |>
     mutate(.stu.resid = rstudent(model1))
 
 ggplot(gala_aug, aes(x = .std.resid, 

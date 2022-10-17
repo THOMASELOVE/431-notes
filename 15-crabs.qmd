@@ -155,7 +155,7 @@ ggplot(crabs, aes(x = height, y = force)) +
     labs(title = "Crab Claw Force by Size with Linear Regression Model", 
          x = "Claw's propodus height (mm)", y = "Mean closing force (N)") +
     annotate("text", x = 11, y = 0, color = "red", fontface = "italic",
-             label = paste( "Force - ", round_half_up(coef(mod)[1],3), " + ", 
+             label = paste( "Force = ", round_half_up(coef(mod)[1],3), " + ", 
                             round_half_up(coef(mod)[2],3), " Height" ))
 ```
 

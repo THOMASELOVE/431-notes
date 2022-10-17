@@ -49,8 +49,8 @@ book:
         - 29-mult_reg_intro.qmd
         - 30-regr_diagnostics.qmd
         - 31-prediction_wcgs.qmd
+        - 32-galapagos.qmd
         - partChold.qmd
-##        - 32-galapagos.qmd
 ##        - 33-emp_bmi.qmd
 ##        - 34-nonlinearity.qmd
 ##        - 35-olsfits.qmd
