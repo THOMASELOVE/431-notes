@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Course Notes for 431 - 34&nbsp; Using ols to fit linear models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./35-emp_bmi.html" rel="next">
+<link href="./33-nonlinearity.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Course Notes for 431</a> 
+        <div class="sidebar-tools-main">
+    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-testing_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-ci_for_mean.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-pairedsamples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sample Size and Power for Means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-anova.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-one_proportion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-comparing_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-power_for_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Power and Proportions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-contingency_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-mult_reg_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-regr_diagnostics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Regression Diagnostics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-prediction_wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Building Prediction Models for <code>wcgs</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-galapagos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-nonlinearity.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./34-olsfits.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./35-emp_bmi.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">BMI and Employment Study</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">34.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#where-we-are" id="toc-where-we-are" class="nav-link" data-scroll-target="#where-we-are"> <span class="header-section-number">34.2</span> Where We Are</a></li>
+  <li><a href="#fitting-a-model-with-ols" id="toc-fitting-a-model-with-ols" class="nav-link" data-scroll-target="#fitting-a-model-with-ols"> <span class="header-section-number">34.3</span> Fitting a model with <code>ols</code></a>
+  <ul class="collapse">
+  <li><a href="#the-model-likelihood-ratio-test" id="toc-the-model-likelihood-ratio-test" class="nav-link" data-scroll-target="#the-model-likelihood-ratio-test"> <span class="header-section-number">34.3.1</span> The Model Likelihood Ratio Test</a></li>
+  <li><a href="#the-g-statistic" id="toc-the-g-statistic" class="nav-link" data-scroll-target="#the-g-statistic"> <span class="header-section-number">34.3.2</span> The g statistic</a></li>
+  </ul></li>
+  <li><a href="#anova-for-an-ols-model" id="toc-anova-for-an-ols-model" class="nav-link" data-scroll-target="#anova-for-an-ols-model"> <span class="header-section-number">34.4</span> ANOVA for an <code>ols</code> model</a></li>
+  <li><a href="#effect-estimates" id="toc-effect-estimates" class="nav-link" data-scroll-target="#effect-estimates"> <span class="header-section-number">34.5</span> Effect Estimates</a>
+  <ul class="collapse">
+  <li><a href="#simultaneous-confidence-intervals" id="toc-simultaneous-confidence-intervals" class="nav-link" data-scroll-target="#simultaneous-confidence-intervals"> <span class="header-section-number">34.5.1</span> Simultaneous Confidence Intervals</a></li>
+  </ul></li>
+  <li><a href="#the-predict-function-for-an-ols-model" id="toc-the-predict-function-for-an-ols-model" class="nav-link" data-scroll-target="#the-predict-function-for-an-ols-model"> <span class="header-section-number">34.6</span> The <code>Predict</code> function for an <code>ols</code> model</a></li>
+  <li><a href="#checking-influence-via-dfbeta" id="toc-checking-influence-via-dfbeta" class="nav-link" data-scroll-target="#checking-influence-via-dfbeta"> <span class="header-section-number">34.7</span> Checking Influence via <code>dfbeta</code></a>
+  <ul class="collapse">
+  <li><a href="#using-the-residuals-command-for-dfbetas" id="toc-using-the-residuals-command-for-dfbetas" class="nav-link" data-scroll-target="#using-the-residuals-command-for-dfbetas"> <span class="header-section-number">34.7.1</span> Using the <code>residuals</code> command for <code>dfbetas</code></a></li>
+  <li><a href="#using-the-residuals-command-for-other-summaries" id="toc-using-the-residuals-command-for-other-summaries" class="nav-link" data-scroll-target="#using-the-residuals-command-for-other-summaries"> <span class="header-section-number">34.7.2</span> Using the <code>residuals</code> command for other summaries</a></li>
+  </ul></li>
+  <li><a href="#model-validation-and-correcting-for-optimism" id="toc-model-validation-and-correcting-for-optimism" class="nav-link" data-scroll-target="#model-validation-and-correcting-for-optimism"> <span class="header-section-number">34.8</span> Model Validation and Correcting for Optimism</a></li>
+  <li><a href="#building-a-nomogram-for-our-model" id="toc-building-a-nomogram-for-our-model" class="nav-link" data-scroll-target="#building-a-nomogram-for-our-model"> <span class="header-section-number">34.9</span> Building a Nomogram for Our Model</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="setup-packages-used-here" class="level2" data-number="34.1">
+<h2 data-number="34.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">34.1</span> Setup: Packages Used Here</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="where-we-are" class="level2" data-number="34.2">
+<h2 data-number="34.2" class="anchored" data-anchor-id="where-we-are"><span class="header-section-number">34.2</span> Where We Are</h2>
+<p>At the end of <span class="quarto-unresolved-ref">?sec-nonlinear</span>, we had fit a model to the <code>pollution</code> data that predicted our outcome <code>y</code> = Age-Adjusted Mortality Rate, using:</p>
+<ul>
+<li>a restricted cubic spline with 5 knots on <code>x9</code></li>
+<li>a restricted cubic spline with 3 knots on <code>x6</code></li>
+<li>a polynomial in 2 degrees on <code>x14</code></li>
+<li>linear terms for <code>x1</code> and <code>x13</code></li>
+</ul>
+<p>but this model was hard to evaluate in some ways. Now, instead of using <code>lm</code> to fit this model, we’ll use a new function called <code>ols</code> from the <code>rms</code> package developed by Frank Harrell and colleagues, in part to support ideas developed in <span class="citation" data-cites="Harrell2001">Harrell (<a href="references.html#ref-Harrell2001" role="doc-biblioref">2001</a>)</span> for clinical prediction models.</p>
+</section>
+<section id="fitting-a-model-with-ols" class="level2" data-number="34.3">
+<h2 data-number="34.3" class="anchored" data-anchor-id="fitting-a-model-with-ols"><span class="header-section-number">34.3</span> Fitting a model with <code>ols</code></h2>
+<p>We will use the <code>datadist</code> approach when fitting a linear model with <code>ols</code> from the <code>rms</code> package, so as to store additional important elements of the model fit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/pollution.csv"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">datadist</span>(pollution)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">datadist =</span> <span class="st">"d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we’ll fit the model using <code>ols</code> and place its results in <code>newmod</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>newmod <span class="ot">&lt;-</span> <span class="fu">ols</span>(y <span class="sc">~</span> <span class="fu">rcs</span>(x9, <span class="dv">5</span>) <span class="sc">+</span> <span class="fu">rcs</span>(x6, <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">pol</span>(x14, <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  x1 <span class="sc">+</span> x13, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> pollution, <span class="at">x =</span> <span class="cn">TRUE</span>, <span class="at">y =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>newmod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear Regression Model
+ 
+ ols(formula = y ~ rcs(x9, 5) + rcs(x6, 3) + pol(x14, 2) + x1 + 
+     x13, data = pollution, x = TRUE, y = TRUE)
+ 
+                  Model Likelihood    Discrimination    
+                        Ratio Test           Indexes    
+ Obs       60    LR chi2     72.02    R2       0.699    
+ sigma37.4566    d.f.           10    R2 adj   0.637    
+ d.f.      49    Pr(&gt; chi2) 0.0000    g       58.961    
+ 
+ Residuals
+ 
+     Min      1Q  Median      3Q     Max 
+ -86.189 -18.554  -1.799  18.645 104.307 
+ 
+ 
+           Coef      S.E.     t     Pr(&gt;|t|)
+ Intercept  796.2658 162.3269  4.91 &lt;0.0001 
+ x9          -2.6328   6.3504 -0.41 0.6803  
+ x9'        121.4651 124.4827  0.98 0.3340  
+ x9''      -219.8025 227.6775 -0.97 0.3391  
+ x9'''      151.5700 171.3867  0.88 0.3808  
+ x6           7.6817  15.5230  0.49 0.6229  
+ x6'        -29.4388  18.0531 -1.63 0.1094  
+ x14          0.5652   0.2547  2.22 0.0311  
+ x14^2       -0.0010   0.0010 -0.96 0.3407  
+ x1           1.0717   0.7317  1.46 0.1494  
+ x13         -0.1028   0.1443 -0.71 0.4796  
+ </code></pre>
+</div>
+</div>
+<p>Some of the advantages and disadvantages of fitting linear regression models with <code>ols</code> or <code>lm</code> will reveal themselves over time. For now, one advantage for <code>ols</code> is that the entire variance-covariance matrix is saved. Most of the time, there will be some value to considering both <code>ols</code> and <code>lm</code> approaches.</p>
+<p>Most of this output should be familiar, but a few pieces are different.</p>
+<section id="the-model-likelihood-ratio-test" class="level3" data-number="34.3.1">
+<h3 data-number="34.3.1" class="anchored" data-anchor-id="the-model-likelihood-ratio-test"><span class="header-section-number">34.3.1</span> The Model Likelihood Ratio Test</h3>
+<p>The <strong>Model Likelihood Ratio Test</strong> compares <code>newmod</code> to the null model with only an intercept term. It is a goodness-of-fit test that we’ll use in several types of model settings this semester.</p>
+<ul>
+<li>In many settings, the logarithm of the likelihood ratio, multiplied by -2, yields a value which can be compared to a <span class="math inline">\(\chi^2\)</span> distribution. So here, the value 72.02 is -2(log likelihood), and is compared to a <span class="math inline">\(\chi^2\)</span> distribution with 10 degrees of freedom. We reject the null hypothesis that <code>newmod</code> is no better than the null model, and conclude instead that at least one of these predictors adds statistically significant value.
+<ul>
+<li>For <code>ols</code>, interpret the model likelihood ratio test like the global (ANOVA) F test in <code>lm</code>.</li>
+<li>The likelihood function is the probability of observing our data under the specified model.</li>
+<li>We can compare two nested models by evaluating the difference in their likelihood ratios and degrees of freedom, then comparing the result to a <span class="math inline">\(\chi^2\)</span> distribution.</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-g-statistic" class="level3" data-number="34.3.2">
+<h3 data-number="34.3.2" class="anchored" data-anchor-id="the-g-statistic"><span class="header-section-number">34.3.2</span> The g statistic</h3>
+<p>The <strong>g statistic</strong> is new and is referred to as the g-index. it’s based on Gini’s mean difference and is purported to be a robust and highly efficient measure of variation.</p>
+<ul>
+<li>Here, g = 58.9, which implies that if you randomly select two of the 60 areas included in the model, the average difference in predicted <code>y</code> (Age-Adjusted Mortality Rate) using this model will be 58.9.
+<ul>
+<li>Technically, g is Gini’s mean difference of the predicted values.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="anova-for-an-ols-model" class="level2" data-number="34.4">
+<h2 data-number="34.4" class="anchored" data-anchor-id="anova-for-an-ols-model"><span class="header-section-number">34.4</span> ANOVA for an <code>ols</code> model</h2>
+<p>One advantage of the <code>ols</code> approach is that when you apply an <code>anova</code> to it, it separates out the linear and non-linear components of restricted cubic splines and polynomial terms (as well as product terms, if your model includes them.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(newmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Analysis of Variance          Response: y 
+
+ Factor          d.f. Partial SS  MS         F     P     
+ x9               4    35219.7647  8804.9412  6.28 0.0004
+  Nonlinear       3     1339.3081   446.4360  0.32 0.8121
+ x6               2     9367.6008  4683.8004  3.34 0.0437
+  Nonlinear       1     3730.7388  3730.7388  2.66 0.1094
+ x14              2    18679.6957  9339.8478  6.66 0.0028
+  Nonlinear       1     1298.7625  1298.7625  0.93 0.3407
+ x1               1     3009.1829  3009.1829  2.14 0.1494
+ x13              1      711.9108   711.9108  0.51 0.4796
+ TOTAL NONLINEAR  5     6656.1824  1331.2365  0.95 0.4582
+ REGRESSION      10   159563.8285 15956.3829 11.37 &lt;.0001
+ ERROR           49    68746.8004  1402.9959             </code></pre>
+</div>
+</div>
+<p>Unlike the <code>anova</code> approach in <code>lm</code>, in <code>ols</code> ANOVA, <em>partial</em> F tests are presented - each predictor is assessed as “last predictor in” much like the usual <em>t</em> tests in <code>lm</code>. In essence, the partial sums of squares and F tests here describe the marginal impact of removing each covariate from <code>newmod</code>.</p>
+<p>We conclude that the non-linear parts of <code>x9</code> and <code>x6</code> and <code>x14</code> combined don’t seem to add much value, but that overall, <code>x9</code>, <code>x6</code> and <code>x14</code> seem to be valuable. So it must be the linear parts of those variables within our model that are doing the lion’s share of the work.</p>
+</section>
+<section id="effect-estimates" class="level2" data-number="34.5">
+<h2 data-number="34.5" class="anchored" data-anchor-id="effect-estimates"><span class="header-section-number">34.5</span> Effect Estimates</h2>
+<p>A particularly useful thing to get out of the <code>ols</code> approach that is not as easily available in <code>lm</code> (without recoding or standardizing our predictors) is a summary of the effects of each predictor in an interesting scale.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(newmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Effects              Response : y 
+
+ Factor Low   High  Diff. Effect   S.E.    Lower 0.95 Upper 0.95
+ x9      4.95 15.65 10.70  40.4060 14.0790  12.1120   68.6990   
+ x6     10.40 11.50  1.10 -18.2930  8.1499 -34.6710   -1.9153   
+ x14    11.00 69.00 58.00  28.3480 10.6480   6.9503   49.7460   
+ x1     32.75 43.25 10.50  11.2520  7.6833  -4.1878   26.6930   
+ x13     4.00 23.75 19.75  -2.0303  2.8502  -7.7579    3.6973   </code></pre>
+</div>
+</div>
+<p>This “effects summary” shows the effect on <code>y</code> of moving from the 25th to the 75th percentile of each variable (along with a standard error and 95% confidence interval) while holding the other variable at the level specified at the bottom of the output.</p>
+<p>The most useful way to look at this sort of analysis is often a plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">summary</span>(newmod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="34-olsfits_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>For <code>x9</code> note from the <code>summary</code> above that the 25th percentile is 4.95 and the 75th is 15.65. Our conclusion is that the estimated effect of moving <code>x9</code> from 4.95 to 15.65 is an increase of 40.4 on <code>y</code>, with a 95% CI of (12.1, 68.7).</p>
+<p>For a categorical variable, the low level is shown first and then the high level.</p>
+<p>The plot shows the point estimate (arrow head) and then the 90% (narrowest bar), 95% (middle bar) and 99% (widest bar in lightest color) confidence intervals for each predictor’s effect.</p>
+<ul>
+<li>It’s easier to distinguish this in the <code>x9</code> plot than the one for <code>x13</code>.</li>
+<li>Remember that what is being compared is the first value to the second value’s impact on the outcome, with other predictors held constant.</li>
+</ul>
+<section id="simultaneous-confidence-intervals" class="level3" data-number="34.5.1">
+<h3 data-number="34.5.1" class="anchored" data-anchor-id="simultaneous-confidence-intervals"><span class="header-section-number">34.5.1</span> Simultaneous Confidence Intervals</h3>
+<p>These confidence intervals make no effort to deal with the multiple comparisons problem, but just fit individual 95% (or whatever level you choose) confidence intervals for each predictor. The natural alternative is to make an adjustment for multiple comparisons in fitting the confidence intervals, so that the set of (in this case, five - one for each predictor) confidence intervals for effect sizes has a family-wise 95% confidence level. You’ll note that the effect estimates and standard errors are unchanged from those shown above, but the confidence limits are a bit wider.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(newmod, <span class="at">conf.type=</span><span class="fu">c</span>(<span class="st">'simultaneous'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Effects              Response : y 
+
+ Factor Low   High  Diff. Effect   S.E.    Lower 0.95 Upper 0.95
+ x9      4.95 15.65 10.70  40.4060 14.0790   3.09750  77.7140   
+ x6     10.40 11.50  1.10 -18.2930  8.1499 -39.88900   3.3028   
+ x14    11.00 69.00 58.00  28.3480 10.6480   0.13279  56.5630   
+ x1     32.75 43.25 10.50  11.2520  7.6833  -9.10720  31.6120   
+ x13     4.00 23.75 19.75  -2.0303  2.8502  -9.58280   5.5222   </code></pre>
+</div>
+</div>
+<p>Remember that if you’re looking for the usual <code>lm</code> summary for an <code>ols</code> object, use <code>summary.lm</code>, and that the <code>display</code> function from <code>arm</code> does not recognize <code>ols</code> objects.</p>
+</section>
+</section>
+<section id="the-predict-function-for-an-ols-model" class="level2" data-number="34.6">
+<h2 data-number="34.6" class="anchored" data-anchor-id="the-predict-function-for-an-ols-model"><span class="header-section-number">34.6</span> The <code>Predict</code> function for an <code>ols</code> model</h2>
+<p>The <code>Predict</code> function is very flexible, and can be used to produce individual or simultaneous confidence limits.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Predict</span>(newmod, <span class="at">x9 =</span> <span class="dv">12</span>, <span class="at">x6 =</span> <span class="dv">12</span>, <span class="at">x14 =</span> <span class="dv">40</span>, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">x1 =</span> <span class="dv">40</span>, <span class="at">x13 =</span> <span class="dv">20</span>) <span class="co"># individual limits</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  x9 x6 x14 x1 x13     yhat    lower   upper
+1 12 12  40 40  20 923.0982 893.0984 953.098
+
+Response variable (y): y 
+
+Limits are 0.95 confidence limits</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Predict</span>(newmod, <span class="at">x9 =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">15</span>) <span class="co"># individual limits</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x9    x6 x14 x1 x13     yhat    lower    upper
+1   5 11.05  30 38   9 913.7392 889.4802 937.9983
+2   6 11.05  30 38   9 916.3490 892.0082 940.6897
+3   7 11.05  30 38   9 921.3093 898.9657 943.6529
+4   8 11.05  30 38   9 927.6464 907.0355 948.2574
+5   9 11.05  30 38   9 934.3853 913.3761 955.3946
+6  10 11.05  30 38   9 940.5510 917.8371 963.2648
+7  11 11.05  30 38   9 945.2225 921.9971 968.4479
+8  12 11.05  30 38   9 948.2885 926.4576 970.1194
+9  13 11.05  30 38   9 950.2608 930.3003 970.2213
+10 14 11.05  30 38   9 951.6671 932.2370 971.0971
+11 15 11.05  30 38   9 953.0342 932.1662 973.9021
+
+Response variable (y): y 
+
+Adjust to: x6=11.05 x14=30 x1=38 x13=9  
+
+Limits are 0.95 confidence limits</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Predict</span>(newmod, <span class="at">x9 =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">conf.type =</span> <span class="st">'simult'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x9    x6 x14 x1 x13     yhat    lower    upper
+1   5 11.05  30 38   9 913.7392 882.5292 944.9493
+2   6 11.05  30 38   9 916.3490 885.0338 947.6641
+3   7 11.05  30 38   9 921.3093 892.5636 950.0551
+4   8 11.05  30 38   9 927.6464 901.1298 954.1631
+5   9 11.05  30 38   9 934.3853 907.3562 961.4144
+6  10 11.05  30 38   9 940.5510 911.3289 969.7731
+7  11 11.05  30 38   9 945.2225 915.3422 975.1028
+8  12 11.05  30 38   9 948.2885 920.2024 976.3747
+9  13 11.05  30 38   9 950.2608 924.5810 975.9406
+10 14 11.05  30 38   9 951.6671 926.6697 976.6645
+11 15 11.05  30 38   9 953.0342 926.1868 979.8815
+
+Response variable (y): y 
+
+Adjust to: x6=11.05 x14=30 x1=38 x13=9  
+
+Limits are 0.95 confidence limits</code></pre>
+</div>
+</div>
+<p>The plot below shows the individual effects in <code>newmod</code> in five subpanels, using the default approach of displaying the same range of values as are seen in the data. Note that each panel shows point and interval estimates of the effects, and spot the straight lines in <code>x1</code> and <code>x13</code>, the single bends in <code>x14</code> and <code>x6</code> and the wiggles in <code>x9</code>, corresponding to the amount of non-linearity specified in the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">Predict</span>(newmod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="34-olsfits_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="checking-influence-via-dfbeta" class="level2" data-number="34.7">
+<h2 data-number="34.7" class="anchored" data-anchor-id="checking-influence-via-dfbeta"><span class="header-section-number">34.7</span> Checking Influence via <code>dfbeta</code></h2>
+<p>For an <code>ols</code> object, we have several tools for looking at residuals. The most interesting to me is <code>which.influence</code> which is reliant on the notion of <code>dfbeta</code>.</p>
+<ul>
+<li>DFBETA is estimated for each observation in the data, and each coefficient in the model.</li>
+<li>The DFBETA is the difference in the estimated coefficient caused by deleting the observation, scaled by the coefficient’s standard error estimated with the observation deleted.</li>
+<li>The <code>which.influence</code> command applied to an <code>ols</code> model produces a list of all of the predictors estimated by the model, including the intercept.
+<ul>
+<li>For each predictor, the command lists all observations (by row number) that, if removed from the model, would cause the estimated coefficient (the “beta”) for that predictor to change by at least some particular cutoff.</li>
+<li>The default is that the DFBETA for that predictor is 0.2 or more.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.influence</span>(newmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Intercept
+[1]  2 11 28 32 37 49 59
+
+$x9
+[1]  2  3  6  9 31 35 49 57 58
+
+$x6
+[1]  2 11 15 28 32 37 50 56 59
+
+$x14
+[1]  2  6  7 12 13 16 32 37
+
+$x1
+[1]  7 18 32 37 49 57
+
+$x13
+[1] 29 32 37</code></pre>
+</div>
+</div>
+<p>The implication here, for instance, is that if we drop row 3 from our data frame, and refit the model, this will have a meaningful impact on the estimate of <code>x9</code> but not on the other coefficients. But if we drop, say, row 37, we will affect the estimates of the intercept, <code>x6</code>, <code>x14</code>, <code>x1</code>, and <code>x13</code>.</p>
+<section id="using-the-residuals-command-for-dfbetas" class="level3" data-number="34.7.1">
+<h3 data-number="34.7.1" class="anchored" data-anchor-id="using-the-residuals-command-for-dfbetas"><span class="header-section-number">34.7.1</span> Using the <code>residuals</code> command for <code>dfbetas</code></h3>
+<p>To see the <code>dfbeta</code> values, standardized according to the approach I used above, you can use the following code (I’ll use <code>head</code> to just show the first few rows of results) to get a matrix of the results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">residuals</span>(newmod, <span class="at">type =</span> <span class="st">"dfbetas"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            [,1]         [,2]         [,3]        [,4]        [,5]        [,6]
+[1,]  0.03071160 -0.023775487 -0.004055111  0.01205425 -0.03260003 -0.02392315
+[2,] -0.38276573 -0.048404993 -0.142293606  0.17009666 -0.22350621  0.44737372
+[3,]  0.17226780 -0.426153536  0.350913139 -0.32949129  0.25777913 -0.10263448
+[4,]  0.06175110 -0.006460916  0.024828272 -0.03009337  0.04154812 -0.06254145
+[5,]  0.16875200  0.039839994 -0.058178534  0.06449504 -0.07772208 -0.18058630
+[6,]  0.03322073  0.112699877 -0.203543632  0.23987378 -0.35201736 -0.04075617
+            [,7]        [,8]         [,9]        [,10]       [,11]
+[1,]  0.01175375 -0.06494414  0.060929683 -0.011042644  0.03425156
+[2,] -0.48562818  0.19372285 -0.212186731 -0.107830147 -0.01503250
+[3,]  0.05005284 -0.02049877  0.014059330  0.010793169  0.04924166
+[4,]  0.05498432  0.01135031 -0.001877983 -0.005490454 -0.01254111
+[5,]  0.16151742  0.02723710  0.065483158  0.003326357 -0.05570035
+[6,]  0.02900006 -0.21508009  0.171627718  0.019241676  0.05775536</code></pre>
+</div>
+</div>
+</section>
+<section id="using-the-residuals-command-for-other-summaries" class="level3" data-number="34.7.2">
+<h3 data-number="34.7.2" class="anchored" data-anchor-id="using-the-residuals-command-for-other-summaries"><span class="header-section-number">34.7.2</span> Using the <code>residuals</code> command for other summaries</h3>
+<p>The <code>residuals</code> command will also let you get ordinary residuals, leverage values and <code>dffits</code> values, which are the normalized differences in predicted values when observations are omitted. See <code>?residuals.ols</code> for more details.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">area =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">60</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>temp<span class="sc">$</span>residual <span class="ot">&lt;-</span> <span class="fu">residuals</span>(newmod, <span class="at">type =</span> <span class="st">"ordinary"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>temp<span class="sc">$</span>leverage <span class="ot">&lt;-</span> <span class="fu">residuals</span>(newmod, <span class="at">type =</span> <span class="st">"hat"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>temp<span class="sc">$</span>dffits <span class="ot">&lt;-</span> <span class="fu">residuals</span>(newmod, <span class="at">type =</span> <span class="st">"dffits"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temp, <span class="fu">aes</span>(<span class="at">x =</span> area, <span class="at">y =</span> dffits)) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="34-olsfits_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>It appears that point 37 has the largest (positive) <code>dffits</code> value. Recall that point 37 seemed influential on several predictors and the intercept term. Point 32 has the smallest (or largest negative) <code>dffits</code>, and also appears to have been influential on several predictors and the intercept.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(temp<span class="sc">$</span>dffits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>37 
+37 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.min</span>(temp<span class="sc">$</span>dffits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>32 
+32 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="model-validation-and-correcting-for-optimism" class="level2" data-number="34.8">
+<h2 data-number="34.8" class="anchored" data-anchor-id="model-validation-and-correcting-for-optimism"><span class="header-section-number">34.8</span> Model Validation and Correcting for Optimism</h2>
+<p>We have learned about splitting our regression models into <strong>training</strong> samples and <strong>test</strong> samples, performing variable selection work on the training sample to identify two or three candidate models (perhaps via a stepwise approach), and then comparing the predictions made by those models in a test sample.</p>
+<p>The <code>validate</code> function allows us to perform cross-validation of our models for some summary statistics (and then correct those statistics for optimism in describing likely predictive accuracy) in an easy way.</p>
+<p><code>validate</code> develops:</p>
+<ul>
+<li>Resampling validation with or without backward elimination of variables</li>
+<li>Estimates of the <em>optimism</em> in measures of predictive accuracy</li>
+<li>Estimates of the intercept and slope of a calibration model</li>
+</ul>
+<p>with the following code…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">432002</span>); <span class="fu">validate</span>(newmod, <span class="at">method =</span> <span class="st">"boot"</span>, <span class="at">B =</span> <span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          index.orig training      test  optimism index.corrected  n
+R-square      0.6989   0.7426    0.5749    0.1676          0.5312 40
+MSE        1145.7800 963.9565 1617.4042 -653.4478       1799.2278 40
+g            58.9614  59.7891   54.6444    5.1447         53.8168 40
+Intercept     0.0000   0.0000   96.6990  -96.6990         96.6990 40
+Slope         1.0000   1.0000    0.8961    0.1039          0.8961 40</code></pre>
+</div>
+</div>
+<p>So, for <code>R-square</code> we see that our original estimate was 0.6989</p>
+<ul>
+<li>Our estimated <code>R-square</code> across <code>n</code> = 40 training samples was 0.7426, but in the resulting tests, the average <code>R-square</code> was only 0.5749</li>
+<li>This suggests an optimism of 0.7426 - 0.5749 = 0.1676 (after rounding).</li>
+<li>We then apply that optimism to obtain a new estimate of R<sup>2</sup> corrected for overfitting, at 0.5312, which is probably a better estimate of what our results might look like in new data that were similar to (but not the same as) the data we used in building <code>newmod</code> than our initial estimate of 0.6989</li>
+</ul>
+<p>We also obtain optimism-corrected estimates of the mean squared error (square of the residual standard deviation), the g index, and the intercept and slope of the calibration model. The “corrected” slope is a shrinkage factor that takes overfitting into account.</p>
+</section>
+<section id="building-a-nomogram-for-our-model" class="level2" data-number="34.9">
+<h2 data-number="34.9" class="anchored" data-anchor-id="building-a-nomogram-for-our-model"><span class="header-section-number">34.9</span> Building a Nomogram for Our Model</h2>
+<p>Another nice feature of an <code>ols</code> model object is that we can picture the model with a <strong>nomogram</strong> easily. Here is model <code>newmod</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">nomogram</span>(newmod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="34-olsfits_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>For this model, we can use this plot to predict <code>y</code> as follows:</p>
+<ol type="1">
+<li>find our values of <code>x9</code> on the appropriate line</li>
+<li>draw a vertical line up to the points line to count the points associated with our subject</li>
+<li>repeat the process to obtain the points associated with <code>x6</code>, <code>x14</code>, <code>x1</code>, and <code>x13</code>. Sum the points.</li>
+<li>draw a vertical line down from that number in the Total Points line to estimate <code>y</code> (the Linear Predictor) = Age-Adjusted Mortality Rate.</li>
+</ol>
+<p>The impact of the non-linearity is seen in the <code>x6</code> results, for example, which turn around from 9-10 to 11-12. We also see non-linearity’s effects in the scales of the non-linear terms in terms of points awarded.</p>
+<p>An area with a combination of predictor values leading to a total of 100 points, for instance, would lead to a prediction of a Mortality Rate near 905. An area with a total of 140 points would have a predicted Mortality Rate of 955, roughly.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Harrell2001" class="csl-entry" role="doc-biblioentry">
+Harrell, Frank E. 2001. <em>Regression Modeling Strategies</em>. New York: Springer.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./33-nonlinearity.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./35-emp_bmi.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">BMI and Employment Study</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

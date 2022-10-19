@@ -50,10 +50,9 @@ book:
         - 30-regr_diagnostics.qmd
         - 31-prediction_wcgs.qmd
         - 32-galapagos.qmd
-        - partChold.qmd
-##        - 33-emp_bmi.qmd
-##        - 34-nonlinearity.qmd
-##        - 35-olsfits.qmd
+        - 33-nonlinearity.qmd
+        - 34-olsfits.qmd
+        - 35-emp_bmi.qmd
   appendices:
     - 98_gettingdataintoR.qmd
     - 99_sessioninfo.qmd
