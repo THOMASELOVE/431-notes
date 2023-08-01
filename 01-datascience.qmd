@@ -30,7 +30,7 @@ This diagram is sometimes referred to as the Krebs Cycle of Data Science. For mo
 
 We'll discuss each of these elements in the 431 course, focusing at the start on understanding our data through transformation, modeling and (especially in the early stages) visualization. In 431, we learn how to get things done.
 
--   We get people working with R and R Studio and R Markdown, even if they are completely new to coding. A gentle introduction is provided at @ModernDive
+-   We get people working with R and R Studio and Quarto, even if they are completely new to coding. A gentle introduction is provided at @ModernDive
 -   We learn how to use the `tidyverse` (http://www.tidyverse.org/), an array of tools in R (mostly developed by Hadley Wickham and his colleagues at R Studio) which share an underlying philosophy to make data science faster, easier, more reproducible and more fun. A critical text for understanding the tidyverse is @R4DS. Tidyverse tools facilitate:
     -   **importing** data into R, which can be the source of intense pain for some things, but is really quite easy 95% of the time with the right tool.
     -   **tidying** data, that is, storing it in a format that includes one row per observation and one column per variable. This is harder, and more important, than you might think.

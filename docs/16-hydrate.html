@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
-
+<meta name="generator" content="quarto-1.3.353">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Course Notes for 431 - 16&nbsp; Dehydration Recovery</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -41,45 +44,14 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -95,11 +67,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -117,331 +90,258 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 </head>
-
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-penguins1.html">Part A. Exploring Data</a></li><li class="breadcrumb-item"><a href="./16-hydrate.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Course Notes for 431</a> 
-        <div class="sidebar-tools-main">
-    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+</div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with These Notes</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up R</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Part A. Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a>
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a>
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></a>
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./18-testing_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19-ci_for_mean.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./20-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./21-pairedsamples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./22-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sample Size and Power for Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./23-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./24-anova.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./25-one_proportion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./26-comparing_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./27-power_for_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Power and Proportions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./28-contingency_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29-mult_reg_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
-  </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./30-regr_diagnostics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Regression Diagnostics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./31-prediction_wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Building Prediction Models for <code>wcgs</code></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./32-galapagos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./33-nonlinearity.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./34-olsfits.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./35-emp_bmi.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">BMI and Employment Study</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
-    </div>
-</nav>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">16.1</span> Setup: Packages Used Here</a></li>
-  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data"> <span class="header-section-number">16.2</span> The Data</a></li>
-  <li><a href="#a-scatterplot-matrix" id="toc-a-scatterplot-matrix" class="nav-link" data-scroll-target="#a-scatterplot-matrix"> <span class="header-section-number">16.3</span> A Scatterplot Matrix</a></li>
-  <li><a href="#are-the-recovery-scores-well-described-by-a-normal-model" id="toc-are-the-recovery-scores-well-described-by-a-normal-model" class="nav-link" data-scroll-target="#are-the-recovery-scores-well-described-by-a-normal-model"> <span class="header-section-number">16.4</span> Are the recovery scores well described by a Normal model?</a></li>
-  <li><a href="#simple-regression-using-dose-to-predict-recovery" id="toc-simple-regression-using-dose-to-predict-recovery" class="nav-link" data-scroll-target="#simple-regression-using-dose-to-predict-recovery"> <span class="header-section-number">16.5</span> Simple Regression: Using Dose to predict Recovery</a></li>
-  <li><a href="#the-scatterplot-with-fitted-linear-model" id="toc-the-scatterplot-with-fitted-linear-model" class="nav-link" data-scroll-target="#the-scatterplot-with-fitted-linear-model"> <span class="header-section-number">16.6</span> The Scatterplot, with fitted Linear Model</a></li>
-  <li><a href="#the-fitted-linear-model" id="toc-the-fitted-linear-model" class="nav-link" data-scroll-target="#the-fitted-linear-model"> <span class="header-section-number">16.7</span> The Fitted Linear Model</a>
+<li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"><span class="header-section-number">16.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data"><span class="header-section-number">16.2</span> The Data</a></li>
+  <li><a href="#a-scatterplot-matrix" id="toc-a-scatterplot-matrix" class="nav-link" data-scroll-target="#a-scatterplot-matrix"><span class="header-section-number">16.3</span> A Scatterplot Matrix</a></li>
+  <li><a href="#are-the-recovery-scores-well-described-by-a-normal-model" id="toc-are-the-recovery-scores-well-described-by-a-normal-model" class="nav-link" data-scroll-target="#are-the-recovery-scores-well-described-by-a-normal-model"><span class="header-section-number">16.4</span> Are the recovery scores well described by a Normal model?</a></li>
+  <li><a href="#simple-regression-using-dose-to-predict-recovery" id="toc-simple-regression-using-dose-to-predict-recovery" class="nav-link" data-scroll-target="#simple-regression-using-dose-to-predict-recovery"><span class="header-section-number">16.5</span> Simple Regression: Using Dose to predict Recovery</a></li>
+  <li><a href="#the-scatterplot-with-fitted-linear-model" id="toc-the-scatterplot-with-fitted-linear-model" class="nav-link" data-scroll-target="#the-scatterplot-with-fitted-linear-model"><span class="header-section-number">16.6</span> The Scatterplot, with fitted Linear Model</a></li>
+  <li>
+<a href="#the-fitted-linear-model" id="toc-the-fitted-linear-model" class="nav-link" data-scroll-target="#the-fitted-linear-model"><span class="header-section-number">16.7</span> The Fitted Linear Model</a>
   <ul class="collapse">
-  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"> <span class="header-section-number">16.7.1</span> Confidence Intervals</a></li>
-  </ul></li>
-  <li><a href="#coefficient-plots-with-modelplot" id="toc-coefficient-plots-with-modelplot" class="nav-link" data-scroll-target="#coefficient-plots-with-modelplot"> <span class="header-section-number">16.8</span> Coefficient Plots with <code>modelplot</code></a></li>
-  <li><a href="#coefficient-plots-with-ggstance" id="toc-coefficient-plots-with-ggstance" class="nav-link" data-scroll-target="#coefficient-plots-with-ggstance"> <span class="header-section-number">16.9</span> Coefficient Plots with <code>ggstance</code></a></li>
-  <li><a href="#the-summary-output" id="toc-the-summary-output" class="nav-link" data-scroll-target="#the-summary-output"> <span class="header-section-number">16.10</span> The Summary Output</a>
-  <ul class="collapse">
-  <li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification"> <span class="header-section-number">16.10.1</span> Model Specification</a></li>
-  <li><a href="#residual-summary" id="toc-residual-summary" class="nav-link" data-scroll-target="#residual-summary"> <span class="header-section-number">16.10.2</span> Residual Summary</a></li>
-  <li><a href="#coefficients-output" id="toc-coefficients-output" class="nav-link" data-scroll-target="#coefficients-output"> <span class="header-section-number">16.10.3</span> Coefficients Output</a></li>
-  <li><a href="#correlation-and-slope" id="toc-correlation-and-slope" class="nav-link" data-scroll-target="#correlation-and-slope"> <span class="header-section-number">16.10.4</span> Correlation and Slope</a></li>
-  <li><a href="#coefficient-testing" id="toc-coefficient-testing" class="nav-link" data-scroll-target="#coefficient-testing"> <span class="header-section-number">16.10.5</span> Coefficient Testing</a></li>
-  <li><a href="#summarizing-the-quality-of-fit" id="toc-summarizing-the-quality-of-fit" class="nav-link" data-scroll-target="#summarizing-the-quality-of-fit"> <span class="header-section-number">16.10.6</span> Summarizing the Quality of Fit</a></li>
-  <li><a href="#anova-f-test" id="toc-anova-f-test" class="nav-link" data-scroll-target="#anova-f-test"> <span class="header-section-number">16.10.7</span> ANOVA F test</a></li>
-  </ul></li>
-  <li><a href="#viewing-the-complete-anova-table" id="toc-viewing-the-complete-anova-table" class="nav-link" data-scroll-target="#viewing-the-complete-anova-table"> <span class="header-section-number">16.11</span> Viewing the complete ANOVA table</a></li>
-  <li><a href="#using-glance-to-summarize-the-models-fit" id="toc-using-glance-to-summarize-the-models-fit" class="nav-link" data-scroll-target="#using-glance-to-summarize-the-models-fit"> <span class="header-section-number">16.12</span> Using <code>glance</code> to summarize the model’s fit</a></li>
-  <li><a href="#plotting-residuals-vs.-fitted-values" id="toc-plotting-residuals-vs.-fitted-values" class="nav-link" data-scroll-target="#plotting-residuals-vs.-fitted-values"> <span class="header-section-number">16.13</span> Plotting Residuals vs.&nbsp;Fitted Values</a></li>
+<li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">16.7.1</span> Confidence Intervals</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#coefficient-plots-with-modelplot" id="toc-coefficient-plots-with-modelplot" class="nav-link" data-scroll-target="#coefficient-plots-with-modelplot"><span class="header-section-number">16.8</span> Coefficient Plots with <code>modelplot</code></a></li>
+  <li><a href="#coefficient-plots-with-ggstance" id="toc-coefficient-plots-with-ggstance" class="nav-link" data-scroll-target="#coefficient-plots-with-ggstance"><span class="header-section-number">16.9</span> Coefficient Plots with <code>ggstance</code></a></li>
+  <li>
+<a href="#the-summary-output" id="toc-the-summary-output" class="nav-link" data-scroll-target="#the-summary-output"><span class="header-section-number">16.10</span> The Summary Output</a>
+  <ul class="collapse">
+<li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification"><span class="header-section-number">16.10.1</span> Model Specification</a></li>
+  <li><a href="#residual-summary" id="toc-residual-summary" class="nav-link" data-scroll-target="#residual-summary"><span class="header-section-number">16.10.2</span> Residual Summary</a></li>
+  <li><a href="#coefficients-output" id="toc-coefficients-output" class="nav-link" data-scroll-target="#coefficients-output"><span class="header-section-number">16.10.3</span> Coefficients Output</a></li>
+  <li><a href="#correlation-and-slope" id="toc-correlation-and-slope" class="nav-link" data-scroll-target="#correlation-and-slope"><span class="header-section-number">16.10.4</span> Correlation and Slope</a></li>
+  <li><a href="#coefficient-testing" id="toc-coefficient-testing" class="nav-link" data-scroll-target="#coefficient-testing"><span class="header-section-number">16.10.5</span> Coefficient Testing</a></li>
+  <li><a href="#summarizing-the-quality-of-fit" id="toc-summarizing-the-quality-of-fit" class="nav-link" data-scroll-target="#summarizing-the-quality-of-fit"><span class="header-section-number">16.10.6</span> Summarizing the Quality of Fit</a></li>
+  <li><a href="#anova-f-test" id="toc-anova-f-test" class="nav-link" data-scroll-target="#anova-f-test"><span class="header-section-number">16.10.7</span> ANOVA F test</a></li>
+  </ul>
+</li>
+  <li><a href="#viewing-the-complete-anova-table" id="toc-viewing-the-complete-anova-table" class="nav-link" data-scroll-target="#viewing-the-complete-anova-table"><span class="header-section-number">16.11</span> Viewing the complete ANOVA table</a></li>
+  <li><a href="#using-glance-to-summarize-the-models-fit" id="toc-using-glance-to-summarize-the-models-fit" class="nav-link" data-scroll-target="#using-glance-to-summarize-the-models-fit"><span class="header-section-number">16.12</span> Using <code>glance</code> to summarize the model’s fit</a></li>
+  <li><a href="#plotting-residuals-vs.-fitted-values" id="toc-plotting-residuals-vs.-fitted-values" class="nav-link" data-scroll-target="#plotting-residuals-vs.-fitted-values"><span class="header-section-number">16.13</span> Plotting Residuals vs.&nbsp;Fitted Values</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="sec-Hydrate-Study" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-Hydrate-Study" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span></h1>
 </div>
 
 
@@ -449,39 +349,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
-</header>
-
-<section id="setup-packages-used-here" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">16.1</span> Setup: Packages Used Here</h2>
+</header><section id="setup-packages-used-here" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="setup-packages-used-here">
+<span class="header-section-number">16.1</span> Setup: Packages Used Here</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggstance)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>comment <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lionel-/ggstance">ggstance</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vincentarelbundock.github.io/modelsummary/">modelsummary</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will also use the <code>favstats</code> function from the <code>mosaic</code> package.</p>
-</section>
-<section id="the-data" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="the-data"><span class="header-section-number">16.2</span> The Data</h2>
+</section><section id="the-data" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="the-data">
+<span class="header-section-number">16.2</span> The Data</h2>
 <p>The <code>hydrate</code> data describe the degree of recovery that takes place 90 minutes following treatment of moderate to severe dehydration, for 36 children diagnosed at a hospital’s main pediatric clinic.</p>
 <p>Upon diagnosis and study entry, patients were treated with an electrolytic solution at one of seven <code>dose</code> levels (0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0 mEq/l) in a frozen, flavored, ice popsicle. The degree of rehydration was determined using a subjective scale based on physical examination and parental input, converted to a 0 to 100 point scale, representing the percent of recovery (<code>recov.score</code>). Each child’s <code>age</code> (in years) and <code>weight</code> (in pounds) are also available.</p>
 <p>First, we’ll check ranges (and for missing data) in the <code>hydrate</code> file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hydrate <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/hydrate.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hydrate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hydrate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/hydrate.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">hydrate</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       id         recov.score          dose            age        
  Min.   : 1.00   Min.   : 44.00   Min.   :0.000   Min.   : 3.000  
@@ -500,14 +398,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>There are no missing values, and all of the ranges make sense. There are no especially egregious problems to report.</p>
-</section>
-<section id="a-scatterplot-matrix" class="level2" data-number="16.3">
-<h2 data-number="16.3" class="anchored" data-anchor-id="a-scatterplot-matrix"><span class="header-section-number">16.3</span> A Scatterplot Matrix</h2>
+</section><section id="a-scatterplot-matrix" class="level2" data-number="16.3"><h2 data-number="16.3" class="anchored" data-anchor-id="a-scatterplot-matrix">
+<span class="header-section-number">16.3</span> A Scatterplot Matrix</h2>
 <p>Next, we’ll use a scatterplot matrix to summarize relationships between the outcome <code>recov.score</code> and the key predictor <code>dose</code> as well as the ancillary predictors <code>age</code> and <code>weight</code>, which are of less interest, but are expected to be related to our outcome. The one below uses the <code>ggpairs</code> function in the <code>GGally</code> package, as introduced in Part A of the Notes. We place the outcome in the bottom row, and the key predictor immediately above it, with <code>age</code> and <code>weight</code> in the top rows, using the <code>select</code> function within the `<code>ggpairs</code> call.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hydrate <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, weight, dose, recov.score) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hydrate</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">weight</span>, <span class="va">dose</span>, <span class="va">recov.score</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -516,224 +413,220 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>It looks like <code>recov.score</code> has a moderately strong negative relationship with both <code>age</code> and <code>weight</code> (with correlations in each case around -0.5), but a positive relationship with <code>dose</code> (correlation = 0.36).</li>
 <li>The distribution of <code>recov.score</code> looks to be pretty close to Normal. No potential predictors (<code>age</code>, <code>weight</code> and <code>dose</code>) show substantial non-Normality.</li>
-<li><code>age</code> and <code>weight</code>, as we’d expect, show a very strong and positive linear relationship, with <em>r</em> = 0.94</li>
+<li>
+<code>age</code> and <code>weight</code>, as we’d expect, show a very strong and positive linear relationship, with <em>r</em> = 0.94</li>
 <li>Neither <code>age</code> nor <code>weight</code> shows a meaningful relationship with <code>dose</code>. (<em>r</em> = 0.16)</li>
-</ul>
-</section>
-<section id="are-the-recovery-scores-well-described-by-a-normal-model" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="are-the-recovery-scores-well-described-by-a-normal-model"><span class="header-section-number">16.4</span> Are the recovery scores well described by a Normal model?</h2>
+</ul></section><section id="are-the-recovery-scores-well-described-by-a-normal-model" class="level2" data-number="16.4"><h2 data-number="16.4" class="anchored" data-anchor-id="are-the-recovery-scores-well-described-by-a-normal-model">
+<span class="header-section-number">16.4</span> Are the recovery scores well described by a Normal model?</h2>
 <p>Next, we’ll do a more thorough graphical summary of our outcome, recovery score.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hydrate, <span class="fu">aes</span>(<span class="at">sample =</span> recov.score)) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="at">col =</span> <span class="st">'#440154'</span>) <span class="sc">+</span> <span class="fu">geom_qq_line</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Normal Q-Q plot: hydrate"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hydrate, <span class="fu">aes</span>(<span class="at">x =</span> recov.score)) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">stat</span>(density)), </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">10</span>, <span class="at">fill =</span> <span class="st">'#440154'</span>, <span class="at">col =</span> <span class="st">'#FDE725'</span>) <span class="sc">+</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(hydrate<span class="sc">$</span>recov.score), </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="fu">sd</span>(hydrate<span class="sc">$</span>recov.score)),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Density Function: hydrate"</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hydrate, <span class="fu">aes</span>(<span class="at">x =</span> recov.score, <span class="at">y =</span> <span class="st">""</span>)) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">'#440154'</span>, <span class="at">outlier.color =</span> <span class="st">'#440154'</span>) <span class="sc">+</span> </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Boxplot: hydrate"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> (p2 <span class="sc">/</span> p3 <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hydrate</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">recov.score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">'#440154'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq_line</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Normal Q-Q plot: hydrate"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hydrate</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">recov.score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                 bins <span class="op">=</span> <span class="fl">10</span>, fill <span class="op">=</span> <span class="st">'#440154'</span>, col <span class="op">=</span> <span class="st">'#FDE725'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">dnorm</span>, </span>
+<span>                args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">hydrate</span><span class="op">$</span><span class="va">recov.score</span><span class="op">)</span>, </span>
+<span>                            sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">hydrate</span><span class="op">$</span><span class="va">recov.score</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                col <span class="op">=</span> <span class="st">"red"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Density Function: hydrate"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hydrate</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">recov.score</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'#440154'</span>, outlier.color <span class="op">=</span> <span class="st">'#440154'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Boxplot: hydrate"</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p1</span> <span class="op">+</span> <span class="op">(</span><span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `stat(density)` was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">favstats</span>(<span class="sc">~</span> recov.score, <span class="at">data =</span> hydrate) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">mosaic</span><span class="fu">::</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span> <span class="va">recov.score</span>, data <span class="op">=</span> <span class="va">hydrate</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> min </th>
-   <th style="text-align:right;"> Q1 </th>
-   <th style="text-align:right;"> median </th>
-   <th style="text-align:right;"> Q3 </th>
-   <th style="text-align:right;"> max </th>
-   <th style="text-align:right;"> mean </th>
-   <th style="text-align:right;"> sd </th>
-   <th style="text-align:right;"> n </th>
-   <th style="text-align:right;"> missing </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;"> 44 </td>
-   <td style="text-align:right;"> 61.5 </td>
-   <td style="text-align:right;"> 71.5 </td>
-   <td style="text-align:right;"> 80 </td>
-   <td style="text-align:right;"> 100 </td>
-   <td style="text-align:right;"> 71.6 </td>
-   <td style="text-align:right;"> 12.9 </td>
-   <td style="text-align:right;"> 36 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-</tbody>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">missing</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">61.5</td>
+<td style="text-align: right;">71.5</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">71.6</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">0</td>
+</tr></tbody>
 </table>
-
 </div>
 </div>
 <p>I see no serious problems with assuming Normality for these recovery scores. Our outcome variable doesn’t in any way <em>need</em> to follow a Normal distribution, but it’s nice when it does, because summaries involving means and standard deviations make sense.</p>
-</section>
-<section id="simple-regression-using-dose-to-predict-recovery" class="level2" data-number="16.5">
-<h2 data-number="16.5" class="anchored" data-anchor-id="simple-regression-using-dose-to-predict-recovery"><span class="header-section-number">16.5</span> Simple Regression: Using Dose to predict Recovery</h2>
+</section><section id="simple-regression-using-dose-to-predict-recovery" class="level2" data-number="16.5"><h2 data-number="16.5" class="anchored" data-anchor-id="simple-regression-using-dose-to-predict-recovery">
+<span class="header-section-number">16.5</span> Simple Regression: Using Dose to predict Recovery</h2>
 <p>To start, consider a simple (one predictor) regression model using <code>dose</code> alone to predict the % Recovery (<code>recov.score</code>). Ignoring the <code>age</code> and <code>weight</code> covariates, what can we conclude about this relationship?</p>
-</section>
-<section id="the-scatterplot-with-fitted-linear-model" class="level2" data-number="16.6">
-<h2 data-number="16.6" class="anchored" data-anchor-id="the-scatterplot-with-fitted-linear-model"><span class="header-section-number">16.6</span> The Scatterplot, with fitted Linear Model</h2>
+</section><section id="the-scatterplot-with-fitted-linear-model" class="level2" data-number="16.6"><h2 data-number="16.6" class="anchored" data-anchor-id="the-scatterplot-with-fitted-linear-model">
+<span class="header-section-number">16.6</span> The Scatterplot, with fitted Linear Model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hydrate, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> recov.score)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simple Regression model for the hydrate data"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Dose (mEq/l)"</span>, <span class="at">y =</span> <span class="st">"Recovery Score (points)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hydrate</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dose</span>, y <span class="op">=</span> <span class="va">recov.score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Simple Regression model for the hydrate data"</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"Dose (mEq/l)"</span>, y <span class="op">=</span> <span class="st">"Recovery Score (points)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="the-fitted-linear-model" class="level2" data-number="16.7">
-<h2 data-number="16.7" class="anchored" data-anchor-id="the-fitted-linear-model"><span class="header-section-number">16.7</span> The Fitted Linear Model</h2>
+</section><section id="the-fitted-linear-model" class="level2" data-number="16.7"><h2 data-number="16.7" class="anchored" data-anchor-id="the-fitted-linear-model">
+<span class="header-section-number">16.7</span> The Fitted Linear Model</h2>
 <p>To obtain the fitted linear regression model, we use the <code>lm</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(recov.score <span class="sc">~</span> dose, <span class="at">data =</span> hydrate)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m1) <span class="sc">|&gt;</span> <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">recov.score</span> <span class="op">~</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">hydrate</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:right;"> estimate </th>
-   <th style="text-align:right;"> std.error </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-  </tr>
- </thead>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std.error</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">statistic</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 63.90 </td>
-   <td style="text-align:right;"> 3.97 </td>
-   <td style="text-align:right;"> 16.09 </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> dose </td>
-   <td style="text-align:right;"> 4.88 </td>
-   <td style="text-align:right;"> 2.17 </td>
-   <td style="text-align:right;"> 2.25 </td>
-   <td style="text-align:right;"> 0.03 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">63.90</td>
+<td style="text-align: right;">3.97</td>
+<td style="text-align: right;">16.09</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dose</td>
+<td style="text-align: right;">4.88</td>
+<td style="text-align: right;">2.17</td>
+<td style="text-align: right;">2.25</td>
+<td style="text-align: right;">0.03</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>So, our fitted regression model (prediction model) is <code>recov.score</code> = 63.9 + 4.88 <code>dose</code>.</p>
-<section id="confidence-intervals" class="level3" data-number="16.7.1">
-<h3 data-number="16.7.1" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">16.7.1</span> Confidence Intervals</h3>
+<section id="confidence-intervals" class="level3" data-number="16.7.1"><h3 data-number="16.7.1" class="anchored" data-anchor-id="confidence-intervals">
+<span class="header-section-number">16.7.1</span> Confidence Intervals</h3>
 <p>We can obtain confidence intervals around the coefficients of our fitted model with <code>tidy</code>, too.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m1, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">m1</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span>, conf.level <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:right;"> estimate </th>
-   <th style="text-align:right;"> std.error </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:right;"> conf.low </th>
-   <th style="text-align:right;"> conf.high </th>
-  </tr>
- </thead>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std.error</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">statistic</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">conf.low</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">conf.high</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 63.90 </td>
-   <td style="text-align:right;"> 3.97 </td>
-   <td style="text-align:right;"> 16.09 </td>
-   <td style="text-align:right;"> 0.00 </td>
-   <td style="text-align:right;"> 57.18 </td>
-   <td style="text-align:right;"> 70.61 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> dose </td>
-   <td style="text-align:right;"> 4.88 </td>
-   <td style="text-align:right;"> 2.17 </td>
-   <td style="text-align:right;"> 2.25 </td>
-   <td style="text-align:right;"> 0.03 </td>
-   <td style="text-align:right;"> 1.21 </td>
-   <td style="text-align:right;"> 8.55 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">63.90</td>
+<td style="text-align: right;">3.97</td>
+<td style="text-align: right;">16.09</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">57.18</td>
+<td style="text-align: right;">70.61</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dose</td>
+<td style="text-align: right;">4.88</td>
+<td style="text-align: right;">2.17</td>
+<td style="text-align: right;">2.25</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">1.21</td>
+<td style="text-align: right;">8.55</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>So, our 90% confidence interval for the slope of <code>dose</code> ranges from 1.21 to 8.55.</p>
-</section>
-</section>
-<section id="coefficient-plots-with-modelplot" class="level2" data-number="16.8">
-<h2 data-number="16.8" class="anchored" data-anchor-id="coefficient-plots-with-modelplot"><span class="header-section-number">16.8</span> Coefficient Plots with <code>modelplot</code></h2>
-<p>The <code>modelplot()</code> function from the <code>modelsummary</code> package can provide us with one potential graph.</p>
+</section></section><section id="coefficient-plots-with-modelplot" class="level2" data-number="16.8"><h2 data-number="16.8" class="anchored" data-anchor-id="coefficient-plots-with-modelplot">
+<span class="header-section-number">16.8</span> Coefficient Plots with <code>modelplot</code>
+</h2>
+<p>The <code><a href="https://vincentarelbundock.github.io/modelsummary/reference/modelplot.html">modelplot()</a></code> function from the <code>modelsummary</code> package can provide us with one potential graph.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelplot</span>(m1, <span class="at">conf_level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/modelplot.html">modelplot</a></span><span class="op">(</span><span class="va">m1</span>, conf_level <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="coefficient-plots-with-ggstance" class="level2" data-number="16.9">
-<h2 data-number="16.9" class="anchored" data-anchor-id="coefficient-plots-with-ggstance"><span class="header-section-number">16.9</span> Coefficient Plots with <code>ggstance</code></h2>
+</section><section id="coefficient-plots-with-ggstance" class="level2" data-number="16.9"><h2 data-number="16.9" class="anchored" data-anchor-id="coefficient-plots-with-ggstance">
+<span class="header-section-number">16.9</span> Coefficient Plots with <code>ggstance</code>
+</h2>
 <p>The <code>tidy</code> method makes it easy to construct coefficient plots using <code>ggplot2</code>, and we’ll also make use of the <code>geom_crossbarh</code> function from the <code>ggstance</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">tidy</span>(m1, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(td, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> term, <span class="at">col =</span> term)) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_crossbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> conf.low, <span class="at">xmax =</span> conf.high)) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">col =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Estimates with 90% confidence intervals from m1 in hydrate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">td</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">m1</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span>, conf.level <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">td</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="va">term</span>, col <span class="op">=</span> <span class="va">term</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggstance/man/geom_linerangeh.html">geom_crossbarh</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">conf.low</span>, xmax <span class="op">=</span> <span class="va">conf.high</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Estimates with 90% confidence intervals from m1 in hydrate"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthetic with geom_polygon was deprecated in ggplot2 3.4.0.
+ℹ Please use the `linewidth` aesthetic instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthetic with geom_segment was deprecated in ggplot2 3.4.0.
+ℹ Please use the `linewidth` aesthetic instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Another option would be to use <code>geom_errorbarh</code> in this setting, perhaps with a different color scheme…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>td <span class="ot">&lt;-</span> <span class="fu">tidy</span>(m1, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(td, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> term, <span class="at">col =</span> term)) <span class="sc">+</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> conf.low, <span class="at">xmax =</span> conf.high)) <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">col =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Estimates with 90% confidence intervals from m1 in hydrate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">td</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">m1</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span>, conf.level <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">td</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="va">term</span>, col <span class="op">=</span> <span class="va">term</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_errorbarh</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">conf.low</span>, xmax <span class="op">=</span> <span class="va">conf.high</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_color_viridis_d</a></span><span class="op">(</span>end <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Estimates with 90% confidence intervals from m1 in hydrate"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthetic with geom_path was deprecated in ggplot2 3.4.0.
+ℹ Please use the `linewidth` aesthetic instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="the-summary-output" class="level2" data-number="16.10">
-<h2 data-number="16.10" class="anchored" data-anchor-id="the-summary-output"><span class="header-section-number">16.10</span> The Summary Output</h2>
+</section><section id="the-summary-output" class="level2" data-number="16.10"><h2 data-number="16.10" class="anchored" data-anchor-id="the-summary-output">
+<span class="header-section-number">16.10</span> The Summary Output</h2>
 <p>To get a more complete understanding of the fitted model, we’ll summarize it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(recov.score <span class="sc">~</span> dose, <span class="at">data =</span> hydrate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">recov.score</span> <span class="op">~</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">hydrate</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -755,18 +648,17 @@ Multiple R-squared:  0.1293,    Adjusted R-squared:  0.1037
 F-statistic: 5.047 on 1 and 34 DF,  p-value: 0.03127</code></pre>
 </div>
 </div>
-<section id="model-specification" class="level3" data-number="16.10.1">
-<h3 data-number="16.10.1" class="anchored" data-anchor-id="model-specification"><span class="header-section-number">16.10.1</span> Model Specification</h3>
+<section id="model-specification" class="level3" data-number="16.10.1"><h3 data-number="16.10.1" class="anchored" data-anchor-id="model-specification">
+<span class="header-section-number">16.10.1</span> Model Specification</h3>
 <ol type="1">
 <li>The first part of the output specifies the model that has been fit.
 <ul>
 <li>Here, we have a simple regression model that predicts <code>recov.score</code> on the basis of <code>dose</code>.</li>
 <li>Notice that we’re treating <code>dose</code> here as a quantitative variable. If we wanted <code>dose</code> to be treated as a factor, we’d have specified that in the model.</li>
-</ul></li>
-</ol>
-</section>
-<section id="residual-summary" class="level3" data-number="16.10.2">
-<h3 data-number="16.10.2" class="anchored" data-anchor-id="residual-summary"><span class="header-section-number">16.10.2</span> Residual Summary</h3>
+</ul>
+</li>
+</ol></section><section id="residual-summary" class="level3" data-number="16.10.2"><h3 data-number="16.10.2" class="anchored" data-anchor-id="residual-summary">
+<span class="header-section-number">16.10.2</span> Residual Summary</h3>
 <ol start="2" type="1">
 <li>The second part of the output summarizes the regression <strong>residuals</strong> across the subjects involved in fitting the model.
 <ul>
@@ -781,12 +673,12 @@ F-statistic: 5.047 on 1 and 34 DF,  p-value: 0.03127</code></pre>
 <li>The minimum and maximum show us the largest prediction errors, made in the subjects used to fit this model.</li>
 <li>Here, we predicted a recovery score that was 22.3 points too high for one patient, and another of our predicted recovery scores was 23.9 points too low.</li>
 <li>The middle half of our predictions were between 8.4 points too low and 7.3 points too high.</li>
-</ul></li>
-</ul></li>
-</ol>
-</section>
-<section id="coefficients-output" class="level3" data-number="16.10.3">
-<h3 data-number="16.10.3" class="anchored" data-anchor-id="coefficients-output"><span class="header-section-number">16.10.3</span> Coefficients Output</h3>
+</ul>
+</li>
+</ul>
+</li>
+</ol></section><section id="coefficients-output" class="level3" data-number="16.10.3"><h3 data-number="16.10.3" class="anchored" data-anchor-id="coefficients-output">
+<span class="header-section-number">16.10.3</span> Coefficients Output</h3>
 <ol start="3" type="1">
 <li>The <strong>Coefficients</strong> output begins with a table of the estimated coefficients from the regression equation.
 <ul>
@@ -794,11 +686,16 @@ F-statistic: 5.047 on 1 and 34 DF,  p-value: 0.03127</code></pre>
 <li>In the <code>hydrate</code> model, we have <code>recov.score</code> = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> <code>dose</code>.</li>
 <li>The first column of the table gives the estimated <span class="math inline">\(\beta\)</span> coefficients for our model
 <ul>
-<li>Here the estimated intercept <span class="math inline">\(\hat{\beta_0} = 63.9\)</span></li>
-<li>The estimated slope of dose <span class="math inline">\(\hat{\beta_1} = 4.88\)</span></li>
-<li>Thus, our model is <code>recov.score</code>= 63.9 + 4.88 <code>dose</code></li>
-</ul></li>
-</ul></li>
+<li>Here the estimated intercept <span class="math inline">\(\hat{\beta_0} = 63.9\)</span>
+</li>
+<li>The estimated slope of dose <span class="math inline">\(\hat{\beta_1} = 4.88\)</span>
+</li>
+<li>Thus, our model is <code>recov.score</code>= 63.9 + 4.88 <code>dose</code>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 <p>We interpret these coefficients as follows:</p>
 <ul>
@@ -807,25 +704,23 @@ F-statistic: 5.047 on 1 and 34 DF,  p-value: 0.03127</code></pre>
 <ul>
 <li>Essentially, if we have two children like the ones studied here, and we give Roger a popsicle with dose X and Sarah a popsicle with dose X + 1, then this model predicts that Sarah will have a recovery score that is 4.88 points higher than will Roger.</li>
 <li>From the confidence interval output we saw previously with the function <code>confint(lm(recov.score ~ dose))</code>, we are 95% confident that the true slope for <code>dose</code> is between (0.47, 9.30) mEq/l. We are also 95% confident that the true intercept is between (55.8, 72.0).</li>
-</ul></li>
 </ul>
-</section>
-<section id="correlation-and-slope" class="level3" data-number="16.10.4">
-<h3 data-number="16.10.4" class="anchored" data-anchor-id="correlation-and-slope"><span class="header-section-number">16.10.4</span> Correlation and Slope</h3>
+</li>
+</ul></section><section id="correlation-and-slope" class="level3" data-number="16.10.4"><h3 data-number="16.10.4" class="anchored" data-anchor-id="correlation-and-slope">
+<span class="header-section-number">16.10.4</span> Correlation and Slope</h3>
 <p>If we like, we can use the <code>cor</code> function to specify the Pearson correlation of <code>recov.score</code> and <code>dose</code>, which turns out to be 0.36. - Note that the <strong>slope</strong> in a simple regression model will follow the sign of the Pearson correlation coefficient, in this case, both will be positive.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hydrate <span class="sc">|&gt;</span> <span class="fu">select</span>(recov.score, dose) <span class="sc">|&gt;</span> <span class="fu">cor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hydrate</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">recov.score</span>, <span class="va">dose</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            recov.score     dose
 recov.score    1.000000 0.359528
 dose           0.359528 1.000000</code></pre>
 </div>
 </div>
-</section>
-<section id="coefficient-testing" class="level3" data-number="16.10.5">
-<h3 data-number="16.10.5" class="anchored" data-anchor-id="coefficient-testing"><span class="header-section-number">16.10.5</span> Coefficient Testing</h3>
+</section><section id="coefficient-testing" class="level3" data-number="16.10.5"><h3 data-number="16.10.5" class="anchored" data-anchor-id="coefficient-testing">
+<span class="header-section-number">16.10.5</span> Coefficient Testing</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(recov.score <span class="sc">~</span> dose, <span class="at">data =</span> hydrate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">recov.score</span> <span class="op">~</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">hydrate</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -849,57 +744,57 @@ F-statistic: 5.047 on 1 and 34 DF,  p-value: 0.03127</code></pre>
 </div>
 <p>Next to each coefficient in the summary regression table is its estimated standard error, followed by the coefficient’s t value (the coefficient value divided by the standard error), and the associated two-tailed <em>p</em> value for the test of:</p>
 <ul>
-<li><span class="math inline">\(H_0\)</span>: This coefficient’s <span class="math inline">\(\beta\)</span> value = 0 vs.&nbsp;</li>
-<li><span class="math inline">\(H_A\)</span>: This coefficient’s <span class="math inline">\(\beta\)</span> value <span class="math inline">\(\neq\)</span> 0.</li>
+<li>
+<span class="math inline">\(H_0\)</span>: This coefficient’s <span class="math inline">\(\beta\)</span> value = 0 vs.&nbsp;</li>
+<li>
+<span class="math inline">\(H_A\)</span>: This coefficient’s <span class="math inline">\(\beta\)</span> value <span class="math inline">\(\neq\)</span> 0.</li>
 </ul>
 <p>For the slope coefficient, we can interpret this choice as:</p>
 <ul>
-<li><span class="math inline">\(H_0\)</span>: This predictor adds minimal detectable predictive value to the model vs.&nbsp;</li>
-<li><span class="math inline">\(H_A\)</span>: This predictor adds some predictive value to the model.</li>
+<li>
+<span class="math inline">\(H_0\)</span>: This predictor adds minimal detectable predictive value to the model vs.&nbsp;</li>
+<li>
+<span class="math inline">\(H_A\)</span>: This predictor adds some predictive value to the model.</li>
 </ul>
 <p>In the <code>hydrate</code> simple regression model, by running either <code>tidy</code> with or just the <code>confint</code> function shown below, we can establish a confidence interval for each of the estimated regression coefficients.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(m1, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>) <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">m1</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:right;"> estimate </th>
-   <th style="text-align:right;"> std.error </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:right;"> conf.low </th>
-   <th style="text-align:right;"> conf.high </th>
-  </tr>
- </thead>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std.error</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">statistic</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">conf.low</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">conf.high</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 63.90 </td>
-   <td style="text-align:right;"> 3.97 </td>
-   <td style="text-align:right;"> 16.09 </td>
-   <td style="text-align:right;"> 0.00 </td>
-   <td style="text-align:right;"> 55.83 </td>
-   <td style="text-align:right;"> 71.96 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> dose </td>
-   <td style="text-align:right;"> 4.88 </td>
-   <td style="text-align:right;"> 2.17 </td>
-   <td style="text-align:right;"> 2.25 </td>
-   <td style="text-align:right;"> 0.03 </td>
-   <td style="text-align:right;"> 0.47 </td>
-   <td style="text-align:right;"> 9.30 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">63.90</td>
+<td style="text-align: right;">3.97</td>
+<td style="text-align: right;">16.09</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">55.83</td>
+<td style="text-align: right;">71.96</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dose</td>
+<td style="text-align: right;">4.88</td>
+<td style="text-align: right;">2.17</td>
+<td style="text-align: right;">2.25</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">9.30</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m1, <span class="at">level =</span> .<span class="dv">95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">m1</span>, level <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
 (Intercept) 55.826922 71.964589
@@ -908,9 +803,8 @@ dose         0.465695  9.295466</code></pre>
 </div>
 <p>If the slope of dose was in fact zero, then this would mean that knowing the dose information would be of no additional value in predicting the outcome over just guessing the mean of <code>recov.score</code> for every subject.</p>
 <p>So, since the confidence interval for the slope of dose does not include zero, it appears that there is at least some evidence that the model <code>m1</code> is more effective than a model that ignores the <code>dose</code> information (and simply predicts the mean of <code>recov.score</code> for each subject.) That’s not saying much, actually.</p>
-</section>
-<section id="summarizing-the-quality-of-fit" class="level3" data-number="16.10.6">
-<h3 data-number="16.10.6" class="anchored" data-anchor-id="summarizing-the-quality-of-fit"><span class="header-section-number">16.10.6</span> Summarizing the Quality of Fit</h3>
+</section><section id="summarizing-the-quality-of-fit" class="level3" data-number="16.10.6"><h3 data-number="16.10.6" class="anchored" data-anchor-id="summarizing-the-quality-of-fit">
+<span class="header-section-number">16.10.6</span> Summarizing the Quality of Fit</h3>
 <ol start="4" type="1">
 <li>The next part of the regression summary output is a summary of fit quality.</li>
 </ol>
@@ -921,23 +815,27 @@ dose         0.465695  9.295466</code></pre>
 <li>So we’d expect roughly 95% of our residuals to fall between -2(12.21) and +2(12.21), or roughly -24.4 to +24.4 and that we’d see virtually no residuals outside the range of -3(12.21) to +3(12.21), or roughly -36.6 to +36.6.</li>
 <li>The output at the top of the summary tells us about the observed regression residuals, and that they actually range from -22 to +24.</li>
 <li>In context, it’s hard to know whether or not we should be happy about this. On a scale from 0 to 100, rarely missing by more than 24 seems OK to me, but not terrific.</li>
-</ul></li>
+</ul>
+</li>
 <li>The <strong>degrees of freedom</strong> here are the same as the denominator degrees of freedom in the ANOVA to follow. The calculation is <span class="math inline">\(n - k\)</span>, where <span class="math inline">\(n\)</span> = the number of observations and <span class="math inline">\(k\)</span> is the number of coefficients estimated by the regression (including the intercept and any slopes).
 <ul>
 <li>Here, there are 36 observations in the model, and we fit <em>k</em> = 2 coefficients; the slope and the intercept, as in any simple regression model, so df = 36 - 2 = 34.</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>The multiple R-squared value is usually just referred to as R-squared.</p>
 <ul>
 <li>This is interpreted as the proportion of variation in the outcome variable that has been accounted for by our regression model.
 <ul>
 <li>Here, we’ve accounted for just under 13% of the variation in % Recovery using Dose.</li>
-</ul></li>
+</ul>
+</li>
 <li>The R in multiple R-squared is the Pearson correlation of <code>recov.score</code> and <code>dose</code>, which in this case is 0.3595.
 <ul>
 <li>Squaring this value gives the R-squared for this simple regression.</li>
 <li>(0.3595)^2 = 0.129</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>R-squared is greedy.</p>
 <ul>
@@ -945,15 +843,16 @@ dose         0.465695  9.295466</code></pre>
 <li>As a result, there are various methods for adjusting or penalizing R-squared so that we wind up with smaller models.</li>
 <li>The <strong>adjusted R-squared</strong> is often a useful way to compare multiple models for the same response.
 <ul>
-<li><span class="math inline">\(R^2_{adj} = 1 - \frac{(1-R^2)(n - 1)}{n - k}\)</span>, where <span class="math inline">\(n\)</span> = the number of observations and <span class="math inline">\(k\)</span> is the number of coefficients estimated by the regression (including the intercept and any slopes).</li>
-<li>So, in this case, <span class="math inline">\(R^2_{adj} = 1 - \frac{(1 - 0.1293)(35)}{34} = 0.1037\)</span></li>
+<li>
+<span class="math inline">\(R^2_{adj} = 1 - \frac{(1-R^2)(n - 1)}{n - k}\)</span>, where <span class="math inline">\(n\)</span> = the number of observations and <span class="math inline">\(k\)</span> is the number of coefficients estimated by the regression (including the intercept and any slopes).</li>
+<li>So, in this case, <span class="math inline">\(R^2_{adj} = 1 - \frac{(1 - 0.1293)(35)}{34} = 0.1037\)</span>
+</li>
 <li>The adjusted R-squared value is not, technically, a proportion of anything, but it is comparable across models for the same outcome.</li>
 <li>The adjusted R-squared will always be less than the (unadjusted) R-squared.</li>
-</ul></li>
 </ul>
-</section>
-<section id="anova-f-test" class="level3" data-number="16.10.7">
-<h3 data-number="16.10.7" class="anchored" data-anchor-id="anova-f-test"><span class="header-section-number">16.10.7</span> ANOVA F test</h3>
+</li>
+</ul></section><section id="anova-f-test" class="level3" data-number="16.10.7"><h3 data-number="16.10.7" class="anchored" data-anchor-id="anova-f-test">
+<span class="header-section-number">16.10.7</span> ANOVA F test</h3>
 <ol start="5" type="1">
 <li>The last part of the standard summary of a regression model is the overall ANOVA F test.</li>
 </ol>
@@ -974,16 +873,15 @@ dose         0.465695  9.295466</code></pre>
 <ul>
 <li>The F test statistic in a <em>simple regression</em> is always by definition just the square of the slope’s t test statistic.</li>
 <li>Here, F = 5.047, and this is the square of t = 2.247 from the Coefficients output</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <p>This test is basically just a combination of the R-squared value (13%) and the sample size. We don’t learn much from it that’s practically interesting or useful.</p>
-</section>
-</section>
-<section id="viewing-the-complete-anova-table" class="level2" data-number="16.11">
-<h2 data-number="16.11" class="anchored" data-anchor-id="viewing-the-complete-anova-table"><span class="header-section-number">16.11</span> Viewing the complete ANOVA table</h2>
+</section></section><section id="viewing-the-complete-anova-table" class="level2" data-number="16.11"><h2 data-number="16.11" class="anchored" data-anchor-id="viewing-the-complete-anova-table">
+<span class="header-section-number">16.11</span> Viewing the complete ANOVA table</h2>
 <p>We can obtain the complete ANOVA table associated with this particular model, and the details behind this F test using the <code>anova</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(recov.score <span class="sc">~</span> dose, <span class="at">data =</span> hydrate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">recov.score</span> <span class="op">~</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">hydrate</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -999,114 +897,112 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>The R-squared for our regression model is equal to the <span class="math inline">\(\eta^2\)</span> for this ANOVA model.
 <ul>
 <li>If we divide SS(dose) = 752.2 by the total sum of squares (752.2 + 5066.7), we’ll get the multiple R-squared [0.1293]</li>
-</ul></li>
-<li>Note that this is <em>not</em> the same ANOVA model we would get if we treated <code>dose</code> as a factor with seven levels, rather than as a quantitative variable.</li>
 </ul>
-</section>
-<section id="using-glance-to-summarize-the-models-fit" class="level2" data-number="16.12">
-<h2 data-number="16.12" class="anchored" data-anchor-id="using-glance-to-summarize-the-models-fit"><span class="header-section-number">16.12</span> Using <code>glance</code> to summarize the model’s fit</h2>
+</li>
+<li>Note that this is <em>not</em> the same ANOVA model we would get if we treated <code>dose</code> as a factor with seven levels, rather than as a quantitative variable.</li>
+</ul></section><section id="using-glance-to-summarize-the-models-fit" class="level2" data-number="16.12"><h2 data-number="16.12" class="anchored" data-anchor-id="using-glance-to-summarize-the-models-fit">
+<span class="header-section-number">16.12</span> Using <code>glance</code> to summarize the model’s fit</h2>
 <p>When applied to a linear model, the <code>glance</code> function from the <code>broom</code> package summarizes 12 characteristics of the model’s fit.</p>
 <p>Let’s look at the eight of these that we’ve already addressed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(m1) <span class="sc">|&gt;</span> <span class="fu">select</span>(r.squared<span class="sc">:</span>df, df.residual, nobs) <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">r.squared</span><span class="op">:</span><span class="va">df</span>, <span class="va">df.residual</span>, <span class="va">nobs</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> r.squared </th>
-   <th style="text-align:right;"> adj.r.squared </th>
-   <th style="text-align:right;"> sigma </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:right;"> df </th>
-   <th style="text-align:right;"> df.residual </th>
-   <th style="text-align:right;"> nobs </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.129 </td>
-   <td style="text-align:right;"> 0.104 </td>
-   <td style="text-align:right;"> 12.2 </td>
-   <td style="text-align:right;"> 5.05 </td>
-   <td style="text-align:right;"> 0.031 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 34 </td>
-   <td style="text-align:right;"> 36 </td>
-  </tr>
-</tbody>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">r.squared</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">adj.r.squared</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sigma</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">statistic</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">df</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">df.residual</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">nobs</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: right;">0.129</td>
+<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">5.05</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">36</td>
+</tr></tbody>
 </table>
-
 </div>
 </div>
 <ul>
 <li>We’ve discussed the R-square value, shown in <code>r.squared</code>.</li>
-<li>We’ve also discussed the adjusted R-square value, in <code>adj.r.squared</code></li>
-<li><code>sigma</code> is the residual standard error.</li>
-<li><code>statistic</code> is the ANOVA F statistic.</li>
-<li><code>p.value</code> is the <em>p</em> value associated with the ANOVA F statistic.</li>
-<li><code>df</code> is the numerator degrees of freedom (here, the <code>df</code> associated with <code>dose</code>) for the ANOVA test associated with this model.</li>
-<li><code>df.residual</code> is the denominator degrees of freedom (here the <code>df</code> associated with <code>residual</code>) for that same ANOVA test.</li>
+<li>We’ve also discussed the adjusted R-square value, in <code>adj.r.squared</code>
+</li>
+<li>
+<code>sigma</code> is the residual standard error.</li>
+<li>
+<code>statistic</code> is the ANOVA F statistic.</li>
+<li>
+<code>p.value</code> is the <em>p</em> value associated with the ANOVA F statistic.</li>
+<li>
+<code>df</code> is the numerator degrees of freedom (here, the <code>df</code> associated with <code>dose</code>) for the ANOVA test associated with this model.</li>
+<li>
+<code>df.residual</code> is the denominator degrees of freedom (here the <code>df</code> associated with <code>residual</code>) for that same ANOVA test.</li>
 <li>Remember that the F-statistic at the bottom of the summary output provides these last four statistics, as well.</li>
-<li><code>nobs</code> is the number of observations (rows) used to fit the model.</li>
+<li>
+<code>nobs</code> is the number of observations (rows) used to fit the model.</li>
 </ul>
 <p>Now, let’s look at the remaining four summaries:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(m1) <span class="sc">|&gt;</span> <span class="fu">select</span>(logLik<span class="sc">:</span>deviance) <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">logLik</span><span class="op">:</span><span class="va">deviance</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> logLik </th>
-   <th style="text-align:right;"> AIC </th>
-   <th style="text-align:right;"> BIC </th>
-   <th style="text-align:right;"> deviance </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> -140.1 </td>
-   <td style="text-align:right;"> 286.3 </td>
-   <td style="text-align:right;"> 291 </td>
-   <td style="text-align:right;"> 5066.7 </td>
-  </tr>
-</tbody>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">logLik</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">deviance</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: right;">-140.1</td>
+<td style="text-align: right;">286.3</td>
+<td style="text-align: right;">291</td>
+<td style="text-align: right;">5066.7</td>
+</tr></tbody>
 </table>
-
 </div>
 </div>
 <ul>
-<li><code>logLik</code> is the log-likelihood value for the model, and is most commonly used for a model (like the ordinary least squares model fit by <code>lm</code> that is fit using the method of maximum likelihood). Thus, the log-likelihood value will be maximized in this fit.</li>
-<li><code>AIC</code> is the Akaike Information Criterion for the model. When comparing models fitted by maximum likelihood to the same outcome variable (using the same transformation, for example), the smaller the AIC, the better the fit.</li>
-<li><code>BIC</code> is the Bayes Information Criterion for the model. When comparing models fitted by maximum likelihood to the same outcome variable (using the same transformation, for example), the smaller the BIC, the better the fit. BIC often prefers models with fewer coefficients to estimate than does AIC.
+<li>
+<code>logLik</code> is the log-likelihood value for the model, and is most commonly used for a model (like the ordinary least squares model fit by <code>lm</code> that is fit using the method of maximum likelihood). Thus, the log-likelihood value will be maximized in this fit.</li>
+<li>
+<code>AIC</code> is the Akaike Information Criterion for the model. When comparing models fitted by maximum likelihood to the same outcome variable (using the same transformation, for example), the smaller the AIC, the better the fit.</li>
+<li>
+<code>BIC</code> is the Bayes Information Criterion for the model. When comparing models fitted by maximum likelihood to the same outcome variable (using the same transformation, for example), the smaller the BIC, the better the fit. BIC often prefers models with fewer coefficients to estimate than does AIC.
 <ul>
-<li><code>AIC</code> and <code>BIC</code> can be estimated using several different approaches in R, but we’ll need to use the same one across multiple models if we’re comparing the results, because the concepts are only defined up to a constant.</li>
-</ul></li>
-<li><code>deviance</code> is the fitted model’s deviance, a measure of lack of fit. It is a generalization of the residual sum of squares seen in the ANOVA table, and takes the same value in the case of a simple linear regression model fit with <code>lm</code> as we have here. For some generalized linear models, we’ll use this for hypothesis testing, just as the ANOVA table does in the linear model case.</li>
+<li>
+<code>AIC</code> and <code>BIC</code> can be estimated using several different approaches in R, but we’ll need to use the same one across multiple models if we’re comparing the results, because the concepts are only defined up to a constant.</li>
 </ul>
-</section>
-<section id="plotting-residuals-vs.-fitted-values" class="level2" data-number="16.13">
-<h2 data-number="16.13" class="anchored" data-anchor-id="plotting-residuals-vs.-fitted-values"><span class="header-section-number">16.13</span> Plotting Residuals vs.&nbsp;Fitted Values</h2>
+</li>
+<li>
+<code>deviance</code> is the fitted model’s deviance, a measure of lack of fit. It is a generalization of the residual sum of squares seen in the ANOVA table, and takes the same value in the case of a simple linear regression model fit with <code>lm</code> as we have here. For some generalized linear models, we’ll use this for hypothesis testing, just as the ANOVA table does in the linear model case.</li>
+</ul></section><section id="plotting-residuals-vs.-fitted-values" class="level2" data-number="16.13"><h2 data-number="16.13" class="anchored" data-anchor-id="plotting-residuals-vs.-fitted-values">
+<span class="header-section-number">16.13</span> Plotting Residuals vs.&nbsp;Fitted Values</h2>
 <p>To save the residuals and predicted (fitted) values from this simple regression model, we can use the <code>resid</code> and <code>fitted</code> commands, respectively, or we can use the <code>augment</code> function in the <code>broom</code> package to obtain a tidy data set containing these objects and others.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>aug_m1 <span class="ot">&lt;-</span> <span class="fu">augment</span>(m1)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(aug_m1, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> F) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> F, <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Residuals vs. Fitted values for Model m1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">aug_m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">aug_m1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.fitted</span>, y <span class="op">=</span> <span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, se <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, se <span class="op">=</span> <span class="cn">F</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Residuals vs. Fitted values for Model m1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We can also obtain a plot of residuals vs.&nbsp;fitted values for <code>m1</code> using the following code from base R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m1, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">m1</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="16-hydrate_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1114,10 +1010,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>We hope in this plot to see a generally random scatter of points, perhaps looking like a “fuzzy football”. Since we only have seven possible <code>dose</code> values, we obtain only seven distinct predicted values, which explains the seven vertical lines in the plot. Here, the smooth red line indicates a gentle curve, but no evidence of a strong curve, or any other regular pattern in this residual plot.</p>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1137,6 +1030,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1144,9 +1152,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1158,7 +1180,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1186,36 +1225,139 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./15-crabs.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></span>
       </a>          

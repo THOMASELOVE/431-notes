@@ -316,7 +316,7 @@ nh_500cc |>
     kable_styling(full_width = FALSE)
 ```
 
-The end of this chunk of code tells R Markdown to generate a table with some attractive formatting, and rounding any decimals to two figures.
+The end of this chunk of code tells Quarto to generate a table with some attractive formatting, and rounding any decimals to two figures.
 
 ### Pulse by Sleeping Trouble
 

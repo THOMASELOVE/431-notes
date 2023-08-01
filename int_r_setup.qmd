@@ -5,26 +5,26 @@ These Notes make extensive use of
 -   the statistical [software language R](https://cran.case.edu/), and
 -   the development environment [RStudio](https://www.rstudio.com/products/rstudio/),
 
-both of which are free, and you'll need to install them on your machine. Instructions for doing so will be found on [the course website](https://thomaselove.github.io/431-2022/).
+both of which are free, and you'll need to install them on your machine. Instructions for doing so will be found on [the course website](https://thomaselove.github.io/431-2023/).
 
 If you need a gentle introduction, or if you're just new to R and RStudio and need to learn about them, we encourage you to take a look at [https://moderndive.com/](http://moderndive.com/), which provides an introduction to statistical and data sciences via R at @ModernDive.
 
-## R Markdown
+## Quarto
 
-These notes were written using [Quarto](https://quarto.org/), which is an amplification of R Markdown (which we'll learn in 431.) [R Markdown](https://rmarkdown.rstudio.com/), like R and RStudio and Quarto, is free and open source.
+These notes were written using [Quarto](https://quarto.org/), which we'll learn to use in 431. Quarto, like R and RStudio, is free and open source.
 
-R Markdown is described as an *authoring framework* for data science, which lets you
+Quarto is described as an *scientific and technical publishing system* for data science, which lets you (among many other things):
 
 -   save and execute R code
 -   generate high-quality reports that can be shared with an audience
 
-This description comes from [RStudio's introduction to R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) which provides an overview and quick tour of what's possible with R Markdown.
+The [Quarto Get Started page](https://quarto.org/docs/get-started/) which provides an overview and quick tour of what's possible with Quarto.
 
-Another excellent resource to learn more about R Markdown tools is the Communicate section (especially the [R Markdown chapter](https://r4ds.hadley.nz/rmarkdown.html)) of @R4DS.
+Another excellent resource to learn more about Quarto is the Communicate section (especially the [Quarto chapter]https://r4ds.hadley.nz/quarto.html)) of @R4DS.
 
 ## R Packages {.unnumbered}
 
-At the start of each chapter that involves R code, I'll present a series of commands I run to set up R to use several packages (libraries) of functions that expand its capabilities, make a specific change to how I want R output to be displayed (that's the `comment = NA` piece) and sets the theme for most graphs to `theme_bw()`. A chunk of code like this will occur near the top of any R Markdown work.
+At the start of each chapter that involves R code, I'll present a series of commands I run to set up R to use several packages (libraries) of functions that expand its capabilities, make a specific change to how I want R output to be displayed (that's the `comment = NA` piece) and sets the theme for most graphs to `theme_bw()`. A chunk of code like this will occur near the top of any Quarto work.
 
 For example, this is the setup for one of our early chapters that loads four packages.
 
@@ -58,7 +58,7 @@ The `Love-boost.R` script includes four functions:
 
 ## Packages Used in these Notes {.unnumbered}
 
-A list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at [our course web site](https://thomaselove.github.io/431-2022/).
+A list of all R packages we want you to install this semester (which includes some packages not included in these Notes) is maintained at [our course web site](https://thomaselove.github.io/431-2023/).
 
 Package | Parts | Key functions in the Package
 :-------: | :---: | :---: 
@@ -67,7 +67,6 @@ Package | Parts | Key functions in the Package
 `broom` | A, B, C | `tidy`, `glance`, `augment` (part of `tidymodels`)
 `car` | A, C |  `boxCox`, `powerTransform`
 `Epi` | B | `twoby2`
-`equatiomatic` | A, C | `extract_eq`
 `fivethirtyeight` | Appendix | source of data
 `GGally` | A, C | `ggpairs`
 `ggrepel` | C | --

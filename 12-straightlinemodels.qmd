@@ -8,7 +8,6 @@
 knitr::opts_chunk$set(comment = NA)
 
 library(broom)
-library(equatiomatic)
 library(janitor)
 library(kableExtra)
 library(modelsummary)
@@ -132,16 +131,6 @@ m
 ```
 
 So the fitted line contained in model `m` can be specified as
-
-$$
-\mbox{fat} = 18.8945 + 0.7251 \mbox{ protein }
-$$
-
-We can use the `extract_eq()` function from the `equatiomatic` package to pull the equation out of this model, as well. Unfortunately, if I run this code, it breaks in the PDF version of this book. So I'll demonstrate in class, and just show the results here without actually executing the code.
-
-```{r, eval = FALSE}
-extract_eq(m, use_coefs = TRUE)
-```
 
 $$
 \operatorname{\widehat{fat}} = 18.89 + 0.73(\operatorname{protein})

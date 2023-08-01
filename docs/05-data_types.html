@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
-
+<meta name="generator" content="quarto-1.3.353">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Course Notes for 431 - 5&nbsp; Types of Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -41,48 +44,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -96,9 +70,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
-
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -114,11 +86,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -136,322 +109,251 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 </head>
-
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-penguins1.html">Part A. Exploring Data</a></li><li class="breadcrumb-item"><a href="./05-data_types.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Course Notes for 431</a> 
-        <div class="sidebar-tools-main">
-    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+</div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with These Notes</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up R</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Part A. Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a>
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a>
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></a>
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./18-testing_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19-ci_for_mean.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./20-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./21-pairedsamples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./22-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sample Size and Power for Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./23-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./24-anova.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./25-one_proportion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./26-comparing_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./27-power_for_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Power and Proportions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./28-contingency_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29-mult_reg_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
-  </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./30-regr_diagnostics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Regression Diagnostics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./31-prediction_wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Building Prediction Models for <code>wcgs</code></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./32-galapagos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./33-nonlinearity.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./34-olsfits.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./35-emp_bmi.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">BMI and Employment Study</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
-    </div>
-</nav>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">5.1</span> Setup: Packages Used Here</a></li>
-  <li><a href="#data-require-structure-and-context" id="toc-data-require-structure-and-context" class="nav-link" data-scroll-target="#data-require-structure-and-context"> <span class="header-section-number">5.2</span> Data require structure and context</a></li>
-  <li><a href="#reading-in-the-complete-cases-sample" id="toc-reading-in-the-complete-cases-sample" class="nav-link" data-scroll-target="#reading-in-the-complete-cases-sample"> <span class="header-section-number">5.3</span> Reading in the “Complete Cases” Sample</a></li>
-  <li><a href="#quantitative-variables" id="toc-quantitative-variables" class="nav-link" data-scroll-target="#quantitative-variables"> <span class="header-section-number">5.4</span> Quantitative Variables</a></li>
-  <li><a href="#quantitative-variables-in-nh_500cc" id="toc-quantitative-variables-in-nh_500cc" class="nav-link" data-scroll-target="#quantitative-variables-in-nh_500cc"> <span class="header-section-number">5.5</span> Quantitative Variables in <code>nh_500cc</code></a>
+<li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"><span class="header-section-number">5.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#data-require-structure-and-context" id="toc-data-require-structure-and-context" class="nav-link" data-scroll-target="#data-require-structure-and-context"><span class="header-section-number">5.2</span> Data require structure and context</a></li>
+  <li><a href="#reading-in-the-complete-cases-sample" id="toc-reading-in-the-complete-cases-sample" class="nav-link" data-scroll-target="#reading-in-the-complete-cases-sample"><span class="header-section-number">5.3</span> Reading in the “Complete Cases” Sample</a></li>
+  <li><a href="#quantitative-variables" id="toc-quantitative-variables" class="nav-link" data-scroll-target="#quantitative-variables"><span class="header-section-number">5.4</span> Quantitative Variables</a></li>
+  <li>
+<a href="#quantitative-variables-in-nh_500cc" id="toc-quantitative-variables-in-nh_500cc" class="nav-link" data-scroll-target="#quantitative-variables-in-nh_500cc"><span class="header-section-number">5.5</span> Quantitative Variables in <code>nh_500cc</code></a>
   <ul class="collapse">
-  <li><a href="#a-look-at-bmi-body-mass-index" id="toc-a-look-at-bmi-body-mass-index" class="nav-link" data-scroll-target="#a-look-at-bmi-body-mass-index"> <span class="header-section-number">5.5.1</span> A look at BMI (Body-Mass Index)</a></li>
-  <li><a href="#types-of-quantitative-variables" id="toc-types-of-quantitative-variables" class="nav-link" data-scroll-target="#types-of-quantitative-variables"> <span class="header-section-number">5.5.2</span> Types of Quantitative Variables</a></li>
-  </ul></li>
-  <li><a href="#qualitative-categorical-variables" id="toc-qualitative-categorical-variables" class="nav-link" data-scroll-target="#qualitative-categorical-variables"> <span class="header-section-number">5.6</span> Qualitative (Categorical) Variables</a>
-  <ul class="collapse">
-  <li><a href="#nominal-vs.-ordinal-categories" id="toc-nominal-vs.-ordinal-categories" class="nav-link" data-scroll-target="#nominal-vs.-ordinal-categories"> <span class="header-section-number">5.6.1</span> Nominal vs.&nbsp;Ordinal Categories</a></li>
-  </ul></li>
-  <li><a href="#tabulating-binary-variables" id="toc-tabulating-binary-variables" class="nav-link" data-scroll-target="#tabulating-binary-variables"> <span class="header-section-number">5.7</span> Tabulating Binary Variables</a></li>
-  <li><a href="#tabulating-multi-categorical-variables" id="toc-tabulating-multi-categorical-variables" class="nav-link" data-scroll-target="#tabulating-multi-categorical-variables"> <span class="header-section-number">5.8</span> Tabulating Multi-Categorical Variables</a></li>
-  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">5.9</span> Coming Up</a></li>
+<li><a href="#a-look-at-bmi-body-mass-index" id="toc-a-look-at-bmi-body-mass-index" class="nav-link" data-scroll-target="#a-look-at-bmi-body-mass-index"><span class="header-section-number">5.5.1</span> A look at BMI (Body-Mass Index)</a></li>
+  <li><a href="#types-of-quantitative-variables" id="toc-types-of-quantitative-variables" class="nav-link" data-scroll-target="#types-of-quantitative-variables"><span class="header-section-number">5.5.2</span> Types of Quantitative Variables</a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#qualitative-categorical-variables" id="toc-qualitative-categorical-variables" class="nav-link" data-scroll-target="#qualitative-categorical-variables"><span class="header-section-number">5.6</span> Qualitative (Categorical) Variables</a>
+  <ul class="collapse">
+<li><a href="#nominal-vs.-ordinal-categories" id="toc-nominal-vs.-ordinal-categories" class="nav-link" data-scroll-target="#nominal-vs.-ordinal-categories"><span class="header-section-number">5.6.1</span> Nominal vs.&nbsp;Ordinal Categories</a></li>
+  </ul>
+</li>
+  <li><a href="#tabulating-binary-variables" id="toc-tabulating-binary-variables" class="nav-link" data-scroll-target="#tabulating-binary-variables"><span class="header-section-number">5.7</span> Tabulating Binary Variables</a></li>
+  <li><a href="#tabulating-multi-categorical-variables" id="toc-tabulating-multi-categorical-variables" class="nav-link" data-scroll-target="#tabulating-multi-categorical-variables"><span class="header-section-number">5.8</span> Tabulating Multi-Categorical Variables</a></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"><span class="header-section-number">5.9</span> Coming Up</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span>
+</h1>
 </div>
 
 
@@ -459,56 +361,51 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
-</header>
-
-<section id="setup-packages-used-here" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">5.1</span> Setup: Packages Used Here</h2>
+</header><section id="setup-packages-used-here" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="setup-packages-used-here">
+<span class="header-section-number">5.1</span> Setup: Packages Used Here</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>comment <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We’ll also use the <code>describe()</code> function from the <code>psych</code> package in what follows, but I won’t load the whole <code>psych</code> package here.</p>
-</section>
-<section id="data-require-structure-and-context" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="data-require-structure-and-context"><span class="header-section-number">5.2</span> Data require structure and context</h2>
+</section><section id="data-require-structure-and-context" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="data-require-structure-and-context">
+<span class="header-section-number">5.2</span> Data require structure and context</h2>
 <p><strong>Descriptive statistics</strong> are concerned with the presentation, organization and summary of data, as suggested in <span class="citation" data-cites="Norman-Streiner">Norman and Streiner (<a href="references.html#ref-Norman-Streiner" role="doc-biblioref">2014</a>)</span>. This includes various methods of organizing and graphing data to get an idea of what those data can tell us.</p>
 <p>As <span class="citation" data-cites="Vittinghoff">Vittinghoff et al. (<a href="references.html#ref-Vittinghoff" role="doc-biblioref">2012</a>)</span> suggest, the nature of the measurement determines how best to describe it statistically, and the main distinction is between <strong>numerical</strong> and <strong>categorical</strong> variables. Even this is a little tricky - plenty of data can have values that look like numerical values, but are just numerals serving as labels.</p>
 <p>As <span class="citation" data-cites="BockVD">Bock, Velleman, and De Veaux (<a href="references.html#ref-BockVD" role="doc-biblioref">2004</a>)</span> point out, the truly critical notion, of course, is that data values, no matter what kind, are useless without their contexts. The Five W’s (Who, What [and in what units], When, Where, Why, and often How) are just as useful for establishing the context of data as they are in journalism. If you can’t answer Who and What, in particular, you don’t have any useful information.</p>
 <p>In general, each row of a data frame corresponds to an individual (respondent, experimental unit, record, or observation) about whom some characteristics are gathered in columns (and these characteristics may be called variables, factors or data elements.) Every column / variable should have a name that indicates <em>what</em> it is measuring, and every row / observation should have a name that indicates <em>who</em> is being measured.</p>
-</section>
-<section id="reading-in-the-complete-cases-sample" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="reading-in-the-complete-cases-sample"><span class="header-section-number">5.3</span> Reading in the “Complete Cases” Sample</h2>
+</section><section id="reading-in-the-complete-cases-sample" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="reading-in-the-complete-cases-sample">
+<span class="header-section-number">5.3</span> Reading in the “Complete Cases” Sample</h2>
 <p>Let’s begin by loading into the <code>nh_500cc</code> tibble the information from the <code>nh_adult500cc.Rds</code> file we created in <a href="04-nhanes.html#sec-nh_cc"><span>Section&nbsp;4.5</span></a>. Notice that I am simplifying the name of the tibble, to save me some typing.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/nh_adult500cc.Rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="st">"data/nh_adult500cc.Rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>One obvious hurdle we’ll avoid for the moment is what to do about missing data, since the <code>nh_500cc</code> data are specifically drawn from complete responses. Working with complete cases only can introduce bias to our estimates and visualizations, so it will be necessary in time to address what we should do when a complete-case analysis isn’t a good choice. We’ll return to this issue later.</p>
-</section>
-<section id="quantitative-variables" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="quantitative-variables"><span class="header-section-number">5.4</span> Quantitative Variables</h2>
+</section><section id="quantitative-variables" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="quantitative-variables">
+<span class="header-section-number">5.4</span> Quantitative Variables</h2>
 <p>Variables recorded in numbers that we use as numbers are called <strong>quantitative</strong>. Familiar examples include incomes, heights, weights, ages, distances, times, and counts. All quantitative variables have measurement units, which tell you how the quantitative variable was measured. Without units (like miles per hour, angstroms, yen or degrees Celsius) the values of a quantitative variable have no meaning.</p>
 <ul>
 <li><p>It does little good to be told the price of something if you don’t know the currency being used.</p></li>
 <li><p>You might be surprised to see someone whose age is 72 listed in a database on childhood diseases until you find out that age is measured in months.</p></li>
 <li><p>Often just seeking the units can reveal a variable whose definition is challenging - just how do we measure “friendliness”, or “success,” for example.</p></li>
 <li><p>Quantitative variables may also be classified by whether they are <strong>continuous</strong> or can only take on a <strong>discrete</strong> set of values. Continuous data may take on any value, within a defined range. Suppose we are measuring height. While height is really continuous, our measuring stick usually only lets us measure with a certain degree of precision. If our measurements are only trustworthy to the nearest centimeter with the ruler we have, we might describe them as discrete measures. But we could always get a more precise ruler. The measurement divisions we make in moving from a continuous concept to a discrete measurement are usually fairly arbitrary. Another way to think of this, if you enjoy music, is that, as suggested in <span class="citation" data-cites="Norman-Streiner">Norman and Streiner (<a href="references.html#ref-Norman-Streiner" role="doc-biblioref">2014</a>)</span>, a piano is a <em>discrete</em> instrument, but a violin is a <em>continuous</em> one, enabling finer distinctions between notes than the piano is capable of making. Sometimes the distinction between continuous and discrete is important, but usually, it’s not.</p></li>
-</ul>
-</section>
-<section id="quantitative-variables-in-nh_500cc" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="quantitative-variables-in-nh_500cc"><span class="header-section-number">5.5</span> Quantitative Variables in <code>nh_500cc</code></h2>
+</ul></section><section id="quantitative-variables-in-nh_500cc" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="quantitative-variables-in-nh_500cc">
+<span class="header-section-number">5.5</span> Quantitative Variables in <code>nh_500cc</code>
+</h2>
 <p>Here’s a list of the variables contained in our <code>nh_500cc</code> tibble.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(nh_500cc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">nh_500cc</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "ID"            "Sex"           "Age"           "Height"       
  [5] "Weight"        "Race"          "Education"     "BMI"          
@@ -520,175 +417,186 @@ div.csl-indent {
 <ul>
 <li>We know these are quantitative variables because they have units:
 <ul>
-<li><code>Age</code> in years, <code>Height</code> in centimeters, <code>Weight</code> in kilograms,</li>
-<li><code>BMI</code> in kg/m<sup>2</sup>, the <code>BP</code> measurements in mm Hg, and <code>Pulse</code> in beats per minute.</li>
-</ul></li>
+<li>
+<code>Age</code> in years, <code>Height</code> in centimeters, <code>Weight</code> in kilograms,</li>
+<li>
+<code>BMI</code> in kg/m<sup>2</sup>, the <code>BP</code> measurements in mm Hg, and <code>Pulse</code> in beats per minute.</li>
+</ul>
+</li>
 </ul>
 <p>Let’s summarize them with the <code>describe()</code> function from the <code>psych</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Age, Height, Weight, BMI, SBP, DBP, Pulse) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">Height</span>, <span class="va">Weight</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table class="table" style="margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> vars </th>
-   <th style="text-align:right;"> n </th>
-   <th style="text-align:right;"> mean </th>
-   <th style="text-align:right;"> sd </th>
-   <th style="text-align:right;"> median </th>
-   <th style="text-align:right;"> trimmed </th>
-   <th style="text-align:right;"> mad </th>
-   <th style="text-align:right;"> min </th>
-   <th style="text-align:right;"> max </th>
-   <th style="text-align:right;"> range </th>
-   <th style="text-align:right;"> skew </th>
-   <th style="text-align:right;"> kurtosis </th>
-   <th style="text-align:right;"> se </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">vars</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">trimmed</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mad</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">range</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">skew</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kurtosis</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">se</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> Age </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 41.6060 </td>
-   <td style="text-align:right;"> 12.803853 </td>
-   <td style="text-align:right;"> 42.00 </td>
-   <td style="text-align:right;"> 41.48000 </td>
-   <td style="text-align:right;"> 16.30860 </td>
-   <td style="text-align:right;"> 21.0 </td>
-   <td style="text-align:right;"> 64.0 </td>
-   <td style="text-align:right;"> 43.0 </td>
-   <td style="text-align:right;"> 0.0469923 </td>
-   <td style="text-align:right;"> -1.2377866 </td>
-   <td style="text-align:right;"> 0.5726057 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Height </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 169.3726 </td>
-   <td style="text-align:right;"> 9.935372 </td>
-   <td style="text-align:right;"> 169.05 </td>
-   <td style="text-align:right;"> 169.19025 </td>
-   <td style="text-align:right;"> 10.52646 </td>
-   <td style="text-align:right;"> 144.8 </td>
-   <td style="text-align:right;"> 200.4 </td>
-   <td style="text-align:right;"> 55.6 </td>
-   <td style="text-align:right;"> 0.1618323 </td>
-   <td style="text-align:right;"> -0.2539869 </td>
-   <td style="text-align:right;"> 0.4443233 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Weight </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 82.7094 </td>
-   <td style="text-align:right;"> 20.884652 </td>
-   <td style="text-align:right;"> 80.00 </td>
-   <td style="text-align:right;"> 81.05650 </td>
-   <td style="text-align:right;"> 19.94097 </td>
-   <td style="text-align:right;"> 41.9 </td>
-   <td style="text-align:right;"> 184.5 </td>
-   <td style="text-align:right;"> 142.6 </td>
-   <td style="text-align:right;"> 0.9835819 </td>
-   <td style="text-align:right;"> 1.7024261 </td>
-   <td style="text-align:right;"> 0.9339900 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BMI </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 28.7574 </td>
-   <td style="text-align:right;"> 6.567995 </td>
-   <td style="text-align:right;"> 27.70 </td>
-   <td style="text-align:right;"> 28.11625 </td>
-   <td style="text-align:right;"> 6.07866 </td>
-   <td style="text-align:right;"> 17.0 </td>
-   <td style="text-align:right;"> 63.3 </td>
-   <td style="text-align:right;"> 46.3 </td>
-   <td style="text-align:right;"> 1.1522475 </td>
-   <td style="text-align:right;"> 2.2838638 </td>
-   <td style="text-align:right;"> 0.2937297 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SBP </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 119.3320 </td>
-   <td style="text-align:right;"> 15.049344 </td>
-   <td style="text-align:right;"> 119.00 </td>
-   <td style="text-align:right;"> 118.41250 </td>
-   <td style="text-align:right;"> 13.34340 </td>
-   <td style="text-align:right;"> 84.0 </td>
-   <td style="text-align:right;"> 221.0 </td>
-   <td style="text-align:right;"> 137.0 </td>
-   <td style="text-align:right;"> 1.1872427 </td>
-   <td style="text-align:right;"> 4.7556753 </td>
-   <td style="text-align:right;"> 0.6730271 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> DBP </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 72.1580 </td>
-   <td style="text-align:right;"> 11.245709 </td>
-   <td style="text-align:right;"> 72.00 </td>
-   <td style="text-align:right;"> 72.24500 </td>
-   <td style="text-align:right;"> 8.89560 </td>
-   <td style="text-align:right;"> 0.0 </td>
-   <td style="text-align:right;"> 110.0 </td>
-   <td style="text-align:right;"> 110.0 </td>
-   <td style="text-align:right;"> -0.5339975 </td>
-   <td style="text-align:right;"> 4.5794674 </td>
-   <td style="text-align:right;"> 0.5029234 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Pulse </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 74.1640 </td>
-   <td style="text-align:right;"> 11.500505 </td>
-   <td style="text-align:right;"> 74.00 </td>
-   <td style="text-align:right;"> 73.76500 </td>
-   <td style="text-align:right;"> 11.86080 </td>
-   <td style="text-align:right;"> 48.0 </td>
-   <td style="text-align:right;"> 114.0 </td>
-   <td style="text-align:right;"> 66.0 </td>
-   <td style="text-align:right;"> 0.3414617 </td>
-   <td style="text-align:right;"> -0.0027802 </td>
-   <td style="text-align:right;"> 0.5143182 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">41.6060</td>
+<td style="text-align: right;">12.803853</td>
+<td style="text-align: right;">42.00</td>
+<td style="text-align: right;">41.48000</td>
+<td style="text-align: right;">16.30860</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">64.0</td>
+<td style="text-align: right;">43.0</td>
+<td style="text-align: right;">0.0469923</td>
+<td style="text-align: right;">-1.2377866</td>
+<td style="text-align: right;">0.5726057</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Height</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">169.3726</td>
+<td style="text-align: right;">9.935372</td>
+<td style="text-align: right;">169.05</td>
+<td style="text-align: right;">169.19025</td>
+<td style="text-align: right;">10.52646</td>
+<td style="text-align: right;">144.8</td>
+<td style="text-align: right;">200.4</td>
+<td style="text-align: right;">55.6</td>
+<td style="text-align: right;">0.1618323</td>
+<td style="text-align: right;">-0.2539869</td>
+<td style="text-align: right;">0.4443233</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Weight</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">82.7094</td>
+<td style="text-align: right;">20.884652</td>
+<td style="text-align: right;">80.00</td>
+<td style="text-align: right;">81.05650</td>
+<td style="text-align: right;">19.94097</td>
+<td style="text-align: right;">41.9</td>
+<td style="text-align: right;">184.5</td>
+<td style="text-align: right;">142.6</td>
+<td style="text-align: right;">0.9835819</td>
+<td style="text-align: right;">1.7024261</td>
+<td style="text-align: right;">0.9339900</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BMI</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">28.7574</td>
+<td style="text-align: right;">6.567995</td>
+<td style="text-align: right;">27.70</td>
+<td style="text-align: right;">28.11625</td>
+<td style="text-align: right;">6.07866</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">63.3</td>
+<td style="text-align: right;">46.3</td>
+<td style="text-align: right;">1.1522475</td>
+<td style="text-align: right;">2.2838638</td>
+<td style="text-align: right;">0.2937297</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SBP</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">119.3320</td>
+<td style="text-align: right;">15.049344</td>
+<td style="text-align: right;">119.00</td>
+<td style="text-align: right;">118.41250</td>
+<td style="text-align: right;">13.34340</td>
+<td style="text-align: right;">84.0</td>
+<td style="text-align: right;">221.0</td>
+<td style="text-align: right;">137.0</td>
+<td style="text-align: right;">1.1872427</td>
+<td style="text-align: right;">4.7556753</td>
+<td style="text-align: right;">0.6730271</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DBP</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">72.1580</td>
+<td style="text-align: right;">11.245709</td>
+<td style="text-align: right;">72.00</td>
+<td style="text-align: right;">72.24500</td>
+<td style="text-align: right;">8.89560</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">110.0</td>
+<td style="text-align: right;">110.0</td>
+<td style="text-align: right;">-0.5339975</td>
+<td style="text-align: right;">4.5794674</td>
+<td style="text-align: right;">0.5029234</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pulse</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">500</td>
+<td style="text-align: right;">74.1640</td>
+<td style="text-align: right;">11.500505</td>
+<td style="text-align: right;">74.00</td>
+<td style="text-align: right;">73.76500</td>
+<td style="text-align: right;">11.86080</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">114.0</td>
+<td style="text-align: right;">66.0</td>
+<td style="text-align: right;">0.3414617</td>
+<td style="text-align: right;">-0.0027802</td>
+<td style="text-align: right;">0.5143182</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
-<p>As an alternative, we could use <code>tbl_summary()</code> from the <code>gtsummary</code> package, as well. The approach below works nicely for producing a mean, standard deviation, and five-number summary for each of the variables we’ve identified as quantitative.</p>
+<p>As an alternative, we could use <code><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html">tbl_summary()</a></code> from the <code>gtsummary</code> package, as well. The approach below works nicely for producing a mean, standard deviation, and five-number summary for each of the variables we’ve identified as quantitative.</p>
 <ul>
 <li>Quantitative variables lend themselves to many of the summaries we will discuss, like means, quantiles, and our various measures of spread, like the standard deviation or inter-quartile range. They also have at least a chance to follow the Normal distribution.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Age, Height, Weight, BMI, SBP, DBP, Pulse) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>( <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{mean} ({sd}): </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">                     [ {min}, {p25}, {median}, {p75}, {max} ]"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Age</span>, <span class="va">Height</span>, <span class="va">Weight</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, <span class="va">Pulse</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html">tbl_summary</a></span><span class="op">(</span> statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html">all_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"{mean} ({sd}): </span></span>
+<span><span class="st">                     [ {min}, {p25}, {median}, {p75}, {max} ]"</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="mjrcdmmczh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="sppqmjqrau" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sppqmjqrau table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#mjrcdmmczh .gt_table {
+#sppqmjqrau thead, #sppqmjqrau tbody, #sppqmjqrau tfoot, #sppqmjqrau tr, #sppqmjqrau td, #sppqmjqrau th {
+  border-style: none;
+}
+
+#sppqmjqrau p {
+  margin: 0;
+  padding: 0;
+}
+
+#sppqmjqrau .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -711,19 +619,12 @@ div.csl-indent {
   border-left-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#sppqmjqrau .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-#mjrcdmmczh .gt_title {
+#sppqmjqrau .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -735,25 +636,37 @@ div.csl-indent {
   border-bottom-width: 0;
 }
 
-#mjrcdmmczh .gt_subtitle {
+#sppqmjqrau .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#mjrcdmmczh .gt_bottom_border {
+#sppqmjqrau .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sppqmjqrau .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_col_headings {
+#sppqmjqrau .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -768,7 +681,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_col_heading {
+#sppqmjqrau .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -788,7 +701,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#mjrcdmmczh .gt_column_spanner_outer {
+#sppqmjqrau .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -800,15 +713,15 @@ div.csl-indent {
   padding-right: 4px;
 }
 
-#mjrcdmmczh .gt_column_spanner_outer:first-child {
+#sppqmjqrau .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mjrcdmmczh .gt_column_spanner_outer:last-child {
+#sppqmjqrau .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mjrcdmmczh .gt_column_spanner {
+#sppqmjqrau .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -820,7 +733,11 @@ div.csl-indent {
   width: 100%;
 }
 
-#mjrcdmmczh .gt_group_heading {
+#sppqmjqrau .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#sppqmjqrau .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -843,9 +760,10 @@ div.csl-indent {
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#mjrcdmmczh .gt_empty_group_heading {
+#sppqmjqrau .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -860,15 +778,15 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#mjrcdmmczh .gt_from_md > :first-child {
+#sppqmjqrau .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mjrcdmmczh .gt_from_md > :last-child {
+#sppqmjqrau .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mjrcdmmczh .gt_row {
+#sppqmjqrau .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -887,7 +805,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#mjrcdmmczh .gt_stub {
+#sppqmjqrau .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -900,7 +818,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#mjrcdmmczh .gt_stub_row_group {
+#sppqmjqrau .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -914,11 +832,15 @@ div.csl-indent {
   vertical-align: top;
 }
 
-#mjrcdmmczh .gt_row_group_first td {
+#sppqmjqrau .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mjrcdmmczh .gt_summary_row {
+#sppqmjqrau .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#sppqmjqrau .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -928,16 +850,16 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#mjrcdmmczh .gt_first_summary_row {
+#sppqmjqrau .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_first_summary_row.thick {
+#sppqmjqrau .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mjrcdmmczh .gt_last_summary_row {
+#sppqmjqrau .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -947,7 +869,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_grand_summary_row {
+#sppqmjqrau .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -957,7 +879,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#mjrcdmmczh .gt_first_grand_summary_row {
+#sppqmjqrau .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -967,11 +889,21 @@ div.csl-indent {
   border-top-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_striped {
+#sppqmjqrau .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sppqmjqrau .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mjrcdmmczh .gt_table_body {
+#sppqmjqrau .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -980,7 +912,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_footnotes {
+#sppqmjqrau .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -994,30 +926,8 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#mjrcdmmczh .gt_footnote {
+#sppqmjqrau .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mjrcdmmczh .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#mjrcdmmczh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1025,111 +935,143 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#mjrcdmmczh .gt_left {
+#sppqmjqrau .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sppqmjqrau .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sppqmjqrau .gt_left {
   text-align: left;
 }
 
-#mjrcdmmczh .gt_center {
+#sppqmjqrau .gt_center {
   text-align: center;
 }
 
-#mjrcdmmczh .gt_right {
+#sppqmjqrau .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mjrcdmmczh .gt_font_normal {
+#sppqmjqrau .gt_font_normal {
   font-weight: normal;
 }
 
-#mjrcdmmczh .gt_font_bold {
+#sppqmjqrau .gt_font_bold {
   font-weight: bold;
 }
 
-#mjrcdmmczh .gt_font_italic {
+#sppqmjqrau .gt_font_italic {
   font-style: italic;
 }
 
-#mjrcdmmczh .gt_super {
+#sppqmjqrau .gt_super {
   font-size: 65%;
 }
 
-#mjrcdmmczh .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#sppqmjqrau .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#mjrcdmmczh .gt_asterisk {
+#sppqmjqrau .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mjrcdmmczh .gt_indent_1 {
+#sppqmjqrau .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mjrcdmmczh .gt_indent_2 {
+#sppqmjqrau .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mjrcdmmczh .gt_indent_3 {
+#sppqmjqrau .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mjrcdmmczh .gt_indent_4 {
+#sppqmjqrau .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mjrcdmmczh .gt_indent_5 {
+#sppqmjqrau .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>N = 500</strong><sup class="gt_footnote_marks">1</sup></th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">Age</td>
-<td class="gt_row gt_center">42 (13): 
-[ 21, 30, 42, 52, 64 ]</td></tr>
-    <tr><td class="gt_row gt_left">Height</td>
-<td class="gt_row gt_center">169 (10): 
-[ 145, 162, 169, 176, 200 ]</td></tr>
-    <tr><td class="gt_row gt_left">Weight</td>
-<td class="gt_row gt_center">83 (21): 
-[ 42, 68, 80, 94, 184 ]</td></tr>
-    <tr><td class="gt_row gt_left">BMI</td>
-<td class="gt_row gt_center">29 (7): 
-[ 17, 24, 28, 32, 63 ]</td></tr>
-    <tr><td class="gt_row gt_left">SBP</td>
-<td class="gt_row gt_center">119 (15): 
-[ 84, 110, 119, 127, 221 ]</td></tr>
-    <tr><td class="gt_row gt_left">DBP</td>
-<td class="gt_row gt_center">72 (11): 
-[ 0, 66, 72, 79, 110 ]</td></tr>
-    <tr><td class="gt_row gt_left">Pulse</td>
-<td class="gt_row gt_center">74 (12): 
-[ 48, 66, 74, 82, 114 ]</td></tr>
-  </tbody>
-  
-  <tfoot class="gt_footnotes">
-    <tr>
-      <td class="gt_footnote" colspan="2"><sup class="gt_footnote_marks">1</sup> Mean (SD):
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>N = 500</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>">
+<strong>N = 500</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left">Age</td>
+<td headers="stat_0" class="gt_row gt_center">42 (13): 
+[ 21, 30, 42, 52, 64 ]</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">Height</td>
+<td headers="stat_0" class="gt_row gt_center">169 (10): 
+[ 145, 162, 169, 176, 200 ]</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">Weight</td>
+<td headers="stat_0" class="gt_row gt_center">83 (21): 
+[ 42, 68, 80, 94, 185 ]</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">BMI</td>
+<td headers="stat_0" class="gt_row gt_center">29 (7): 
+[ 17, 24, 28, 32, 63 ]</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">SBP</td>
+<td headers="stat_0" class="gt_row gt_center">119 (15): 
+[ 84, 110, 119, 127, 221 ]</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">DBP</td>
+<td headers="stat_0" class="gt_row gt_center">72 (11): 
+[ 0, 66, 72, 79, 110 ]</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">Pulse</td>
+<td headers="stat_0" class="gt_row gt_center">74 (12): 
+[ 48, 66, 74, 82, 114 ]</td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes"><tr>
+<td class="gt_footnote" colspan="2">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Mean (SD):
 [ Minimum, 25%, Median, 75%, Maximum ]</td>
-    </tr>
-  </tfoot>
+    </tr></tfoot>
 </table>
 </div>
 </div>
 </div>
-<section id="a-look-at-bmi-body-mass-index" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="a-look-at-bmi-body-mass-index"><span class="header-section-number">5.5.1</span> A look at BMI (Body-Mass Index)</h3>
+<section id="a-look-at-bmi-body-mass-index" class="level3" data-number="5.5.1"><h3 data-number="5.5.1" class="anchored" data-anchor-id="a-look-at-bmi-body-mass-index">
+<span class="header-section-number">5.5.1</span> A look at BMI (Body-Mass Index)</h3>
 <p>The definition of BMI (<em>body-mass index</em>) for adult subjects (which is expressed in units of kg/m<sup>2</sup>) is:</p>
 <p><span class="math display">\[
 \mbox{Body Mass Index} = \frac{\mbox{weight in kg}}{(\mbox{height in meters})^2} = 703 \times \frac{\mbox{weight in pounds}}{(\mbox{height in inches})^2}
@@ -1138,9 +1080,8 @@ div.csl-indent {
 <p>[BMI is essentially] … a measure of a person’s <em>thinness</em> or <em>thickness</em>… BMI was designed for use as a simple means of classifying average sedentary (physically inactive) populations, with an average body composition. For these individuals, the current value recommendations are as follow: a BMI from 18.5 up to 25 may indicate optimal weight, a BMI lower than 18.5 suggests the person is underweight, a number from 25 up to 30 may indicate the person is overweight, and a number from 30 upwards suggests the person is obese.</p>
 <p>Wikipedia, https://en.wikipedia.org/wiki/Body_mass_index</p>
 </blockquote>
-</section>
-<section id="types-of-quantitative-variables" class="level3" data-number="5.5.2">
-<h3 data-number="5.5.2" class="anchored" data-anchor-id="types-of-quantitative-variables"><span class="header-section-number">5.5.2</span> Types of Quantitative Variables</h3>
+</section><section id="types-of-quantitative-variables" class="level3" data-number="5.5.2"><h3 data-number="5.5.2" class="anchored" data-anchor-id="types-of-quantitative-variables">
+<span class="header-section-number">5.5.2</span> Types of Quantitative Variables</h3>
 <p>Depending on the context, we would likely treat most of these quantitative variables as <em>discrete</em> given that are measurements are fairly crude (this is certainly true for <code>Age</code>, measured in years) although BMI is probably <em>continuous</em> in most settings, even though it is a function of two other measures (<code>Height</code> and <code>Weight</code>) which are rounded off to integer numbers of centimeters and kilograms, respectively.</p>
 <p>It is also possible to separate out quantitative variables into <strong>ratio</strong> variables or <strong>interval</strong> variables.</p>
 <ul>
@@ -1149,17 +1090,15 @@ div.csl-indent {
 </ul>
 <p>For example, weight is an example of a ratio variable, while IQ is an example of an interval variable. We all know what zero weight is. An intelligence score like IQ is a different matter. We say that the average IQ is 100, but that’s only by convention. We could just as easily have decided to add 400 to every IQ value and make the average 500 instead. Because IQ’s intervals are equal, the difference between and IQ of 70 and an IQ of 80 is the same as the difference between 120 and 130. However, an IQ of 100 is not twice as high as an IQ of 50. The point is that if the zero point is artificial and movable, then the differences between numbers are meaningful but the ratios between them are not.</p>
 <p>On the other hand, most lab test values are ratio variables, as are physical characteristics like height and weight. Each of the quantitative variables in our <code>nh_500cc</code> data can be thought of as a ratio variable.A person who weighs 100 kg is twice as heavy as one who weighs 50 kg; even when we convert kg to pounds, this is still true. For the most part, we can treat and analyze interval or ratio variables the same way.</p>
-</section>
-</section>
-<section id="qualitative-categorical-variables" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="qualitative-categorical-variables"><span class="header-section-number">5.6</span> Qualitative (Categorical) Variables</h2>
+</section></section><section id="qualitative-categorical-variables" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="qualitative-categorical-variables">
+<span class="header-section-number">5.6</span> Qualitative (Categorical) Variables</h2>
 <p><strong>Qualitative</strong> or categorical variables consist of names of categories. These names may be numerical, but the numbers (or names) are simply codes to identify the groups or categories into which the individuals are divided. Categorical variables with two categories, like yes or no, up or down, or, more generally, 1 and 0, are called <strong>binary</strong> variables. Those with more than two-categories are sometimes called <strong>multi-categorical</strong> variables.</p>
 <p>In the <code>nh_500cc</code> data, we have eight categorical variables, four binary and four with multiple categories.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sex, PhysActive, Smoke100, SleepTrouble,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>         Race, Education, MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span>,</span>
+<span>         <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Sex      PhysActive Smoke100  SleepTrouble       Race    
  female:236   No :216    No :291   No :380      Asian   : 51  
@@ -1177,8 +1116,8 @@ div.csl-indent {
                       Widowed     :  9                  </code></pre>
 </div>
 </div>
-<section id="nominal-vs.-ordinal-categories" class="level3" data-number="5.6.1">
-<h3 data-number="5.6.1" class="anchored" data-anchor-id="nominal-vs.-ordinal-categories"><span class="header-section-number">5.6.1</span> Nominal vs.&nbsp;Ordinal Categories</h3>
+<section id="nominal-vs.-ordinal-categories" class="level3" data-number="5.6.1"><h3 data-number="5.6.1" class="anchored" data-anchor-id="nominal-vs.-ordinal-categories">
+<span class="header-section-number">5.6.1</span> Nominal vs.&nbsp;Ordinal Categories</h3>
 <ul>
 <li>When the categories included in a variable are merely names, and come in no particular order, we sometimes call them <strong>nominal</strong> variables. The most important summary of such a variable is usually a table of frequencies, and the mode becomes an important single summary, while the mean and median are essentially useless.</li>
 </ul>
@@ -1194,25 +1133,35 @@ div.csl-indent {
 </ul>
 <p>Binary variables in the <code>nh_500cc</code> data include <code>Sex</code>, <code>PhysActive</code>, <code>Smoke100</code>, <code>SleepTrouble</code>. Each can be thought of as either ordinal or nominal.</p>
 <p>Lots of variables may be treated as either quantitative or qualitative, depending on how we use them. For instance, we usually think of age as a quantitative variable, but if we simply use age to make the distinction between “child” and “adult” then we are using it to describe categorical information. Just because your variable’s values are numbers, don’t assume that the information provided is quantitative.</p>
-</section>
-</section>
-<section id="tabulating-binary-variables" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="tabulating-binary-variables"><span class="header-section-number">5.7</span> Tabulating Binary Variables</h2>
-<p>Note how the <code>tbl_summary()</code> approach works with binary variables, and in particular with variables coded Yes and No, like <code>PhysActive</code>, <code>Smoke100</code> and <code>SleepTrouble</code>.</p>
+</section></section><section id="tabulating-binary-variables" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="tabulating-binary-variables">
+<span class="header-section-number">5.7</span> Tabulating Binary Variables</h2>
+<p>Note how the <code><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html">tbl_summary()</a></code> approach works with binary variables, and in particular with variables coded Yes and No, like <code>PhysActive</code>, <code>Smoke100</code> and <code>SleepTrouble</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sex, PhysActive, Smoke100, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="jwgbwigwds" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="zadjhrpnca" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zadjhrpnca table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#jwgbwigwds .gt_table {
+#zadjhrpnca thead, #zadjhrpnca tbody, #zadjhrpnca tfoot, #zadjhrpnca tr, #zadjhrpnca td, #zadjhrpnca th {
+  border-style: none;
+}
+
+#zadjhrpnca p {
+  margin: 0;
+  padding: 0;
+}
+
+#zadjhrpnca .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -1235,19 +1184,12 @@ div.csl-indent {
   border-left-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#zadjhrpnca .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-#jwgbwigwds .gt_title {
+#zadjhrpnca .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1259,25 +1201,37 @@ div.csl-indent {
   border-bottom-width: 0;
 }
 
-#jwgbwigwds .gt_subtitle {
+#zadjhrpnca .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#jwgbwigwds .gt_bottom_border {
+#zadjhrpnca .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zadjhrpnca .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_col_headings {
+#zadjhrpnca .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1292,7 +1246,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_col_heading {
+#zadjhrpnca .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1312,7 +1266,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#jwgbwigwds .gt_column_spanner_outer {
+#zadjhrpnca .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1324,15 +1278,15 @@ div.csl-indent {
   padding-right: 4px;
 }
 
-#jwgbwigwds .gt_column_spanner_outer:first-child {
+#zadjhrpnca .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jwgbwigwds .gt_column_spanner_outer:last-child {
+#zadjhrpnca .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jwgbwigwds .gt_column_spanner {
+#zadjhrpnca .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1344,7 +1298,11 @@ div.csl-indent {
   width: 100%;
 }
 
-#jwgbwigwds .gt_group_heading {
+#zadjhrpnca .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#zadjhrpnca .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1367,9 +1325,10 @@ div.csl-indent {
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#jwgbwigwds .gt_empty_group_heading {
+#zadjhrpnca .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1384,15 +1343,15 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#jwgbwigwds .gt_from_md > :first-child {
+#zadjhrpnca .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jwgbwigwds .gt_from_md > :last-child {
+#zadjhrpnca .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jwgbwigwds .gt_row {
+#zadjhrpnca .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1411,7 +1370,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#jwgbwigwds .gt_stub {
+#zadjhrpnca .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1424,7 +1383,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jwgbwigwds .gt_stub_row_group {
+#zadjhrpnca .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1438,11 +1397,15 @@ div.csl-indent {
   vertical-align: top;
 }
 
-#jwgbwigwds .gt_row_group_first td {
+#zadjhrpnca .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jwgbwigwds .gt_summary_row {
+#zadjhrpnca .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#zadjhrpnca .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1452,16 +1415,16 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jwgbwigwds .gt_first_summary_row {
+#zadjhrpnca .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_first_summary_row.thick {
+#zadjhrpnca .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jwgbwigwds .gt_last_summary_row {
+#zadjhrpnca .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1471,7 +1434,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_grand_summary_row {
+#zadjhrpnca .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1481,7 +1444,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jwgbwigwds .gt_first_grand_summary_row {
+#zadjhrpnca .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1491,11 +1454,21 @@ div.csl-indent {
   border-top-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_striped {
+#zadjhrpnca .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zadjhrpnca .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jwgbwigwds .gt_table_body {
+#zadjhrpnca .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1504,7 +1477,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_footnotes {
+#zadjhrpnca .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1518,30 +1491,8 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#jwgbwigwds .gt_footnote {
+#zadjhrpnca .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#jwgbwigwds .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#jwgbwigwds .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1549,103 +1500,133 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#jwgbwigwds .gt_left {
+#zadjhrpnca .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zadjhrpnca .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zadjhrpnca .gt_left {
   text-align: left;
 }
 
-#jwgbwigwds .gt_center {
+#zadjhrpnca .gt_center {
   text-align: center;
 }
 
-#jwgbwigwds .gt_right {
+#zadjhrpnca .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jwgbwigwds .gt_font_normal {
+#zadjhrpnca .gt_font_normal {
   font-weight: normal;
 }
 
-#jwgbwigwds .gt_font_bold {
+#zadjhrpnca .gt_font_bold {
   font-weight: bold;
 }
 
-#jwgbwigwds .gt_font_italic {
+#zadjhrpnca .gt_font_italic {
   font-style: italic;
 }
 
-#jwgbwigwds .gt_super {
+#zadjhrpnca .gt_super {
   font-size: 65%;
 }
 
-#jwgbwigwds .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#zadjhrpnca .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#jwgbwigwds .gt_asterisk {
+#zadjhrpnca .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jwgbwigwds .gt_indent_1 {
+#zadjhrpnca .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jwgbwigwds .gt_indent_2 {
+#zadjhrpnca .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jwgbwigwds .gt_indent_3 {
+#zadjhrpnca .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jwgbwigwds .gt_indent_4 {
+#zadjhrpnca .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jwgbwigwds .gt_indent_5 {
+#zadjhrpnca .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>N = 500</strong><sup class="gt_footnote_marks">1</sup></th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">Sex</td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;female</td>
-<td class="gt_row gt_center">236 (47%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;male</td>
-<td class="gt_row gt_center">264 (53%)</td></tr>
-    <tr><td class="gt_row gt_left">PhysActive</td>
-<td class="gt_row gt_center">284 (57%)</td></tr>
-    <tr><td class="gt_row gt_left">Smoke100</td>
-<td class="gt_row gt_center">209 (42%)</td></tr>
-    <tr><td class="gt_row gt_left">SleepTrouble</td>
-<td class="gt_row gt_center">120 (24%)</td></tr>
-  </tbody>
-  
-  <tfoot class="gt_footnotes">
-    <tr>
-      <td class="gt_footnote" colspan="2"><sup class="gt_footnote_marks">1</sup> n (%)</td>
-    </tr>
-  </tfoot>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>N = 500</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>">
+<strong>N = 500</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left">Sex</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;female</td>
+<td headers="stat_0" class="gt_row gt_center">236 (47%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;male</td>
+<td headers="stat_0" class="gt_row gt_center">264 (53%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">PhysActive</td>
+<td headers="stat_0" class="gt_row gt_center">284 (57%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">Smoke100</td>
+<td headers="stat_0" class="gt_row gt_center">209 (42%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">SleepTrouble</td>
+<td headers="stat_0" class="gt_row gt_center">120 (24%)</td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes"><tr>
+<td class="gt_footnote" colspan="2">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%)</td>
+    </tr></tfoot>
 </table>
 </div>
 </div>
 </div>
-<p>We can also summarize any particular variable with the <code>tabyl()</code> function from the <code>janitor</code> package.</p>
+<p>We can also summarize any particular variable with the <code><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl()</a></code> function from the <code>janitor</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(Sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Sex</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Sex   n percent
  female 236   0.472
@@ -1654,9 +1635,9 @@ div.csl-indent {
 </div>
 <p>Or, we can make a basic cross-tabulation of two binary variables, like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(PhysActive, Smoke100) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_title</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">PhysActive</span>, <span class="va">Smoke100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Smoke100    
  PhysActive       No Yes
@@ -1664,23 +1645,34 @@ div.csl-indent {
         Yes      180 104</code></pre>
 </div>
 </div>
-</section>
-<section id="tabulating-multi-categorical-variables" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="tabulating-multi-categorical-variables"><span class="header-section-number">5.8</span> Tabulating Multi-Categorical Variables</h2>
+</section><section id="tabulating-multi-categorical-variables" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="tabulating-multi-categorical-variables">
+<span class="header-section-number">5.8</span> Tabulating Multi-Categorical Variables</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Race, Education, MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Race</span>, <span class="va">Education</span>, <span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="vbhsulldmn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="tmblbdpdvd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tmblbdpdvd table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#vbhsulldmn .gt_table {
+#tmblbdpdvd thead, #tmblbdpdvd tbody, #tmblbdpdvd tfoot, #tmblbdpdvd tr, #tmblbdpdvd td, #tmblbdpdvd th {
+  border-style: none;
+}
+
+#tmblbdpdvd p {
+  margin: 0;
+  padding: 0;
+}
+
+#tmblbdpdvd .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -1703,19 +1695,12 @@ div.csl-indent {
   border-left-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#tmblbdpdvd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-#vbhsulldmn .gt_title {
+#tmblbdpdvd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1727,25 +1712,37 @@ div.csl-indent {
   border-bottom-width: 0;
 }
 
-#vbhsulldmn .gt_subtitle {
+#tmblbdpdvd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#vbhsulldmn .gt_bottom_border {
+#tmblbdpdvd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tmblbdpdvd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_col_headings {
+#tmblbdpdvd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1760,7 +1757,7 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_col_heading {
+#tmblbdpdvd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1780,7 +1777,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#vbhsulldmn .gt_column_spanner_outer {
+#tmblbdpdvd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1792,15 +1789,15 @@ div.csl-indent {
   padding-right: 4px;
 }
 
-#vbhsulldmn .gt_column_spanner_outer:first-child {
+#tmblbdpdvd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vbhsulldmn .gt_column_spanner_outer:last-child {
+#tmblbdpdvd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vbhsulldmn .gt_column_spanner {
+#tmblbdpdvd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1812,7 +1809,11 @@ div.csl-indent {
   width: 100%;
 }
 
-#vbhsulldmn .gt_group_heading {
+#tmblbdpdvd .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#tmblbdpdvd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1835,9 +1836,10 @@ div.csl-indent {
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#vbhsulldmn .gt_empty_group_heading {
+#tmblbdpdvd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1852,15 +1854,15 @@ div.csl-indent {
   vertical-align: middle;
 }
 
-#vbhsulldmn .gt_from_md > :first-child {
+#tmblbdpdvd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vbhsulldmn .gt_from_md > :last-child {
+#tmblbdpdvd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vbhsulldmn .gt_row {
+#tmblbdpdvd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1879,7 +1881,7 @@ div.csl-indent {
   overflow-x: hidden;
 }
 
-#vbhsulldmn .gt_stub {
+#tmblbdpdvd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1892,7 +1894,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#vbhsulldmn .gt_stub_row_group {
+#tmblbdpdvd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1906,11 +1908,15 @@ div.csl-indent {
   vertical-align: top;
 }
 
-#vbhsulldmn .gt_row_group_first td {
+#tmblbdpdvd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vbhsulldmn .gt_summary_row {
+#tmblbdpdvd .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#tmblbdpdvd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1920,16 +1926,16 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#vbhsulldmn .gt_first_summary_row {
+#tmblbdpdvd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_first_summary_row.thick {
+#tmblbdpdvd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vbhsulldmn .gt_last_summary_row {
+#tmblbdpdvd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1939,7 +1945,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_grand_summary_row {
+#tmblbdpdvd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1949,7 +1955,7 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#vbhsulldmn .gt_first_grand_summary_row {
+#tmblbdpdvd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1959,11 +1965,21 @@ div.csl-indent {
   border-top-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_striped {
+#tmblbdpdvd .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tmblbdpdvd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vbhsulldmn .gt_table_body {
+#tmblbdpdvd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1972,7 +1988,7 @@ div.csl-indent {
   border-bottom-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_footnotes {
+#tmblbdpdvd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1986,30 +2002,8 @@ div.csl-indent {
   border-right-color: #D3D3D3;
 }
 
-#vbhsulldmn .gt_footnote {
+#tmblbdpdvd .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#vbhsulldmn .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#vbhsulldmn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2017,251 +2011,313 @@ div.csl-indent {
   padding-right: 5px;
 }
 
-#vbhsulldmn .gt_left {
+#tmblbdpdvd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tmblbdpdvd .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tmblbdpdvd .gt_left {
   text-align: left;
 }
 
-#vbhsulldmn .gt_center {
+#tmblbdpdvd .gt_center {
   text-align: center;
 }
 
-#vbhsulldmn .gt_right {
+#tmblbdpdvd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vbhsulldmn .gt_font_normal {
+#tmblbdpdvd .gt_font_normal {
   font-weight: normal;
 }
 
-#vbhsulldmn .gt_font_bold {
+#tmblbdpdvd .gt_font_bold {
   font-weight: bold;
 }
 
-#vbhsulldmn .gt_font_italic {
+#tmblbdpdvd .gt_font_italic {
   font-style: italic;
 }
 
-#vbhsulldmn .gt_super {
+#tmblbdpdvd .gt_super {
   font-size: 65%;
 }
 
-#vbhsulldmn .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#tmblbdpdvd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#vbhsulldmn .gt_asterisk {
+#tmblbdpdvd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vbhsulldmn .gt_indent_1 {
+#tmblbdpdvd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vbhsulldmn .gt_indent_2 {
+#tmblbdpdvd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vbhsulldmn .gt_indent_3 {
+#tmblbdpdvd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vbhsulldmn .gt_indent_4 {
+#tmblbdpdvd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vbhsulldmn .gt_indent_5 {
+#tmblbdpdvd .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col"><strong>Characteristic</strong></th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col"><strong>N = 500</strong><sup class="gt_footnote_marks">1</sup></th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">Race</td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Asian</td>
-<td class="gt_row gt_center">51 (10%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Black</td>
-<td class="gt_row gt_center">81 (16%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hispanic</td>
-<td class="gt_row gt_center">37 (7.4%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Mexican</td>
-<td class="gt_row gt_center">48 (9.6%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;White</td>
-<td class="gt_row gt_center">262 (52%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Other</td>
-<td class="gt_row gt_center">21 (4.2%)</td></tr>
-    <tr><td class="gt_row gt_left">Education</td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;8th Grade</td>
-<td class="gt_row gt_center">26 (5.2%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;9 - 11th Grade</td>
-<td class="gt_row gt_center">59 (12%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;High School</td>
-<td class="gt_row gt_center">89 (18%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Some College</td>
-<td class="gt_row gt_center">153 (31%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;College Grad</td>
-<td class="gt_row gt_center">173 (35%)</td></tr>
-    <tr><td class="gt_row gt_left">MaritalStatus</td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Divorced</td>
-<td class="gt_row gt_center">47 (9.4%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;LivePartner</td>
-<td class="gt_row gt_center">46 (9.2%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Married</td>
-<td class="gt_row gt_center">256 (51%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;NeverMarried</td>
-<td class="gt_row gt_center">125 (25%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Separated</td>
-<td class="gt_row gt_center">17 (3.4%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Widowed</td>
-<td class="gt_row gt_center">9 (1.8%)</td></tr>
-    <tr><td class="gt_row gt_left">HealthGen</td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Excellent</td>
-<td class="gt_row gt_center">52 (10%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Vgood</td>
-<td class="gt_row gt_center">167 (33%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Good</td>
-<td class="gt_row gt_center">204 (41%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Fair</td>
-<td class="gt_row gt_center">65 (13%)</td></tr>
-    <tr><td class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Poor</td>
-<td class="gt_row gt_center">12 (2.4%)</td></tr>
-  </tbody>
-  
-  <tfoot class="gt_footnotes">
-    <tr>
-      <td class="gt_footnote" colspan="2"><sup class="gt_footnote_marks">1</sup> n (%)</td>
-    </tr>
-  </tfoot>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>N = 500</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>">
+<strong>N = 500</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left">Race</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Asian</td>
+<td headers="stat_0" class="gt_row gt_center">51 (10%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Black</td>
+<td headers="stat_0" class="gt_row gt_center">81 (16%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hispanic</td>
+<td headers="stat_0" class="gt_row gt_center">37 (7.4%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Mexican</td>
+<td headers="stat_0" class="gt_row gt_center">48 (9.6%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;White</td>
+<td headers="stat_0" class="gt_row gt_center">262 (52%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Other</td>
+<td headers="stat_0" class="gt_row gt_center">21 (4.2%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">Education</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;8th Grade</td>
+<td headers="stat_0" class="gt_row gt_center">26 (5.2%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;9 - 11th Grade</td>
+<td headers="stat_0" class="gt_row gt_center">59 (12%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;High School</td>
+<td headers="stat_0" class="gt_row gt_center">89 (18%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Some College</td>
+<td headers="stat_0" class="gt_row gt_center">153 (31%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;College Grad</td>
+<td headers="stat_0" class="gt_row gt_center">173 (35%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">MaritalStatus</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Divorced</td>
+<td headers="stat_0" class="gt_row gt_center">47 (9.4%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;LivePartner</td>
+<td headers="stat_0" class="gt_row gt_center">46 (9.2%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Married</td>
+<td headers="stat_0" class="gt_row gt_center">256 (51%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;NeverMarried</td>
+<td headers="stat_0" class="gt_row gt_center">125 (25%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Separated</td>
+<td headers="stat_0" class="gt_row gt_center">17 (3.4%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Widowed</td>
+<td headers="stat_0" class="gt_row gt_center">9 (1.8%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">HealthGen</td>
+<td headers="stat_0" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Excellent</td>
+<td headers="stat_0" class="gt_row gt_center">52 (10%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Vgood</td>
+<td headers="stat_0" class="gt_row gt_center">167 (33%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Good</td>
+<td headers="stat_0" class="gt_row gt_center">204 (41%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Fair</td>
+<td headers="stat_0" class="gt_row gt_center">65 (13%)</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Poor</td>
+<td headers="stat_0" class="gt_row gt_center">12 (2.4%)</td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes"><tr>
+<td class="gt_footnote" colspan="2">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%)</td>
+    </tr></tfoot>
 </table>
 </div>
 </div>
 </div>
-<p>We can also use <code>tabyl()</code> to look at combinations of multi-categorical variables, whether they are ordinal or nominal.</p>
+<p>We can also use <code><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl()</a></code> to look at combinations of multi-categorical variables, whether they are ordinal or nominal.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nh_500cc <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(Education, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_title</span>() <span class="sc">|&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'lrrrrrc'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_500cc</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">'lrrrrrc'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> HealthGen </th>
-   <th style="text-align:right;">  </th>
-   <th style="text-align:right;">  </th>
-   <th style="text-align:right;">  </th>
-   <th style="text-align:right;">  </th>
-   <th style="text-align:center;">  </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">HealthGen</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> Education </td>
-   <td style="text-align:right;"> Excellent </td>
-   <td style="text-align:right;"> Vgood </td>
-   <td style="text-align:right;"> Good </td>
-   <td style="text-align:right;"> Fair </td>
-   <td style="text-align:right;"> Poor </td>
-   <td style="text-align:center;"> Total </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 8th Grade </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:center;"> 26 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 9 - 11th Grade </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 28 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:center;"> 59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> High School </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 26 </td>
-   <td style="text-align:right;"> 36 </td>
-   <td style="text-align:right;"> 18 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:center;"> 89 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Some College </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:right;"> 46 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 17 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:center;"> 153 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> College Grad </td>
-   <td style="text-align:right;"> 26 </td>
-   <td style="text-align:right;"> 80 </td>
-   <td style="text-align:right;"> 56 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:center;"> 173 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:right;"> 52 </td>
-   <td style="text-align:right;"> 167 </td>
-   <td style="text-align:right;"> 204 </td>
-   <td style="text-align:right;"> 65 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:center;"> 500 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">Education</td>
+<td style="text-align: right;">Excellent</td>
+<td style="text-align: right;">Vgood</td>
+<td style="text-align: right;">Good</td>
+<td style="text-align: right;">Fair</td>
+<td style="text-align: right;">Poor</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8th Grade</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9 - 11th Grade</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High School</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: center;">89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Some College</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: center;">153</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">College Grad</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: center;">173</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">167</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: center;">500</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
-</section>
-<section id="coming-up" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">5.9</span> Coming Up</h2>
+</section><section id="coming-up" class="level2" data-number="5.9"><h2 data-number="5.9" class="anchored" data-anchor-id="coming-up">
+<span class="header-section-number">5.9</span> Coming Up</h2>
 <p>Next, we’ll look at several additional approaches to building tabular and graphical summaries for these data, beyond the ideas provided here.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-BockVD" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-BockVD" class="csl-entry" role="listitem">
 Bock, David E., Paul F. Velleman, and Richard D. De Veaux. 2004. <em>Stats: Modelling the World</em>. Boston <span>MA</span>: Pearson Addison-Wesley.
 </div>
-<div id="ref-Norman-Streiner" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Norman-Streiner" class="csl-entry" role="listitem">
 Norman, Geoffrey R., and David L. Streiner. 2014. <em>Biostatistics: The Bare Essentials</em>. Fourth. People’s Medical Publishing House.
 </div>
-<div id="ref-Vittinghoff" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Vittinghoff" class="csl-entry" role="listitem">
 Vittinghoff, Eric, David V. Glidden, Stephen C. Shiboski, and Charles E. McCulloch. 2012. <em>Regression Methods in Biostatistics: Linear, Logistic, Survival, and Repeated Measures Models</em>. Second. Springer-Verlag, Inc. <a href="http://www.biostat.ucsf.edu/vgsm/">http://www.biostat.ucsf.edu/vgsm/</a>.
 </div>
 </div>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -2281,6 +2337,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -2288,9 +2459,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -2302,7 +2487,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -2330,36 +2532,139 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./04-nhanes.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span>
       </a>          

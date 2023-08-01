@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
-
+<meta name="generator" content="quarto-1.3.353">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Course Notes for 431 - 8&nbsp; Summarizing Categories</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -41,48 +44,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -96,9 +70,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
-
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -114,11 +86,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -136,320 +109,247 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
-
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
-
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-penguins1.html">Part A. Exploring Data</a></li><li class="breadcrumb-item"><a href="./08-summarizing_categories.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Course Notes for 431</a> 
-        <div class="sidebar-tools-main">
-    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+</div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with These Notes</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up R</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Part A. Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a>
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a>
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></a>
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./18-testing_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19-ci_for_mean.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./20-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./21-pairedsamples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./22-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sample Size and Power for Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./23-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./24-anova.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./25-one_proportion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./26-comparing_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./27-power_for_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Power and Proportions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./28-contingency_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29-mult_reg_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
-  </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./30-regr_diagnostics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Regression Diagnostics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./31-prediction_wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Building Prediction Models for <code>wcgs</code></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./32-galapagos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./33-nonlinearity.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./34-olsfits.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./35-emp_bmi.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">BMI and Employment Study</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
-    </div>
-</nav>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">8.1</span> Setup: Packages Used Here</a></li>
-  <li><a href="#using-the-nh_adult750-data-again" id="toc-using-the-nh_adult750-data-again" class="nav-link" data-scroll-target="#using-the-nh_adult750-data-again"> <span class="header-section-number">8.2</span> Using the <code>nh_adult750</code> data again</a></li>
-  <li><a href="#the-summary-function-for-categorical-data" id="toc-the-summary-function-for-categorical-data" class="nav-link" data-scroll-target="#the-summary-function-for-categorical-data"> <span class="header-section-number">8.3</span> The <code>summary</code> function for Categorical data</a></li>
-  <li><a href="#tables-to-describe-one-categorical-variable" id="toc-tables-to-describe-one-categorical-variable" class="nav-link" data-scroll-target="#tables-to-describe-one-categorical-variable"> <span class="header-section-number">8.4</span> Tables to describe One Categorical Variable</a></li>
-  <li><a href="#constructing-tables-well" id="toc-constructing-tables-well" class="nav-link" data-scroll-target="#constructing-tables-well"> <span class="header-section-number">8.5</span> Constructing Tables Well</a>
+<li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"><span class="header-section-number">8.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#using-the-nh_adult750-data-again" id="toc-using-the-nh_adult750-data-again" class="nav-link" data-scroll-target="#using-the-nh_adult750-data-again"><span class="header-section-number">8.2</span> Using the <code>nh_adult750</code> data again</a></li>
+  <li><a href="#the-summary-function-for-categorical-data" id="toc-the-summary-function-for-categorical-data" class="nav-link" data-scroll-target="#the-summary-function-for-categorical-data"><span class="header-section-number">8.3</span> The <code>summary</code> function for Categorical data</a></li>
+  <li><a href="#tables-to-describe-one-categorical-variable" id="toc-tables-to-describe-one-categorical-variable" class="nav-link" data-scroll-target="#tables-to-describe-one-categorical-variable"><span class="header-section-number">8.4</span> Tables to describe One Categorical Variable</a></li>
+  <li>
+<a href="#constructing-tables-well" id="toc-constructing-tables-well" class="nav-link" data-scroll-target="#constructing-tables-well"><span class="header-section-number">8.5</span> Constructing Tables Well</a>
   <ul class="collapse">
-  <li><a href="#alabama-first" id="toc-alabama-first" class="nav-link" data-scroll-target="#alabama-first"> <span class="header-section-number">8.5.1</span> Alabama First!</a></li>
-  <li><a href="#all-is-different-and-important" id="toc-all-is-different-and-important" class="nav-link" data-scroll-target="#all-is-different-and-important"> <span class="header-section-number">8.5.2</span> ALL is different and important</a></li>
-  </ul></li>
-  <li><a href="#the-mode-of-a-categorical-variable" id="toc-the-mode-of-a-categorical-variable" class="nav-link" data-scroll-target="#the-mode-of-a-categorical-variable"> <span class="header-section-number">8.6</span> The Mode of a Categorical Variable</a></li>
-  <li><a href="#describe-in-the-hmisc-package" id="toc-describe-in-the-hmisc-package" class="nav-link" data-scroll-target="#describe-in-the-hmisc-package"> <span class="header-section-number">8.7</span> <code>describe</code> in the <code>Hmisc</code> package</a></li>
-  <li><a href="#cross-tabulations-of-two-variables" id="toc-cross-tabulations-of-two-variables" class="nav-link" data-scroll-target="#cross-tabulations-of-two-variables"> <span class="header-section-number">8.8</span> Cross-Tabulations of Two Variables</a></li>
-  <li><a href="#cross-classifying-three-categorical-variables" id="toc-cross-classifying-three-categorical-variables" class="nav-link" data-scroll-target="#cross-classifying-three-categorical-variables"> <span class="header-section-number">8.9</span> Cross-Classifying Three Categorical Variables</a></li>
-  <li><a href="#gaining-control-over-tables-in-r-the-gt-package" id="toc-gaining-control-over-tables-in-r-the-gt-package" class="nav-link" data-scroll-target="#gaining-control-over-tables-in-r-the-gt-package"> <span class="header-section-number">8.10</span> Gaining Control over Tables in R: the <code>gt</code> package</a></li>
-  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">8.11</span> Coming Up</a></li>
+<li><a href="#alabama-first" id="toc-alabama-first" class="nav-link" data-scroll-target="#alabama-first"><span class="header-section-number">8.5.1</span> Alabama First!</a></li>
+  <li><a href="#all-is-different-and-important" id="toc-all-is-different-and-important" class="nav-link" data-scroll-target="#all-is-different-and-important"><span class="header-section-number">8.5.2</span> ALL is different and important</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#the-mode-of-a-categorical-variable" id="toc-the-mode-of-a-categorical-variable" class="nav-link" data-scroll-target="#the-mode-of-a-categorical-variable"><span class="header-section-number">8.6</span> The Mode of a Categorical Variable</a></li>
+  <li><a href="#describe-in-the-hmisc-package" id="toc-describe-in-the-hmisc-package" class="nav-link" data-scroll-target="#describe-in-the-hmisc-package"><span class="header-section-number">8.7</span> <code>describe</code> in the <code>Hmisc</code> package</a></li>
+  <li><a href="#cross-tabulations-of-two-variables" id="toc-cross-tabulations-of-two-variables" class="nav-link" data-scroll-target="#cross-tabulations-of-two-variables"><span class="header-section-number">8.8</span> Cross-Tabulations of Two Variables</a></li>
+  <li><a href="#cross-classifying-three-categorical-variables" id="toc-cross-classifying-three-categorical-variables" class="nav-link" data-scroll-target="#cross-classifying-three-categorical-variables"><span class="header-section-number">8.9</span> Cross-Classifying Three Categorical Variables</a></li>
+  <li><a href="#gaining-control-over-tables-in-r-the-gt-package" id="toc-gaining-control-over-tables-in-r-the-gt-package" class="nav-link" data-scroll-target="#gaining-control-over-tables-in-r-the-gt-package"><span class="header-section-number">8.10</span> Gaining Control over Tables in R: the <code>gt</code> package</a></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"><span class="header-section-number">8.11</span> Coming Up</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span>
+</h1>
 </div>
 
 
@@ -457,41 +357,37 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
-</header>
-
-<section id="setup-packages-used-here" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">8.1</span> Setup: Packages Used Here</h2>
+</header><section id="setup-packages-used-here" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="setup-packages-used-here">
+<span class="header-section-number">8.1</span> Setup: Packages Used Here</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>comment <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="using-the-nh_adult750-data-again" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="using-the-nh_adult750-data-again"><span class="header-section-number">8.2</span> Using the <code>nh_adult750</code> data again</h2>
+</section><section id="using-the-nh_adult750-data-again" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="using-the-nh_adult750-data-again">
+<span class="header-section-number">8.2</span> Using the <code>nh_adult750</code> data again</h2>
 <p>To demonstrate key ideas in this Chapter, we will again consider our sample of 750 adults ages 21-64 from NHANES 2011-12 which includes some missing values. We’ll load into the <code>nh_750</code> data frame the information from the <code>nh_adult750.Rds</code> file we created in Section @ref(newNHANES).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/nh_adult750.Rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="st">"data/nh_adult750.Rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Summarizing categorical variables numerically is mostly about building tables, and calculating percentages or proportions. We’ll save our discussion of modeling categorical data for later. Recall that in the <code>nh_750</code> data set we built in Section @ref(newNHANES) we had the following categorical variables. The number of levels indicates the number of possible categories for each categorical variable.</p>
 <table class="table">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;">Variable</th>
 <th>Description</th>
 <th>Levels</th>
 <th>Type</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">Sex</td>
@@ -536,16 +432,14 @@ div.csl-indent {
 <td>ordinal</td>
 </tr>
 </tbody>
-</table>
-</section>
-<section id="the-summary-function-for-categorical-data" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="the-summary-function-for-categorical-data"><span class="header-section-number">8.3</span> The <code>summary</code> function for Categorical data</h2>
+</table></section><section id="the-summary-function-for-categorical-data" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="the-summary-function-for-categorical-data">
+<span class="header-section-number">8.3</span> The <code>summary</code> function for Categorical data</h2>
 <p>When R recognizes a variable as categorical, it stores it as a <em>factor</em>. Such variables get special treatment from the <code>summary</code> function, in particular a table of available values (so long as there aren’t too many.)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sex, Race, Education, PhysActive, Smoke100, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         SleepTrouble, HealthGen, MaritalStatus) <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, </span>
+<span>         <span class="va">SleepTrouble</span>, <span class="va">HealthGen</span>, <span class="va">MaritalStatus</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Sex            Race              Education   PhysActive Smoke100 
  female:388   Asian   : 70   8th Grade     : 50   No :326    No :453  
@@ -563,14 +457,13 @@ div.csl-indent {
               NA's     : 99   Widowed     : 16  </code></pre>
 </div>
 </div>
-</section>
-<section id="tables-to-describe-one-categorical-variable" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="tables-to-describe-one-categorical-variable"><span class="header-section-number">8.4</span> Tables to describe One Categorical Variable</h2>
+</section><section id="tables-to-describe-one-categorical-variable" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="tables-to-describe-one-categorical-variable">
+<span class="header-section-number">8.4</span> Tables to describe One Categorical Variable</h2>
 <p>Suppose we build a table (using the <code>tabyl</code> function from the <code>janitor</code> package) to describe the <code>HealthGen</code> distribution.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> HealthGen   n percent valid_percent
  Excellent  84   11.2%         12.9%
@@ -584,10 +477,10 @@ div.csl-indent {
 <p>Note how the missing (<code>&lt;NA&gt;</code>) values are not included in the <code>valid_percent</code> calculation, but are in the <code>percent</code> calculation. Note also the use of percentage formatting.</p>
 <p>What if we want to add a total count, sometimes called the <em>marginal</em> total?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>() <span class="sc">|&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> HealthGen   n percent valid_percent
  Excellent  84   11.2%         12.9%
@@ -601,10 +494,10 @@ div.csl-indent {
 </div>
 <p>What about marital status, which has no missing data in our sample?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(MaritalStatus) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>() <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">MaritalStatus</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> MaritalStatus   n percent
       Divorced  78   10.4%
@@ -616,28 +509,25 @@ div.csl-indent {
          Total 750  100.0%</code></pre>
 </div>
 </div>
-</section>
-<section id="constructing-tables-well" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="constructing-tables-well"><span class="header-section-number">8.5</span> Constructing Tables Well</h2>
+</section><section id="constructing-tables-well" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="constructing-tables-well">
+<span class="header-section-number">8.5</span> Constructing Tables Well</h2>
 <p>The prolific Howard Wainer is responsible for many interesting books on visualization and related issues, including <span class="citation" data-cites="HW_GraphicDiscovery">Wainer (<a href="references.html#ref-HW_GraphicDiscovery" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="HW_MedicalIlluminations">Wainer (<a href="references.html#ref-HW_MedicalIlluminations" role="doc-biblioref">2013</a>)</span>. These rules come from Chapter 10 of <span class="citation" data-cites="HW_VisualRevelations">Wainer (<a href="references.html#ref-HW_VisualRevelations" role="doc-biblioref">1997</a>)</span>.</p>
 <ol type="1">
 <li>Order the rows and columns in a way that makes sense.</li>
 <li>Round, a lot!</li>
 <li>ALL is different and important</li>
 </ol>
-<section id="alabama-first" class="level3" data-number="8.5.1">
-<h3 data-number="8.5.1" class="anchored" data-anchor-id="alabama-first"><span class="header-section-number">8.5.1</span> Alabama First!</h3>
+<section id="alabama-first" class="level3" data-number="8.5.1"><h3 data-number="8.5.1" class="anchored" data-anchor-id="alabama-first">
+<span class="header-section-number">8.5.1</span> Alabama First!</h3>
 <p>Which of these Tables is more useful to you?</p>
 <p>2013 Percent of Students in grades 9-12 who are obese</p>
 <table class="table">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">State</th>
 <th style="text-align: center;">% Obese</th>
 <th style="text-align: center;">95% CI</th>
 <th style="text-align: center;">Sample Size</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Alabama</td>
@@ -703,14 +593,12 @@ div.csl-indent {
 </table>
 <p>or …</p>
 <table class="table">
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;">State</th>
 <th style="text-align: center;">% Obese</th>
 <th style="text-align: center;">95% CI</th>
 <th style="text-align: center;">Sample Size</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Kentucky</td>
@@ -781,21 +669,18 @@ div.csl-indent {
 </tbody>
 </table>
 <p>It is a rare event when Alabama first is the best choice.</p>
-</section>
-<section id="all-is-different-and-important" class="level3" data-number="8.5.2">
-<h3 data-number="8.5.2" class="anchored" data-anchor-id="all-is-different-and-important"><span class="header-section-number">8.5.2</span> ALL is different and important</h3>
+</section><section id="all-is-different-and-important" class="level3" data-number="8.5.2"><h3 data-number="8.5.2" class="anchored" data-anchor-id="all-is-different-and-important">
+<span class="header-section-number">8.5.2</span> ALL is different and important</h3>
 <p>Summaries of rows and columns provide a measure of what is typical or usual. Sometimes a sum is helpful, at other times, consider presenting a median or other summary. The ALL category, as <span class="citation" data-cites="HW_VisualRevelations">Wainer (<a href="references.html#ref-HW_VisualRevelations" role="doc-biblioref">1997</a>)</span> suggests, should be both visually different from the individual entries and set spatially apart.</p>
 <p>On the whole, it’s <em>far</em> easier to fall into a good graph in R (at least if you have some ggplot2 skills) than to produce a good table.</p>
-</section>
-</section>
-<section id="the-mode-of-a-categorical-variable" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="the-mode-of-a-categorical-variable"><span class="header-section-number">8.6</span> The Mode of a Categorical Variable</h2>
+</section></section><section id="the-mode-of-a-categorical-variable" class="level2" data-number="8.6"><h2 data-number="8.6" class="anchored" data-anchor-id="the-mode-of-a-categorical-variable">
+<span class="header-section-number">8.6</span> The Mode of a Categorical Variable</h2>
 <p>A common measure applied to a categorical variable is to identify the mode, the most frequently observed value. To find the mode for variables with lots of categories (so that the <code>summary</code> may not be sufficient), we usually tabulate the data, and then sort by the counts of the numbers of observations, as we did with discrete quantitative variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(count)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   HealthGen count
@@ -808,14 +693,13 @@ div.csl-indent {
 6 Poor         14</code></pre>
 </div>
 </div>
-</section>
-<section id="describe-in-the-hmisc-package" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="describe-in-the-hmisc-package"><span class="header-section-number">8.7</span> <code>describe</code> in the <code>Hmisc</code> package</h2>
+</section><section id="describe-in-the-hmisc-package" class="level2" data-number="8.7"><h2 data-number="8.7" class="anchored" data-anchor-id="describe-in-the-hmisc-package">
+<span class="header-section-number">8.7</span> <code>describe</code> in the <code>Hmisc</code> package</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Hmisc<span class="sc">::</span><span class="fu">describe</span>(nh_750 <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">select</span>(Sex, Race, Education, PhysActive, </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                           Smoke100, SleepTrouble, </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                           HealthGen, MaritalStatus))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">nh_750</span> <span class="op">|&gt;</span> </span>
+<span>                    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">PhysActive</span>, </span>
+<span>                           <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span>, </span>
+<span>                           <span class="va">HealthGen</span>, <span class="va">MaritalStatus</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>select(nh_750, Sex, Race, Education, PhysActive, Smoke100, SleepTrouble, HealthGen, MaritalStatus) 
 
@@ -832,9 +716,6 @@ Proportion  0.517  0.483
 Race 
        n  missing distinct 
      750        0        6 
-
-lowest : Asian    Black    Hispanic Mexican  White   
-highest: Black    Hispanic Mexican  White    Other   
                                                                 
 Value         Asian    Black Hispanic  Mexican    White    Other
 Frequency        70      128       63       80      393       16
@@ -843,9 +724,6 @@ Proportion    0.093    0.171    0.084    0.107    0.524    0.021
 Education 
        n  missing distinct 
      750        0        5 
-
-lowest : 8th Grade      9 - 11th Grade High School    Some College   College Grad  
-highest: 8th Grade      9 - 11th Grade High School    Some College   College Grad  
                                                                       
 Value           8th Grade 9 - 11th Grade    High School   Some College
 Frequency              50             76            143            241
@@ -882,9 +760,6 @@ Proportion 0.74 0.26
 HealthGen 
        n  missing distinct 
      651       99        5 
-
-lowest : Excellent Vgood     Good      Fair      Poor     
-highest: Excellent Vgood     Good      Fair      Poor     
                                                             
 Value      Excellent     Vgood      Good      Fair      Poor
 Frequency         84       197       252       104        14
@@ -893,9 +768,6 @@ Proportion     0.129     0.303     0.387     0.160     0.022
 MaritalStatus 
        n  missing distinct 
      750        0        6 
-
-lowest : Divorced     LivePartner  Married      NeverMarried Separated   
-highest: LivePartner  Married      NeverMarried Separated    Widowed     
                                                                            
 Value          Divorced  LivePartner      Married NeverMarried    Separated
 Frequency            78           70          388          179           19
@@ -907,14 +779,13 @@ Proportion        0.021
 --------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
-</section>
-<section id="cross-tabulations-of-two-variables" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="cross-tabulations-of-two-variables"><span class="header-section-number">8.8</span> Cross-Tabulations of Two Variables</h2>
+</section><section id="cross-tabulations-of-two-variables" class="level2" data-number="8.8"><h2 data-number="8.8" class="anchored" data-anchor-id="cross-tabulations-of-two-variables">
+<span class="header-section-number">8.8</span> Cross-Tabulations of Two Variables</h2>
 <p>It is very common for us to want to describe the association of one categorical variable with another. For instance, is there a relationship between Education and SleepTrouble in these data?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Education, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Education  No Yes Total
       8th Grade  40  10    50
@@ -927,10 +798,10 @@ Proportion        0.021
 </div>
 <p>Note the use of <code>adorn_totals</code> to get the marginal counts, and how we specify that we want both the row and column totals. We can add a title for the columns with…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Education, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Education/SleepTrouble  No Yes Total
               8th Grade  40  10    50
@@ -943,12 +814,12 @@ Proportion        0.021
 </div>
 <p>Often, we’ll want to show percentages in a cross-tabulation like this. To get row percentages so that we can directly see the probability of <code>SleepTrouble = Yes</code> for each level of <code>Education</code>, we can use:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Education, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Education/SleepTrouble    No   Yes
               8th Grade 80.0% 20.0%
@@ -961,12 +832,12 @@ Proportion        0.021
 </div>
 <p>If we want to compare the distribution of <code>Education</code> between the two levels of <code>SleepTrouble</code> with column percentages, we can use the following…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Education, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="st">"col"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"col"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Education/SleepTrouble    No   Yes Total
               8th Grade  7.2%  5.1%  6.7%
@@ -978,251 +849,239 @@ Proportion        0.021
 </div>
 <p>If we want overall percentages in the cells of the table, so that the total across all combinations of <code>Education</code> and <code>SleepTrouble</code> is 100%, we can use:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Education, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>, <span class="st">"col"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"all"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'lrrrrrr'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Education</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"col"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">'lrrrrrr'</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Education/SleepTrouble </th>
-   <th style="text-align:right;"> No </th>
-   <th style="text-align:right;"> Yes </th>
-   <th style="text-align:right;"> Total </th>
-  </tr>
- </thead>
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Education/SleepTrouble</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">No</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Yes</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Total</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> 8th Grade </td>
-   <td style="text-align:right;"> 5.3% </td>
-   <td style="text-align:right;"> 1.3% </td>
-   <td style="text-align:right;"> 6.7% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 9 - 11th Grade </td>
-   <td style="text-align:right;"> 6.9% </td>
-   <td style="text-align:right;"> 3.2% </td>
-   <td style="text-align:right;"> 10.1% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> High School </td>
-   <td style="text-align:right;"> 13.6% </td>
-   <td style="text-align:right;"> 5.5% </td>
-   <td style="text-align:right;"> 19.1% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Some College </td>
-   <td style="text-align:right;"> 23.1% </td>
-   <td style="text-align:right;"> 9.1% </td>
-   <td style="text-align:right;"> 32.1% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> College Grad </td>
-   <td style="text-align:right;"> 25.1% </td>
-   <td style="text-align:right;"> 6.9% </td>
-   <td style="text-align:right;"> 32.0% </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:right;"> 74.0% </td>
-   <td style="text-align:right;"> 26.0% </td>
-   <td style="text-align:right;"> 100.0% </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">8th Grade</td>
+<td style="text-align: right;">5.3%</td>
+<td style="text-align: right;">1.3%</td>
+<td style="text-align: right;">6.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9 - 11th Grade</td>
+<td style="text-align: right;">6.9%</td>
+<td style="text-align: right;">3.2%</td>
+<td style="text-align: right;">10.1%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">High School</td>
+<td style="text-align: right;">13.6%</td>
+<td style="text-align: right;">5.5%</td>
+<td style="text-align: right;">19.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Some College</td>
+<td style="text-align: right;">23.1%</td>
+<td style="text-align: right;">9.1%</td>
+<td style="text-align: right;">32.1%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">College Grad</td>
+<td style="text-align: right;">25.1%</td>
+<td style="text-align: right;">6.9%</td>
+<td style="text-align: right;">32.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">74.0%</td>
+<td style="text-align: right;">26.0%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>Another common approach is to include both counts and percentages in a cross-tabulation. Let’s look at the breakdown of <code>HealthGen</code> by <code>MaritalStatus</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'lrrrrrr'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_ns.html">adorn_ns</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">'lrrrrrr'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> MaritalStatus/HealthGen </th>
-   <th style="text-align:right;"> Excellent </th>
-   <th style="text-align:right;"> Vgood </th>
-   <th style="text-align:right;"> Good </th>
-   <th style="text-align:right;"> Fair </th>
-   <th style="text-align:right;"> Poor </th>
-   <th style="text-align:right;"> NA_ </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">MaritalStatus/HealthGen</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Excellent</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Vgood</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Good</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Fair</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Poor</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">NA_</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> Divorced </td>
-   <td style="text-align:right;"> 7  (9.0%) </td>
-   <td style="text-align:right;"> 19 (24.4%) </td>
-   <td style="text-align:right;"> 29 (37.2%) </td>
-   <td style="text-align:right;"> 11 (14.1%) </td>
-   <td style="text-align:right;"> 3  (3.8%) </td>
-   <td style="text-align:right;"> 9 (11.5%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> LivePartner </td>
-   <td style="text-align:right;"> 4  (5.7%) </td>
-   <td style="text-align:right;"> 19 (27.1%) </td>
-   <td style="text-align:right;"> 25 (35.7%) </td>
-   <td style="text-align:right;"> 18 (25.7%) </td>
-   <td style="text-align:right;"> 0  (0.0%) </td>
-   <td style="text-align:right;"> 4  (5.7%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Married </td>
-   <td style="text-align:right;"> 46 (11.9%) </td>
-   <td style="text-align:right;"> 101 (26.0%) </td>
-   <td style="text-align:right;"> 130 (33.5%) </td>
-   <td style="text-align:right;"> 41 (10.6%) </td>
-   <td style="text-align:right;"> 6  (1.5%) </td>
-   <td style="text-align:right;"> 64 (16.5%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> NeverMarried </td>
-   <td style="text-align:right;"> 25 (14.0%) </td>
-   <td style="text-align:right;"> 52 (29.1%) </td>
-   <td style="text-align:right;"> 56 (31.3%) </td>
-   <td style="text-align:right;"> 24 (13.4%) </td>
-   <td style="text-align:right;"> 3  (1.7%) </td>
-   <td style="text-align:right;"> 19 (10.6%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Separated </td>
-   <td style="text-align:right;"> 2 (10.5%) </td>
-   <td style="text-align:right;"> 3 (15.8%) </td>
-   <td style="text-align:right;"> 4 (21.1%) </td>
-   <td style="text-align:right;"> 8 (42.1%) </td>
-   <td style="text-align:right;"> 0  (0.0%) </td>
-   <td style="text-align:right;"> 2 (10.5%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Widowed </td>
-   <td style="text-align:right;"> 0  (0.0%) </td>
-   <td style="text-align:right;"> 3 (18.8%) </td>
-   <td style="text-align:right;"> 8 (50.0%) </td>
-   <td style="text-align:right;"> 2 (12.5%) </td>
-   <td style="text-align:right;"> 2 (12.5%) </td>
-   <td style="text-align:right;"> 1  (6.2%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:right;"> 84 (11.2%) </td>
-   <td style="text-align:right;"> 197 (26.3%) </td>
-   <td style="text-align:right;"> 252 (33.6%) </td>
-   <td style="text-align:right;"> 104 (13.9%) </td>
-   <td style="text-align:right;"> 14  (1.9%) </td>
-   <td style="text-align:right;"> 99 (13.2%) </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">Divorced</td>
+<td style="text-align: right;">7 (9.0%)</td>
+<td style="text-align: right;">19 (24.4%)</td>
+<td style="text-align: right;">29 (37.2%)</td>
+<td style="text-align: right;">11 (14.1%)</td>
+<td style="text-align: right;">3 (3.8%)</td>
+<td style="text-align: right;">9 (11.5%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LivePartner</td>
+<td style="text-align: right;">4 (5.7%)</td>
+<td style="text-align: right;">19 (27.1%)</td>
+<td style="text-align: right;">25 (35.7%)</td>
+<td style="text-align: right;">18 (25.7%)</td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: right;">4 (5.7%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Married</td>
+<td style="text-align: right;">46 (11.9%)</td>
+<td style="text-align: right;">101 (26.0%)</td>
+<td style="text-align: right;">130 (33.5%)</td>
+<td style="text-align: right;">41 (10.6%)</td>
+<td style="text-align: right;">6 (1.5%)</td>
+<td style="text-align: right;">64 (16.5%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NeverMarried</td>
+<td style="text-align: right;">25 (14.0%)</td>
+<td style="text-align: right;">52 (29.1%)</td>
+<td style="text-align: right;">56 (31.3%)</td>
+<td style="text-align: right;">24 (13.4%)</td>
+<td style="text-align: right;">3 (1.7%)</td>
+<td style="text-align: right;">19 (10.6%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Separated</td>
+<td style="text-align: right;">2 (10.5%)</td>
+<td style="text-align: right;">3 (15.8%)</td>
+<td style="text-align: right;">4 (21.1%)</td>
+<td style="text-align: right;">8 (42.1%)</td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: right;">2 (10.5%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Widowed</td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: right;">3 (18.8%)</td>
+<td style="text-align: right;">8 (50.0%)</td>
+<td style="text-align: right;">2 (12.5%)</td>
+<td style="text-align: right;">2 (12.5%)</td>
+<td style="text-align: right;">1 (6.2%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">84 (11.2%)</td>
+<td style="text-align: right;">197 (26.3%)</td>
+<td style="text-align: right;">252 (33.6%)</td>
+<td style="text-align: right;">104 (13.9%)</td>
+<td style="text-align: right;">14 (1.9%)</td>
+<td style="text-align: right;">99 (13.2%)</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>What if we wanted to ignore the missing <code>HealthGen</code> values? Most often, I filter down to the complete observations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">complete.cases</span>(MaritalStatus, HealthGen)) <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_totals</span>(<span class="at">where =</span> <span class="fu">c</span>(<span class="st">"row"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_percentages</span>(<span class="at">denominator =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_pct_formatting</span>() <span class="sc">|&gt;</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_ns</span>(<span class="at">position =</span> <span class="st">"front"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"combined"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">'lrrrrr'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"row"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_ns.html">adorn_ns</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">'lrrrrr'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> MaritalStatus/HealthGen </th>
-   <th style="text-align:right;"> Excellent </th>
-   <th style="text-align:right;"> Vgood </th>
-   <th style="text-align:right;"> Good </th>
-   <th style="text-align:right;"> Fair </th>
-   <th style="text-align:right;"> Poor </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">MaritalStatus/HealthGen</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Excellent</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Vgood</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Good</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Fair</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Poor</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> Divorced </td>
-   <td style="text-align:right;"> 7 (10.1%) </td>
-   <td style="text-align:right;"> 19 (27.5%) </td>
-   <td style="text-align:right;"> 29 (42.0%) </td>
-   <td style="text-align:right;"> 11 (15.9%) </td>
-   <td style="text-align:right;"> 3  (4.3%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> LivePartner </td>
-   <td style="text-align:right;"> 4  (6.1%) </td>
-   <td style="text-align:right;"> 19 (28.8%) </td>
-   <td style="text-align:right;"> 25 (37.9%) </td>
-   <td style="text-align:right;"> 18 (27.3%) </td>
-   <td style="text-align:right;"> 0  (0.0%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Married </td>
-   <td style="text-align:right;"> 46 (14.2%) </td>
-   <td style="text-align:right;"> 101 (31.2%) </td>
-   <td style="text-align:right;"> 130 (40.1%) </td>
-   <td style="text-align:right;"> 41 (12.7%) </td>
-   <td style="text-align:right;"> 6  (1.9%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> NeverMarried </td>
-   <td style="text-align:right;"> 25 (15.6%) </td>
-   <td style="text-align:right;"> 52 (32.5%) </td>
-   <td style="text-align:right;"> 56 (35.0%) </td>
-   <td style="text-align:right;"> 24 (15.0%) </td>
-   <td style="text-align:right;"> 3  (1.9%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Separated </td>
-   <td style="text-align:right;"> 2 (11.8%) </td>
-   <td style="text-align:right;"> 3 (17.6%) </td>
-   <td style="text-align:right;"> 4 (23.5%) </td>
-   <td style="text-align:right;"> 8 (47.1%) </td>
-   <td style="text-align:right;"> 0  (0.0%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Widowed </td>
-   <td style="text-align:right;"> 0  (0.0%) </td>
-   <td style="text-align:right;"> 3 (20.0%) </td>
-   <td style="text-align:right;"> 8 (53.3%) </td>
-   <td style="text-align:right;"> 2 (13.3%) </td>
-   <td style="text-align:right;"> 2 (13.3%) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:right;"> 84 (12.9%) </td>
-   <td style="text-align:right;"> 197 (30.3%) </td>
-   <td style="text-align:right;"> 252 (38.7%) </td>
-   <td style="text-align:right;"> 104 (16.0%) </td>
-   <td style="text-align:right;"> 14  (2.2%) </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">Divorced</td>
+<td style="text-align: right;">7 (10.1%)</td>
+<td style="text-align: right;">19 (27.5%)</td>
+<td style="text-align: right;">29 (42.0%)</td>
+<td style="text-align: right;">11 (15.9%)</td>
+<td style="text-align: right;">3 (4.3%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LivePartner</td>
+<td style="text-align: right;">4 (6.1%)</td>
+<td style="text-align: right;">19 (28.8%)</td>
+<td style="text-align: right;">25 (37.9%)</td>
+<td style="text-align: right;">18 (27.3%)</td>
+<td style="text-align: right;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Married</td>
+<td style="text-align: right;">46 (14.2%)</td>
+<td style="text-align: right;">101 (31.2%)</td>
+<td style="text-align: right;">130 (40.1%)</td>
+<td style="text-align: right;">41 (12.7%)</td>
+<td style="text-align: right;">6 (1.9%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NeverMarried</td>
+<td style="text-align: right;">25 (15.6%)</td>
+<td style="text-align: right;">52 (32.5%)</td>
+<td style="text-align: right;">56 (35.0%)</td>
+<td style="text-align: right;">24 (15.0%)</td>
+<td style="text-align: right;">3 (1.9%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Separated</td>
+<td style="text-align: right;">2 (11.8%)</td>
+<td style="text-align: right;">3 (17.6%)</td>
+<td style="text-align: right;">4 (23.5%)</td>
+<td style="text-align: right;">8 (47.1%)</td>
+<td style="text-align: right;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Widowed</td>
+<td style="text-align: right;">0 (0.0%)</td>
+<td style="text-align: right;">3 (20.0%)</td>
+<td style="text-align: right;">8 (53.3%)</td>
+<td style="text-align: right;">2 (13.3%)</td>
+<td style="text-align: right;">2 (13.3%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">84 (12.9%)</td>
+<td style="text-align: right;">197 (30.3%)</td>
+<td style="text-align: right;">252 (38.7%)</td>
+<td style="text-align: right;">104 (16.0%)</td>
+<td style="text-align: right;">14 (2.2%)</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>For more on working with <code>tabyls</code>, see <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html">this overview of janitor functions</a>. There you’ll find a complete list of all of the <code>adorn</code> functions, for example.</p>
 <p>Here’s another approach, to look at the cross-classification of Race and HealthGen:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Race <span class="sc">+</span> HealthGen, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Race</span> <span class="op">+</span> <span class="va">HealthGen</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          HealthGen
 Race       Excellent Vgood Good Fair Poor
@@ -1234,14 +1093,13 @@ Race       Excellent Vgood Good Fair Poor
   Other            1     3    8    3    0</code></pre>
 </div>
 </div>
-</section>
-<section id="cross-classifying-three-categorical-variables" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="cross-classifying-three-categorical-variables"><span class="header-section-number">8.9</span> Cross-Classifying Three Categorical Variables</h2>
+</section><section id="cross-classifying-three-categorical-variables" class="level2" data-number="8.9"><h2 data-number="8.9" class="anchored" data-anchor-id="cross-classifying-three-categorical-variables">
+<span class="header-section-number">8.9</span> Cross-Classifying Three Categorical Variables</h2>
 <p>Suppose we are interested in <code>Smoke100</code> and its relationship to <code>PhysActive</code> and <code>SleepTrouble</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabyl</span>(Smoke100, PhysActive, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">adorn_title</span>(<span class="at">placement =</span> <span class="st">"top"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">Smoke100</span>, <span class="va">PhysActive</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_title.html">adorn_title</a></span><span class="op">(</span>placement <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$No
           PhysActive    
@@ -1259,7 +1117,7 @@ $Yes
 <p>The result here is a tabyl of <code>Smoke100</code> (rows) by <code>PhysActive</code> (columns), split into a list by <code>SleepTrouble</code>.</p>
 <p>There are several alternative approaches for doing this, although I expect us to stick with <code>tabyl</code> for our work in 431. These alternatives include the use of the <code>xtabs</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> Smoke100 <span class="sc">+</span> PhysActive <span class="sc">+</span> SleepTrouble, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Smoke100</span> <span class="op">+</span> <span class="va">PhysActive</span> <span class="op">+</span> <span class="va">SleepTrouble</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>, , SleepTrouble = No
 
@@ -1278,7 +1136,7 @@ Smoke100  No Yes
 </div>
 <p>We can also build a <strong>flat</strong> version of this table, as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(Smoke100 <span class="sc">~</span> PhysActive <span class="sc">+</span> SleepTrouble, <span class="at">data =</span> nh_750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ftable.html">ftable</a></span><span class="op">(</span><span class="va">Smoke100</span> <span class="op">~</span> <span class="va">PhysActive</span> <span class="op">+</span> <span class="va">SleepTrouble</span>, data <span class="op">=</span> <span class="va">nh_750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        Smoke100  No Yes
 PhysActive SleepTrouble                 
@@ -1288,11 +1146,11 @@ Yes        No                    219 106
            Yes                    56  43</code></pre>
 </div>
 </div>
-<p>And we can do this with <code>dplyr</code> functions and the <code>table()</code> function, as well, for example…</p>
+<p>And we can do this with <code>dplyr</code> functions and the <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> function, as well, for example…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>nh_750 <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Smoke100, PhysActive, SleepTrouble) <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">table</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_750</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Smoke100</span>, <span class="va">PhysActive</span>, <span class="va">SleepTrouble</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>, , SleepTrouble = No
 
@@ -1309,29 +1167,40 @@ Smoke100  No Yes
      Yes  55  43</code></pre>
 </div>
 </div>
-</section>
-<section id="gaining-control-over-tables-in-r-the-gt-package" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="gaining-control-over-tables-in-r-the-gt-package"><span class="header-section-number">8.10</span> Gaining Control over Tables in R: the <code>gt</code> package</h2>
+</section><section id="gaining-control-over-tables-in-r-the-gt-package" class="level2" data-number="8.10"><h2 data-number="8.10" class="anchored" data-anchor-id="gaining-control-over-tables-in-r-the-gt-package">
+<span class="header-section-number">8.10</span> Gaining Control over Tables in R: the <code>gt</code> package</h2>
 <p>With the <code>gt</code> package, anyone can make wonderful-looking tables using the R programming language. The <code>gt</code> package allows you to start with a tibble or data frame, and use it to make very detailed tables that look professional, and includes tools that enable you to include titles and subtitles, all sorts of labels, as well as footnotes and source notes.</p>
 <p>Here’s a fairly simple example of a cross-tabulation of part of the <code>nh_750</code> data built using a few tools from the <code>gt</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>temp_tbl <span class="ot">&lt;-</span> nh_750 <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">complete.cases</span>(PhysActive, HealthGen)) <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabyl</span>(PhysActive, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>() </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gt</span>(temp_tbl) <span class="sc">|&gt;</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title =</span> <span class="fu">md</span>(<span class="st">"**Cross-Tabulation from nh_750**"</span>),</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">subtitle =</span> <span class="fu">md</span>(<span class="st">"Physical Activity vs. Overall Health"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">temp_tbl</span> <span class="op">&lt;-</span> <span class="va">nh_750</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">PhysActive</span>, <span class="va">HealthGen</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">PhysActive</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="va">temp_tbl</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_header.html">tab_header</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/md.html">md</a></span><span class="op">(</span><span class="st">"**Cross-Tabulation from nh_750**"</span><span class="op">)</span>,</span>
+<span>             subtitle <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/md.html">md</a></span><span class="op">(</span><span class="st">"Physical Activity vs. Overall Health"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="glwduqhxiq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="irapcmsjyb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#irapcmsjyb table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#glwduqhxiq .gt_table {
+#irapcmsjyb thead, #irapcmsjyb tbody, #irapcmsjyb tfoot, #irapcmsjyb tr, #irapcmsjyb td, #irapcmsjyb th {
+  border-style: none;
+}
+
+#irapcmsjyb p {
+  margin: 0;
+  padding: 0;
+}
+
+#irapcmsjyb .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -1354,19 +1223,12 @@ Smoke100  No Yes
   border-left-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
+#irapcmsjyb .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-#glwduqhxiq .gt_title {
+#irapcmsjyb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1378,25 +1240,37 @@ Smoke100  No Yes
   border-bottom-width: 0;
 }
 
-#glwduqhxiq .gt_subtitle {
+#irapcmsjyb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#glwduqhxiq .gt_bottom_border {
+#irapcmsjyb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#irapcmsjyb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_col_headings {
+#irapcmsjyb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1411,7 +1285,7 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_col_heading {
+#irapcmsjyb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1431,7 +1305,7 @@ Smoke100  No Yes
   overflow-x: hidden;
 }
 
-#glwduqhxiq .gt_column_spanner_outer {
+#irapcmsjyb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1443,15 +1317,15 @@ Smoke100  No Yes
   padding-right: 4px;
 }
 
-#glwduqhxiq .gt_column_spanner_outer:first-child {
+#irapcmsjyb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#glwduqhxiq .gt_column_spanner_outer:last-child {
+#irapcmsjyb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#glwduqhxiq .gt_column_spanner {
+#irapcmsjyb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1463,7 +1337,11 @@ Smoke100  No Yes
   width: 100%;
 }
 
-#glwduqhxiq .gt_group_heading {
+#irapcmsjyb .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#irapcmsjyb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1486,9 +1364,10 @@ Smoke100  No Yes
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#glwduqhxiq .gt_empty_group_heading {
+#irapcmsjyb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1503,15 +1382,15 @@ Smoke100  No Yes
   vertical-align: middle;
 }
 
-#glwduqhxiq .gt_from_md > :first-child {
+#irapcmsjyb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#glwduqhxiq .gt_from_md > :last-child {
+#irapcmsjyb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#glwduqhxiq .gt_row {
+#irapcmsjyb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1530,7 +1409,7 @@ Smoke100  No Yes
   overflow-x: hidden;
 }
 
-#glwduqhxiq .gt_stub {
+#irapcmsjyb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1543,7 +1422,7 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#glwduqhxiq .gt_stub_row_group {
+#irapcmsjyb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1557,11 +1436,15 @@ Smoke100  No Yes
   vertical-align: top;
 }
 
-#glwduqhxiq .gt_row_group_first td {
+#irapcmsjyb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#glwduqhxiq .gt_summary_row {
+#irapcmsjyb .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#irapcmsjyb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1571,16 +1454,16 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#glwduqhxiq .gt_first_summary_row {
+#irapcmsjyb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_first_summary_row.thick {
+#irapcmsjyb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#glwduqhxiq .gt_last_summary_row {
+#irapcmsjyb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1590,7 +1473,7 @@ Smoke100  No Yes
   border-bottom-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_grand_summary_row {
+#irapcmsjyb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1600,7 +1483,7 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#glwduqhxiq .gt_first_grand_summary_row {
+#irapcmsjyb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1610,11 +1493,21 @@ Smoke100  No Yes
   border-top-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_striped {
+#irapcmsjyb .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#irapcmsjyb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#glwduqhxiq .gt_table_body {
+#irapcmsjyb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1623,7 +1516,7 @@ Smoke100  No Yes
   border-bottom-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_footnotes {
+#irapcmsjyb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1637,30 +1530,8 @@ Smoke100  No Yes
   border-right-color: #D3D3D3;
 }
 
-#glwduqhxiq .gt_footnote {
+#irapcmsjyb .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#glwduqhxiq .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#glwduqhxiq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1668,128 +1539,145 @@ Smoke100  No Yes
   padding-right: 5px;
 }
 
-#glwduqhxiq .gt_left {
+#irapcmsjyb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#irapcmsjyb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#irapcmsjyb .gt_left {
   text-align: left;
 }
 
-#glwduqhxiq .gt_center {
+#irapcmsjyb .gt_center {
   text-align: center;
 }
 
-#glwduqhxiq .gt_right {
+#irapcmsjyb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#glwduqhxiq .gt_font_normal {
+#irapcmsjyb .gt_font_normal {
   font-weight: normal;
 }
 
-#glwduqhxiq .gt_font_bold {
+#irapcmsjyb .gt_font_bold {
   font-weight: bold;
 }
 
-#glwduqhxiq .gt_font_italic {
+#irapcmsjyb .gt_font_italic {
   font-style: italic;
 }
 
-#glwduqhxiq .gt_super {
+#irapcmsjyb .gt_super {
   font-size: 65%;
 }
 
-#glwduqhxiq .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#irapcmsjyb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#glwduqhxiq .gt_asterisk {
+#irapcmsjyb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#glwduqhxiq .gt_indent_1 {
+#irapcmsjyb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#glwduqhxiq .gt_indent_2 {
+#irapcmsjyb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#glwduqhxiq .gt_indent_3 {
+#irapcmsjyb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#glwduqhxiq .gt_indent_4 {
+#irapcmsjyb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#glwduqhxiq .gt_indent_5 {
+#irapcmsjyb .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  <thead class="gt_header">
-    <tr>
-      <td colspan="6" class="gt_heading gt_title gt_font_normal" style=""><strong>Cross-Tabulation from nh_750</strong></td>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading">
+<td colspan="6" class="gt_heading gt_title gt_font_normal" style=""><strong>Cross-Tabulation from nh_750</strong></td>
     </tr>
-    <tr>
-      <td colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="">Physical Activity vs. Overall Health</td>
+<tr class="gt_heading">
+<td colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="">Physical Activity vs. Overall Health</td>
     </tr>
-  </thead>
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col">PhysActive</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">Excellent</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">Vgood</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">Good</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">Fair</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col">Poor</th>
+<tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="PhysActive">PhysActive</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Excellent">Excellent</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Vgood">Vgood</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Good">Good</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Fair">Fair</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Poor">Poor</th>
     </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_center">No</td>
-<td class="gt_row gt_right">24</td>
-<td class="gt_row gt_right">66</td>
-<td class="gt_row gt_right">126</td>
-<td class="gt_row gt_right">59</td>
-<td class="gt_row gt_right">10</td></tr>
-    <tr><td class="gt_row gt_center">Yes</td>
-<td class="gt_row gt_right">60</td>
-<td class="gt_row gt_right">131</td>
-<td class="gt_row gt_right">126</td>
-<td class="gt_row gt_right">45</td>
-<td class="gt_row gt_right">4</td></tr>
-  </tbody>
-  
-  
+</thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="PhysActive" class="gt_row gt_center">No</td>
+<td headers="Excellent" class="gt_row gt_right">24</td>
+<td headers="Vgood" class="gt_row gt_right">66</td>
+<td headers="Good" class="gt_row gt_right">126</td>
+<td headers="Fair" class="gt_row gt_right">59</td>
+<td headers="Poor" class="gt_row gt_right">10</td>
+</tr>
+<tr>
+<td headers="PhysActive" class="gt_row gt_center">Yes</td>
+<td headers="Excellent" class="gt_row gt_right">60</td>
+<td headers="Vgood" class="gt_row gt_right">131</td>
+<td headers="Good" class="gt_row gt_right">126</td>
+<td headers="Fair" class="gt_row gt_right">45</td>
+<td headers="Poor" class="gt_row gt_right">4</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
 <p>The <code>gt</code> package and its usage is described in detail at https://gt.rstudio.com/.</p>
-</section>
-<section id="coming-up" class="level2" data-number="8.11">
-<h2 data-number="8.11" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">8.11</span> Coming Up</h2>
+</section><section id="coming-up" class="level2" data-number="8.11"><h2 data-number="8.11" class="anchored" data-anchor-id="coming-up">
+<span class="header-section-number">8.11</span> Coming Up</h2>
 <p>Next, we’ll make some early attempts at describing missingness in our data.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-HW_VisualRevelations" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-HW_VisualRevelations" class="csl-entry" role="listitem">
 Wainer, Howard. 1997. <em>Visual Revelations: Graphical Tales of Fate and Deception from Napoleon Bonaparte to Ross Perot</em>. New York: Springer-Verlag.
 </div>
-<div id="ref-HW_GraphicDiscovery" class="csl-entry" role="doc-biblioentry">
+<div id="ref-HW_GraphicDiscovery" class="csl-entry" role="listitem">
 ———. 2005. <em>Graphic Discovery: A Trout in the Milk and Other Visual Adventures</em>. Princeton, NJ: Princeton University Press.
 </div>
-<div id="ref-HW_MedicalIlluminations" class="csl-entry" role="doc-biblioentry">
+<div id="ref-HW_MedicalIlluminations" class="csl-entry" role="listitem">
 ———. 2013. <em>Medical Illuminations: Using Evidence, Visualization and Statistical Thinking to Improve Healthcare</em>. New York: Oxford University Press.
 </div>
 </div>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1809,6 +1697,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1816,9 +1819,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1830,7 +1847,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1858,36 +1892,139 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./07-summarizing_quantities.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></span>
       </a>          

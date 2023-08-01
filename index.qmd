@@ -1,5 +1,3 @@
-**Version**: `r Sys.time()`.
-
 # Working with These Notes {.unnumbered}
 
 1.  This document is broken down into multiple chapters. Use the table of contents on the left side of the screen to navigate between chapters, or use the right side to navigate within the current chapter.
@@ -23,13 +21,13 @@ but what we don't do is follow these notes very precisely. We assume instead tha
 
 ## The 431 Course online {.unnumbered}
 
-The **online home** for Dr. Love's 431 course in Fall 2022 is 
+The **online home** for Dr. Love's 431 course in Fall 2023 is 
 
-[https://thomaselove.github.io/431-2022/](https://thomaselove.github.io/431-2022/). 
+[https://thomaselove.github.io/431-2023/](https://thomaselove.github.io/431-2023/). 
 
 Go there for all information related to the course.
 
-All of the code and text in these Notes is posted online as HTML, and it is also possible to download PDF and ePub versions of the document from the down arrow next to the title (Notes for 431) at the top left of this screen. All data and R code related to these notes are also available to you through [our course web site](https://thomaselove.github.io/431-2022/).
+All of the code and text in these Notes is posted online as HTML, and it is also possible to download PDF and ePub versions of the document from the down arrow next to the title (Notes for 431) at the top left of this screen. All data and R code related to these notes are also available to you through [our course web site](https://thomaselove.github.io/431-2023/).
 
-By the end of the semester, you will also have access to the Quarto files which generate everything in the document, including all of the R results. [Quarto](https://quarto.org/) is a souped-up version of [R Markdown](https://rmarkdown.rstudio.com/), which you will use during the semester to complete your assignments, and which I used to develop previous versions of these notes. We will demonstrate the use of R Markdown and [RStudio](https://www.rstudio.com/products/rstudio/) (the "program" we use to interface with the R language) in class.
+By the end of the semester, you will also have access to the [Quarto](https://quarto.org/) files which generate everything in the document, including all of the R results. You will also use Quarto during the semester to complete your assignments, and so we will demonstrate the use of Quarto and [RStudio](https://posit.co/download/rstudio-desktop/) (the "program" we use to interface with the R language) in class.
 

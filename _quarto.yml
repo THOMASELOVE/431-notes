@@ -5,9 +5,10 @@ project:
 book:
   title: "Course Notes for 431"
   author: "Thomas E. Love, Ph.D."
-  date: "2022-08-29"
+  date: last-modified
+  reader-mode: true
   search: true
-  downloads: [pdf]
+  downloads: [pdf, epub]
   output-file: "431-notes"
   chapters:
     - index.qmd
@@ -31,28 +32,28 @@ book:
         - 15-crabs.qmd
         - 16-hydrate.qmd
         - 17-wcgs.qmd
-    - part: "Part B. Comparing Summaries"
-      chapters:
-        - 18-testing_intro.qmd
-        - 19-ci_for_mean.qmd
-        - 20-ibuprofen_sepsis.qmd
-        - 21-pairedsamples.qmd
-        - 22-samplesize.qmd
-        - 23-examples_2means.qmd
-        - 24-anova.qmd
-        - 25-one_proportion.qmd
-        - 26-comparing_rates.qmd
-        - 27-power_for_rates.qmd
-        - 28-contingency_tables.qmd
-    - part: "Part C. Building Models"
-      chapters: 
-        - 29-mult_reg_intro.qmd
-        - 30-regr_diagnostics.qmd
-        - 31-prediction_wcgs.qmd
-        - 32-galapagos.qmd
-        - 33-nonlinearity.qmd
-        - 34-olsfits.qmd
-        - 35-emp_bmi.qmd
+  #  - part: "Part B. Comparing Summaries"
+  #    chapters:
+  #      - 18-testing_intro.qmd
+  #      - 19-ci_for_mean.qmd
+  #      - 20-ibuprofen_sepsis.qmd
+  #      - 21-pairedsamples.qmd
+  #      - 22-samplesize.qmd
+  #      - 23-examples_2means.qmd
+  #      - 24-anova.qmd
+  #      - 25-one_proportion.qmd
+  #      - 26-comparing_rates.qmd
+  #      - 27-power_for_rates.qmd
+  #      - 28-contingency_tables.qmd
+  #  - part: "Part C. Building Models"
+  #    chapters: 
+  #      - 29-mult_reg_intro.qmd
+  #      - 30-regr_diagnostics.qmd
+  #      - 31-prediction_wcgs.qmd
+  #      - 32-galapagos.qmd
+  #      - 33-nonlinearity.qmd
+  #      - 34-olsfits.qmd
+  #      - 35-emp_bmi.qmd
   appendices:
     - 98_gettingdataintoR.qmd
     - 99_sessioninfo.qmd
@@ -62,9 +63,16 @@ bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      light: pulse
+      dark: cyborg
+    date-format: iso
+    code-link: true
   pdf:
     documentclass: scrreprt
+    date-format: iso
+  epub: 
+    date-format: iso
 
 editor: source
 

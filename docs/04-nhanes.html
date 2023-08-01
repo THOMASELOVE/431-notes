@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
-
+<meta name="generator" content="quarto-1.3.353">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Course Notes for 431 - 4&nbsp; NHANES Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -41,48 +44,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -96,9 +70,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
-
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -114,11 +86,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -136,318 +109,243 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
-
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
-
 <body class="nav-sidebar floating">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-penguins1.html">Part A. Exploring Data</a></li><li class="breadcrumb-item"><a href="./04-nhanes.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Course Notes for 431</a> 
-        <div class="sidebar-tools-main">
-    <a href="./431-notes.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+</div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Working with These Notes</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with These Notes</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">Setting Up R</a>
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up R</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></a>
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Part A. Exploring Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Part A. Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></a>
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></a>
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></a>
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></a>
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></a>
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></a>
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></a>
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></a>
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></a>
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-normality.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></a>
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></a>
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></a>
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></a>
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></a>
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></a>
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></a>
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Part B. Comparing Summaries</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./18-testing_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></a>
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19-ci_for_mean.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></a>
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./20-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./21-pairedsamples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./22-samplesize.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sample Size and Power for Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./23-examples_2means.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./24-anova.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./25-one_proportion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./26-comparing_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./27-power_for_rates.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Power and Proportions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./28-contingency_tables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Part C. Building Models</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29-mult_reg_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></a>
-  </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./30-regr_diagnostics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Regression Diagnostics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./31-prediction_wcgs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Building Prediction Models for <code>wcgs</code></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./32-galapagos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./33-nonlinearity.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./34-olsfits.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./35-emp_bmi.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">BMI and Employment Study</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
-    </div>
-</nav>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"> <span class="header-section-number">4.1</span> Setup: Packages Used Here</a></li>
-  <li><a href="#the-nhanes-data-a-first-sample" id="toc-the-nhanes-data-a-first-sample" class="nav-link" data-scroll-target="#the-nhanes-data-a-first-sample"> <span class="header-section-number">4.2</span> The NHANES data: A First Sample</a></li>
-  <li><a href="#newNHANES" id="toc-newNHANES" class="nav-link" data-scroll-target="#newNHANES"> <span class="header-section-number">4.3</span> Sampling NHANES Adults</a>
+<li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"><span class="header-section-number">4.1</span> Setup: Packages Used Here</a></li>
+  <li><a href="#the-nhanes-data-a-first-sample" id="toc-the-nhanes-data-a-first-sample" class="nav-link" data-scroll-target="#the-nhanes-data-a-first-sample"><span class="header-section-number">4.2</span> The NHANES data: A First Sample</a></li>
+  <li>
+<a href="#newNHANES" id="toc-newNHANES" class="nav-link" data-scroll-target="#newNHANES"><span class="header-section-number">4.3</span> Sampling NHANES Adults</a>
   <ul class="collapse">
-  <li><a href="#creating-a-temporary-cleaner-tibble" id="toc-creating-a-temporary-cleaner-tibble" class="nav-link" data-scroll-target="#creating-a-temporary-cleaner-tibble"> <span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Tibble</a></li>
-  <li><a href="#sec-nh750" id="toc-sec-nh750" class="nav-link" data-scroll-target="#sec-nh750"> <span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</a></li>
-  <li><a href="#summarizing-the-datas-structure" id="toc-summarizing-the-datas-structure" class="nav-link" data-scroll-target="#summarizing-the-datas-structure"> <span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</a></li>
-  <li><a href="#what-are-the-variables" id="toc-what-are-the-variables" class="nav-link" data-scroll-target="#what-are-the-variables"> <span class="header-section-number">4.3.4</span> What are the variables?</a></li>
-  </ul></li>
-  <li><a href="#counting-missing-values" id="toc-counting-missing-values" class="nav-link" data-scroll-target="#counting-missing-values"> <span class="header-section-number">4.4</span> Counting Missing Values</a></li>
-  <li><a href="#sec-nh_cc" id="toc-sec-nh_cc" class="nav-link" data-scroll-target="#sec-nh_cc"> <span class="header-section-number">4.5</span> Sampling 500 Complete Cases</a></li>
-  <li><a href="#saving-our-samples-in-.rds-files" id="toc-saving-our-samples-in-.rds-files" class="nav-link" data-scroll-target="#saving-our-samples-in-.rds-files"> <span class="header-section-number">4.6</span> Saving our Samples in <code>.Rds</code> files</a></li>
-  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"> <span class="header-section-number">4.7</span> Coming Up</a></li>
+<li><a href="#creating-a-temporary-cleaner-tibble" id="toc-creating-a-temporary-cleaner-tibble" class="nav-link" data-scroll-target="#creating-a-temporary-cleaner-tibble"><span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Tibble</a></li>
+  <li><a href="#sec-nh750" id="toc-sec-nh750" class="nav-link" data-scroll-target="#sec-nh750"><span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</a></li>
+  <li><a href="#summarizing-the-datas-structure" id="toc-summarizing-the-datas-structure" class="nav-link" data-scroll-target="#summarizing-the-datas-structure"><span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</a></li>
+  <li><a href="#what-are-the-variables" id="toc-what-are-the-variables" class="nav-link" data-scroll-target="#what-are-the-variables"><span class="header-section-number">4.3.4</span> What are the variables?</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#counting-missing-values" id="toc-counting-missing-values" class="nav-link" data-scroll-target="#counting-missing-values"><span class="header-section-number">4.4</span> Counting Missing Values</a></li>
+  <li><a href="#sec-nh_cc" id="toc-sec-nh_cc" class="nav-link" data-scroll-target="#sec-nh_cc"><span class="header-section-number">4.5</span> Sampling 500 Complete Cases</a></li>
+  <li><a href="#saving-our-samples-in-.rds-files" id="toc-saving-our-samples-in-.rds-files" class="nav-link" data-scroll-target="#saving-our-samples-in-.rds-files"><span class="header-section-number">4.6</span> Saving our Samples in <code>.Rds</code> files</a></li>
+  <li><a href="#coming-up" id="toc-coming-up" class="nav-link" data-scroll-target="#coming-up"><span class="header-section-number">4.7</span> Coming Up</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="sec-nhanes1" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-nhanes1" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span></h1>
 </div>
 
 
@@ -455,61 +353,58 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
-</header>
-
-<p>Next, we’ll explore some data from the US <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, often referred to as NHANES.</p>
-<section id="setup-packages-used-here" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="setup-packages-used-here"><span class="header-section-number">4.1</span> Setup: Packages Used Here</h2>
+</header><p>Next, we’ll explore some data from the US <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, often referred to as NHANES.</p>
+<section id="setup-packages-used-here" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="setup-packages-used-here">
+<span class="header-section-number">4.1</span> Setup: Packages Used Here</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="cn">NA</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>comment <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/njtierney/naniar">naniar</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="the-nhanes-data-a-first-sample" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="the-nhanes-data-a-first-sample"><span class="header-section-number">4.2</span> The NHANES data: A First Sample</h2>
-<p>The <code>NHANES</code> package provides a sample of 10,000 NHANES responses from the 2009-10 and 2011-12 administrations, in a tibble also called <code>NHANES</code>. We can obtain the dimensions of this tibble with the <code>dim()</code> function.</p>
+</section><section id="the-nhanes-data-a-first-sample" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="the-nhanes-data-a-first-sample">
+<span class="header-section-number">4.2</span> The NHANES data: A First Sample</h2>
+<p>The <code>NHANES</code> package provides a sample of 10,000 NHANES responses from the 2009-10 and 2011-12 administrations, in a tibble also called <code>NHANES</code>. We can obtain the dimensions of this tibble with the <code><a href="https://rdrr.io/r/base/dim.html">dim()</a></code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>NHANES</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NHANES</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10,000 × 76
-      ID SurveyYr Gender   Age AgeDecade AgeMonths Race1 Race3 Education Marit…¹
-   &lt;int&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt;  
- 1 51624 2009_10  male      34 " 30-39"        409 White &lt;NA&gt;  High Sch… Married
- 2 51624 2009_10  male      34 " 30-39"        409 White &lt;NA&gt;  High Sch… Married
- 3 51624 2009_10  male      34 " 30-39"        409 White &lt;NA&gt;  High Sch… Married
- 4 51625 2009_10  male       4 " 0-9"           49 Other &lt;NA&gt;  &lt;NA&gt;      &lt;NA&gt;   
- 5 51630 2009_10  female    49 " 40-49"        596 White &lt;NA&gt;  Some Col… LivePa…
- 6 51638 2009_10  male       9 " 0-9"          115 White &lt;NA&gt;  &lt;NA&gt;      &lt;NA&gt;   
- 7 51646 2009_10  male       8 " 0-9"          101 White &lt;NA&gt;  &lt;NA&gt;      &lt;NA&gt;   
- 8 51647 2009_10  female    45 " 40-49"        541 White &lt;NA&gt;  College … Married
- 9 51647 2009_10  female    45 " 40-49"        541 White &lt;NA&gt;  College … Married
-10 51647 2009_10  female    45 " 40-49"        541 White &lt;NA&gt;  College … Married
-# … with 9,990 more rows, 66 more variables: HHIncome &lt;fct&gt;, HHIncomeMid &lt;int&gt;,
+      ID SurveyYr Gender   Age AgeDecade AgeMonths Race1 Race3 Education   
+   &lt;int&gt; &lt;fct&gt;    &lt;fct&gt;  &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;       
+ 1 51624 2009_10  male      34 " 30-39"        409 White &lt;NA&gt;  High School 
+ 2 51624 2009_10  male      34 " 30-39"        409 White &lt;NA&gt;  High School 
+ 3 51624 2009_10  male      34 " 30-39"        409 White &lt;NA&gt;  High School 
+ 4 51625 2009_10  male       4 " 0-9"           49 Other &lt;NA&gt;  &lt;NA&gt;        
+ 5 51630 2009_10  female    49 " 40-49"        596 White &lt;NA&gt;  Some College
+ 6 51638 2009_10  male       9 " 0-9"          115 White &lt;NA&gt;  &lt;NA&gt;        
+ 7 51646 2009_10  male       8 " 0-9"          101 White &lt;NA&gt;  &lt;NA&gt;        
+ 8 51647 2009_10  female    45 " 40-49"        541 White &lt;NA&gt;  College Grad
+ 9 51647 2009_10  female    45 " 40-49"        541 White &lt;NA&gt;  College Grad
+10 51647 2009_10  female    45 " 40-49"        541 White &lt;NA&gt;  College Grad
+# ℹ 9,990 more rows
+# ℹ 67 more variables: MaritalStatus &lt;fct&gt;, HHIncome &lt;fct&gt;, HHIncomeMid &lt;int&gt;,
 #   Poverty &lt;dbl&gt;, HomeRooms &lt;int&gt;, HomeOwn &lt;fct&gt;, Work &lt;fct&gt;, Weight &lt;dbl&gt;,
 #   Length &lt;dbl&gt;, HeadCirc &lt;dbl&gt;, Height &lt;dbl&gt;, BMI &lt;dbl&gt;,
 #   BMICatUnder20yrs &lt;fct&gt;, BMI_WHO &lt;fct&gt;, Pulse &lt;int&gt;, BPSysAve &lt;int&gt;,
 #   BPDiaAve &lt;int&gt;, BPSys1 &lt;int&gt;, BPDia1 &lt;int&gt;, BPSys2 &lt;int&gt;, BPDia2 &lt;int&gt;,
-#   BPSys3 &lt;int&gt;, BPDia3 &lt;int&gt;, Testosterone &lt;dbl&gt;, DirectChol &lt;dbl&gt;,
-#   TotChol &lt;dbl&gt;, UrineVol1 &lt;int&gt;, UrineFlow1 &lt;dbl&gt;, UrineVol2 &lt;int&gt;, …</code></pre>
+#   BPSys3 &lt;int&gt;, BPDia3 &lt;int&gt;, Testosterone &lt;dbl&gt;, DirectChol &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
-<p>We see that we have 10000 rows and 76 columns in the <code>NHANES</code> tibble. For more on what makes a particular data frame into a tibble, and why we’d want such a thing, you might be interested in the Tibbles section of <span class="citation" data-cites="R4DS">Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2022</a>)</span>. Essentially, tibbles are data frames that are easier and more predictable to work with.</p>
-</section>
-<section id="newNHANES" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="newNHANES"><span class="header-section-number">4.3</span> Sampling NHANES Adults</h2>
+<p>We see that we have 10000 rows and 76 columns in the <code>NHANES</code> tibble. For more on what makes a particular data frame into a tibble, and why we’d want such a thing, you might be interested in the Tibbles section of <span class="citation" data-cites="R4DS">Hadley Wickham and Grolemund (<a href="references.html#ref-R4DS" role="doc-biblioref">2023</a>)</span>. Essentially, tibbles are data frames that are easier and more predictable to work with.</p>
+</section><section id="newNHANES" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="newNHANES">
+<span class="header-section-number">4.3</span> Sampling NHANES Adults</h2>
 <p>Suppose we want to take this NHANES tibble, and use it to generate a sample describing 750 unique (distinct) adult subjects who completed the 2011-12 version of the survey when they were between the ages of 21 and 64.</p>
-<section id="creating-a-temporary-cleaner-tibble" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="creating-a-temporary-cleaner-tibble"><span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Tibble</h3>
+<section id="creating-a-temporary-cleaner-tibble" class="level3" data-number="4.3.1"><h3 data-number="4.3.1" class="anchored" data-anchor-id="creating-a-temporary-cleaner-tibble">
+<span class="header-section-number">4.3.1</span> Creating a Temporary, Cleaner Tibble</h3>
 <p>I’ll start by describing the plan we will use to create a new tibble called <code>nh_temp</code> from which we will eventually build our final sample. In particular, let me lay out the steps I will use to create the <code>nh_temp</code> frame from the original <code>NHANES</code> tibble available in the R package called <code>NHANES</code>.</p>
 <ol type="1">
 <li><p>We’ll <strong>filter</strong> the original NHANES tibble to include only the responses from the 2011-12 administration of the survey. This will cut the sample in half, from 10,000 rows to 5,000.</p></li>
@@ -517,95 +412,95 @@ div.csl-indent {
 <li><p>What is listed in the NHANES tibble as <code>Gender</code> should be more correctly referred to as <code>Sex</code>. <code>Sex</code> is a biological feature of an individual, while <code>Gender</code> is a social construct. This is an important distinction, so I’ll change the name of the variable.</p></li>
 <li><p>We’ll also rename three other variables, specifically we’ll use <code>Race</code> to describe the <code>Race3</code> variable in the original NHANES tibble, as well as <code>SBP</code> to refer to the average systolic blood pressure, which is specified as <code>BPSysAve</code>, and <code>DBP</code> to refer to the average diastolic blood pressure, which is specified as <code>BPDiaAve</code>.</p></li>
 <li><p>Having accomplished the previous four steps, we’ll then <em>select</em> the variables we want to keep in the sample. (We use <em>select</em> for choosing variables or columns in the tibble, and <em>filter</em> for selecting subjects or rows.) The sixteen variables we will select are: ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, Pulse, PhysActive, Smoke100, SleepTrouble, MaritalStatus and HealthGen.</p></li>
-<li><p>The original NHANES tibble includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we’d like to only include each subject one time. We use the <code>distinct()</code> function to limit the tibble to completely unique subjects (so that, for example, we don’t wind up with two or more rows that have the same ID number.)</p></li>
+<li><p>The original NHANES tibble includes some subjects (rows) multiple times in an effort to incorporate some of the sampling weights used in most NHANES analyses. For our purposes, though, we’d like to only include each subject one time. We use the <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> function to limit the tibble to completely unique subjects (so that, for example, we don’t wind up with two or more rows that have the same ID number.)</p></li>
 </ol>
 <p>Here is the code I used to complete the six steps listed above and create the <code>nh_temp</code> tibble.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nh_temp <span class="ot">&lt;-</span> NHANES <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(SurveyYr <span class="sc">==</span> <span class="st">"2011_12"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">21</span> <span class="sc">&amp;</span> Age <span class="sc">&lt;</span> <span class="dv">65</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Sex =</span> Gender, <span class="at">Race =</span> Race3, <span class="at">SBP =</span> BPSysAve, <span class="at">DBP =</span> BPDiaAve) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>           Pulse, PhysActive, Smoke100, SleepTrouble, </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>           MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">distinct</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_temp</span> <span class="op">&lt;-</span> <span class="va">NHANES</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">SurveyYr</span> <span class="op">==</span> <span class="st">"2011_12"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span> <span class="op">&gt;=</span> <span class="fl">21</span> <span class="op">&amp;</span> <span class="va">Age</span> <span class="op">&lt;</span> <span class="fl">65</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Sex <span class="op">=</span> <span class="va">Gender</span>, Race <span class="op">=</span> <span class="va">Race3</span>, SBP <span class="op">=</span> <span class="va">BPSysAve</span>, DBP <span class="op">=</span> <span class="va">BPDiaAve</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">Sex</span>, <span class="va">Age</span>, <span class="va">Height</span>, <span class="va">Weight</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, </span>
+<span>           <span class="va">Pulse</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span>, </span>
+<span>           <span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The resulting <code>nh_temp</code> tibble has 1700 rows and 16 columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nh_temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_temp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,700 × 16
-      ID Sex     Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
-   &lt;int&gt; &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
- 1 62172 fema…    43   172    98.6 Black High S…  33.3   103    72    80 No     
- 2 62176 fema…    34   172.   68.7 White Colleg…  23.3   107    69    92 Yes    
- 3 62180 male     35   179.   89   White Colleg…  27.9   107    66    66 No     
- 4 62199 male     57   186    96.9 White Colleg…  28     110    65    84 Yes    
- 5 62205 male     28   171.   84.8 White Colleg…  28.9   122    87    70 Yes    
- 6 62206 fema…    35   167.   81.5 White Some C…  29.1   106    50    58 No     
- 7 62208 male     38   169.   63.2 Hisp… Some C…  22.2   105    59    52 Yes    
- 8 62209 fema…    62   143.   53.5 Mexi… 8th Gr…  26     108    57    72 No     
- 9 62220 fema…    31   167.  113.  Black Colleg…  40.4   120    71    62 Yes    
-10 62222 male     32   179    80.1 White Colleg…  25     104    73    78 No     
-# … with 1,690 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
-#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive</code></pre>
+      ID Sex      Age Height Weight Race     Education     BMI   SBP   DBP Pulse
+   &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1 62172 female    43   172    98.6 Black    High School  33.3   103    72    80
+ 2 62176 female    34   172.   68.7 White    College Gr…  23.3   107    69    92
+ 3 62180 male      35   179.   89   White    College Gr…  27.9   107    66    66
+ 4 62199 male      57   186    96.9 White    College Gr…  28     110    65    84
+ 5 62205 male      28   171.   84.8 White    College Gr…  28.9   122    87    70
+ 6 62206 female    35   167.   81.5 White    Some Colle…  29.1   106    50    58
+ 7 62208 male      38   169.   63.2 Hispanic Some Colle…  22.2   105    59    52
+ 8 62209 female    62   143.   53.5 Mexican  8th Grade    26     108    57    72
+ 9 62220 female    31   167.  113.  Black    College Gr…  40.4   120    71    62
+10 62222 male      32   179    80.1 White    College Gr…  25     104    73    78
+# ℹ 1,690 more rows
+# ℹ 5 more variables: PhysActive &lt;fct&gt;, Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;</code></pre>
 </div>
 </div>
-</section>
-<section id="sec-nh750" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-nh750"><span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</h3>
+</section><section id="sec-nh750" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="sec-nh750">
+<span class="header-section-number">4.3.2</span> Sampling <code>nh_temp</code> to obtain our <code>nh_adult750</code> sample</h3>
 <p>Having established the <code>nh_temp</code> tibble, we now select a random sample of 750 adults from the 1700 available responses.</p>
 <ul>
-<li>We will use the <code>set.seed()</code> function in R to set a random numerical seed to ensure that if you redo this work, you will obtain the same sample.
+<li>We will use the <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> function in R to set a random numerical seed to ensure that if you redo this work, you will obtain the same sample.
 <ul>
 <li>Setting a seed is an important part of being able to replicate the work later when sampling is involved. If you and I use the same seed, we should get the same sample.</li>
-</ul></li>
-<li>Then we will use the <code>slice_sample()</code> function to actually draw the random sample, without replacement.
+</ul>
+</li>
+<li>Then we will use the <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> function to actually draw the random sample, without replacement.
 <ul>
 <li>“Without replacement” means that once we’ve selected a particular subject, we won’t select them again.</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431002</span>) </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># use set.seed to ensure that we all get the same random sample </span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>nh_adult750 <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(nh_temp, <span class="at">n =</span> <span class="dv">750</span>, <span class="at">replace =</span> F) </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>nh_adult750</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">431002</span><span class="op">)</span> </span>
+<span><span class="co"># use set.seed to ensure that we all get the same random sample </span></span>
+<span></span>
+<span><span class="va">nh_adult750</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span><span class="va">nh_temp</span>, n <span class="op">=</span> <span class="fl">750</span>, replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">nh_adult750</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 750 × 16
-      ID Sex     Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
-   &lt;int&gt; &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
- 1 68648 fema…    30   181.   67.1 White Colleg…  20.4   103    59    78 No     
- 2 67200 male     30   180.   86.6 White Colleg…  26.7   113    68    70 Yes    
- 3 66404 fema…    35   160.   71.1 White Colleg…  27.8   116    80    68 Yes    
- 4 70535 male     40   177.   82   White Colleg…  26.3   130    79    68 No     
- 5 65308 fema…    54   151.   60.6 Mexi… 8th Gr…  26.6   130    64    48 No     
- 6 67392 male     41   171.   90.7 Hisp… Colleg…  31.2   124    82    68 Yes    
- 7 63218 male     35   163.   81   Mexi… 8th Gr…  30.3   128    96    82 No     
- 8 65879 fema…    32   160.   66.4 Mexi… Colleg…  25.9   104    70    78 Yes    
- 9 63617 male     29   189.   83.3 White Colleg…  23.2   105    72    76 Yes    
-10 64720 male     29   174.   62.3 Black Colleg…  20.6   127    60    84 Yes    
-# … with 740 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
-#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive</code></pre>
+      ID Sex      Age Height Weight Race     Education     BMI   SBP   DBP Pulse
+   &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1 68648 female    30   181.   67.1 White    College Gr…  20.4   103    59    78
+ 2 67200 male      30   180.   86.6 White    College Gr…  26.7   113    68    70
+ 3 66404 female    35   160.   71.1 White    College Gr…  27.8   116    80    68
+ 4 70535 male      40   177.   82   White    College Gr…  26.3   130    79    68
+ 5 65308 female    54   151.   60.6 Mexican  8th Grade    26.6   130    64    48
+ 6 67392 male      41   171.   90.7 Hispanic College Gr…  31.2   124    82    68
+ 7 63218 male      35   163.   81   Mexican  8th Grade    30.3   128    96    82
+ 8 65879 female    32   160.   66.4 Mexican  College Gr…  25.9   104    70    78
+ 9 63617 male      29   189.   83.3 White    College Gr…  23.2   105    72    76
+10 64720 male      29   174.   62.3 Black    College Gr…  20.6   127    60    84
+# ℹ 740 more rows
+# ℹ 5 more variables: PhysActive &lt;fct&gt;, Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;</code></pre>
 </div>
 </div>
 <p>The <code>nh_adult750</code> tibble now includes 750 rows (observations) on 16 variables (columns). Essentially, we have 16 pieces of information on each of 750 adult NHANES subjects who were included in the 2011-12 panel.</p>
-</section>
-<section id="summarizing-the-datas-structure" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="summarizing-the-datas-structure"><span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</h3>
+</section><section id="summarizing-the-datas-structure" class="level3" data-number="4.3.3"><h3 data-number="4.3.3" class="anchored" data-anchor-id="summarizing-the-datas-structure">
+<span class="header-section-number">4.3.3</span> Summarizing the Data’s Structure</h3>
 <p>We can identify the number of rows and columns in a data frame or tibble with the <code>dim</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 750  16</code></pre>
 </div>
 </div>
 <p>The <code>str</code> function provides a lot of information about the structure of a data frame or tibble.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [750 × 16] (S3: tbl_df/tbl/data.frame)
  $ ID           : int [1:750] 68648 67200 66404 70535 65308 67392 63218 65879 63617 64720 ...
@@ -628,27 +523,25 @@ div.csl-indent {
 </div>
 <p>To see the first few observations, use <code>head</code>, and to see the last few, try <code>tail</code>…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(nh_adult750, <span class="dv">5</span>) <span class="co"># shows the last five observations in the data set</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">nh_adult750</span>, <span class="fl">5</span><span class="op">)</span> <span class="co"># shows the last five observations in the data set</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 16
-     ID Sex      Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
-  &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
-1 63924 female    29   165.  113.  Black High S…  41.9    98    56    74 No     
-2 69825 female    43   164.   63.3 White Colleg…  23.7   122    83    88 Yes    
-3 68109 male      45   170.   78.7 Black High S…  27.1   140    79   102 Yes    
-4 64598 female    60   158    74.5 White Some C…  29.8   137    80    78 Yes    
-5 64048 female    54   161.   67.5 White Some C…  26.2   121    87    72 No     
-# … with 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
-#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive</code></pre>
+     ID Sex      Age Height Weight Race  Education      BMI   SBP   DBP Pulse
+  &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;        &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1 63924 female    29   165.  113.  Black High School   41.9    98    56    74
+2 69825 female    43   164.   63.3 White College Grad  23.7   122    83    88
+3 68109 male      45   170.   78.7 Black High School   27.1   140    79   102
+4 64598 female    60   158    74.5 White Some College  29.8   137    80    78
+5 64048 female    54   161.   67.5 White Some College  26.2   121    87    72
+# ℹ 5 more variables: PhysActive &lt;fct&gt;, Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;</code></pre>
 </div>
 </div>
-</section>
-<section id="what-are-the-variables" class="level3" data-number="4.3.4">
-<h3 data-number="4.3.4" class="anchored" data-anchor-id="what-are-the-variables"><span class="header-section-number">4.3.4</span> What are the variables?</h3>
+</section><section id="what-are-the-variables" class="level3" data-number="4.3.4"><h3 data-number="4.3.4" class="anchored" data-anchor-id="what-are-the-variables">
+<span class="header-section-number">4.3.4</span> What are the variables?</h3>
 <p>We can use the <code>glimpse</code> function to get a short preview of the data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 750
 Columns: 16
@@ -677,13 +570,11 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 <col style="width: 63%">
 <col style="width: 19%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: right;">Variable</th>
 <th>Description</th>
 <th>Sample Values</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">ID</td>
@@ -722,7 +613,8 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 </tr>
 <tr class="even">
 <td style="text-align: right;">BMI</td>
-<td>body-mass index, in kg/m<sup>2</sup></td>
+<td>body-mass index, in kg/m<sup>2</sup>
+</td>
 <td>20.4, 26.7</td>
 </tr>
 <tr class="odd">
@@ -769,14 +661,18 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 </table>
 <p>The levels for the multi-categorical variables are:</p>
 <ul>
-<li><strong>Race</strong>: Mexican, Hispanic, White, Black, Asian, or Other.</li>
-<li><strong>Education</strong>: 8th Grade, 9 - 11th Grade, High School, Some College, or College Grad.</li>
-<li><strong>MaritalStatus</strong>: Married, Widowed, Divorced, Separated, NeverMarried or LivePartner (living with partner).</li>
-<li><strong>HealthGen</strong>: Excellent, Vgood, Good, Fair or Poor.</li>
+<li>
+<strong>Race</strong>: Mexican, Hispanic, White, Black, Asian, or Other.</li>
+<li>
+<strong>Education</strong>: 8th Grade, 9 - 11th Grade, High School, Some College, or College Grad.</li>
+<li>
+<strong>MaritalStatus</strong>: Married, Widowed, Divorced, Separated, NeverMarried or LivePartner (living with partner).</li>
+<li>
+<strong>HealthGen</strong>: Excellent, Vgood, Good, Fair or Poor.</li>
 </ul>
 <p>Some details can be obtained using the <code>summary</code> function, or any of the other approaches we saw used with the <code>penguins</code> data earlier.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       ID            Sex           Age            Height          Weight      
  Min.   :62206   female:388   Min.   :21.00   Min.   :142.4   Min.   : 39.30  
@@ -813,15 +709,13 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 </div>
 </div>
 <p>Note the appearance of <code>NA's</code> (indicating missing values) in some columns, and that some variables are summarized by a list of their (categorical) values (with counts) and some (quantitative/numeric) variables are summarized with a minimum, quartiles and means.</p>
-</section>
-</section>
-<section id="counting-missing-values" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="counting-missing-values"><span class="header-section-number">4.4</span> Counting Missing Values</h2>
-<p>The <code>summary()</code> command counts the number of missing observations in each variable, but sometimes you want considerably more information.</p>
-<p>We can use some functions from the <code>naniar</code> package to learn useful things about the missing data in our <code>nh_adult750</code> sample. (Recall that we could also use the <code>vis_miss()</code> function from the <code>visdat</code> package, as we saw earlier with the <code>penguins</code> to get some of this information, but the <code>naniar</code> approach provides more exploratory tools.)</p>
+</section></section><section id="counting-missing-values" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="counting-missing-values">
+<span class="header-section-number">4.4</span> Counting Missing Values</h2>
+<p>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> command counts the number of missing observations in each variable, but sometimes you want considerably more information.</p>
+<p>We can use some functions from the <code>naniar</code> package to learn useful things about the missing data in our <code>nh_adult750</code> sample. (Recall that we could also use the <code><a href="https://docs.ropensci.org/visdat/reference/vis_miss.html">vis_miss()</a></code> function from the <code>visdat</code> package, as we saw earlier with the <code>penguins</code> to get some of this information, but the <code>naniar</code> approach provides more exploratory tools.)</p>
 <p>The <code>miss_var_table</code> command provides a table of the number of variables with 0, 1, 2, up to n, missing values and the percentage of the total number of variables those variables make up.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_table</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_var_table.html">miss_var_table</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   n_miss_in_var n_vars pct_vars
@@ -834,118 +728,114 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 </div>
 </div>
 <p>So, for instance, we have 9 variables with no missing data, and that constitutes 56.25% of the 16 variables in our <code>nh_adult750</code> data.</p>
-<p>The <code>miss_var_summary()</code> function tabulates the number, percent missing, and cumulative sum of missing of each variable in our tibble, in order of most to least missing values.</p>
+<p>The <code><a href="https://rdrr.io/pkg/naniar/man/miss_var_summary.html">miss_var_summary()</a></code> function tabulates the number, percent missing, and cumulative sum of missing of each variable in our tibble, in order of most to least missing values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_summary</span>(nh_adult750) <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">position =</span> <span class="st">"center"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_var_summary.html">miss_var_summary</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span>, position <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> variable </th>
-   <th style="text-align:right;"> n_miss </th>
-   <th style="text-align:right;"> pct_miss </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">variable</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n_miss</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">pct_miss</th>
+</tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> HealthGen </td>
-   <td style="text-align:right;"> 99 </td>
-   <td style="text-align:right;"> 13.2000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SBP </td>
-   <td style="text-align:right;"> 33 </td>
-   <td style="text-align:right;"> 4.4000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> DBP </td>
-   <td style="text-align:right;"> 33 </td>
-   <td style="text-align:right;"> 4.4000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Pulse </td>
-   <td style="text-align:right;"> 32 </td>
-   <td style="text-align:right;"> 4.2666667 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Height </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.6666667 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Weight </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.6666667 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BMI </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.6666667 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ID </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Sex </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Age </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Race </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Education </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PhysActive </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Smoke100 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SleepTrouble </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> MaritalStatus </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">HealthGen</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">13.2000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SBP</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">4.4000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DBP</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">4.4000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pulse</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4.2666667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Height</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.6666667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weight</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.6666667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BMI</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.6666667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ID</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Race</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Education</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PhysActive</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Smoke100</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SleepTrouble</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MaritalStatus</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>So, for example, the HealthGen variable is the one missing more of our data than anything else within the <code>nh_adult750</code> tibble.</p>
 <p>A graph of this information is available, as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_miss_var</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/gg_miss_var.html">gg_miss_var</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="04-nhanes_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>I’ll note that there are also functions to count the number of missing observations by case (observation) rather than variable. For example, we can use <code>miss_case_table</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_case_table</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_case_table.html">miss_case_table</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   n_miss_in_case n_cases pct_cases
@@ -959,9 +849,9 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 </div>
 </div>
 <p>Now we see that 636 observations, or 84.8% of all cases have no missing data.</p>
-<p>We can use <code>miss_case_summary()</code> to identify cases with missing data, as well.</p>
+<p>We can use <code><a href="https://rdrr.io/pkg/naniar/man/miss_case_summary.html">miss_case_summary()</a></code> to identify cases with missing data, as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_case_summary</span>(nh_adult750)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_case_summary.html">miss_case_summary</a></span><span class="op">(</span><span class="va">nh_adult750</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 750 × 3
     case n_miss pct_miss
@@ -976,27 +866,26 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
  8   415      4     25  
  9   478      4     25  
 10   483      4     25  
-# … with 740 more rows</code></pre>
+# ℹ 740 more rows</code></pre>
 </div>
 </div>
-</section>
-<section id="sec-nh_cc" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="sec-nh_cc"><span class="header-section-number">4.5</span> Sampling 500 Complete Cases</h2>
+</section><section id="sec-nh_cc" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="sec-nh_cc">
+<span class="header-section-number">4.5</span> Sampling 500 Complete Cases</h2>
 <p>If we wanted a sample of exactly 750 subjects with complete data, we would have needed to add a step in the development of our <code>nh_temp</code> tibble to filter for complete cases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nh_temp2 <span class="ot">&lt;-</span> NHANES <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(SurveyYr <span class="sc">==</span> <span class="st">"2011_12"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Age <span class="sc">&gt;=</span> <span class="dv">21</span> <span class="sc">&amp;</span> Age <span class="sc">&lt;</span> <span class="dv">65</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Sex =</span> Gender, <span class="at">Race =</span> Race3, <span class="at">SBP =</span> BPSysAve, <span class="at">DBP =</span> BPDiaAve) <span class="sc">|&gt;</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(ID, Sex, Age, Height, Weight, Race, Education, BMI, SBP, DBP, </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>           Pulse, PhysActive, Smoke100, SleepTrouble, </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>           MaritalStatus, HealthGen) <span class="sc">|&gt;</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nh_temp2</span> <span class="op">&lt;-</span> <span class="va">NHANES</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">SurveyYr</span> <span class="op">==</span> <span class="st">"2011_12"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Age</span> <span class="op">&gt;=</span> <span class="fl">21</span> <span class="op">&amp;</span> <span class="va">Age</span> <span class="op">&lt;</span> <span class="fl">65</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Sex <span class="op">=</span> <span class="va">Gender</span>, Race <span class="op">=</span> <span class="va">Race3</span>, SBP <span class="op">=</span> <span class="va">BPSysAve</span>, DBP <span class="op">=</span> <span class="va">BPDiaAve</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">Sex</span>, <span class="va">Age</span>, <span class="va">Height</span>, <span class="va">Weight</span>, <span class="va">Race</span>, <span class="va">Education</span>, <span class="va">BMI</span>, <span class="va">SBP</span>, <span class="va">DBP</span>, </span>
+<span>           <span class="va">Pulse</span>, <span class="va">PhysActive</span>, <span class="va">Smoke100</span>, <span class="va">SleepTrouble</span>, </span>
+<span>           <span class="va">MaritalStatus</span>, <span class="va">HealthGen</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check that this new tibble has no missing data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">miss_var_table</span>(nh_temp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/naniar/man/miss_var_table.html">miss_var_table</a></span><span class="op">(</span><span class="va">nh_temp2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   n_miss_in_var n_vars pct_vars
@@ -1006,61 +895,53 @@ $ HealthGen     &lt;fct&gt; Excellent, Excellent, Excellent, Vgood, Fair, Good, 
 </div>
 <p>OK. Now, let’s create a second sample, called <code>nh_adult500cc</code>, where now, we will select 500 adults with complete data on all of the variables of interest, and using a different random seed. The <code>cc</code> here stands for complete cases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">431003</span>) </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># use set.seed to ensure that we all get the same random sample </span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>nh_adult500cc <span class="ot">&lt;-</span> <span class="fu">slice_sample</span>(nh_temp2, <span class="at">n =</span> <span class="dv">500</span>, <span class="at">replace =</span> F) </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>nh_adult500cc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">431003</span><span class="op">)</span> </span>
+<span><span class="co"># use set.seed to ensure that we all get the same random sample </span></span>
+<span></span>
+<span><span class="va">nh_adult500cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span><span class="va">nh_temp2</span>, n <span class="op">=</span> <span class="fl">500</span>, replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">nh_adult500cc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 500 × 16
-      ID Sex     Age Height Weight Race  Educa…¹   BMI   SBP   DBP Pulse PhysA…²
-   &lt;int&gt; &lt;fct&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt;  
- 1 64079 fema…    25   159.   86.2 Hisp… Some C…  34.2   120    67    84 Yes    
- 2 64374 fema…    52   169    65.5 Asian Colleg…  22.9    92    58    60 Yes    
- 3 71875 male     42   182.   94.1 Black Colleg…  28.5   102    63    76 Yes    
- 4 66396 fema…    46   161.  107.  Asian 8th Gr…  41.2   111    61    70 No     
- 5 64315 fema…    52   161.   64.5 White 9 - 11…  24.9   130    69    68 Yes    
- 6 64015 male     32   168.   82.3 Mexi… Some C…  29     119    79    70 No     
- 7 63590 male     21   181.   98.3 Black Some C…  29.9   121    67    58 Yes    
- 8 70893 fema…    30   171.   65.7 White 9 - 11…  22.5   104    75    74 Yes    
- 9 70828 male     26   178.  100.  White Some C…  31.5   119    77    66 No     
-10 67930 male     59   172.   91.7 Mexi… Colleg…  31     127    85    66 No     
-# … with 490 more rows, 4 more variables: Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
-#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;, and abbreviated variable names
-#   ¹​Education, ²​PhysActive</code></pre>
+      ID Sex      Age Height Weight Race     Education     BMI   SBP   DBP Pulse
+   &lt;int&gt; &lt;fct&gt;  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1 64079 female    25   159.   86.2 Hispanic Some Colle…  34.2   120    67    84
+ 2 64374 female    52   169    65.5 Asian    College Gr…  22.9    92    58    60
+ 3 71875 male      42   182.   94.1 Black    College Gr…  28.5   102    63    76
+ 4 66396 female    46   161.  107.  Asian    8th Grade    41.2   111    61    70
+ 5 64315 female    52   161.   64.5 White    9 - 11th G…  24.9   130    69    68
+ 6 64015 male      32   168.   82.3 Mexican  Some Colle…  29     119    79    70
+ 7 63590 male      21   181.   98.3 Black    Some Colle…  29.9   121    67    58
+ 8 70893 female    30   171.   65.7 White    9 - 11th G…  22.5   104    75    74
+ 9 70828 male      26   178.  100.  White    Some Colle…  31.5   119    77    66
+10 67930 male      59   172.   91.7 Mexican  College Gr…  31     127    85    66
+# ℹ 490 more rows
+# ℹ 5 more variables: PhysActive &lt;fct&gt;, Smoke100 &lt;fct&gt;, SleepTrouble &lt;fct&gt;,
+#   MaritalStatus &lt;fct&gt;, HealthGen &lt;fct&gt;</code></pre>
 </div>
 </div>
-</section>
-<section id="saving-our-samples-in-.rds-files" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="saving-our-samples-in-.rds-files"><span class="header-section-number">4.6</span> Saving our Samples in <code>.Rds</code> files</h2>
+</section><section id="saving-our-samples-in-.rds-files" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="saving-our-samples-in-.rds-files">
+<span class="header-section-number">4.6</span> Saving our Samples in <code>.Rds</code> files</h2>
 <p>We’ll save the <code>nh_adult750</code> and <code>nh_adult500cc</code> samples to use in later parts of the notes. To do this, we’ll save them as <code>.Rds</code> files, which are files we can read directly into R with the <code>read_rds</code> command, and which will have some advantages for us later on.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(nh_adult750, <span class="at">file =</span> <span class="st">"data/nh_adult750.Rds"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(nh_adult500cc, <span class="at">file =</span> <span class="st">"data/nh_adult500cc.Rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span><span class="op">(</span><span class="va">nh_adult750</span>, file <span class="op">=</span> <span class="st">"data/nh_adult750.Rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span><span class="op">(</span><span class="va">nh_adult500cc</span>, file <span class="op">=</span> <span class="st">"data/nh_adult500cc.Rds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You will also find these <code>.Rds</code> files as part of the <a href="https://github.com/THOMASELOVE/431-data">431-data repository</a> for the course.</p>
-</section>
-<section id="coming-up" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="coming-up"><span class="header-section-number">4.7</span> Coming Up</h2>
+</section><section id="coming-up" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="coming-up">
+<span class="header-section-number">4.7</span> Coming Up</h2>
 <p>Next, we’ll introduce some new ways of thinking about data and variables as we load, explore and learn about some of the variables in our two NHANES samples.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-R4DS" class="csl-entry" role="doc-biblioentry">
-Wickham, Hadley, and Garrett Grolemund. 2022. <em>R for Data Science</em>. Second. O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-R4DS" class="csl-entry" role="listitem">
+Hadley Wickham, Mine Çetinyaka-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science</em>. Second. O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
 </div>
 </div>
-</section>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
-<li id="fn1" role="doc-endnote"><p>Descriptions are adapted from the ?NHANES help file. Remember that what NHANES lists as Gender is captured here as Sex, and similarly Race3, BPSysAve and BPDiaAve from NHANES are here listed as Race, SBP and DBP.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<li id="fn1"><p>Descriptions are adapted from the ?NHANES help file. Remember that what NHANES lists as Gender is captured here as Sex, and similarly Race3, BPSysAve and BPDiaAve from NHANES are here listed as Race, SBP and DBP.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1080,6 +961,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1087,9 +1083,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1101,7 +1111,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1129,36 +1156,139 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./03-penguins2.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></span>
       </a>          
