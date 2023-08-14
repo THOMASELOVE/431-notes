@@ -1,9 +1,11 @@
 # Working with These Notes {.unnumbered}
 
-1.  This document is broken down into multiple chapters. Use the table of contents on the left side of the screen to navigate between chapters, or use the right side to navigate within the current chapter.
-2.  You can also search the document, using an automated index.
-3.  Any of the code provided in the document can be copied to the clipboard using the Copy icon at the top right of the code block.
-4.  More complete drafts (including, eventually, all three parts) will appear throughout the semester, and other updates will appear as needed. If you find a typo or other problem, please tell us about it through Campuswire.
+1. This document is broken down into multiple chapters. Use the table of contents on the left side of the screen to navigate between chapters, or use the right side to navigate within the current chapter.
+2. You can also search the document, using an automated index.
+3. Any of the code provided in the document can be copied to the clipboard using the Copy icon at the top right of the code block.
+4. If you find a typo or other problem, please tell us about it through Campuswire.
+5. This is a **draft** document. The publication date is shown above. Later drafts (including, eventually, all three parts) **will appear** irregularly between now and December, so you'll need to **stay current**. 
+6. If, for some awful reason, you want to print or save this document, we recommend waiting until the semester is over to do so, when a more "final" version will be available. 
 
 ## What You'll Find Here {.unnumbered}
 
