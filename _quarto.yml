@@ -32,19 +32,19 @@ book:
         - 15-crabs.qmd
         - 16-hydrate.qmd
         - 17-wcgs.qmd
-  #  - part: "Part B. Comparing Summaries"
-  #    chapters:
-  #      - 18-testing_intro.qmd
-  #      - 19-ci_for_mean.qmd
-  #      - 20-ibuprofen_sepsis.qmd
-  #      - 21-pairedsamples.qmd
-  #      - 22-samplesize.qmd
-  #      - 23-examples_2means.qmd
-  #      - 24-anova.qmd
-  #      - 25-one_proportion.qmd
-  #      - 26-comparing_rates.qmd
-  #      - 27-power_for_rates.qmd
-  #      - 28-contingency_tables.qmd
+    - part: "Part B. Comparing Summaries"
+      chapters:
+        - 18-testing_intro.qmd
+        - 19-ci_for_mean.qmd
+        - 20-ibuprofen_sepsis.qmd
+        - 21-pairedsamples.qmd
+        - 22-samplesize.qmd
+        - 23-examples_2means.qmd
+        - 24-anova.qmd
+        - 25-one_proportion.qmd
+        - 26-comparing_rates.qmd
+        - 27-power_for_rates.qmd
+        - 28-contingency_tables.qmd
   #  - part: "Part C. Building Models"
   #    chapters: 
   #      - 29-mult_reg_intro.qmd
