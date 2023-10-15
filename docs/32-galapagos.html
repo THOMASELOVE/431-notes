@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Course Notes for 431 - 32&nbsp; Species Found on the Galapagos Islands</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./33-nonlinearity.html" rel="next">
+<link href="./31-prediction_wcgs.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./29-mult_reg_intro.html">Part C. Building Models</a></li><li class="breadcrumb-item"><a href="./32-galapagos.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Course Notes for 431</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./431-notes.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+</div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with These Notes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./int_r_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Setting Up R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-datascience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science and 431</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Part A. Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-penguins1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Palmer Penguins</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-penguins2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summarizing Penguins</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-nhanes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NHANES Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Types of Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-nhanes_cc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">More NHANES Summaries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-summarizing_quantities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summarizing Quantities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-summarizing_categories.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summarizing Categories</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-missing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Missing Data and Single Imputation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-nnyfs_foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">National Youth Fitness Survey</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Assessing Normality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-straightlinemodels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Straight Line Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-linear_trans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Linearizing Transformations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-crabs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Studying Crab Claws</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-hydrate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Dehydration Recovery</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-wcgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">The WCGS</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Part B. Comparing Summaries</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-testing_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis Testing: What is it good for?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-ci_for_mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Confidence Intervals for a Mean</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-ibuprofen_sepsis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ibuprofen in Sepsis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-pairedsamples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Comparing Means with Paired Samples</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-samplesize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sample Size and Power for Means</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-examples_2means.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Two Examples Comparing Means</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-one_proportion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Estimating a Population Proportion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-comparing_rates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Comparing Proportions with Two Independent Samples</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-power_for_rates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Power and Proportions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-contingency_tables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Larger Contingency Tables</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Part C. Building Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-mult_reg_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Multiple Regression: Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-regr_diagnostics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Regression Diagnostics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-prediction_wcgs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Building Prediction Models for <code>wcgs</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-galapagos.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-nonlinearity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./34-olsfits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Using <code>ols</code> to fit linear models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./35-emp_bmi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">BMI and Employment Study</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_gettingdataintoR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Getting Data Into R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99_sessioninfo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Session Information</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#setup-packages-used-here" id="toc-setup-packages-used-here" class="nav-link active" data-scroll-target="#setup-packages-used-here"><span class="header-section-number">32.1</span> Setup: Packages Used Here</a></li>
+  <li>
+<a href="#a-little-background" id="toc-a-little-background" class="nav-link" data-scroll-target="#a-little-background"><span class="header-section-number">32.2</span> A Little Background</a>
+  <ul class="collapse">
+<li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources"><span class="header-section-number">32.2.1</span> Sources</a></li>
+  <li><a href="#variables-in-the-gala-data-frame" id="toc-variables-in-the-gala-data-frame" class="nav-link" data-scroll-target="#variables-in-the-gala-data-frame"><span class="header-section-number">32.2.2</span> Variables in the <code>gala</code> data frame</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#dtdp-a-scatterplot-matrix" id="toc-dtdp-a-scatterplot-matrix" class="nav-link" data-scroll-target="#dtdp-a-scatterplot-matrix"><span class="header-section-number">32.3</span> DTDP: A Scatterplot Matrix</a>
+  <ul class="collapse">
+<li><a href="#questions-about-the-scatterplot-matrix" id="toc-questions-about-the-scatterplot-matrix" class="nav-link" data-scroll-target="#questions-about-the-scatterplot-matrix"><span class="header-section-number">32.3.1</span> Questions about the Scatterplot Matrix</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#fitting-a-kitchen-sink-linear-regression-model" id="toc-fitting-a-kitchen-sink-linear-regression-model" class="nav-link" data-scroll-target="#fitting-a-kitchen-sink-linear-regression-model"><span class="header-section-number">32.4</span> Fitting A “Kitchen Sink” Linear Regression model</a>
+  <ul class="collapse">
+<li><a href="#questions-about-the-kitchen-sink-model-summaries" id="toc-questions-about-the-kitchen-sink-model-summaries" class="nav-link" data-scroll-target="#questions-about-the-kitchen-sink-model-summaries"><span class="header-section-number">32.4.1</span> Questions about the Kitchen Sink Model Summaries</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#finding-confidence-intervals-for-our-coefficient-estimates" id="toc-finding-confidence-intervals-for-our-coefficient-estimates" class="nav-link" data-scroll-target="#finding-confidence-intervals-for-our-coefficient-estimates"><span class="header-section-number">32.5</span> Finding Confidence Intervals for our Coefficient Estimates</a>
+  <ul class="collapse">
+<li><a href="#questions-about-the-confidence-intervals" id="toc-questions-about-the-confidence-intervals" class="nav-link" data-scroll-target="#questions-about-the-confidence-intervals"><span class="header-section-number">32.5.1</span> Questions about the Confidence Intervals</a></li>
+  </ul>
+</li>
+  <li><a href="#measuring-collinearity---the-variance-inflation-factor" id="toc-measuring-collinearity---the-variance-inflation-factor" class="nav-link" data-scroll-target="#measuring-collinearity---the-variance-inflation-factor"><span class="header-section-number">32.6</span> Measuring Collinearity - the Variance Inflation Factor</a></li>
+  <li>
+<a href="#global-f-testing-of-overall-significance" id="toc-global-f-testing-of-overall-significance" class="nav-link" data-scroll-target="#global-f-testing-of-overall-significance"><span class="header-section-number">32.7</span> Global (F) Testing of Overall Significance</a>
+  <ul class="collapse">
+<li><a href="#questions-about-the-global-test-via-anova" id="toc-questions-about-the-global-test-via-anova" class="nav-link" data-scroll-target="#questions-about-the-global-test-via-anova"><span class="header-section-number">32.7.1</span> Questions about the Global Test via ANOVA</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sequential-testing-in-a-regression-model-with-anova" id="toc-sequential-testing-in-a-regression-model-with-anova" class="nav-link" data-scroll-target="#sequential-testing-in-a-regression-model-with-anova"><span class="header-section-number">32.8</span> Sequential Testing in a Regression Model with ANOVA</a>
+  <ul class="collapse">
+<li><a href="#questions-about-sequential-testing-and-anova" id="toc-questions-about-sequential-testing-and-anova" class="nav-link" data-scroll-target="#questions-about-sequential-testing-and-anova"><span class="header-section-number">32.8.1</span> Questions about Sequential Testing and ANOVA</a></li>
+  </ul>
+</li>
+  <li><a href="#an-anova-table-for-the-model-as-a-whole" id="toc-an-anova-table-for-the-model-as-a-whole" class="nav-link" data-scroll-target="#an-anova-table-for-the-model-as-a-whole"><span class="header-section-number">32.9</span> An ANOVA table for the Model as a Whole</a></li>
+  <li><a href="#assumption-checking-for-our-galapagos-islands-models" id="toc-assumption-checking-for-our-galapagos-islands-models" class="nav-link" data-scroll-target="#assumption-checking-for-our-galapagos-islands-models"><span class="header-section-number">32.10</span> Assumption Checking for our Galapagos Islands models</a></li>
+  <li>
+<a href="#my-first-plot-studentized-residuals-vs.-fitted-values" id="toc-my-first-plot-studentized-residuals-vs.-fitted-values" class="nav-link" data-scroll-target="#my-first-plot-studentized-residuals-vs.-fitted-values"><span class="header-section-number">32.11</span> My First Plot: Studentized Residuals vs.&nbsp;Fitted Values</a>
+  <ul class="collapse">
+<li><a href="#questions-about-studentized-residuals-vs.-fitted-values" id="toc-questions-about-studentized-residuals-vs.-fitted-values" class="nav-link" data-scroll-target="#questions-about-studentized-residuals-vs.-fitted-values"><span class="header-section-number">32.11.1</span> Questions about Studentized Residuals vs.&nbsp;Fitted Values</a></li>
+  </ul>
+</li>
+  <li><a href="#automatic-regression-diagnostics-for-model-1" id="toc-automatic-regression-diagnostics-for-model-1" class="nav-link" data-scroll-target="#automatic-regression-diagnostics-for-model-1"><span class="header-section-number">32.12</span> Automatic Regression Diagnostics for Model 1</a></li>
+  <li>
+<a href="#model-1-diagnostic-plot-1" id="toc-model-1-diagnostic-plot-1" class="nav-link" data-scroll-target="#model-1-diagnostic-plot-1"><span class="header-section-number">32.13</span> Model 1: Diagnostic Plot 1</a>
+  <ul class="collapse">
+<li><a href="#questions-about-diagnostic-plot-1-residuals-vs.-fitted-values" id="toc-questions-about-diagnostic-plot-1-residuals-vs.-fitted-values" class="nav-link" data-scroll-target="#questions-about-diagnostic-plot-1-residuals-vs.-fitted-values"><span class="header-section-number">32.13.1</span> Questions about Diagnostic Plot 1: Residuals vs.&nbsp;Fitted Values</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#diagnostic-plot-2-assessing-normality" id="toc-diagnostic-plot-2-assessing-normality" class="nav-link" data-scroll-target="#diagnostic-plot-2-assessing-normality"><span class="header-section-number">32.14</span> Diagnostic Plot 2: Assessing Normality</a>
+  <ul class="collapse">
+<li><a href="#questions-about-diagnostic-plot-2-normal-plot-of-standardized-residuals" id="toc-questions-about-diagnostic-plot-2-normal-plot-of-standardized-residuals" class="nav-link" data-scroll-target="#questions-about-diagnostic-plot-2-normal-plot-of-standardized-residuals"><span class="header-section-number">32.14.1</span> Questions about Diagnostic Plot 2: Normal Plot of Standardized Residuals</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#diagnostic-plot-3-assessing-constant-variance" id="toc-diagnostic-plot-3-assessing-constant-variance" class="nav-link" data-scroll-target="#diagnostic-plot-3-assessing-constant-variance"><span class="header-section-number">32.15</span> Diagnostic Plot 3: Assessing Constant Variance</a>
+  <ul class="collapse">
+<li><a href="#questions-about-diagnostic-plot-3-scale-location-plot" id="toc-questions-about-diagnostic-plot-3-scale-location-plot" class="nav-link" data-scroll-target="#questions-about-diagnostic-plot-3-scale-location-plot"><span class="header-section-number">32.15.1</span> Questions about Diagnostic Plot 3: Scale-Location Plot</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#obtaining-fitted-values-and-residuals-from-a-model" id="toc-obtaining-fitted-values-and-residuals-from-a-model" class="nav-link" data-scroll-target="#obtaining-fitted-values-and-residuals-from-a-model"><span class="header-section-number">32.16</span> Obtaining Fitted Values and Residuals from a Model</a>
+  <ul class="collapse">
+<li><a href="#questions-about-fitted-values" id="toc-questions-about-fitted-values" class="nav-link" data-scroll-target="#questions-about-fitted-values"><span class="header-section-number">32.16.1</span> Questions about Fitted Values</a></li>
+  <li><a href="#questions-about-residuals" id="toc-questions-about-residuals" class="nav-link" data-scroll-target="#questions-about-residuals"><span class="header-section-number">32.16.2</span> Questions about Residuals</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#relationship-between-fitted-and-observed-values" id="toc-relationship-between-fitted-and-observed-values" class="nav-link" data-scroll-target="#relationship-between-fitted-and-observed-values"><span class="header-section-number">32.17</span> Relationship between Fitted and Observed Values</a>
+  <ul class="collapse">
+<li><a href="#questions-about-fitted-and-observed-values" id="toc-questions-about-fitted-and-observed-values" class="nav-link" data-scroll-target="#questions-about-fitted-and-observed-values"><span class="header-section-number">32.17.1</span> Questions about Fitted and Observed Values</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#standardizing-residuals" id="toc-standardizing-residuals" class="nav-link" data-scroll-target="#standardizing-residuals"><span class="header-section-number">32.18</span> Standardizing Residuals</a>
+  <ul class="collapse">
+<li><a href="#questions-about-standardized-and-studentized-residuals" id="toc-questions-about-standardized-and-studentized-residuals" class="nav-link" data-scroll-target="#questions-about-standardized-and-studentized-residuals"><span class="header-section-number">32.18.1</span> Questions about Standardized and Studentized Residuals</a></li>
+  </ul>
+</li>
+  <li><a href="#influence-measures-for-multiple-regression" id="toc-influence-measures-for-multiple-regression" class="nav-link" data-scroll-target="#influence-measures-for-multiple-regression"><span class="header-section-number">32.19</span> Influence Measures for Multiple Regression</a></li>
+  <li><a href="#dfbetas" id="toc-dfbetas" class="nav-link" data-scroll-target="#dfbetas"><span class="header-section-number">32.20</span> DFBETAs</a></li>
+  <li>
+<a href="#cooks-d-or-cooks-distance" id="toc-cooks-d-or-cooks-distance" class="nav-link" data-scroll-target="#cooks-d-or-cooks-distance"><span class="header-section-number">32.21</span> Cook’s d or Cook’s Distance</a>
+  <ul class="collapse">
+<li><a href="#plotting-cooks-distance" id="toc-plotting-cooks-distance" class="nav-link" data-scroll-target="#plotting-cooks-distance"><span class="header-section-number">32.21.1</span> Plotting Cook’s Distance</a></li>
+  </ul>
+</li>
+  <li><a href="#dffits" id="toc-dffits" class="nav-link" data-scroll-target="#dffits"><span class="header-section-number">32.22</span> DFFITS</a></li>
+  <li><a href="#covariance-ratio" id="toc-covariance-ratio" class="nav-link" data-scroll-target="#covariance-ratio"><span class="header-section-number">32.23</span> Covariance Ratio</a></li>
+  <li>
+<a href="#leverage" id="toc-leverage" class="nav-link" data-scroll-target="#leverage"><span class="header-section-number">32.24</span> Leverage</a>
+  <ul class="collapse">
+<li><a href="#indicator-of-influence" id="toc-indicator-of-influence" class="nav-link" data-scroll-target="#indicator-of-influence"><span class="header-section-number">32.24.1</span> Indicator of Influence</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#building-predictions-from-our-models" id="toc-building-predictions-from-our-models" class="nav-link" data-scroll-target="#building-predictions-from-our-models"><span class="header-section-number">32.25</span> Building Predictions from our models</a>
+  <ul class="collapse">
+<li><a href="#questions-about-the-prediction-and-confidence-interval-methods" id="toc-questions-about-the-prediction-and-confidence-interval-methods" class="nav-link" data-scroll-target="#questions-about-the-prediction-and-confidence-interval-methods"><span class="header-section-number">32.25.1</span> Questions about the Prediction and Confidence Interval Methods</a></li>
+  </ul>
+</li>
+  <li><a href="#making-a-prediction-with-new-data-without-broom" id="toc-making-a-prediction-with-new-data-without-broom" class="nav-link" data-scroll-target="#making-a-prediction-with-new-data-without-broom"><span class="header-section-number">32.26</span> Making a Prediction with New Data (without <code>broom</code>)</a></li>
+  <li>
+<a href="#scaling-predictors-using-z-scores-semi-standardized-coefficients" id="toc-scaling-predictors-using-z-scores-semi-standardized-coefficients" class="nav-link" data-scroll-target="#scaling-predictors-using-z-scores-semi-standardized-coefficients"><span class="header-section-number">32.27</span> Scaling Predictors using Z Scores: Semi-Standardized Coefficients</a>
+  <ul class="collapse">
+<li><a href="#questions-about-the-semi-standardized-model" id="toc-questions-about-the-semi-standardized-model" class="nav-link" data-scroll-target="#questions-about-the-semi-standardized-model"><span class="header-section-number">32.27.1</span> Questions about the Semi-Standardized Model</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#fully-standardized-regression-coefficients" id="toc-fully-standardized-regression-coefficients" class="nav-link" data-scroll-target="#fully-standardized-regression-coefficients"><span class="header-section-number">32.28</span> Fully Standardized Regression Coefficients</a>
+  <ul class="collapse">
+<li><a href="#questions-about-the-standardized-model" id="toc-questions-about-the-standardized-model" class="nav-link" data-scroll-target="#questions-about-the-standardized-model"><span class="header-section-number">32.28.1</span> Questions about the Standardized Model</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#robust-standardization-of-regression-coefficients" id="toc-robust-standardization-of-regression-coefficients" class="nav-link" data-scroll-target="#robust-standardization-of-regression-coefficients"><span class="header-section-number">32.29</span> Robust Standardization of Regression Coefficients</a>
+  <ul class="collapse">
+<li><a href="#questions-about-robust-standardization" id="toc-questions-about-robust-standardization" class="nav-link" data-scroll-target="#questions-about-robust-standardization"><span class="header-section-number">32.29.1</span> Questions about Robust Standardization</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#scaling-inputs-by-dividing-by-2-standard-deviations" id="toc-scaling-inputs-by-dividing-by-2-standard-deviations" class="nav-link" data-scroll-target="#scaling-inputs-by-dividing-by-2-standard-deviations"><span class="header-section-number">32.30</span> Scaling Inputs by Dividing by 2 Standard Deviations</a>
+  <ul class="collapse">
+<li><a href="#questions-about-standardizing-by-dividing-by-two-sd" id="toc-questions-about-standardizing-by-dividing-by-two-sd" class="nav-link" data-scroll-target="#questions-about-standardizing-by-dividing-by-two-sd"><span class="header-section-number">32.30.1</span> Questions about Standardizing by Dividing by Two SD</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Species Found on the Galapagos Islands</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header><section id="setup-packages-used-here" class="level2" data-number="32.1"><h2 data-number="32.1" class="anchored" data-anchor-id="setup-packages-used-here">
+<span class="header-section-number">32.1</span> Setup: Packages Used Here</h2>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>comment <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll also use a function from the <code>arm</code> package, and from the <code>Hmisc</code> package.</p>
+</section><section id="a-little-background" class="level2" data-number="32.2"><h2 data-number="32.2" class="anchored" data-anchor-id="a-little-background">
+<span class="header-section-number">32.2</span> A Little Background</h2>
+<p>The <code>gala</code> data describe describe features of the 30 Galapagos Islands.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/gala.csv"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The Galapagos Islands are found about 900 km west of South America: specifically the continental part of Ecuador. The Islands form a province of Ecuador and serve as a national park and marine reserve. They are noted for their vast numbers of unique (or endemic) species and were studied by Charles Darwin during the voyage of the Beagle.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="figures/galapic.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">galapic.jpg</figcaption></figure>
+</div>
+<section id="sources" class="level3" data-number="32.2.1"><h3 data-number="32.2.1" class="anchored" data-anchor-id="sources">
+<span class="header-section-number">32.2.1</span> Sources</h3>
+<p>The data were initially presented by Johnson M and Raven P (1973) Species number and endemism: the Galapagos Archipelago revisited. <em>Science</em> 179: 893-895 and also appear in several regression texts, including my source: <span class="citation" data-cites="Faraway2015">Faraway (<a href="references.html#ref-Faraway2015" role="doc-biblioref">2015</a>)</span>. Note that Faraway filled in some missing data to simplify things a bit. A similar version of the data is available as part of the <code>faraway</code> library in R, but I encourage you to use the version I supply on our web site.</p>
+</section><section id="variables-in-the-gala-data-frame" class="level3" data-number="32.2.2"><h3 data-number="32.2.2" class="anchored" data-anchor-id="variables-in-the-gala-data-frame">
+<span class="header-section-number">32.2.2</span> Variables in the <code>gala</code> data frame</h3>
+<ul>
+<li>
+<strong>id</strong> = island identification code</li>
+<li>
+<strong>island</strong> = island name</li>
+<li>
+<strong>species</strong> = our outcome, the number of species found on the island</li>
+<li>
+<strong>area</strong> = the area of the island, in square kilometers</li>
+<li>
+<strong>elevation</strong> = the highest elevation of the island, in meters</li>
+<li>
+<strong>nearest</strong> = the distance from the nearest island, in kilometers</li>
+<li>
+<strong>scruz</strong> = the distance from Santa Cruz Island, in kilometers. Santa Cruz is the home to the largest human population in the Islands, and to the town of Puerto Ayora.</li>
+<li>
+<strong>adjacent</strong> = the area of the adjacent island, in square kilometers</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 8
+      id island       species  area elevation nearest scruz adjacent
+   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+ 1     1 Baltra            58 25.1        346     0.6   0.6     1.84
+ 2     2 Bartolome         31  1.24       109     0.6  26.3   572.  
+ 3     3 Caldwell           3  0.21       114     2.8  58.7     0.78
+ 4     4 Champion          25  0.1         46     1.9  47.4     0.18
+ 5     5 Coamano            2  0.05        77     1.9   1.9   904.  
+ 6     6 Daphne.Major      18  0.34       119     8     8       1.84
+ 7     7 Daphne.Minor      24  0.08        93     6    12       0.34
+ 8     8 Darwin            10  2.33       168    34.1 290.      2.85
+ 9     9 Eden               8  0.03        71     0.4   0.4    18.0 
+10    10 Enderby            2  0.18       112     2.6  50.2     0.1 
+# ℹ 20 more rows</code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">gala</span><span class="op">)</span> <span class="co"># check for missing and inexplicable values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>gala 
+
+ 8  Variables      30  Observations
+--------------------------------------------------------------------------------
+id 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       30        1     15.5    10.33     2.45     3.90 
+     .25      .50      .75      .90      .95 
+    8.25    15.50    22.75    27.10    28.55 
+
+lowest :  1  2  3  4  5, highest: 26 27 28 29 30
+--------------------------------------------------------------------------------
+island 
+       n  missing distinct 
+      30        0       30 
+
+lowest : Baltra     Bartolome  Caldwell   Champion   Coamano   
+highest: SantaFe    SantaMaria Seymour    Tortuga    Wolf      
+--------------------------------------------------------------------------------
+species 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       27    0.999    85.23    109.5      2.0      2.9 
+     .25      .50      .75      .90      .95 
+    13.0     42.0     96.0    280.5    319.1 
+
+lowest :   2   3   5   8  10, highest: 237 280 285 347 444
+--------------------------------------------------------------------------------
+area 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       29        1    261.7    478.6   0.0390   0.0770 
+     .25      .50      .75      .90      .95 
+  0.2575   2.5900  59.2375 578.5460 782.6215 
+                                                          
+Value          0    50   100   150   550   600   900  4650
+Frequency     21     2     1     1     2     1     1     1
+Proportion 0.700 0.067 0.033 0.033 0.067 0.033 0.033 0.033
+
+For the frequency table, variable is rounded to the nearest 50
+--------------------------------------------------------------------------------
+elevation 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       30        1      368    411.1    47.35    68.80 
+     .25      .50      .75      .90      .95 
+   97.75   192.00   435.25   868.20  1229.40 
+
+lowest :   25   46   49   71   76, highest:  777  864  906 1494 1707
+--------------------------------------------------------------------------------
+nearest 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       22    0.997    10.06    13.73    0.445    0.590 
+     .25      .50      .75      .90      .95 
+   0.800    3.050   10.025   34.100   40.205 
+
+lowest : 0.2  0.4  0.5  0.6  0.7 , highest: 16.5 29.1 34.1 45.2 47.4
+--------------------------------------------------------------------------------
+scruz 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       29        1    56.98    65.17     0.49     0.60 
+     .25      .50      .75      .90      .95 
+   11.02    46.65    81.08    97.73   193.90 
+
+lowest : 0     0.4   0.6   1.9   8    , highest: 93.1  95.3  119.6 254.7 290.2
+--------------------------------------------------------------------------------
+adjacent 
+       n  missing distinct     Info     Mean      Gmd      .05      .10 
+      30        0       21    0.998    261.1    477.8     0.10     0.10 
+     .25      .50      .75      .90      .95 
+    0.52     2.59    59.24   578.55   782.62 
+                                                    
+Value          0    50   100   550   600   900  4650
+Frequency     21     2     2     2     1     1     1
+Proportion 0.700 0.067 0.067 0.067 0.033 0.033 0.033
+
+For the frequency table, variable is rounded to the nearest 50
+--------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+</section></section><section id="dtdp-a-scatterplot-matrix" class="level2" data-number="32.3"><h2 data-number="32.3" class="anchored" data-anchor-id="dtdp-a-scatterplot-matrix">
+<span class="header-section-number">32.3</span> DTDP: A Scatterplot Matrix</h2>
+<p>After missingness and range checks, the first step in any data analysis problem is to draw the picture. The most useful picture for me in thinking about a regression problem with a reasonably small number of predictors is a scatterplot matrix.</p>
+<p>Our outcome, that we are predicting here is the number of <code>species</code>.</p>
+<p>We’ll use five predictors:</p>
+<ul>
+<li><code>area</code></li>
+<li><code>elevation</code></li>
+<li><code>nearest</code></li>
+<li>
+<code>scruz</code> and</li>
+<li>
+<code>adjacent</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">gala</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">area</span>, <span class="va">elevation</span>, <span class="va">nearest</span>,</span>
+<span>                        <span class="va">scruz</span>, <span class="va">adjacent</span>, <span class="va">species</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="32-galapagos_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="questions-about-the-scatterplot-matrix" class="level3" data-number="32.3.1"><h3 data-number="32.3.1" class="anchored" data-anchor-id="questions-about-the-scatterplot-matrix">
+<span class="header-section-number">32.3.1</span> Questions about the Scatterplot Matrix</h3>
+<p>In this Chapter, I will provide you with nearly 100 questions that you should be able to answer in light of the output provided. Here are the first few. If you have questions about how to interpret the output in light of these questions, please ask about them on Piazza or in TA office hours.</p>
+<ol type="1">
+<li>What are we looking for in the scatterplots in the bottom row?</li>
+<li>What can we learn from the Pearson correlations in the right column?</li>
+<li>How do the density plots help increase our understanding of the data?</li>
+<li>What about the scatterplots that are not in the top row?</li>
+<li>What can we learn from the Pearson correlations that compare predictors?</li>
+</ol></section></section><section id="fitting-a-kitchen-sink-linear-regression-model" class="level2" data-number="32.4"><h2 data-number="32.4" class="anchored" data-anchor-id="fitting-a-kitchen-sink-linear-regression-model">
+<span class="header-section-number">32.4</span> Fitting A “Kitchen Sink” Linear Regression model</h2>
+<p>Next, we’ll fit a multiple linear regression model to predict the number of species based on the five predictors included in the gala data frame (and scatterplot matrix above.) We use the lm command to fit the linear model, and use what is called Wilkinson-Rogers notation to specify the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">area</span> <span class="op">+</span> <span class="va">elevation</span> <span class="op">+</span> <span class="va">nearest</span> <span class="op">+</span> <span class="va">scruz</span> <span class="op">+</span> </span>
+<span>               <span class="va">adjacent</span>, data<span class="op">=</span><span class="va">gala</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here are the results of running <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> and <code><a href="https://generics.r-lib.org/reference/glance.html">glance()</a></code> from the <code>broom</code> package on <code>model1</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">7.068</td>
+<td style="text-align: right;">19.154</td>
+<td style="text-align: right;">0.369</td>
+<td style="text-align: right;">0.715</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">area</td>
+<td style="text-align: right;">-0.024</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">-1.068</td>
+<td style="text-align: right;">0.296</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">elevation</td>
+<td style="text-align: right;">0.319</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">5.953</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nearest</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">1.054</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.993</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">scruz</td>
+<td style="text-align: right;">-0.241</td>
+<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">-1.117</td>
+<td style="text-align: right;">0.275</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">adjacent</td>
+<td style="text-align: right;">-0.075</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">-4.226</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">r.squared</span>, <span class="va">adj.r.squared</span>, <span class="va">sigma</span>, <span class="va">statistic</span>, </span>
+<span>           <span class="va">p.value</span>, <span class="va">df</span>, <span class="va">df.residual</span>, <span class="va">nobs</span>, <span class="va">AIC</span>, <span class="va">BIC</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 3%">
+<col style="width: 15%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">r.squared</th>
+<th style="text-align: right;">adj.r.squared</th>
+<th style="text-align: right;">sigma</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">df.residual</th>
+<th style="text-align: right;">nobs</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: right;">0.766</td>
+<td style="text-align: right;">0.717</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">15.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">339.1</td>
+<td style="text-align: right;">348.9</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<p>Here is the result of running <code>summary</code> on <code>model1</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species ~ area + elevation + nearest + scruz + adjacent, 
+    data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-111.679  -34.898   -7.862   33.460  182.584 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  7.068221  19.154198   0.369 0.715351    
+area        -0.023938   0.022422  -1.068 0.296318    
+elevation    0.319465   0.053663   5.953 3.82e-06 ***
+nearest      0.009144   1.054136   0.009 0.993151    
+scruz       -0.240524   0.215402  -1.117 0.275208    
+adjacent    -0.074805   0.017700  -4.226 0.000297 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 60.98 on 24 degrees of freedom
+Multiple R-squared:  0.7658,    Adjusted R-squared:  0.7171 
+F-statistic:  15.7 on 5 and 24 DF,  p-value: 6.838e-07</code></pre>
+</div>
+</div>
+<section id="questions-about-the-kitchen-sink-model-summaries" class="level3" data-number="32.4.1"><h3 data-number="32.4.1" class="anchored" data-anchor-id="questions-about-the-kitchen-sink-model-summaries">
+<span class="header-section-number">32.4.1</span> Questions about the Kitchen Sink Model Summaries</h3>
+<p>What conclusions can we draw from the <code>summary</code> output for this model? Specifically …</p>
+<ol start="6" type="1">
+<li>What is being predicted? What is the prediction equation?</li>
+<li>How do we interpret the <code>elevation</code> estimate of 0.32?</li>
+<li>How do we interpret the <code>area</code> estimate of -0.02?</li>
+<li>How do we interpret the intercept estimate of 7.07?</li>
+<li>Overall, does our <code>model1</code> add detectable predictive value (say, at the 5% significance level) over the simplest possible model for this outcome (the model using the intercept term alone)?</li>
+<li>What proportion of the variation in <code>species</code> counts does this model account for?</li>
+<li>What does the residual standard error mean in this context?</li>
+<li>What can we learn from the standard errors in the coefficient output?</li>
+<li>What can we learn from the <code>t</code> values and <code>Pr(&gt;|t|)</code> values in the summary output?</li>
+<li>How should we interpret the meaning of the <code>Adjusted R-squared</code> value?</li>
+</ol></section></section><section id="finding-confidence-intervals-for-our-coefficient-estimates" class="level2" data-number="32.5"><h2 data-number="32.5" class="anchored" data-anchor-id="finding-confidence-intervals-for-our-coefficient-estimates">
+<span class="header-section-number">32.5</span> Finding Confidence Intervals for our Coefficient Estimates</h2>
+<p>Of course, we can find these intervals in several ways. One approach uses <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> from the <code>broom</code> package.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">model1</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>, <span class="va">estimate</span>, <span class="va">std.error</span>, <span class="va">conf.low</span>, <span class="va">conf.high</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">7.068</td>
+<td style="text-align: right;">19.154</td>
+<td style="text-align: right;">-32.464</td>
+<td style="text-align: right;">46.601</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">area</td>
+<td style="text-align: right;">-0.024</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">-0.070</td>
+<td style="text-align: right;">0.022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">elevation</td>
+<td style="text-align: right;">0.319</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">0.209</td>
+<td style="text-align: right;">0.430</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nearest</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">1.054</td>
+<td style="text-align: right;">-2.166</td>
+<td style="text-align: right;">2.185</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">scruz</td>
+<td style="text-align: right;">-0.241</td>
+<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">-0.685</td>
+<td style="text-align: right;">0.204</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">adjacent</td>
+<td style="text-align: right;">-0.075</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">-0.111</td>
+<td style="text-align: right;">-0.038</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Another approach would be:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">model1</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %      97.5 %
+(Intercept) -32.4641006 46.60054205
+area         -0.0702158  0.02233912
+elevation     0.2087102  0.43021935
+nearest      -2.1664857  2.18477363
+scruz        -0.6850926  0.20404416
+adjacent     -0.1113362 -0.03827344</code></pre>
+</div>
+</div>
+<section id="questions-about-the-confidence-intervals" class="level3" data-number="32.5.1"><h3 data-number="32.5.1" class="anchored" data-anchor-id="questions-about-the-confidence-intervals">
+<span class="header-section-number">32.5.1</span> Questions about the Confidence Intervals</h3>
+<ol start="16" type="1">
+<li>What can we learn from the provided confidence interval for <code>elevation</code>?</li>
+<li>How do the confidence interval results here compare to the t tests we saw previously?</li>
+</ol></section></section><section id="measuring-collinearity---the-variance-inflation-factor" class="level2" data-number="32.6"><h2 data-number="32.6" class="anchored" data-anchor-id="measuring-collinearity---the-variance-inflation-factor">
+<span class="header-section-number">32.6</span> Measuring Collinearity - the Variance Inflation Factor</h2>
+<p>The <strong>variance inflation factor</strong> (abbreviated VIF) can be used to quantify the impact of multicollinearity in a linear regression model.</p>
+<p>The VIF is sometimes interpreted by taking its square root, and then interpreting the result as telling you how much larger the standard error for that coefficient is, as compared to what it would be if that variable were uncorrelated with the other predictors.</p>
+<p>In R, the <code>vif</code> function from the <code>car</code> library, when applied to a linear regression model, specifies the variance inflation factors for each of the model’s coefficients, as follows.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/car/man/vif.html">vif</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     area elevation   nearest     scruz  adjacent 
+ 2.928145  3.992545  1.766099  1.675031  1.826403 </code></pre>
+</div>
+</div>
+<p>So, for instance, the VIF of 3.99 for <code>elevation</code> implies that the standard error of the elevation coefficient is approximately 2 times larger than it would be if elevation was uncorrelated with the other predictors.</p>
+<p><strong>I will look closely at any VIF value that is greater than 5, although some people use a cutoff of 10.</strong></p>
+<ul>
+<li>Another collinearity measure called tolerance is simply 1/<code>VIF</code>.</li>
+<li>For example, the tolerance for <code>elevation</code> would be 0.25, and the cutoff for a potentially problematic tolerance is either 0.2 or lower, or 0.1 or lower.</li>
+</ul>
+<p>To calculate the VIF for a predictor <span class="math inline">\(x_1\)</span>, use all of the other predictors to predict <span class="math inline">\(x_1\)</span> and find the multiple <span class="math inline">\(R^2\)</span> value.</p>
+<ul>
+<li>
+<code>VIF</code> for <span class="math inline">\(x_1\)</span> = 1 / (1 - <span class="math inline">\(R^2_{x_1 | others}\)</span>), and <code>tolerance</code> = (1 - <span class="math inline">\(R^2_{x_1 | others}\)</span>).</li>
+</ul></section><section id="global-f-testing-of-overall-significance" class="level2" data-number="32.7"><h2 data-number="32.7" class="anchored" data-anchor-id="global-f-testing-of-overall-significance">
+<span class="header-section-number">32.7</span> Global (F) Testing of Overall Significance</h2>
+<p>Our Galapagos Islands species count regression model (called <code>model1</code>) predicts the count of an island’s species using <code>area</code>, <code>elevation</code>, <code>nearest</code>, <code>scruz</code> and <code>adjacent</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nullmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="fl">1</span>, data<span class="op">=</span><span class="va">gala</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">nullmodel</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species ~ 1, data = gala)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-83.23 -72.23 -43.23  10.77 358.77 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    85.23      20.93   4.072 0.000328 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 114.6 on 29 degrees of freedom</code></pre>
+</div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">nullmodel</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: species ~ area + elevation + nearest + scruz + adjacent
+Model 2: species ~ 1
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1     24  89231                                  
+2     29 381081 -5   -291850 15.699 6.838e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<section id="questions-about-the-global-test-via-anova" class="level3" data-number="32.7.1"><h3 data-number="32.7.1" class="anchored" data-anchor-id="questions-about-the-global-test-via-anova">
+<span class="header-section-number">32.7.1</span> Questions about the Global Test via ANOVA</h3>
+<ol start="18" type="1">
+<li>How do we interpret the null model fit above?</li>
+<li>What are the hypotheses being tested by this ANOVA output?</li>
+<li>What conclusions can we draw from the ANOVA output presented here?</li>
+<li>Where do we find information regarding the result for the previous question in the summary output for the linear model?</li>
+<li>How would we set up an ANOVA model to test whether the “kitchen sink” model’s predictive value would be meaningfully impacted by removing the <code>adjacent</code> predictor from the model?</li>
+<li>Where do we find information regarding these result for the previous question in the <code>summary</code> output for the linear model?</li>
+<li>How would we set an ANOVA model to test whether a model with <code>area</code> only would be a detectable improvement over the null model?</li>
+</ol></section></section><section id="sequential-testing-in-a-regression-model-with-anova" class="level2" data-number="32.8"><h2 data-number="32.8" class="anchored" data-anchor-id="sequential-testing-in-a-regression-model-with-anova">
+<span class="header-section-number">32.8</span> Sequential Testing in a Regression Model with ANOVA</h2>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: species
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+area       1 145470  145470 39.1262 1.826e-06 ***
+elevation  1  65664   65664 17.6613 0.0003155 ***
+nearest    1     29      29  0.0079 0.9300674    
+scruz      1  14280   14280  3.8408 0.0617324 .  
+adjacent   1  66406   66406 17.8609 0.0002971 ***
+Residuals 24  89231    3718                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<section id="questions-about-sequential-testing-and-anova" class="level3" data-number="32.8.1"><h3 data-number="32.8.1" class="anchored" data-anchor-id="questions-about-sequential-testing-and-anova">
+<span class="header-section-number">32.8.1</span> Questions about Sequential Testing and ANOVA</h3>
+<ol start="25" type="1">
+<li>What conclusions can we draw from the <code>area</code> row in the output above?</li>
+<li>What conclusions can we draw from the <code>elevation</code> row?</li>
+<li>Does <code>nearest</code> add statistically detectable predictive value to the model including <code>area</code> and <code>elevation</code>, but none of the other predictors?</li>
+<li>Does <code>adjacent</code> add detectable predictive value as last predictor into the model?</li>
+<li>Where else in the regression output can we find the answer to the previous question?</li>
+<li>How does the mean square of the residuals (3718) relate to the residual standard error?</li>
+<li>What percentage of the variation in the species counts is accounted for by area alone?</li>
+<li>What percentage of the variation explained by the kitchen sink model would also be accounted for in a two-predictor regression model including <code>area</code> and <code>elevation</code> alone?</li>
+<li>How could we use the original linear model output to whether a model using the four predictors that appear most promising here would be statistically meaningfully worse than the full model with all five predictors?</li>
+<li>What does the following output do differently than the output above, and why is that potentially useful here? Why is the p value for <code>scruz</code> so different?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">area</span> <span class="op">+</span> <span class="va">elevation</span> <span class="op">+</span> <span class="va">adjacent</span> <span class="op">+</span> </span>
+<span>             <span class="va">scruz</span> <span class="op">+</span> <span class="va">nearest</span>, data<span class="op">=</span><span class="va">gala</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: species
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+area       1 145470  145470 39.1262 1.826e-06 ***
+elevation  1  65664   65664 17.6613 0.0003155 ***
+adjacent   1  73171   73171 19.6804 0.0001742 ***
+scruz      1   7544    7544  2.0291 0.1671885    
+nearest    1      0       0  0.0001 0.9931506    
+Residuals 24  89231    3718                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<ol start="35" type="1">
+<li>Consider the ANOVA below, run on a new model with <code>elevation</code> after <code>adjacent</code>. What happens? Why?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">area</span> <span class="op">+</span> <span class="va">adjacent</span> <span class="op">+</span> <span class="va">elevation</span> <span class="op">+</span> </span>
+<span>             <span class="va">scruz</span> <span class="op">+</span> <span class="va">nearest</span>, data<span class="op">=</span><span class="va">gala</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: species
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+area       1 145470  145470 39.1262 1.826e-06 ***
+adjacent   1   2850    2850  0.7666    0.3900    
+elevation  1 135985  135985 36.5751 3.030e-06 ***
+scruz      1   7544    7544  2.0291    0.1672    
+nearest    1      0       0  0.0001    0.9932    
+Residuals 24  89231    3718                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section></section><section id="an-anova-table-for-the-model-as-a-whole" class="level2" data-number="32.9"><h2 data-number="32.9" class="anchored" data-anchor-id="an-anova-table-for-the-model-as-a-whole">
+<span class="header-section-number">32.9</span> An ANOVA table for the Model as a Whole</h2>
+<p>It’s probably also worthwhile to compute a completed ANOVA table for the model as a whole. All elements are in the ANOVA tables above, or the model summary.</p>
+<table class="table">
+<thead><tr class="header">
+<th style="text-align: right;">Group</th>
+<th style="text-align: right;">DF</th>
+<th style="text-align: right;">SS</th>
+<th style="text-align: right;">MS</th>
+<th style="text-align: right;">F</th>
+<th style="text-align: right;">P</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Regression</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">291849</td>
+<td style="text-align: right;">58369.8</td>
+<td style="text-align: right;">15.7</td>
+<td style="text-align: right;">6.838e-07</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Residuals</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">89231</td>
+<td style="text-align: right;">3718.0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Total</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">381080</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<ol start="36" type="1">
+<li>How did I determine the Mean Square for the Regression model?</li>
+<li>What conclusions can we draw from this ANOVA table?</li>
+</ol></section><section id="assumption-checking-for-our-galapagos-islands-models" class="level2" data-number="32.10"><h2 data-number="32.10" class="anchored" data-anchor-id="assumption-checking-for-our-galapagos-islands-models">
+<span class="header-section-number">32.10</span> Assumption Checking for our Galapagos Islands models</h2>
+<p>Remember that the key assumptions of multiple linear regression are:</p>
+<ul>
+<li>[Linearity] We have also assumed that the structural part of the model is correctly specified (we’ve included all the predictors that need to be in the model, and expressed them in the most appropriate manner, and we’ve left out any predictors that don’t need to be in the model.)</li>
+<li>[Normality] The regression makes errors that come from a Normal distribution</li>
+<li>[Homoscedasticity = Constant Variance] The regression makes errors that come from a distribution with constant variance at all predictor levels.</li>
+<li>[Independence] The regression errors are independent of each other.</li>
+</ul>
+<p>In addition, we need to realize that sometimes a few observations may be particularly problematic. For instance:</p>
+<ol type="1">
+<li>An observation may simply not fit the model well (i.e.&nbsp;it creates a large residual)</li>
+<li>An observation may have high leverage over the fit of the model (this happens with observations that have an unusual combination of predictor values, in particular)</li>
+<li>An observation may actually have high influence on the model (in the sense that whether they are included or excluded has a large impact on the model’s fit, and the value of its parameter estimates.)</li>
+<li>Or any combination of high residual, leverage and influence may occur.</li>
+</ol>
+<p>So it is important to check the assumptions that we can with the data we have. Our most important tools are plots and other summaries of residuals, and what are called influence statistics.</p>
+</section><section id="my-first-plot-studentized-residuals-vs.-fitted-values" class="level2" data-number="32.11"><h2 data-number="32.11" class="anchored" data-anchor-id="my-first-plot-studentized-residuals-vs.-fitted-values">
+<span class="header-section-number">32.11</span> My First Plot: Studentized Residuals vs.&nbsp;Fitted Values</h2>
+<p>The first diagnostic plot I usually draw for a multiple regression is a scatterplot of the model’s <strong>studentized</strong> residuals (on the vertical axis) vs.&nbsp;the model’s fitted values (on the horizontal.) This plot can be used to assess potential non-linearity, non-constant variance, and non-Normality in the residuals.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span><span class="op">$</span><span class="va">stures</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span>; <span class="va">gala</span><span class="op">$</span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">gala</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">fits</span>, y <span class="op">=</span> <span class="va">stures</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="st">"loess"</span>,</span>
+<span>                formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, weight <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fitted Values of Species"</span>, </span>
+<span>         y <span class="op">=</span> <span class="st">"Studentized Residuals"</span>,</span>
+<span>         title <span class="op">=</span> <span class="st">"gala data: Model 1"</span>,</span>
+<span>         subtitle <span class="op">=</span> <span class="st">"Studentized Residuals vs. Fitted Values"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="32-galapagos_files/figure-html/p60-1.png" class="img-fluid figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="questions-about-studentized-residuals-vs.-fitted-values" class="level3" data-number="32.11.1"><h3 data-number="32.11.1" class="anchored" data-anchor-id="questions-about-studentized-residuals-vs.-fitted-values">
+<span class="header-section-number">32.11.1</span> Questions about Studentized Residuals vs.&nbsp;Fitted Values</h3>
+<ol start="38" type="1">
+<li>Consider the point at bottom right. What can you infer about this observation?</li>
+<li>Why did I include the dotted horizontal line at Studentized Residual = 0?</li>
+<li>What is the purpose of the thin blue line?</li>
+<li>What does this plot suggest about the potential for outliers in the residuals?</li>
+</ol></section></section><section id="automatic-regression-diagnostics-for-model-1" class="level2" data-number="32.12"><h2 data-number="32.12" class="anchored" data-anchor-id="automatic-regression-diagnostics-for-model-1">
+<span class="header-section-number">32.12</span> Automatic Regression Diagnostics for Model 1</h2>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="32-galapagos_files/figure-html/p58-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="model-1-diagnostic-plot-1" class="level2" data-number="32.13"><h2 data-number="32.13" class="anchored" data-anchor-id="model-1-diagnostic-plot-1">
+<span class="header-section-number">32.13</span> Model 1: Diagnostic Plot 1</h2>
+<p>As we’ve seen, the first of R’s automated diagnostic plots for a linear model is a plot of the residuals vs.&nbsp;the fitted values.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="32-galapagos_files/figure-html/p61-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="questions-about-diagnostic-plot-1-residuals-vs.-fitted-values" class="level3" data-number="32.13.1"><h3 data-number="32.13.1" class="anchored" data-anchor-id="questions-about-diagnostic-plot-1-residuals-vs.-fitted-values">
+<span class="header-section-number">32.13.1</span> Questions about Diagnostic Plot 1: Residuals vs.&nbsp;Fitted Values</h3>
+<ol start="42" type="1">
+<li>What type of regression residuals is R plotting here?</li>
+<li>Which points are identified by numbers here?</li>
+<li>Why did R include the gray dotted line at Residual = 0?</li>
+<li>What is the purpose of the thin red line?</li>
+<li>What can you tell about the potential for outliers in the model 1 residuals from the plot?</li>
+<li>What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it? Which assumptions can we assess with it?</li>
+<li>What would we do if we saw a violation of assumptions in this plot?</li>
+<li>What are the key differences between this plot and the one I showed earlier?</li>
+</ol></section></section><section id="diagnostic-plot-2-assessing-normality" class="level2" data-number="32.14"><h2 data-number="32.14" class="anchored" data-anchor-id="diagnostic-plot-2-assessing-normality">
+<span class="header-section-number">32.14</span> Diagnostic Plot 2: Assessing Normality</h2>
+<p>The second diagnostic plot prepared by R for any linear model using the plot command is a Normal Q-Q plot of the standardized residuals from the model.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1</span>, which<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="32-galapagos_files/figure-html/p62-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="questions-about-diagnostic-plot-2-normal-plot-of-standardized-residuals" class="level3" data-number="32.14.1"><h3 data-number="32.14.1" class="anchored" data-anchor-id="questions-about-diagnostic-plot-2-normal-plot-of-standardized-residuals">
+<span class="header-section-number">32.14.1</span> Questions about Diagnostic Plot 2: Normal Plot of Standardized Residuals</h3>
+<ol start="50" type="1">
+<li>Which points are being identified here by number?</li>
+<li>Which assumption(s) of multiple regression does this plot help us check?</li>
+<li>What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it?</li>
+<li>What would we do if we saw a violation of assumptions in this plot?</li>
+</ol>
+<p>We could also look at studentized residuals, or we could apply a more complete set of plots and other assessments of normality. Usually, I don’t.</p>
+</section></section><section id="diagnostic-plot-3-assessing-constant-variance" class="level2" data-number="32.15"><h2 data-number="32.15" class="anchored" data-anchor-id="diagnostic-plot-3-assessing-constant-variance">
+<span class="header-section-number">32.15</span> Diagnostic Plot 3: Assessing Constant Variance</h2>
+<p>The third diagnostic plot prepared by R for any linear model using the <code>plot</code> command shows the square root of the model’s standardized residuals vs.&nbsp;its fitted values. R calls this a <strong>scale-location plot</strong>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1</span>, which<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="32-galapagos_files/figure-html/p63-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="questions-about-diagnostic-plot-3-scale-location-plot" class="level3" data-number="32.15.1"><h3 data-number="32.15.1" class="anchored" data-anchor-id="questions-about-diagnostic-plot-3-scale-location-plot">
+<span class="header-section-number">32.15.1</span> Questions about Diagnostic Plot 3: Scale-Location Plot</h3>
+<ol start="54" type="1">
+<li>Which points are being identified here by number?</li>
+<li>Which assumption(s) of multiple regression does this plot help us check?</li>
+<li>What is the role of the thin red line in this plot?</li>
+<li>What are we looking for in this plot that would let us conclude there were no important assumption violations implied by it?</li>
+<li>What would we do if we saw a violation of assumptions in this plot?</li>
+</ol></section></section><section id="obtaining-fitted-values-and-residuals-from-a-model" class="level2" data-number="32.16"><h2 data-number="32.16" class="anchored" data-anchor-id="obtaining-fitted-values-and-residuals-from-a-model">
+<span class="header-section-number">32.16</span> Obtaining Fitted Values and Residuals from a Model</h2>
+<p>We can use the <code><a href="https://generics.r-lib.org/reference/augment.html">augment()</a></code> function from the <code>broom</code> package to find the predictions made by the regression model for each of the observations used to create the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala_aug</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">gala_aug</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "species"    "area"       "elevation"  "nearest"    "scruz"     
+ [6] "adjacent"   ".fitted"    ".resid"     ".hat"       ".sigma"    
+[11] ".cooksd"    ".std.resid"</code></pre>
+</div>
+</div>
+<p>Here, we obtain</p>
+<ul>
+<li>predicted (fitted) values for the outcome, in <code>.fitted</code>
+</li>
+<li>residuals (observed - fitted) values for each observation, in <code>.resid</code>
+</li>
+<li>leverage values in <code>.hat</code> for each observation</li>
+<li>standard errors associated with each observation in <code>.sigma</code>
+</li>
+<li>Cook’s distance values for each observation in <code>.cooksd</code>
+</li>
+<li>standardized residuals in <code>.std.resid</code>
+</li>
+</ul>
+<p>Here, for instance, are the first few rows.</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gala_aug</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 10%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">species</th>
+<th style="text-align: right;">area</th>
+<th style="text-align: right;">elevation</th>
+<th style="text-align: right;">nearest</th>
+<th style="text-align: right;">scruz</th>
+<th style="text-align: right;">adjacent</th>
+<th style="text-align: right;">.fitted</th>
+<th style="text-align: right;">.resid</th>
+<th style="text-align: right;">.hat</th>
+<th style="text-align: right;">.sigma</th>
+<th style="text-align: right;">.cooksd</th>
+<th style="text-align: right;">.std.resid</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">25.09</td>
+<td style="text-align: right;">346</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">1.84</td>
+<td style="text-align: right;">116.73</td>
+<td style="text-align: right;">-58.73</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">60.97</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">-1.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">1.24</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">26.3</td>
+<td style="text-align: right;">572.33</td>
+<td style="text-align: right;">-7.27</td>
+<td style="text-align: right;">38.27</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">61.72</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.66</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">58.7</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">29.33</td>
+<td style="text-align: right;">-26.33</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">62.03</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-0.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">47.4</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">10.36</td>
+<td style="text-align: right;">14.64</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">62.21</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">903.82</td>
+<td style="text-align: right;">-36.38</td>
+<td style="text-align: right;">38.38</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">61.66</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">1.84</td>
+<td style="text-align: right;">43.09</td>
+<td style="text-align: right;">-25.09</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">62.05</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">-0.43</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="questions-about-fitted-values" class="level3" data-number="32.16.1"><h3 data-number="32.16.1" class="anchored" data-anchor-id="questions-about-fitted-values">
+<span class="header-section-number">32.16.1</span> Questions about Fitted Values</h3>
+<ol start="59" type="1">
+<li>Verify that the first fitted value [116.73] is in fact what you get for Baltra (observation 1) when you apply the regression equation:</li>
+</ol>
+<pre><code>species = 7.07 - 0.02 area + 0.32 elevation 
+               + 0.009 nearest - 0.24 scruz - 0.07 adjacent</code></pre>
+<p>We can compare these predictions to the actual observed counts of the number of species on each island. Subtracting the fitted values from the observed values gives us the residuals, as does the <code>resid</code> function.</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1       2       3       4       5       6       7       8       9      10 
+ -58.73   38.27  -26.33   14.64   38.38  -25.09   -9.92   19.02  -20.31  -28.79 
+     11      12      13      14      15      16      17      18      19      20 
+  49.34   -3.99   62.03  -59.63   40.50  -39.40  -37.69   -2.04 -111.68  -42.48 
+     21      22      23      24      25      26      27      28      29      30 
+ -23.08   -5.55   73.05  -40.68  182.58  -23.38   89.38   -5.81  -36.94   -5.70 </code></pre>
+</div>
+</div>
+</section><section id="questions-about-residuals" class="level3" data-number="32.16.2"><h3 data-number="32.16.2" class="anchored" data-anchor-id="questions-about-residuals">
+<span class="header-section-number">32.16.2</span> Questions about Residuals</h3>
+<ol start="60" type="1">
+<li>What does a positive residual indicate?</li>
+<li>What does a negative residual indicate?</li>
+<li>The standard deviation of the full set of 30 residuals turns out to be 55.47. How does this compare to the residual standard error?</li>
+<li>The command below identifies Santa Cruz. What does it indicate about Santa Cruz, specifically?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span><span class="op">$</span><span class="va">island</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SantaCruz"</code></pre>
+</div>
+</div>
+<ol start="64" type="1">
+<li>From the results below, what is the <code>model1</code> residual for Santa Cruz? What does this imply about the <code>species</code> prediction made by Model 1 for Santa Cruz?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>25 
+25 </code></pre>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1       2       3       4       5       6       7       8       9      10 
+ -58.73   38.27  -26.33   14.64   38.38  -25.09   -9.92   19.02  -20.31  -28.79 
+     11      12      13      14      15      16      17      18      19      20 
+  49.34   -3.99   62.03  -59.63   40.50  -39.40  -37.69   -2.04 -111.68  -42.48 
+     21      22      23      24      25      26      27      28      29      30 
+ -23.08   -5.55   73.05  -40.68  182.58  -23.38   89.38   -5.81  -36.94   -5.70 </code></pre>
+</div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 10
+     id island    species  area elevation nearest scruz adjacent stures  fits
+  &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1    25 SantaCruz     444  904.       864     0.6     0     0.52   4.38  261.</code></pre>
+</div>
+</div>
+</section></section><section id="relationship-between-fitted-and-observed-values" class="level2" data-number="32.17"><h2 data-number="32.17" class="anchored" data-anchor-id="relationship-between-fitted-and-observed-values">
+<span class="header-section-number">32.17</span> Relationship between Fitted and Observed Values</h2>
+<p>We’ve already seen that the <code>fitted</code> command can produce predicted values for each observations used to develop a regression model, and that the <code>resid</code> command can produce the residuals (observed - predicted) for those same observations. Returning to our original model1, let’s compare the fitted values (stored earlier in <code>fits</code>) to the observed values.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">gala</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">species</span>, y <span class="op">=</span> <span class="va">fits</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                col <span class="op">=</span> <span class="st">"purple"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Observed Species Count"</span>, </span>
+<span>         y <span class="op">=</span> <span class="st">"Model Predicted Species"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="32-galapagos_files/figure-html/p65-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="questions-about-fitted-and-observed-values" class="level3" data-number="32.17.1"><h3 data-number="32.17.1" class="anchored" data-anchor-id="questions-about-fitted-and-observed-values">
+<span class="header-section-number">32.17.1</span> Questions about Fitted and Observed Values</h3>
+<ol start="65" type="1">
+<li>Why did I draw the dotted purple line with y-intercept 0 and slope 1? Why is that particular line of interest?</li>
+<li>If a point on this plot is in the top left here, above the dotted line, what does that mean?</li>
+<li>If a point is below the dotted line here, what does that mean?</li>
+<li>How does this plot display the size of an observation’s residual?</li>
+</ol></section></section><section id="standardizing-residuals" class="level2" data-number="32.18"><h2 data-number="32.18" class="anchored" data-anchor-id="standardizing-residuals">
+<span class="header-section-number">32.18</span> Standardizing Residuals</h2>
+<p>We’ve already seen that the raw residuals from a regression model can be obtained using the <code>resid</code> function. Residuals are defined to have mean 0. This is one of the requirements of the least squares procedure for estimating a linear model, and their true standard deviation is effectively estimated using the residual standard error.</p>
+<p>There are two additional types of residuals for us to be aware of: standardized residuals, and studentized (sometimes called externally standardized, or jackknife) residuals. Each approach standardizes the residuals by dividing them by a standard deviation estimate, so the resulting residuals should have mean 0 and standard deviation 1 if assumptions hold.</p>
+<ul>
+<li>
+<strong>Standardized</strong> residuals are the original (raw) residuals, scaled by a standard deviation estimate developed using the entire data set. This summary is part of what is provided by <code>augment</code> from the <code>broom</code> package, as <code>.std.resid</code>.</li>
+<li>
+<strong>Studentized</strong> residuals are the original (raw) residuals, scaled by a standard deviation estimate developed using the entire data set EXCEPT for this particular observation.</li>
+</ul>
+<p>The <code>rstudent</code> function, when applied to a linear regression model, will the model’s studentized residuals.</p>
+<div class="cell">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala_aug</span> <span class="op">&lt;-</span> <span class="va">gala_aug</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>.stu.resid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">gala_aug</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.std.resid</span>, </span>
+<span>                           y <span class="op">=</span> <span class="va">.stu.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, pch <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_label</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2.5</span>, y <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>               label <span class="op">=</span> <span class="st">"y = x"</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Standardized Residuals for Model 1"</span>, </span>
+<span>         y <span class="op">=</span> <span class="st">"Studentized Residuals for Model 1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="32-galapagos_files/figure-html/p66-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="questions-about-standardized-and-studentized-residuals" class="level3" data-number="32.18.1"><h3 data-number="32.18.1" class="anchored" data-anchor-id="questions-about-standardized-and-studentized-residuals">
+<span class="header-section-number">32.18.1</span> Questions about Standardized and Studentized Residuals</h3>
+<ol start="69" type="1">
+<li>From the plot above, what conclusions can you draw about the two methods of standardizing residuals as they apply in the case of our model1?</li>
+</ol></section></section><section id="influence-measures-for-multiple-regression" class="level2" data-number="32.19"><h2 data-number="32.19" class="anchored" data-anchor-id="influence-measures-for-multiple-regression">
+<span class="header-section-number">32.19</span> Influence Measures for Multiple Regression</h2>
+<p>R can output a series of <strong>influence measures</strong> for a regression model. Let me show you all of the available measures for model 1, but just for three of the data points - #1 (which is not particularly influential) and #12 and #16 (which are).</p>
+<p>First, we’ll look at the raw data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">12</span>,<span class="fl">16</span><span class="op">)</span>,<span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 10
+     id island     species   area elevation nearest scruz adjacent stures  fits
+  &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1     1 Baltra          58   25.1       346     0.6   0.6     1.84 -1.00  117. 
+2    12 Fernandina      93  634.       1494     4.3  95.3  4669.   -0.286  97.0
+3    16 Isabela        347 4669.       1707     0.7  28.1   634.   -5.33  386. </code></pre>
+</div>
+</div>
+<p>And then, we’ll gather the output available in the <code>influence.measures</code> function.</p>
+<div class="cell">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">influence.measures</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s an edited version of this output…</p>
+<pre><code>Influence measures of
+lm(formula = species ~ area + elevation + nearest + scruz + adjacent, 
+data = gala) :
+
+     dfb.1_  dfb.area  dfb.elvt dfb.nrst  dfb.scrz  dfb.adjc
+1  -0.15064   0.13572 -0.122412  0.07684  0.084786  1.14e-01
+12  0.16112   0.16395 -0.122578  0.03093 -0.059059 -8.27e-01
+16 -1.18618 -20.87453  4.885852  0.36713 -1.022431 -8.09e-01
+
+     dffit   cov.r   cook.d    hat inf
+1   -0.29335  1.0835 1.43e-02 0.0787    
+12  -1.24249 25.1101 2.68e-01 0.9497   *
+16 -29.59041  0.3275 6.81e+01 0.9685   *</code></pre>
+<p>This output presents dfbetas for each coefficient, followed by dffit statistics, covariance ratios, Cook’s distance and leverage values (<code>hat</code>) along with an indicator of influence.</p>
+<p>We’ll consider each of these elements in turn.</p>
+</section><section id="dfbetas" class="level2" data-number="32.20"><h2 data-number="32.20" class="anchored" data-anchor-id="dfbetas">
+<span class="header-section-number">32.20</span> DFBETAs</h2>
+<p>The first part of the influence measures output concerns what are generally called <code>dfbetas</code> …</p>
+<table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 17%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: center;">island</th>
+<th style="text-align: right;">dfb.1_</th>
+<th style="text-align: right;">dfb.area</th>
+<th style="text-align: right;">dfb.elvt</th>
+<th style="text-align: right;">dfb.nrst</th>
+<th style="text-align: right;">dfb.scrz</th>
+<th style="text-align: right;">dfb.adjc</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: center;">Baltra</td>
+<td style="text-align: right;">-0.151</td>
+<td style="text-align: right;">0.136</td>
+<td style="text-align: right;">-0.122</td>
+<td style="text-align: right;">0.077</td>
+<td style="text-align: right;">0.085</td>
+<td style="text-align: right;">0.114</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td style="text-align: center;">Fernandina</td>
+<td style="text-align: right;">0.161</td>
+<td style="text-align: right;">0.164</td>
+<td style="text-align: right;">-0.123</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">-0.059</td>
+<td style="text-align: right;">-0.827</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">Isabela</td>
+<td style="text-align: right;">-1.186</td>
+<td style="text-align: right;">-20.875</td>
+<td style="text-align: right;">4.886</td>
+<td style="text-align: right;">0.367</td>
+<td style="text-align: right;">-1.022</td>
+<td style="text-align: right;">-0.809</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>dfbetas</code> look at a standardized difference in the estimate of a coefficient (slope) that will occur if the specified point (here, <code>island</code>) is removed from the data set.</p>
+<ul>
+<li>Positive values indicate that deleting the point will yield a smaller coefficient.</li>
+<li>Negative values indicate that deleting the point will yield a larger coefficient.</li>
+<li>If the absolute value of the dfbeta is greater than <span class="math inline">\(2 / \sqrt{n}\)</span>, where <span class="math inline">\(n\)</span> is the sample size, then the <code>dfbeta</code> is considered to be large.</li>
+</ul>
+<p>In this case, our cutoff would be <span class="math inline">\(2 / \sqrt{30}\)</span> or 0.365, so that the Isabela <code>dfbeta</code> values are all indicative of large influence. Essentially, if we remove Isabela from the data, and refit the model, our regression slopes will change a lot (see below). Fernandina has some influence as well, especially on the <code>adjacent</code> coefficient.</p>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 44%">
+<col style="width: 44%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">Predictor</th>
+<th style="text-align: right;">Coefficient (<em>p</em>) <strong>all 30 islands</strong>
+</th>
+<th style="text-align: right;">Coefficient (<em>p</em>) <strong>without Isabela</strong>
+</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Intercept</td>
+<td style="text-align: right;">7.07 (<em>p</em> = 0.72)</td>
+<td style="text-align: right;">22.59 (<em>p</em> = 0.11)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>area</code></td>
+<td style="text-align: right;">-0.02 (<em>p</em> = 0.30)</td>
+<td style="text-align: right;">0.30 (<em>p</em> &lt; 0.01)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>elevation</code></td>
+<td style="text-align: right;">0.32 (<em>p</em> &lt; 0.01)</td>
+<td style="text-align: right;">0.14 (<em>p</em> &lt; 0.01)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>nearest</code></td>
+<td style="text-align: right;">0.01 (<em>p</em> = 0.99)</td>
+<td style="text-align: right;">-0.26 (<em>p</em> = 0.73)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>scruz</code></td>
+<td style="text-align: right;">-0.24 (<em>p</em> = 0.28)</td>
+<td style="text-align: right;">-0.09 (<em>p</em> = 0.55)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>adjacent</code></td>
+<td style="text-align: right;">-0.08 (<em>p</em> &lt; 0.01)</td>
+<td style="text-align: right;">-0.07 (<em>p</em> &lt; 0.01)</td>
+</tr>
+</tbody>
+</table>
+<p>After the dfbetas, the <code>influence.measures</code> output presents <code>dffit</code>, covariance ratios, Cook’s distance and leverage values (<code>hat</code>) for each observation, along with an indicator of influence.</p>
+<pre><code>id  island         dffit   cov.r   cook.d    hat inf
+1   Baltra      -0.29335  1.0835 1.43e-02 0.0787    
+12  Fernandina  -1.24249 25.1101 2.68e-01 0.9497   *
+16  Isabela    -29.59041  0.3275 6.81e+01 0.9685   *</code></pre>
+</section><section id="cooks-d-or-cooks-distance" class="level2" data-number="32.21"><h2 data-number="32.21" class="anchored" data-anchor-id="cooks-d-or-cooks-distance">
+<span class="header-section-number">32.21</span> Cook’s d or Cook’s Distance</h2>
+<p>The main measure of influence is Cook’s Distance, also called Cook’s d.&nbsp;Cook’s d provides a summary of the influence of a particular point on all of the regression coefficients. It is a function of the standardized residual and the leverage. We’ve seen that the <code><a href="https://generics.r-lib.org/reference/augment.html">augment()</a></code> function in the <code>broom</code> package provides both Cook’s distance and leverage values for all observations in our model.</p>
+<ul>
+<li>Cook’s distance values greater than 1 are generally indicators of high influence.</li>
+<li>Obviously, Isabela (with a value of Cook’s d = 68.1) is a highly influential observation by this measure.</li>
+</ul>
+<section id="plotting-cooks-distance" class="level3" data-number="32.21.1"><h3 data-number="32.21.1" class="anchored" data-anchor-id="plotting-cooks-distance">
+<span class="header-section-number">32.21.1</span> Plotting Cook’s Distance</h3>
+<p>As one of its automated regression diagnostic plots, R will produce an index plot of the Cook’s distance values. Note the relatively enormous influence for island 16 (Isabela).</p>
+<div class="cell">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1</span>, which <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="32-galapagos_files/figure-html/model 1 diagnostic 4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section></section><section id="dffits" class="level2" data-number="32.22"><h2 data-number="32.22" class="anchored" data-anchor-id="dffits">
+<span class="header-section-number">32.22</span> DFFITS</h2>
+<p>A similar measure to Cook’s distance is called <code>DFFITS</code>. The <code>DFFITS</code> value describes the influence of the point on the fitted value. It’s the number of standard deviations that the fitted value changes if the observation is removed. This is defined as a function of the studentized residual and the leverage.</p>
+<ul>
+<li>If the absolute value of <code>DFFITS</code> is greater than 2 times <span class="math inline">\(\sqrt{p / n-p}\)</span>, where <em>p</em> is the number of predictors (not including the intercept), we deem the observation influential.</li>
+<li>For the <code>gala</code> data, we’d consider any point with <code>DFFITS</code> greater than 2 x <span class="math inline">\(\sqrt{5 / (30-5)}\)</span> = 0.894 to be influential by this standard, since n = 30 and we are estimating p = 5 slopes in our model. This is true of both Fernandina and Isabela.</li>
+</ul></section><section id="covariance-ratio" class="level2" data-number="32.23"><h2 data-number="32.23" class="anchored" data-anchor-id="covariance-ratio">
+<span class="header-section-number">32.23</span> Covariance Ratio</h2>
+<p>The covariance ratio <code>cov.r</code> indicates the role of the observation on the precision of estimation. If <code>cov.r</code> is greater than 1, then this observation improves the precision, overall, and if it’s less than 1, the observation drops the precision of estimation, and these are the points about which we’ll be most concerned.</p>
+<ul>
+<li>As with most of our other influence measures, Isabela appears to be a concern.</li>
+</ul></section><section id="leverage" class="level2" data-number="32.24"><h2 data-number="32.24" class="anchored" data-anchor-id="leverage">
+<span class="header-section-number">32.24</span> Leverage</h2>
+<p>The <code>hat</code> value is a measure of leverage. Specifically, this addresses whether or not the point in question is unusual in terms of its combination of predictor values. We’ve seen that the <code><a href="https://generics.r-lib.org/reference/augment.html">augment()</a></code> function in the <code>broom</code> package provides leverage values for all observations in our model.</p>
+<ul>
+<li>The usual cutoff for a large leverage value is 2.5 times the average leverage across all observations, where the average leverage is equal to k/n, where n is the number of observations included in the regression model, and k is the number of model coefficients (slopes plus intercept).</li>
+<li>In the <code>gala</code> example, we’d regard any observation with a hat value larger than 2.5 x 6/30 = 0.5 to have large leverage. This includes Fernandina and Isabela.</li>
+</ul>
+<section id="indicator-of-influence" class="level3" data-number="32.24.1"><h3 data-number="32.24.1" class="anchored" data-anchor-id="indicator-of-influence">
+<span class="header-section-number">32.24.1</span> Indicator of Influence</h3>
+<p>The little asterisk indicates an observation which is influential according to R’s standards for any of these measures. You can take the absence of an asterisk as a clear indication that a point is NOT influential. Points with asterisks may or may not be influential in an important way. In practice, I usually focus on the Cook’s distance to make decisions about likely influence, when the results aren’t completely clear.</p>
+</section></section><section id="building-predictions-from-our-models" class="level2" data-number="32.25"><h2 data-number="32.25" class="anchored" data-anchor-id="building-predictions-from-our-models">
+<span class="header-section-number">32.25</span> Building Predictions from our models</h2>
+<p>The <code>predict</code> function, when applied to a linear regression model, produces the fitted values, just as the <code><a href="https://generics.r-lib.org/reference/augment.html">augment()</a></code> function did, and, as we’ve seen, it can be used to generate <em>prediction</em> intervals for a single new observation, or <em>confidence</em> intervals for a group of new observations with the same predictor values.</p>
+<p>Let us, just for a moment, consider a “typical” island, exemplified by the median value of all the predictors. There’s a trick to creating this and dumping it in a vector I will call <code>x.medians</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span>
+<span><span class="va">x.medians</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x.medians</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        area   elevation     nearest       scruz    adjacent 
+       1.00        2.59      192.00        3.05       46.65        2.59 </code></pre>
+</div>
+</div>
+<p>We want to use the model to predict our outcome (species) on the basis of the inputs above: a new island with values of all predictors equal to the median of the existing islands. As before, building an interval forecast around a fitted value requires us to decide whether we are:</p>
+<ul>
+<li>predicting the number of species for one particular island with the specified characteristics (in which case we use something called a prediction interval) or</li>
+<li>predicting the mean number of species across all islands that have the specified characteristics (in which case we use the confidence interval).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">x.medians</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">newdata</span>, interval<span class="op">=</span><span class="st">"prediction"</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit       lwr      upr
+1 56.95714 -72.06155 185.9758</code></pre>
+</div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">newdata</span>, interval<span class="op">=</span><span class="st">"confidence"</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 56.95714 28.52381 85.39048</code></pre>
+</div>
+</div>
+<section id="questions-about-the-prediction-and-confidence-interval-methods" class="level3" data-number="32.25.1"><h3 data-number="32.25.1" class="anchored" data-anchor-id="questions-about-the-prediction-and-confidence-interval-methods">
+<span class="header-section-number">32.25.1</span> Questions about the Prediction and Confidence Interval Methods</h3>
+<ol start="70" type="1">
+<li>What is the 95% prediction interval for this new observation? Does that make sense?</li>
+<li>Which interval (prediction or confidence) is wider? Does that make sense?</li>
+<li>Is there an island that has characteristics that match our new medians variable?</li>
+<li>What happens if we don’t specify new data in making a prediction?</li>
+</ol></section></section><section id="making-a-prediction-with-new-data-without-broom" class="level2" data-number="32.26"><h2 data-number="32.26" class="anchored" data-anchor-id="making-a-prediction-with-new-data-without-broom">
+<span class="header-section-number">32.26</span> Making a Prediction with New Data (without <code>broom</code>)</h2>
+<ol start="74" type="1">
+<li>How does the output below help us to make a prediction with a new data point, or series of them? Interpret the resulting intervals.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">newdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>area <span class="op">=</span> <span class="fl">2</span>, elevation <span class="op">=</span> <span class="fl">100</span>, nearest <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>                       scruz <span class="op">=</span> <span class="fl">5</span>, adjacent <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">newdata2</span>, interval<span class="op">=</span><span class="st">"prediction"</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit       lwr      upr
+1 37.71683 -92.46825 167.9019</code></pre>
+</div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">newdata2</span>, interval<span class="op">=</span><span class="st">"confidence"</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr     upr
+1 37.71683 4.388351 71.0453</code></pre>
+</div>
+</div>
+</section><section id="scaling-predictors-using-z-scores-semi-standardized-coefficients" class="level2" data-number="32.27"><h2 data-number="32.27" class="anchored" data-anchor-id="scaling-predictors-using-z-scores-semi-standardized-coefficients">
+<span class="header-section-number">32.27</span> Scaling Predictors using Z Scores: Semi-Standardized Coefficients</h2>
+<p>We know that the interpretation of the coefficients in a regression model is sensitive to the scale of the predictors. We have already seen how to “standardize” each predictor by subtracting its mean and dividing by its standard deviation.</p>
+<ul>
+<li>Each coefficient in this semi-standardized model has the following interpretation: the expected difference in the outcome, comparing units (subjects) that differ by one standard deviation in the variable of interest, but for which all other variables are fixed at their average.</li>
+<li>Remember also that the intercept in such a model shows the mean outcome across all subjects.</li>
+</ul>
+<p>Consider a two-variable model, using <code>area</code> and <code>elevation</code> to predict the number of <code>species</code>…</p>
+<div class="cell">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="va">area</span> <span class="op">+</span> <span class="va">elevation</span>, data<span class="op">=</span><span class="va">gala</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species ~ area + elevation, data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-192.619  -33.534  -19.199    7.541  261.514 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept) 17.10519   20.94211   0.817  0.42120   
+area         0.01880    0.02594   0.725  0.47478   
+elevation    0.17174    0.05317   3.230  0.00325 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 79.34 on 27 degrees of freedom
+Multiple R-squared:  0.554, Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05</code></pre>
+</div>
+</div>
+<p>Now compare these results to the ones we get after scaling the area and elevation variables. Remember that the <code>scale</code> function centers a variable on zero by subtracting the mean from each observation, and then scales the result by dividing by the standard deviation. This ensures that each regression input has mean 0 and standard deviation 1, and is thus a <em>z score</em>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model2.z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">area</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">elevation</span><span class="op">)</span>, </span>
+<span>               data<span class="op">=</span><span class="va">gala</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2.z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species ~ scale(area) + scale(elevation), data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-192.619  -33.534  -19.199    7.541  261.514 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         85.23      14.48   5.884 2.87e-06 ***
+scale(area)         16.25      22.42   0.725  0.47478    
+scale(elevation)    72.41      22.42   3.230  0.00325 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 79.34 on 27 degrees of freedom
+Multiple R-squared:  0.554, Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05</code></pre>
+</div>
+</div>
+<section id="questions-about-the-semi-standardized-model" class="level3" data-number="32.27.1"><h3 data-number="32.27.1" class="anchored" data-anchor-id="questions-about-the-semi-standardized-model">
+<span class="header-section-number">32.27.1</span> Questions about the Semi-Standardized Model</h3>
+<ol start="75" type="1">
+<li>What changes after centering and rescaling the predictors, and what does not?</li>
+<li>Why might rescaling like this be a helpful thing to do if you want to compare predictors in terms of importance?</li>
+</ol></section></section><section id="fully-standardized-regression-coefficients" class="level2" data-number="32.28"><h2 data-number="32.28" class="anchored" data-anchor-id="fully-standardized-regression-coefficients">
+<span class="header-section-number">32.28</span> Fully Standardized Regression Coefficients</h2>
+<p>Suppose we standardize the coefficients by also taking centering and scaling (using the z score) the outcome variable: <code>species</code>, creating a <strong>fully standardized</strong> model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model2.zout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">species</span><span class="op">)</span> <span class="op">~</span> </span>
+<span>                  <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">area</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">elevation</span><span class="op">)</span>, data<span class="op">=</span><span class="va">gala</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2.zout</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = scale(species) ~ scale(area) + scale(elevation), 
+    data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.68031 -0.29253 -0.16749  0.06578  2.28131 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)      4.594e-17  1.264e-01   0.000  1.00000   
+scale(area)      1.418e-01  1.956e-01   0.725  0.47478   
+scale(elevation) 6.316e-01  1.956e-01   3.230  0.00325 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6921 on 27 degrees of freedom
+Multiple R-squared:  0.554, Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05</code></pre>
+</div>
+</div>
+<section id="questions-about-the-standardized-model" class="level3" data-number="32.28.1"><h3 data-number="32.28.1" class="anchored" data-anchor-id="questions-about-the-standardized-model">
+<span class="header-section-number">32.28.1</span> Questions about the Standardized Model</h3>
+<ol start="77" type="1">
+<li>How do you interpret the value 0.142 of the <code>scale(area)</code> coefficient here? You may want to start by reviewing the summary of the original <code>gala</code> data shown here.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">gala</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"area"</span>, <span class="st">"elevation"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    species            area            elevation      
+ Min.   :  2.00   Min.   :   0.010   Min.   :  25.00  
+ 1st Qu.: 13.00   1st Qu.:   0.258   1st Qu.:  97.75  
+ Median : 42.00   Median :   2.590   Median : 192.00  
+ Mean   : 85.23   Mean   : 261.709   Mean   : 368.03  
+ 3rd Qu.: 96.00   3rd Qu.:  59.237   3rd Qu.: 435.25  
+ Max.   :444.00   Max.   :4669.320   Max.   :1707.00  </code></pre>
+</div>
+</div>
+<ol start="78" type="1">
+<li>How do you interpret the value 0.632 of the <code>scale(elevation)</code> coefficient in the standardized model?</li>
+<li>What is the intercept in this setting? Will this be the case whenever you scale like this?</li>
+<li>What are some of the advantages of looking at scaled regression coefficients?</li>
+<li>Why are these called <em>fully</em> standardized coefficients while the previous page described semi-standardized coefficients?</li>
+<li>What would motivate you to use one of these two methods of standardization (fully standardized or semi-standardized) vs.&nbsp;the other?</li>
+</ol></section></section><section id="robust-standardization-of-regression-coefficients" class="level2" data-number="32.29"><h2 data-number="32.29" class="anchored" data-anchor-id="robust-standardization-of-regression-coefficients">
+<span class="header-section-number">32.29</span> Robust Standardization of Regression Coefficients</h2>
+<p>Another common option for scaling is to specify lower and upper comparison points, perhaps by comparing the impact of a move from the 25th to the 75th percentile for each variable, while holding all of the other variables constant.</p>
+<p>Occasionally, you will see robust semi-standardized regression coefficients, which measure the increase in the outcome, Y, associated with an increase in that particular predictor of one IQR (inter-quartile range).</p>
+<div class="cell">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span><span class="op">$</span><span class="va">area.scaleiqr</span> <span class="op">&lt;-</span> </span>
+<span>    <span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">area</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">area</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">area</span><span class="op">)</span></span>
+<span><span class="va">gala</span><span class="op">$</span><span class="va">elevation.scaleiqr</span> <span class="op">&lt;-</span> </span>
+<span>    <span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">elevation</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">elevation</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> </span>
+<span>                            <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">elevation</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model2.iqr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species</span> <span class="op">~</span> </span>
+<span>                     <span class="va">area.scaleiqr</span> <span class="op">+</span> <span class="va">elevation.scaleiqr</span>,</span>
+<span>                 data<span class="op">=</span><span class="va">gala</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2.iqr</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species ~ area.scaleiqr + elevation.scaleiqr, data = gala)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-192.619  -33.534  -19.199    7.541  261.514 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          85.233     14.485   5.884 2.87e-06 ***
+area.scaleiqr         1.109      1.530   0.725  0.47478    
+elevation.scaleiqr   57.963     17.946   3.230  0.00325 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 79.34 on 27 degrees of freedom
+Multiple R-squared:  0.554, Adjusted R-squared:  0.521 
+F-statistic: 16.77 on 2 and 27 DF,  p-value: 1.843e-05</code></pre>
+</div>
+</div>
+<section id="questions-about-robust-standardization" class="level3" data-number="32.29.1"><h3 data-number="32.29.1" class="anchored" data-anchor-id="questions-about-robust-standardization">
+<span class="header-section-number">32.29.1</span> Questions about Robust Standardization</h3>
+<ol start="83" type="1">
+<li>How should we interpret the 57.96 value for the scaled <code>elevation</code> variable? You may want to start by considering the summary of the original elevation data below.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">elevation</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  25.00   97.75  192.00  368.03  435.25 1707.00 </code></pre>
+</div>
+</div>
+<p>A <strong>robust standardized coefficient</strong> analysis measures the increase in Y (in IQR of Y) associated with an increase in the predictor of interest of one IQR.</p>
+<div class="cell">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gala</span><span class="op">$</span><span class="va">species.scaleiqr</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">species</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">species</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">species</span><span class="op">)</span></span>
+<span><span class="va">model2.iqrout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">species.scaleiqr</span> <span class="op">~</span> <span class="va">area.scaleiqr</span> <span class="op">+</span> <span class="va">elevation.scaleiqr</span>, data<span class="op">=</span><span class="va">gala</span><span class="op">)</span></span>
+<span><span class="va">model2.iqrout</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species.scaleiqr ~ area.scaleiqr + elevation.scaleiqr, 
+    data = gala)
+
+Coefficients:
+       (Intercept)       area.scaleiqr  elevation.scaleiqr  
+        -1.013e-16           1.336e-02           6.983e-01  </code></pre>
+</div>
+</div>
+<ol start="84" type="1">
+<li>What can we learn from the R output above?</li>
+</ol></section></section><section id="scaling-inputs-by-dividing-by-2-standard-deviations" class="level2" data-number="32.30"><h2 data-number="32.30" class="anchored" data-anchor-id="scaling-inputs-by-dividing-by-2-standard-deviations">
+<span class="header-section-number">32.30</span> Scaling Inputs by Dividing by 2 Standard Deviations</h2>
+<p>It turns out that standardizing the inputs to a regression model by dividing by a standard deviation creates some difficulties when you want to include a binary predictor in the model.</p>
+<p>Instead, Andrew Gelman recommends that you consider centering all of the predictors (binary or continuous) by subtracting off the mean, and then, for the non-binary predictors, also dividing not by one, but rather by two standard deviations.</p>
+<ul>
+<li>Such a standardization can go a long way to helping us understand a model whose predictors are on different scales, and provides an interpretable starting point.</li>
+<li>Another appealing part of this approach is that in the <code>arm</code> library, Gelman and his colleagues have created an R function called <code>standardize</code>, which can be used to automate the process of checking coefficients that have been standardized in this manner, after the regression model has been fit.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species ~ area + elevation, data = gala)
+
+Coefficients:
+(Intercept)         area    elevation  
+    17.1052       0.0188       0.1717  </code></pre>
+</div>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">arm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/arm/man/standardize.html">standardize</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = species ~ z.area + z.elevation, data = gala)
+
+Coefficients:
+(Intercept)       z.area  z.elevation  
+      85.23        32.50       144.81  </code></pre>
+</div>
+</div>
+<section id="questions-about-standardizing-by-dividing-by-two-sd" class="level3" data-number="32.30.1"><h3 data-number="32.30.1" class="anchored" data-anchor-id="questions-about-standardizing-by-dividing-by-two-sd">
+<span class="header-section-number">32.30.1</span> Questions about Standardizing by Dividing by Two SD</h3>
+<ol start="85" type="1">
+<li><p>How does this result compare to the semi-standardized regression coefficients we have seen on the last few analyses?</p></li>
+<li><p>How should we interpret the <code>z.area</code> coefficient of 32.5 here? Again, you may want to start by obtaining a statistical summary of the original <code>area</code> data, as shown below.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">gala</span><span class="op">$</span><span class="va">area</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+   0.010    0.258    2.590  261.709   59.238 4669.320 </code></pre>
+</div>
+</div>
+<p>To standardize the outcome in this way, as well, we use:</p>
+<div class="cell">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">arm</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/arm/man/standardize.html">standardize</a></span><span class="op">(</span><span class="va">model2</span>, standardize.y<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = z.species ~ z.area + z.elevation, data = gala)
+
+Coefficients:
+(Intercept)       z.area  z.elevation  
+  1.653e-19    1.418e-01    6.316e-01  </code></pre>
+</div>
+</div>
+<ol start="87" type="1">
+<li>How should we interpret the <code>z.area</code> coefficient of 0.142 here?</li>
+<li>How does these relate to the standardized regression coefficients we’ve seen before?</li>
+</ol>
+<p>Again, if you have questions about how to interpret the output in light of the questions contained in this Chapter, please ask us for help on Piazza or in TA office hours.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Faraway2015" class="csl-entry" role="listitem">
+Faraway, Julian J. 2015. <em>Linear Models with r</em>. Second. Boca Raton, FL: CRC Press.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./31-prediction_wcgs.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Building Prediction Models for <code>wcgs</code></span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./33-nonlinearity.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Introduction to Non-linear Terms</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -45,15 +45,15 @@ book:
         - 26-comparing_rates.qmd
         - 27-power_for_rates.qmd
         - 28-contingency_tables.qmd
-  #  - part: "Part C. Building Models"
-  #    chapters: 
-  #      - 29-mult_reg_intro.qmd
-  #      - 30-regr_diagnostics.qmd
-  #      - 31-prediction_wcgs.qmd
-  #      - 32-galapagos.qmd
-  #      - 33-nonlinearity.qmd
-  #      - 34-olsfits.qmd
-  #      - 35-emp_bmi.qmd
+    - part: "Part C. Building Models"
+      chapters: 
+        - 29-mult_reg_intro.qmd
+        - 30-regr_diagnostics.qmd
+        - 31-prediction_wcgs.qmd
+        - 32-galapagos.qmd
+        - 33-nonlinearity.qmd
+        - 34-olsfits.qmd
+        - 35-emp_bmi.qmd
   appendices:
     - 98_gettingdataintoR.qmd
     - 99_sessioninfo.qmd
